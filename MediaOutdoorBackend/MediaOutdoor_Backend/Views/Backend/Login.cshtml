@@ -1,0 +1,151 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Outdoor</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.png">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"> </script>
+
+</head>
+
+<body>
+    <div class="col-12 col-md-12 col-sm-12 login-background">
+        <div class="form-background p-3 pt-5 pb-5">
+            <div class="login-logo d-flex justify-content-center align-item-center">
+                <img class="img-fluid w-75" src="~/img/login-logo.jpg" alt="Logo">
+            </div>
+            <h2 class="login-logo mt-3">BACKEND</h2>
+            <form asp-controller="Backend" asp-action="Login" method="post">
+                <div class="input-details mt-0">
+                    <input type="text" class="form-control login-input" name="userName" id="userName" placeholder="@Localizer["USERNAME"]">
+                    <div class="d-flex justify-content-between">
+                        
+                        <input type="text" class="form-control login-input text-center px-2" style="width:55px;" id="one" name="one">
+                        <input type="text" class="form-control login-input text-center px-2" style="width:55px;" id="two" name="two">
+                        <input type="text" class="form-control login-input text-center px-2" style="width:55px;" id="three" name="three">
+                        <input type="text" class="form-control login-input text-center px-2" style="width:55px;" id="four" name="four">
+                        <input type="text" class="form-control login-input text-center px-2" style="width:55px;" id="five" name="five">
+                        <input type="text" class="form-control login-input text-center px-2" style="width:55px;" id="six" name="six">
+                    
+                    </div>
+                    <input type="hidden" id="dateNow" name="activityLogDateTime">
+                </div>
+
+                @if (ViewBag.Error != "")
+                {
+                    <div class="text-center mb-1">
+                        <span class="text-danger p-pad">@ViewBag.Error</span>
+                    </div>
+                }
+
+                <div class="d-flex justify-content-center align-item-center d-none">
+                    <button type="submit" class="login-button rounded-pill">Login</button>
+                </div>
+
+                <div class="d-flex justify-content-end align-item-center me-3">
+
+                    <div class="me-2">
+                        <a href="@Url.Action("SetLanguage", "Language", new { culture = "en-US", returnUrl = Context.Request.Path })">
+                            <img src="/img/eng-flag.png" style="width:30px;" />
+                        </a>
+                    </div>
+
+                    <div class="ms-2">
+                        <a href="@Url.Action("SetLanguage", "Language", new { culture = "nl-NL", returnUrl = Context.Request.Path })">
+                            <img src="/img/dutch-flag.png" style="width:32px;" />
+                        </a>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+    @*<script src="~/js/script.js"></script>*@
+    <script src="~/assets/js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function(){
+            $("#userName").focus();
+        });
+
+        $('body').on('input', "#one, #two, #three, #four, #five", function (event) {
+
+            const inputValue = $(this).val();
+            $(this).val(inputValue.replace(/[^0-9+]/g, ''));
+
+            if ($(this).val() < "0") {
+                $(this).val("");
+            }
+
+            if ($(this).val().length != 0) {
+                $(this).next('input').focus();
+            }
+
+        });
+
+        $('body').on('keydown', "#one, #two, #three, #four, #five, #six", function (event) {
+            if (event.which === 8) {
+                if ($(this).val().length == 0) {
+                    $(this).prev('input').focus();
+                }
+            }
+        });
+
+        $('body').on('input', "#six", function () {
+
+            const inputValue = $(this).val();
+            $(this).val(inputValue.replace(/[^0-9+]/g, ''));
+
+            if ($(this).val() < "0") {
+                $(this).val("");
+            }
+
+            if ($(this).val().length != 0) {
+
+                var v = $(this).val();
+
+                if (v.length > 1) {
+                    v = v.substring(0, 1);
+                    $(this).val(v);
+                }
+
+                $('button').click();
+
+                //focus out
+                $(this).blur();
+            }
+
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var dateElement = document.getElementById('dateNow');
+
+            // Function to update the date and time
+            function updateDateTime() {
+                var currentDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                dateElement.value = currentDateTime;
+            }
+
+            setInterval(updateDateTime, 10);
+        });
+
+    </script>
+
+</body>
+</html>

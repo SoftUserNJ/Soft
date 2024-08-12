@@ -1,0 +1,123 @@
+<div class="content ListPage">
+    <div class="page-header mb-1">
+      <div class="page-title">
+        <h4>Product Sale/Issue</h4>
+      </div>
+      <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-2 col-md-2 col-sm-6">
+            <div class="form-group">
+              <label>Date Range</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                  [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-groupicon">
+                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker2"
+                  [(ngModel)]="toDate" (click)="datepicker2.open()" />
+                <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+            <div class="mb-2">
+              <label class="fw-bolder mb-1">Location</label>
+              <div class="position-relative w-100">
+                <ng-select placeholder="---Select Location---" [dropdownPosition]="'bottom'" [disabled]="isDisableLoc"
+                  [(ngModel)]="locId" (change)="onChangeLoc()">
+                  <ng-option *ngFor="let item of locationList" [value]="item.ID">
+                    {{ item.ID + " - " + item.NAME}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="mb-2" *ngIf="costCenter == 'true'">
+              <label class="fw-bolder mb-1">Job No</label>
+              <ng-select placeholder="---Select Job No---" [items]="filterList" bindLabel="NAME" bindValue="ID"
+                [(ngModel)]="jobNo" [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-10 col-md-6 col-sm-6">
+            <div class="row">
+              <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="mb-3">
+                  <label class="fw-bolder">Select Party</label>
+                  <div class="position-relative w-100">
+                    <ng-select [items]="customerList" bindLabel="name" bindValue="code" placeholder="---Select Party---"
+                      [(ngModel)]="customer" [dropdownPosition]="'bottom'"></ng-select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="mb-3">
+                  <label class="fw-bolder">Select Category</label>
+                  <div class="position-relative w-100">
+                    <ng-select [items]="categoryList" bindLabel="name" bindValue="id" placeholder="---Select Category---"
+                      [(ngModel)]="category" [dropdownPosition]="'bottom'" (change)="onChangeCategory()" ></ng-select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="mb-3">
+                  <label class="fw-bolder">Select Product</label>
+                  <div class="position-relative w-100">
+                    <ng-select [items]="filterProduct" bindLabel="PRODUCTNAME" bindValue="PRODUCTCODE" placeholder="---Select Product---"
+                      [(ngModel)]="product" [dropdownPosition]="'bottom'"></ng-select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="fw-bolder">Select Vehicle</label>
+                  <div class="position-relative w-100">
+                    <ng-select [items]="vehicleList" bindLabel="VEHICLENO" bindValue="VEHICLENO" placeholder="---Select Vehicle---"
+                      [(ngModel)]="vehicle" [dropdownPosition]="'bottom'"></ng-select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-1">
+                <div class="d-flex align-items-center mt-4">
+                  <input type="radio" id="product" class="me-1" name="rpt" checked (click)="rptStatus('sale')">
+                  <label for="product" class="fw-bolder">Sale</label>
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <div class="d-flex align-items-center mt-4">
+                  <input type="radio" id="party" class="me-1" name="rpt" (click)="rptStatus('issue')">
+                  <label for="party" class="fw-bolder">Issue For Job</label>
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <div class="d-flex align-items-center mt-4">
+                  <input type="radio" id="party1" class="me-1" name="rpt" (click)="rptStatus('')">
+                  <label for="party1" class="fw-bolder">Sale/Issue For Job</label>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
+                <div class="text-center">
+                  <button class="btn btn-primary btn-sm" (click)="onViewReport()">View</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

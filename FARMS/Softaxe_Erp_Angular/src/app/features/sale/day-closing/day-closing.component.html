@@ -1,0 +1,287 @@
+<div class="content AddPage">
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group mb-2 d-flex align-items-center justify-content-between">
+            <label class="fw-bolder me-2">Date</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                [(ngModel)]="todayDate" (dateChange)="onDateChange()" (click)="datepicker.open()" />
+              <mat-datepicker #datepicker [startAt]="todayDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-2 d-flex align-items-center justify-content-between">
+            <label class="fw-bolder">Shift</label>
+            <div class="position-relative" style="width: 176px;">
+              <ng-select [items]="shiftList" bindLabel="shiftName" bindValue="shiftId" [(ngModel)]="shiftId"
+                (change)="onRefresh()" placeholder="---Select Shift---" [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="mb-2 d-flex align-items-center justify-content-between">
+            <label class="fw-bolder">Till</label>
+            <div class="position-relative" style="width: 176px;">
+              <ng-select [items]="tillList" bindLabel="pointName" bindValue="pointId" [(ngModel)]="tillId"
+                (change)="onRefresh()" placeholder="---Select Till---" [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="d-flex mb-2">
+            <button class="btn btn-secondary btn-sm mt-1" (click)="onRefresh()">Refresh</button>
+            <button *ngIf="txtDayClose" class="btn btn-success btn-sm ms-2 mt-1" (click)="btnDayClose()">Day
+              Close</button>
+          </div>
+
+          <div class="mb-2" *ngIf="isParty">
+            <label class="fw-bolder">Cash Paid To</label>
+            <div class="position-relative">
+              <ng-select [items]="cashPaidToList" bindLabel="name" bindValue="code" [(ngModel)]="cashPaidToId"
+                placeholder="---Select Paid To---" [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="d-flex" *ngIf="isParty">
+            <button class="btn btn-success btn-sm mt-1" (click)="btnSave()">Save</button>
+          </div>
+
+        </div>
+
+        <div class="col-md-9">
+          <div class="form-group d-flex">
+
+            <label class="mt-2 me-2">Cash Opening &nbsp;&nbsp;&nbsp;&nbsp;:</label>
+            <input type="number" [(ngModel)]="txtCashOpening" class="fw-bold text-end" style="width:16%;" disabled="">
+
+          </div>
+
+          <div class="form-group d-flex">
+
+            <label class="mt-2 me-2">Cash Sale
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
+            <input type="number" [(ngModel)]="txtCashSale" class="fw-bold text-end" style="width:16%;" disabled=""
+              skinid="">
+            <div class=" mt-2 ms-3">
+              <a href="javascript:void(0);" id="" class="float-end">
+                <i class="far fa-arrow-alt-circle-right text-green" aria-label="fa fa-plus" data-bs-toggle="modal"
+                  data-bs-target="#CashSaleModal"></i>
+              </a>
+            </div>
+
+          </div>
+
+          <div class="form-group d-flex">
+
+            <label class="mt-2 me-2">Total Cash &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
+            <input type="number" [(ngModel)]="txtTotalCash" class="fw-bold text-end" style="width:16%;" disabled=""
+              skinid="">
+
+          </div>
+
+          <div class="form-group d-flex">
+
+            <label class="mt-2 me-2">Cash Payment &nbsp;&nbsp;&nbsp;&nbsp;:</label>
+            <input type="number" [(ngModel)]="txtCashPayment" class="fw-bold text-end" style="width:16%;" disabled=""
+              skinid="">
+            <div class=" mt-2 ms-3">
+              <a href="javascript:void(0);" id="" class="float-end">
+                <i class="far fa-arrow-alt-circle-right text-green" aria-label="fa fa-plus" data-bs-toggle="modal"
+                  data-bs-target="#CashPaymentModal"></i>
+              </a>
+            </div>
+
+          </div>
+
+          <div class="form-group d-flex">
+            <label class="mt-2 me-2">Cash Balance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
+            <input type="number" [(ngModel)]="txtCashBalance" class="fw-bold text-end" style="width:16%;" disabled=""
+              skinid="">
+          </div>
+
+          <div class="form-group d-flex">
+
+            <label class="mt-2 me-2">Credit Card Sale :</label>
+            <input type="number" [(ngModel)]="txtCreditCardSale" class="fw-bold text-end" style="width:16%;" disabled=""
+              skinid="">
+            <div class=" mt-2 ms-3">
+              <a href="javascript:void(0);" id="" class="float-end">
+                <i class="far fa-arrow-alt-circle-right text-green" aria-label="fa fa-plus" data-bs-toggle="modal"
+                  data-bs-target="#CreditCardSaleModal"></i>
+              </a>
+            </div>
+
+          </div>
+
+          <div class="form-group d-flex">
+
+            <label class="mt-2 me-2">Total Sale
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label>
+            <input type="number" [(ngModel)]="txtTotalSale" class="fw-bold text-end" style="width:16%;" disabled=""
+              skinid="">
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="CashSaleModal">
+  <div class="modal-dialog" style="max-width:700px;">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Cash Sale</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group">
+              <input placeholder="Search..." type="text" class="form-control" 
+              [(ngModel)]="txtSearchCashSale"
+              (input)="onSearchCashSale($event)">
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Bill-No</th>
+                      <th class="w-50">Customer</th>
+                      <th class="w-25">Contact</th>
+                      <th class="w-25">Sale Man</th>
+                      <th class="text-end pe-2">Sale Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody #cashSaleDetail>
+                    <tr *ngFor="let data of cashSaleList">
+                      <td>{{data.BILLNO}}</td>
+                      <td>{{data.CUSTOMER}}</td>
+                      <td>{{data.CUSTOMERCONTACT}}</td>
+                      <td>{{data.USERNAME}}</td>
+                      <td class="text-end">{{(data.SALEAMOUNT).toFixed(2)}}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot style="border-top: 0px;" [(ngModel)]="footCashSale">
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="CashPaymentModal">
+  <div class="modal-dialog" style="max-width:700px;">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Cash Payment</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group">
+              <input placeholder="Search..." type="text" class="form-control" 
+              [(ngModel)]="txtSearchCashPayment"
+              (input)="onSearchCashPayment($event)">
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Bill-No</th>
+                      <th class="w-50">Customer</th>
+                      <th class="w-25">Contact</th>
+                      <th class="w-25">Sale Man</th>
+                      <th class="text-end pe-2">Sale Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody #cashPaymentDetail>
+                    <tr *ngFor="let data of cashPaymentList">
+                      <td>{{data.BILLNO}}</td>
+                      <td>{{data.CUSTOMER}}</td>
+                      <td>{{data.CUSTOMERCONTACT}}</td>
+                      <td>{{data.USERNAME}}</td>
+                      <td class="text-end">{{(data.SALEAMOUNT).toFixed(2)}}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot style="border-top: 0px;" [(ngModel)]="footCashPayment">
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="CreditCardSaleModal">
+  <div class="modal-dialog" style="max-width:700px;">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Credit Card Sale</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group">
+              <input placeholder="Search..." type="text" class="form-control" 
+              [(ngModel)]="txtSearchCreditCardSale"
+              (input)="onSearchCardSale($event)">
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Bill-No</th>
+                      <th class="w-50">Customer</th>
+                      <th class="w-25">Contact</th>
+                      <th class="w-25">Sale Man</th>
+                      <th>Ref #</th>
+                      <th class="text-end pe-2">Sale Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody #creditCardSaleDetail>
+                    <tr *ngFor="let data of cardSaleList">
+                      <td>{{data.BILLNO}}</td>
+                      <td>{{data.CUSTOMER}}</td>
+                      <td>{{data.CUSTOMERCONTACT}}</td>
+                      <td>{{data.USERNAME}}</td>
+                      <td>{{data.REFNO}}</td>
+                      <td class="text-end">{{(data.SALEAMOUNT).toFixed(2)}}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot style="border-top: 0px;">
+                    <tr>
+                      <td colspan="5" class="text-end fw-bold">Total  =  </td>
+                      <td class="text-end" [(ngModel)]="footCreditCardSale"></td>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

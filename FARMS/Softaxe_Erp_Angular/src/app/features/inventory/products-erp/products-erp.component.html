@@ -1,0 +1,764 @@
+<section *ngIf="isShowPage">
+    <div class="content ListPage">
+      <div class="page-header mb-1">
+        <div class="page-title">
+          <h4>Product Updation</h4>
+          <h6>Manage your products</h6>
+        </div>
+        <div class="page-btn">
+          <div class="wordset newwordset">
+            <ul>
+              <li>
+                <a (click)="export('Products', 'pdf')" title="pdf">
+                  <img src="/assets/img/icons/pdf.svg" alt="img">
+                </a>
+              </li>
+              <li>
+                <a (click)="export('Products', 'xlxs')" title="excel">
+                  <img src="/assets/img/icons/excel.svg" alt="img">
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row align-items-center mb-2">
+            <div class="col-lg-2 pe-1">
+              <div class="position-relative w-100 me-2">
+                <ng-select placeholder="---Select Category ---" 
+                  [items]="homeCategory" 
+                  bindLabel="name" 
+                  bindValue="id"
+                  [(ngModel)]="ngCategory" 
+                  (change)="getProductList()" 
+                  (clear)="onClearHCategory()"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-lg-2 px-1">
+              <div class="position-relative w-100 me-2">
+                <ng-select placeholder="---Select Brand ---" 
+                  [items]="homeBrand" 
+                  bindValue="id" 
+                  bindLabel="name"
+                  [(ngModel)]="ngBrand" 
+                  (change)="onChangeBrand($event)" 
+                  (clear)="onClearHBrand()"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-lg-2 px-1">
+              <div class="position-relative w-100 me-2">
+                <input type="search" id="txtSearch" class="form-control me-2" 
+                (input)="onInput()"
+                [(ngModel)]="productSearch"
+                 placeholder="Search Product">
+              </div>
+            </div>
+            <div class="col-lg-3 px-1">
+              <div class="position-relative w-100 me-2">
+                <ng-select placeholder="---Select Main Account ---" 
+                  [items]="level4" 
+                  bindLabel="name" 
+                  bindValue="code"
+                  [(ngModel)]="L4Code"
+                  (change)="searchGrid();"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-lg-3 ps-0">
+              <div class="form-group d-flex float-end" style="margin-bottom:0px!important;">
+                <div class="d-flex align-items-center me-3">
+                  <input type="radio" id="chkAll" class="me-1" name="Vch" value="all" [checked]="all" (click)="onClickFilter($event)">
+                  <label for="chkAll" style="margin-bottom:0px!important;">All</label>
+                </div>
+                <div class="d-flex align-items-center me-3">
+                  <input type="radio" id="chkActive" class="me-1" name="Vch" value="active" [checked]="active" (click)="onClickFilter($event)">
+                  <label for="chkActive" style="margin-bottom:0px!important;">Active</label>
+                </div>
+                <div class="d-flex align-items-center me-2">
+                  <input type="radio" id="chkInActive" class="me-1" name="Vch" value="inActive" [checked]="inActive" (click)="onClickFilter($event)">
+                  <label for="chkInActive" style="margin-bottom:0px!important;">InActive</label>
+                </div>
+                <button class="btn btn-primary btn-sm text-white" (click)="togglePages()"><i class="fa fa-plus text-white"></i> Add New</button>
+              </div>
+            </div> 
+          </div>
+  
+          <div class="table-responsive" style="height: 380px">
+            <table class="table mb-0" id="export">
+              <thead>
+                <tr>
+                  <th class="text-center w-0">Code</th>
+                  <th>Product Name</th>
+                  <th>Short Name</th>
+                  <th>Pcs</th>
+                  <th>Uom</th>
+                  <th>Category</th>
+                  <th>Brand</th>
+                  <th>Made In</th>
+                  <th class="text-end w-0">Price</th>
+                  <th class="text-center w-0 noPrint">Action</th>
+                </tr>
+              </thead>
+              <tbody #prodList>
+                <tr *ngFor="let item of productsList">
+                  <td class="limited-text code" title="{{item.Id}}">{{ item.Id }}</td>
+                  <td class="productimgname">
+                    <span class="product-img">
+                      <img src="{{basePath + item.Image + query}}" alt="img">
+                    </span>
+                    <p class="limited-text" title="{{item.ProductName}}"> {{ item.ProductName }}</p>
+                  </td>
+                  <td class="limited-text descrip" title="{{item.ShortName}}">{{ item.ShortName }}</td>
+                  <td class="limited-text pcs" title="{{item.Pcs}}">{{ item.Pcs }}</td>
+                  <td class="limited-text uom" title="{{item.Uom}}">{{ item.Uom }}</td>
+                  <td class="limited-text category" title="{{item.Category}}">{{ item.Category }}</td>
+                  <td class="limited-text brand" title="{{item.Brand}}">{{ item.Brand }}</td>
+                  <td class="limited-text country" title="{{item.Country}}">{{ item.Country }}</td>
+                  <td class="text-end price" title="{{item.SaleRate}}">{{ item.SaleRate | number : "1.2-2" }}</td>
+                  <td class="d-none active">{{item.InActive}}</td>
+                  <td class="d-none mainCode">{{item.SaleCode.substring(0, 9)}}</td>
+                  <td class="text-center noPrint">
+                    <!-- Edit Button -->
+                    <span (click)="editProduct(item)" class="me-3 btnEditProduct" style="cursor: pointer">
+                      <i class="fas fa-edit"></i>
+                    </span>
+                    <!-- Delete Button  -->
+                    <span (click)="deleteProduct(item)" class="confirm-text btnDelLevel1" style="cursor: pointer">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section *ngIf="!isShowPage">
+    <div class="content AddPage">
+      <div class="page-header mb-1">
+        <div class="page-title">
+          <h4>Product Add</h4>
+        </div>
+        <div class="page-btn">
+          <button class="btn btn-primary btn-sm text-white" (click)="togglePages()"><i class="fa fa-list text-white"></i> Home</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-8 col-sm-6" [formGroup]="productForm" [ngClass]="{ 'disabled': isDisabled }">
+              <div class="row activeForm">
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="mb-2">
+                    <label class="fw-bolder mb-1">Category</label>
+                    <div class="row">
+                      <div class="col-lg-11 col-sm-11 col-11">
+                        <ng-select placeholder="---Select Category ---" 
+                        [items]="category" 
+                        bindLabel="name" 
+                        bindValue="id"
+                        [dropdownPosition]="'bottom'" 
+                        formControlName="category" 
+                        (clear)="onClearCategory()"
+                        (change)="onChangeCatrgory($event)">
+                      </ng-select>
+                      </div>
+                      <div class="col-1 ps-1">
+                        <div class="text-end">
+                          <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#CategoryModal"
+                            (click)="refreshCategory()"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="mb-2">
+                    <label class="fw-bolder mb-1">Brand</label>
+                    <div class="row">
+                      <div class="col-lg-11 col-sm-11 col-11">
+                        <ng-select placeholder="---Select Brand ---" 
+                          [items]="brand" 
+                          bindLabel="name" 
+                          bindValue="id"
+                          formControlName="brand" 
+                          [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                      <div class="col-1 ps-1">
+                        <div class="text-end">
+                          <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#BrandModal"
+                            (click)="refreshBrand()"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" formControlName="name" class="form-control"/>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 col-12">
+                  <div class="mb-2">
+                    <label class="fw-bolder mb-1">Unit of Measurement</label>
+                    <div class="row">
+                      <div class="col-lg-10 col-sm-10 col-10">
+                        <ng-select placeholder="--Select UOM--" 
+                          [items]="uom" 
+                          bindLabel="name" 
+                          bindValue="id"
+                          formControlName="uomId" 
+                          [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                      <div class="col-2 ps-1">
+                        <div class="text-end">
+                          <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#UOMModal"
+                            (click)="refreshUom()"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Packing</label>
+                    <input type="number" formControlName="packing" class="form-control" (input)="onInputPacking()" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Short Name</label>
+                    <input type="text" formControlName="shortName" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                      <label>Sale Rate</label>
+                      <div class="row">
+                          <div class="col-lg-11 col-sm-11 col-11">
+                              <input type="number" formControlName="saleRate" class="form-control">
+                          </div>
+                          <div class="col-1 ps-1">
+                            <div class="text-end">
+                              <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#SlabRateModal"></i>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Standard Weight</label>
+                    <input type="number" formControlName="standardWeight"  class="form-control"/>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Item Weight</label>
+                    <input type="number" formControlName="itemWeight"  class="form-control"/>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Item Packed Weight</label>
+                    <input type="number" formControlName="itemPackedWeight" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Liter</label>
+                    <input type="number" formControlName="liter" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Discount %</label>
+                    <input type="number" formControlName="discount" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Tax %</label>
+                    <input type="number" formControlName="saleTax" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="mb-2">
+                    <label class="fw-bolder mb-1">Made In</label>
+                    <div class="row">
+                      <div class="col-lg-11 col-sm-11 col-11">
+                        <ng-select placeholder="---Select Made In ---" 
+                          [items]="madeIn" 
+                          bindLabel="name" 
+                          bindValue="id"
+                          formControlName="madeIn" 
+                          [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                      <div class="col-1 ps-1">
+                        <div class="text-end">
+                          <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#MadeInModal" (click)="refreshMadeIn()"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="mb-2">
+                    <label class="fw-bolder mb-1">Location</label>
+                    <ng-select placeholder="---Select Location ---" 
+                      [items]="location" 
+                      bindLabel="name" 
+                      bindValue="id"
+                      formControlName="location" 
+                      [dropdownPosition]="'bottom'">
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Stock Minimum Level</label>
+                    <input type="number" formControlName="minimumLevel" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>HS. No</label>
+                    <input type="number" formControlName="hsNo" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="mb-2">
+                    <label class="fw-bolder mb-1">Status</label>
+                    <ng-select placeholder="---Select Status ---" 
+                      [items]="status" 
+                      bindLabel="name" 
+                      bindValue="id"
+                      formControlName="status" 
+                      [dropdownPosition]="'bottom'">
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Bar/QR Code </label>
+                    <div class="row align-items-center">
+                      <div class="col-lg-10 col-sm-10 col-10 pe-0">
+                        <input type="text" formControlName="barCode" class="form-control">
+                      </div>
+                      <div class="col-2 ps-1">
+                        <div class="text-end">
+                          <i class="fa-solid fa-barcode" (click)="genrateBarCode()"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-sm-6 col-12">
+                  <div class="form-group d-flex" style="margin-top: 25px;">
+                    <input type="checkbox" class="me-1" formControlName="noStock" id="noStock">
+                    <label style="margin-bottom: 0px!important;" for="noStock">No Stock </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-4 col-sm-6">
+              <div class="commom-img">
+                <img src="{{ selectedImage }}" alt="img" id="showImage" />
+              </div>
+              <div class="form-group">
+                <label> Product Image</label>
+                <input class="form-control" type="file" [(ngModel)]="file"
+                  accept="image/jpg, image/jpeg, image/png, image/webp" (change)="onFileSelected($event)" />
+              </div>
+            </div>
+            <div class="col-lg-12 col-sm-12">
+              <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow" (click)="onClickSave()">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">
+                Refresh
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CATEGORY -->
+  <div class="modal fade" id="CategoryModal">
+    <div class="modal-dialog" style="max-width:60%">
+      <div class="modal-content">
+        <div class="modal-header p-2 align-items-center">
+          <h5 class="modal-title">Category</h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="row">
+                <div class="col-sm-7 pe-1">
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <input type="text" class="form-control" [(ngModel)]="categoryName" [disabled]="isDisabledCategory" >
+                        <input type="hidden" [(ngModel)]="categoryId">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label class="form-label">Exp Days</label>
+                        <input type="number" class="form-control" [(ngModel)]="expiryDays" [disabled]="isDisabledCategory">
+                      </div>
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="mb-2">
+                        <label class="fw-bolder mb-1">Expense Code</label>
+                        <ng-select placeholder="--Select Expence--" 
+                          [items]="expenseList" 
+                          bindLabel="name" 
+                          bindValue="code"
+                          [(ngModel)]="expCode"
+                          [disabled]="isDisabledCategory"
+                          [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group d-flex" style="margin-top: 27px!important;">
+                        <input type="checkbox" class="me-1" [(ngModel)]="isCommission" [disabled]="isDisabledCategory">
+                        <label style="margin-bottom: 0px!important;" class="form-label">Commission</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-2">
+                    <button class="btn btn-primary btn-sm me-1" (click)="newCategory()" [hidden]="isShowCategory">New</button>
+                    <button class="btn btn-success btn-sm me-1" (click)="createUpdateCategory()" [hidden]="!isShowCategory">Save</button>
+                    <button class="btn btn-secondary btn-sm me-1" (click)="refreshCategory()">Refresh</button>
+                  </div>
+                  <div class="card mb-0" style="height: 200px;">
+                    <div class="table-responsive">
+                      <table class="table mb-0">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Id</th>
+                            <th class="w-75">Category</th>
+                            <th class="text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of category">
+                            <td class="id text-center">{{ item.id }}</td>
+                            <td class="names">{{ item.name }}</td>
+                            <td class="d-none">{{ item.expiryDays }}</td>
+                            <td class="d-none img"></td>
+                            <td class="text-center">
+                              <span class="me-3" (click)="editCategory(item)">
+                                <i class="fas fa-edit"></i>
+                              </span>
+                              <span (click)="deleteCategory(item.id)" class="confirm-text">
+                                <i class="fas fa-trash"></i>
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-5 ps-1">
+                  <div class="imgBox">
+                    <img src="{{ selectedCategoryImage }}">
+                  </div>
+                  <div class="mt-2">
+                    <input type="file" accept="image/jpg, image/jpeg, image/png, image/webp" class="form-control me-2" 
+                    [(ngModel)]="categoryFile" 
+                    (change)="onCategoryFile($event)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- BRAND -->
+  <div class="modal fade" id="BrandModal" aria-labelledby="brandModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2 align-items-center">
+          <h5 class="modal-title">Brand</h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group mb-1">
+                <label class="form-label mb-1">Brand</label>
+                <input type="text" class="form-control" [(ngModel)]="brandName" [disabled]="isDisabledBrand" />
+                <input type="hidden" [(ngModel)]="brandId"/>
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newBrand()" [hidden]="isShowBrand">
+                  New
+                </button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateBrand()" [hidden]="!isShowBrand">
+                  Save
+                </button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshBrand()">
+                  Refresh
+                </button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height: 205px">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Id</th>
+                        <th class="w-75">Brand</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="brandDetail">
+                      <tr *ngFor="let item of brand">
+                        <td class="code text-center">{{ item.id }}</td>
+                        <td class="names">{{ item.name }}</td>                                            
+                        <td class="text-center">
+                          <span (click)="editBrand(item.id, item.name)" class="me-3">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                          <span (click)="deleteBrand(item.id)" class="confirm-text">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- UOM -->
+  <div class="modal fade" id="UOMModal" aria-labelledby="UomModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center text-center">
+          <h5 class="modal-title">Unit of Measurement
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group mb-1">
+                <label class="form-label mb-1">Unit of Measurement</label>
+                <input type="text" class="form-control" [(ngModel)]="uomName" [disabled]="isDisabledUom" />
+                <input type="hidden" [(ngModel)]="uomId" />
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newUom()" [hidden]="isShowUom">
+                  New
+                </button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateUom()"
+                  [hidden]="!isShowUom">
+                  Save
+                </button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshUom()">
+                  Refresh
+                </button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height: 205px">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Id</th>
+                        <th class="w-75">Name</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="uomDetail">
+                      <tr *ngFor="let item of uom">
+                        <td class="text-center code">{{ item.id }}</td>
+                        <td class="names">{{ item.name }}</td>
+                        <td class="text-center">
+                          <span (click)="editUom(item.id, item.name)" class="me-3">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                          <span (click)="deleteUom(item.id)" class="confirm-text">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                        </td>
+                      </tr>
+                      <!-- Add more table rows as needed -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- MADE IN -->
+  <div class="modal fade" id="MadeInModal" aria-labelledby="madeInModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center text-center">
+          <h5 class="modal-title">Made In
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group mb-1">
+                <label class="form-label mb-1">Made In</label>
+                <input type="text" class="form-control" [(ngModel)]="madeInName" [disabled]="isDisabledMadeIn" />
+                <input type="hidden" [(ngModel)]="madeInId" />
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newMadeIn()" [hidden]="isShowMadeIn">
+                  New
+                </button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateMadeIn()"
+                  [hidden]="!isShowMadeIn">
+                  Save
+                </button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshMadeIn()">
+                  Refresh
+                </button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height: 205px">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Id</th>
+                        <th class="w-75">Name</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="madeInDetail">
+                      <tr *ngFor="let item of madeIn">
+                        <td class="text-center code">{{ item.id }}</td>
+                        <td class="names">{{ item.name }}</td>
+                        <td class="text-center">
+                          <span (click)="editMadeIn(item.id, item.name)" class="me-3 btnEditLevel1">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                          <span (click)="deleteMadeIn(item.id)" class="confirm-text btnDelLevel1">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- RATE MODEL -->
+  <div class="modal fade SlabRateModal" id="SlabRateModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2 align-items-center">
+          <h5 class="modal-title">Rate</h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2" [formGroup]="productForm">
+              <div class="form-group row align-items-center">
+                <label class="col-lg-4 col-form-label mb-0">Rate 2</label>
+                <div class="col-lg-8">
+                  <input type="number" class="form-control" formControlName="rate2" />
+                </div>
+              </div>
+              <div class="form-group row align-items-center">
+                <label class="col-lg-4 col-form-label mb-0">Rate 3</label>
+                <div class="col-lg-8">
+                  <input type="number" class="form-control" formControlName="rate3" />
+                </div>
+              </div>
+              <div class="form-group row align-items-center">
+                <label class="col-lg-4 col-form-label mb-0">Rate 4</label>
+                <div class="col-lg-8">
+                  <input type="number" class="form-control" formControlName="rate4" />
+                </div>
+              </div>
+              <div class="form-group row align-items-center">
+                <label class="col-lg-4 col-form-label mb-0">Rate 5</label>
+                <div class="col-lg-8">
+                  <input type="number" class="form-control" formControlName="rate5" />
+                </div>
+              </div>
+              <div class="form-group row align-items-center">
+                <label class="col-lg-4 col-form-label mb-0">Rate 6</label>
+                <div class="col-lg-8">
+                  <input type="number" class="form-control" formControlName="rate6" />
+                </div>
+              </div>
+              <div class="form-group row align-items-center">
+                <label class="col-lg-4 col-form-label mb-0">Rate 7</label>
+                <div class="col-lg-8">
+                  <input type="number" class="form-control" formControlName="rate7" />
+                </div>
+              </div>
+              <div class="form-group row align-items-center">
+                <label class="col-lg-4 col-form-label mb-0">Old Rate</label>
+                <div class="col-lg-8">
+                  <input type="number" class="form-control" formControlName="oldRate" />
+                </div>
+              </div>
+              <div class="form-group row align-items-center">
+                <label class="col-lg-4 col-form-label mb-0">Purchase Rate 1</label>
+                <div class="col-lg-8">
+                  <input type="number" class="form-control" formControlName="purchaseRate1" />
+                </div>
+              </div>
+              <div class="form-group row align-items-center">
+                <label class="col-lg-4 col-form-label mb-0">Purchase Rate 2</label>
+                <div class="col-lg-8">
+                  <input type="number" class="form-control" formControlName="purchaseRate2" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

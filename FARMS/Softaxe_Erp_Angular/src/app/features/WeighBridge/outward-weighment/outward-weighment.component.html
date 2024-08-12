@@ -1,0 +1,324 @@
+<section>
+    
+    <div class="AddPage" style="padding: 6px;" [formGroup]="WeighBridgeForm">
+  
+      <div class="card">
+        <!-- <div class="page-title text-center"><h4>Inward Weighment</h4></div> -->
+
+        <div class="" style="padding: 6px;">
+          <div class="d-flex justify-content-between" style="height: 110px;">
+            <div style="width: 20%;">
+              <div class="card" style="height: 100%; margin-bottom: 0px !important;">
+                <div class="row align-items-center mb-2">
+
+                  <div class="col-lg-12 col-md-5 col-sm-12" style=" padding-left: 1rem; padding-right: 1rem; padding-top: 4px;">
+                    <div class="position-relative w-100 me-2">
+                      <ng-select class="bold-placeholder" placeholder="Voucher Type" bindLabel="name" bindValue="id"
+                        formControlName="Bag1" [dropdownPosition]="'bottom'">
+                        <ng-option value="SP">SP</ng-option>
+                      </ng-select>
+                    </div>
+                    </div>
+                    
+
+                      <div class="col-lg-12 col-md-12 col-sm-12" style=" padding-left: 1rem; padding-right: 1rem; padding-top: 4px;">
+                        <div class="position-relative w-100 me-2">
+                          <ng-select class="bold-placeholder" placeholder="DO. Type" bindLabel="name" bindValue="id"
+                            formControlName="Bag2" [dropdownPosition]="'bottom'">
+                            <ng-option value="test">D0-SALES</ng-option>
+                          </ng-select>
+                        </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12" style=" padding-left: 1rem; padding-right: 1rem; padding-top: 4px;">
+                          <div class="position-relative w-100 me-2 form-group mb-0">
+                            <div class="input-groupicon">
+                              <input type="text" class="form-control" formControlName="Date" placeholder="DD/MM/YYYY" matInput
+                                    [matDatepicker]="datepicker"  (click)="datepicker.open()" />
+                                  <mat-datepicker #datepicker ></mat-datepicker>
+                              <div class="addonset">
+                                <img src="/assets/img/icons/calendars.svg" alt="img">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                            
+
+                              <!-- <div class="col-lg-12 col-md-12 col-sm-12" style=" padding-left: 1rem; padding-right: 1rem; padding-top: 4px;">
+                                <input class="form-check-input mr-1 disabled" formControlName="minWtFinal" type="checkbox" checked>
+                                <label class="form-check-label">Minimum Weight as Final </label>
+                                </div> -->
+                              
+                </div>
+              </div>
+            </div>
+
+            <div class="w-50" style="padding-left: 8px; padding-right: 8px;">
+              <div class="card" style="height: 100%; margin-bottom: 0px;background-color: lawngreen;">
+              <input class="text-center" [readonly]="isManualAllow" (input)="CalculateWeighment();" type="number" formControlName="weight" style="font-size: 70px; border: 0; background-color: lawngreen;" value="0">
+              </div>
+            </div>
+ 
+            <div style="width: 30%;">
+              <div class="card" style="height: 100%; margin-bottom: 0px !important;">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row align-items-center" style="margin-bottom: 8px;">
+
+            <!-- <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group d-flex align-items-end pt-2" style="margin-bottom:0px!important;">
+                <div class="d-flex align-items-center me-4">
+                  <input type="radio" id="unapproved" value="unapproved" class="me-1" name="approvalStatus">
+                  <label for="unapproved" class="mb-0 pt-1">Weighbridge 1</label>
+                </div>
+                <div class="d-flex align-items-center">
+                  <input type="radio" id="approved" value="approved" class="me-1" name="approvalStatus">
+                  <label for="approved" class="mb-0 pt-1">Weighbridge 2</label>
+                </div>
+                
+              </div>
+            </div> -->
+
+
+            <div class="col-lg-2 col-md-2 col-sm-12" style=" padding-left: 1rem; padding-right: 1rem; padding-top: 4px;">
+              <input class="form-check-input mr-1" formControlName="manualWt" type="checkbox" checked (change)="toggleManualAllow($event)">
+              <label class="form-check-label">Manual Weight </label>
+              </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-12" style="padding-left: 50px;">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Gate Pass No</label>
+                <input type="text" formControlName="gpNo" readonly  class="form-control me-2">
+              </div>
+            </div>
+
+            
+            <div class="col-lg-2 col-md-1 col-sm-12" style="width: 160px; padding-right: 0;padding-left: 0;">
+              <div class="position-relative w-100 me-2 pt-1">
+                <input type="text" formControlName="Vehicleno" [readonly]="isDisabled" class="form-control me-2" style="height: 35px !important; margin-top: 4px; text-align:center; background: darkturquoise;font-size:18px !important">
+              </div>
+            </div>
+            
+            <div class="col-lg-2 col-md-2 col-sm-12">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Expected Weight</label>
+                <input type="text" formControlName="expWt" readonly  class="form-control me-2">
+                <input type="text" formControlName="vchNo" class="form-control me-2 d-none">
+                <input type="text" formControlName="vchDate" class="form-control me-2 d-none">
+                <input type="text" formControlName="firstWeight" class="form-control me-2 d-none">
+              </div>
+            </div>
+
+
+            <div class="col-lg-2 col-md-2 col-sm-12" style="padding-right: 30px;">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Date</label>
+                <input type="text" formControlName="CurrentDate" readonly  class="form-control me-2">
+              </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-12">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Time</label>
+                <input type="text" formControlName="time" readonly class="form-control me-2">
+              </div>
+            </div>
+
+            
+            
+  
+          </div>
+
+          <div class=" d-flex d-flex justify-content-between">
+
+            <div class="card" style="width: 20%; height: 350px; margin-bottom: 10px;margin-right: 10px;">
+              <h5 class="text-center">[ First Weight ]</h5>
+              <div class="col-lg-12 px-1" style="padding-bottom: 6px;">
+                <div class="position-relative w-100 me-2">
+                  <input type="search" id="txtSearch" class="form-control me-2"
+                   placeholder="Search Here" (input)="searchFirstWtGrid($event)">
+                </div>
+              </div>
+              <div class="table-responsive first-weight" style="height: 100%;">
+                  <table class="table table-hover" id="tbl-print">
+                    <thead style="font-size: 10px;">
+                      <tr>
+                        <th class="text-center">Vch No.</th>
+                        <th class="text-center">Veh No</th>
+                        <th class="text-center">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of FirstWeightList" (click)="rowHighLight($event)" (dblclick)="getFirstWeightDetail(data.VchNo)">
+        
+                        <td class="text-center">{{ data.VchNo }}</td>
+                        <td class="text-center">{{ data.VehicleNo }}</td>
+                        <td class="text-center">{{ data.VchDate }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+
+          <div class="card" style="width: 60%; padding: 0px 8px 0px 24px; margin-bottom: 10px;">
+             
+
+              <div class="row align-items-center mb-2">
+
+                <div class="d-flex justify-content-between">
+
+                  <div class="row w-100">
+
+
+                    <div class="col-lg-8 col-md-8 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Party Main</label>
+                        <input type="text" formControlName="partyMain" readonly class="form-control me-2">
+                      </div>
+                      </div>
+                      
+                       
+                      <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Allowed Weight Difference</label>
+                          <input type="text" formControlName="allWtDiff" readonly  class="form-control me-2">
+                        </div>
+                      </div>
+                      
+                      <div class="col-lg-8 col-md-8 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Party Name</label>
+                          <input type="text" formControlName="partyName" readonly class="form-control me-2">
+                        </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Current Weight Difference</label>
+                            <input [ngClass]="(isBig == false) ? '' : 'red'" type="text" formControlName="CurrWtDiff" readonly  class="form-control me-2">
+                          </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Main Item Name</label>
+                            <input type="text" formControlName="MainItemName" readonly class="form-control me-2">
+                          </div>
+                          </div>
+
+                             
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Bags</label>
+                            <ng-select class="bold-placeholder disabled" placeholder="-- Bags Type --" bindLabel="name" bindValue="id"
+                              formControlName="DrpBag" [dropdownPosition]="'bottom'" readonly>
+                              <ng-option value="W">W</ng-option>
+                              <ng-option value="O">O</ng-option>
+                            </ng-select>
+                          </div>
+                          </div> -->
+    
+                          <div class="col-lg-8 col-md-8 col-sm-12">
+                            <div class="position-relative w-100 me-2">
+                              <label class="fw-bold"> Item Name</label>
+                              <input type="text" formControlName="ItemName" readonly class="form-control me-2">
+                            </div>
+                            </div>
+    
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Party Bags</label>
+                            <input type="text" formControlName="partyBags"readonly class="form-control me-2">
+                          </div>
+                        </div>
+    
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Tare Weight</label>
+                            <input type="text" formControlName="tareWeight" readonly class="form-control me-2">
+                          </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Net Weight</label>
+                            <input type="text" formControlName="netWeight" readonly class="form-control me-2">
+                          </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="position-relative w-100 me-2">
+                              <label class="fw-bold">Stock Weight</label>
+                              <input type="text" formControlName="stockWeight" readonly class="form-control me-2">
+                            </div>
+                          </div>
+    
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="position-relative w-100 me-2">
+                              <label class="fw-bold">Freight</label>
+                              <input type="text" formControlName="freight"  readonly class="form-control me-2">
+                            </div>
+                          </div>
+                              
+                  </div>
+                </div>
+
+                </div>
+          </div>
+        
+
+        <div class="card" style="width: 20%;margin-bottom: 10px;margin-left: 10px;">
+          <h5 class="text-center">[ Second Weight ]</h5>
+          <div class="col-lg-12 px-1" style="padding-bottom: 6px;">
+            <div class="position-relative w-100 me-2">
+              <input type="search" id="txtSearch" class="form-control me-2"
+               placeholder="Search Here" (input)="searchSecondWtGrid($event)">
+            </div>
+          </div>
+          
+          <div class="table-responsive second-weight" style="height: 100%;">
+              <table class="table table-hover" id="tbl-print">
+                <thead style="font-size: 10px;">
+                  <tr>
+                    <th class="text-center">Vch No.</th>
+                    <th class="text-center">Veh No</th>
+                    <th class="text-center">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of SecondWeightList" (click)="rowHighLight($event)" (dblclick)="getSecondWeightDetail(data.VchNo)">
+    
+                    <td class="text-center">{{ data.VchNo }}</td>
+                        <td class="text-center">{{ data.VehicleNo }}</td>
+                        <td class="text-center">{{ data.VchDate }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+          </div>
+          
+
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+  
+              <button type="submit" class="btn btn-success btn-sm me-1"  (click)="onClickSave()"
+                >Save</button>
+              <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+              <button class="btn btn-primary btn-sm ml-10"  [hidden]="!isFirstWeight" (click)="LoadingSlip()">Loading Slip</button>
+              <button class="btn btn-primary btn-sm ml-10" [hidden]="!isSecondWeight" (click)="DeliveryChallan()">Delivery Challan</button>
+              <button class="btn btn-primary btn-sm ml-10" [hidden]="!isSecondWeight" (click)="GatePassOutward()">Gate Pass Outward</button>
+              <button class="btn btn-primary btn-sm ml-10" [hidden]="!isSecondWeight" (click)="SecondWeight()">Second Weight</button>
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  

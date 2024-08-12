@@ -1,0 +1,213 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+@{
+    ViewData["Title"] = "Order Invoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content ListPage pt-1">
+
+    <div class="page-header">
+        <div class="page-btn ms-auto">
+            <div class="wordset newwordset">
+                <ul>
+                    @*<li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="convertWord" data-bs-original-title="Word">
+                            <i class="far fa-file-word" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>*@
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="goBackPage" data-bs-original-title="Go Back">
+                            <i class="fas fa-arrow-circle-left" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="pdfPrint" data-bs-original-title="PDF">
+                            <i class="far fa-file-pdf" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                   @* <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="convertExcel" data-bs-original-title="Excel">
+                            <i class="far fa-file-excel" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="convertCsv" data-bs-original-title="CSV">
+                            <i class="fa fa-file-csv" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #000000;"></i>
+                        </a>
+                    </li>*@
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="printInvoice">
+        <div class="row pt-5 pb-3 px-3 bg-white">
+            <div class="col-lg-6 col-md-6 col-sm-6 d-flex">
+                <div class="inv-logo">
+                    <img src="/img/favicon.png" style="width:72px;" />
+                </div>
+
+                <div class="ms-3">
+                    <p class="mb-0 fs-5">Media Outdoor</p>
+                    <p class="mb-2 fs-6">Waldeck Pyrmontlaan 20 – 3LA Amsterdam</p>
+                    <p class="mb-0 fs-6">06-50203599</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="text-center ms-5">
+                    <p class="mb-3 fs-4">@Localizer["Invoice"]</p>
+                    <p class="mb-1 fs-6" id="invDate"></p>`
+                    <p class="fs-6" id="orderNo">@ViewBag.OrderNoGet</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row py-3 px-3 bg-white">
+            <h4 class="fw-bold">@Localizer["BillTo"]</h4>
+            <p class="mb-0 fs-6" id="cName">Mr. Amaar</p>
+            <p class="mb-0 fs-6 d-none" id="cCompany">Microsoft Technologies</p>
+            <p class="mb-0 fs-6" id="cAddress">Gari Show Main Road Lahore</p>
+            <p class="mb-0 fs-6" id="cContact">052651650651</p>
+            <p class="mb-0 fs-6" id="cEmail">amaar.softaxe798@gmail.com</p>
+        </div>
+
+        <div class="row py-5 px-3 bg-white">
+            <div class="table-responsive">
+                <table class="table table-striped" id="tbl-print">
+
+                    <thead>
+                        <tr>
+                            <th class="ps-2 w-30imp">Station</th>
+                            <th class="pe-3 w-25imp">@Localizer["Screen"]</th>
+                            <th class="pe-3 w-15imp">@Localizer["Size"]</th>
+                            <th class="pe-2 w-10imp text-end">@Localizer["Rate"]</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="viewOrdersList">
+                        <tr>
+                            <td class="ps-2">Rokin, Amsterdam</td>
+                            <td class="">001</td>
+                            <td class="">Single</td>
+                            <td class="text-end"><span class="rate">65000.00</span>&nbsp;€</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row pb-4 px-3 bg-white text-end pe-4">
+            <strong class="fs-6 pe-2">@Localizer["Total"]: <span id="totalAmount"></span>&nbsp;€</strong>
+        </div>
+
+        <div class="row bg-white text-center">
+            <p class="fs-6" style="margin-top:100px;">@Localizer["ThankYouLine"]</p>
+        </div>
+
+
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+
+        $(function(){
+            GetInvoice();
+            CalculationTotal();
+        });
+
+        function GetInvoice(){
+
+            var orderNo = $("#orderNo").text();
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Invoices/ViewOrderInvoice/",
+                    data: { orderNo: orderNo },
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#viewOrdersList").empty();
+
+                        $.each(data, function (i, item) {
+
+                            var date = moment(item.date).format("DD MMM YYYY");
+
+                            $("#invDate").text(date);
+                            $("#cName").text(item.customerName);
+                            $("#cCompany").text(item.customerName);
+                            $("#cAddress").text(item.customerAddress);
+                            $("#cContact").text(item.customerContact);
+                            $("#cEmail").text(item.customerEmail);
+                            
+                            $("#viewOrdersList").append(`
+                            <tr>
+                                <td class="ps-2">${item.stationName}</td>
+                                <td class="">${item.screenName}</td>
+                                <td class="">${item.size}</td>
+                                <td class="text-end"><span class="rate">${parseFloat(item.rate).toFixed(2)}</span>&nbsp;€</td>
+                            </tr>
+                            `);
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        function CalculationTotal(){
+
+            var totalSum = 0;
+            $("#viewOrdersList .rate").each(function () {
+                totalSum += parseFloat($(this).text());
+            });
+
+            $("#totalAmount").text(parseFloat(totalSum).toFixed(2))
+        }
+
+        $('#pdfPrint').click(function () {
+
+            var cloneTable = $("#printInvoice").clone();
+            cloneTable.find("table").find('th').css({ 'background': 'white', 'color': '#212529' });
+
+            if (cloneTable.find("#viewOrdersList tr").length < 14) {
+
+                while (cloneTable.find("#viewOrdersList tr").length < 14) {
+                    cloneTable.find("#viewOrdersList").append(`<tr><td style="color:transparent;">.</td><td></td><td></td><td></td></tr>`);
+                }
+
+            }
+
+            $(cloneTable).printThis();
+        });
+
+        $('#goBackPage').click(function () {
+
+            window.history.back();
+
+        });
+
+    </script>
+
+}
+

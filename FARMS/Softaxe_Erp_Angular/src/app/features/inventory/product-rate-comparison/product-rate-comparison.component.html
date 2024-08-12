@@ -1,0 +1,102 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Product Rate Comparison</h4>
+      <h6 id="rateComp"></h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul></ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder mb-1">Select Category</label>
+            <div class="position-relative w-100">
+              <ng-select
+                [items]="category"
+                bindLabel="name"
+                bindValue="id"
+                placeholder="---Select Category---"
+                [(ngModel)]="categoryId"
+                (change)="onChangeCategory()"
+                (clear)="onClearCategory()"
+                [dropdownPosition]="'bottom'"
+              ></ng-select>
+            </div>
+          </div>
+          <div class="mb-2">
+            <label class="fw-bolder mb-1">Select Brand</label>
+            <div class="position-relative w-100">
+              <ng-select
+                [items]="brand"
+                bindLabel="name"
+                bindValue="id"
+                placeholder="---Select Brand---"
+                [(ngModel)]="brandId"
+                [dropdownPosition]="'bottom'"
+              ></ng-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="form-group">
+                <label>From Date</label>
+                <div class="input-groupicon">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="DD/MM/YYYY"
+                    matInput
+                    [matDatepicker]="datepicker"
+                    [(ngModel)]="fromDate"
+                    (click)="datepicker.open()"
+                  />
+                  <mat-datepicker
+                    #datepicker
+                    [startAt]="fromDate"
+                  ></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="form-group">
+                <label>To Date</label>
+                <div class="input-groupicon">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="DD/MM/YYYY"
+                    matInput
+                    [matDatepicker]="datepicker"
+                    [(ngModel)]="toDate"
+                    (click)="datepicker.open()"
+                  />
+                  <mat-datepicker
+                    #datepicker
+                    [startAt]="toDate"
+                  ></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+              <button class="btn btn-primary btn-sm" id="btnView" (click)="onViewReport()">View</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

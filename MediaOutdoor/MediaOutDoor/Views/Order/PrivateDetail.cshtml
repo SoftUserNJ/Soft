@@ -1,0 +1,138 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer
+
+@model IEnumerable<MediaOutDoor.Models.TblContentDetail>
+
+@{
+    ViewData["Title"] = "Private Content";
+}
+<style>
+    .card {
+        background-color: #f3f2ee;
+        border-radius: 8px;
+    }
+
+    .box-shadow {
+        box-shadow: 1px 1px 11px 1px #006837;
+    }
+</style>
+
+<div class="container row mx-auto mt-5">
+
+    @foreach (var cont in Model)
+    {
+        Random rand = new Random();
+        string SingleImage = @cont.SingleImage + "?random=" + rand.Next(100000, 999999);
+        string DoubleImage = @cont.DoubleImage + "?random=" + rand.Next(100000, 999999);
+        string TrippleImage = @cont.TrippleImage + "?random=" + rand.Next(100000, 999999);
+
+
+        <div class="col-md-4 col-lg-4 col-sm-12 mb-3">
+            <div class="card box-shadow">
+                <div class="card-body">
+
+                    <div style="width:auto; max-height:308px; height:308px;" data-toggle="modal" data-target="#allImages">
+                        <img class="singleImg" src="@SingleImage" style="width:100%; height:100%;" />
+                        <input type="hidden" class="doubleImg" value="@DoubleImage">
+                        <input type="hidden" class="trippleImg" value="@TrippleImage">
+                    </div>
+
+                    <div class="d-flex align-items-center pt-4">
+                        <a asp-controller="mod" asp-action="index" asp-fragment="mapSection" class="btn btn-info">@Localizer["ToProcess"] →</a>
+                        <div class="ml-auto font-weight-bold"> @Localizer["From"] €<span>@ViewBag.b2cRate</span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+
+<div id="allImages" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="max-width:1200px;">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="card mb-0">
+                    <div class="card-body p-3">
+                        <div class="">
+                            <div class="d-flex justify-content-end" style="margin-top: 5px; margin-right: 5px;">
+                                <button type="button" class="btn-close1 bg-dark text-white" data-dismiss="modal">x</button>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+
+                                <div style="width:199px">
+                                    <h5 class="text-dark">@Localizer["SingleSizeView"]</h5>
+                                    <div style="height:339px; width:199px">
+                                        <img src="" id="singleImgView" style="height:100%; width:100%;">
+                                    </div>
+                                </div>
+
+                                <div style="width:387px">
+                                    <h5 class="text-dark">@Localizer["DoubleSizeView"]</h5>
+                                    <div style="height:310px; width:387px">
+                                        <img src="" id="doubleImgView" style="height:100%; width:100%;">
+                                    </div>
+                                </div>
+
+                                <div style="width:566px">
+                                    <h5 class="text-dark">@Localizer["TrippleSizeView"]</h5>
+                                    <div style="height:289px; width:566px">
+                                        <img src="" id="trippleImgView" style="height:100%; width:100%;">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts{
+
+    <script>
+
+        $('body').on('click', ".singleImg", function(){
+
+            var singleImg = $(this).closest('div').find('.singleImg').attr('src');
+            var doubleImg = $(this).closest('div').find('.doubleImg').val();
+            var trippleImg = $(this).closest('div').find('.trippleImg').val();
+
+
+            $("#singleImgView").attr('src', singleImg);
+            $("#doubleImgView").attr('src', doubleImg);
+            $("#trippleImgView").attr('src', trippleImg);
+
+        });
+
+        $('body').on('click', ".btn-info", function () { debugger
+            var singleImg = $(this).closest('.card').find('.singleImg').attr('src');
+            var doubleImg = $(this).closest('.card').find('.doubleImg').val();
+            var trippleImg = $(this).closest('.card').find('.trippleImg').val();
+
+            // Create an object to store the image sources
+            var imageSources = {
+                singleImg: singleImg,
+                doubleImg: doubleImg,
+                trippleImg: trippleImg
+            };
+
+            // Convert the object to a JSON string
+            var imageSourcesJSON = JSON.stringify(imageSources);
+
+            // Set the cookie with the image sources
+            setCookie("imageSources", imageSourcesJSON, 1);
+
+            // Now the 'imageSources' cookie contains the image source data
+        });
+
+
+    </script>
+}

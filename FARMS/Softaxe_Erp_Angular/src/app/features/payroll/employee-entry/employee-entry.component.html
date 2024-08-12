@@ -1,0 +1,486 @@
+<section *ngIf="isShowPage">
+    <div class="content ListPage">
+      <div class="page-header mb-4">
+        <div class="page-title">
+          <h4>Employee Entry</h4>
+          <h6>Add/Update Employee data</h6>
+        </div>
+        <div class="page-btn">
+          <div class="wordset newwordset">
+            <ul>
+              <li>
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" id="pdfPrint">
+                  <img src="assets/img/icons/pdf.svg" alt="img" />
+                </a>
+              </li>
+              <li>
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel" id="convertExel">
+                  <img src="assets/img/icons/excel.svg" alt="img" />
+                </a>
+              </li>
+              <li>
+                <a href="/Home/Index" role="button">
+                  <i class="fas fa-times-circle fs-22" style="color: #ff0000"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row align-items-center mb-2">
+            <div class="col-lg-9 d-flex">
+              <div class="col-lg-6 d-flex">
+              <div class="search-set">
+                <div class="search-path">
+                  <a class="btn btn-filter" id="filter_search">
+                    <img src="/assets/img/icons/filter.svg" alt="img">
+                    <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+                  </a>
+                </div>
+              </div>
+              <input (input)="searchGrid($event)" class="form-control me-2"  type="search" id="txtSearch" placeholder="Search Employee" />
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+              <div class="position-relative w-100 me-2">
+                <ng-select class="bold-placeholder" [items]="LocationList" placeholder="--- Select Location ---"
+                 bindLabel="CostcentreName" bindValue="CostcentreId"
+                  [dropdownPosition]="'bottom'" (change)="searchEmpList($event);" [(ngModel)]="selectedLocation">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+         
+
+            <div class="col-lg-3 col-md-3 ps-0">
+              <div class="wordset ms-5">
+                <p href="javascript:void(0);" class="btn btn-addednew btnAdd" (click)="togglePages()">
+                  <img src="/assets/img/icons/plus.svg" alt="img" class="me-4">Add New
+                </p>
+              </div>
+            </div>
+          </div>
+  
+          <div class="table-responsive" style="height: 380px">
+            <table class="table" id="tbl-print">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Employee Name</th>
+                  <th>Father Name</th>
+                  <th>Email</th>
+                  <th>Location</th>
+                  <th>Department</th>
+                  <th>Mobile</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody #EmployeeLists>
+                <tr *ngFor="let item of FilteredEmployeeList">
+                  <td class="limited-text code" title="{{item.empy_id}}">{{ item.empy_id }}</td>
+                  <td class="productimgname">
+                    <span class="product-img">
+                      <img src="{{basePath + item.EmpPhoto + query}}" alt="product">
+                    </span>
+                    <p title="{{item.Name}}"> {{ item.Name }}</p>
+                  </td>
+                  <td class="limited-text descrip" title="{{item.fname}}">{{ item.fname }}</td>
+                  <td class="limited-text pcs" title="{{item.email}}">{{ item.email }}</td>
+                  <td class="limited-text uom" title="{{item.LocatioName}}">{{ item.LocatioName }}</td>
+                  <td class="limited-text category" title="{{item.Department}}">{{ item.Department }}</td>
+                  <td class="limited-text brand" title="{{item.mob}}">{{ item.mob }}</td>
+                  <td class="text-center">
+                    <span class="me-3" style="cursor: pointer">
+                      <img src="/assets/img/icons/printer.svg" alt="img" (click)="printReport(item)">
+                    </span>
+                    <!-- Edit Button -->
+                    <span (click)="editEmployee(item.empy_id)" class="me-3 btnEditProduct" style="cursor: pointer">
+                      <i class="fas fa-edit"></i>
+                    </span>
+                    <!-- Delete Button  -->
+                    <span (click)="deleteEmployee(item.empy_id)" class="confirm-text btnDelLevel1" style="cursor: pointer">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section *ngIf="!isShowPage">
+    <div class="content AddPage">
+      <div class="page-header">
+        <div class="page-title">
+          <h4>Employee Entry</h4>
+        </div>
+        <div class="page-btn">
+          <a (click)="togglePages()" class="btn btn-added btnList">
+            <i class="fa me-2 fa-th-list"></i>
+            Home
+          </a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-8 col-sm-6" [formGroup]="EmployeeForm" [ngClass]="{ 'disabled': isDisabled }">
+              <div class="row activeForm">
+
+                <div class="col-lg-2 col-sm-2 col-12">
+                  <div class="form-group">
+                    <label>E-Id</label>
+                    <input class="form-control"  readonly type="text" formControlName="EmpyId" />
+                  </div>
+                </div>
+
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Employee Name</label>
+                    <input class="form-control"  type="text" formControlName="name" />
+                  </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-4 col-sm-4" style="padding-top: 3px;">
+                  <div class="position-relative w-100 me-2">
+                    <label class="fw-bold">Location</label>
+                    <ng-select class="bold-placeholder" [items]="LocationList" placeholder="--- Select Location ---"
+                     bindLabel="CostcentreName" bindValue="CostcentreId"
+                       formControlName="location"
+                      [dropdownPosition]="'bottom'">
+                    </ng-select>
+                  </div>
+                </div>
+                
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Father Name</label>
+                    <input class="form-control"  type="text" formControlName="Fname" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Father CNIC</label>
+                    <input class="form-control"  type="text" formControlName="Fcnic" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Mother Name</label>
+                    <input class="form-control"  type="text" formControlName="motherName" />
+                  </div>
+                </div>
+                <!-- Minimum Sale Rate -->
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Mother CNIC</label>
+                    <input class="form-control"  type="number" formControlName="motherCNIC" />
+                  </div>
+                </div>
+                <!-- Retail Price -->
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Wife Name</label>
+                    <input class="form-control"  type="text" formControlName="wifeName" />
+                  </div>
+                </div>
+                <!-- Discount % -->
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Wife CNIC</label>
+                    <input class="form-control" type="number" formControlName="wifeCNIC" />
+                  </div>
+                </div>
+
+                <div class="col-lg-12 col-sm-12 col-12">
+                  <div class="form-group">
+                    <label>Employee Address</label>
+                    <input class="form-control"  type="text" formControlName="Address1" />
+                  </div>
+                </div>
+                <!-- Made In -->
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="position-relative w-100 me-2">
+                    <label class="fw-bold">Department</label>
+                    <ng-select class="bold-placeholder" [items]="DepartmentList" placeholder="--- Select Department ---" bindLabel="Department" bindValue="Id"
+                      formControlName="DeptId"
+                      [dropdownPosition]="'bottom'">
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Blood Group</label>
+                    <input class="form-control"  type="text" formControlName="bloodGroup" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>City</label>
+                    <input class="form-control"  type="text" formControlName="city" />
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Phone  Number 1#</label>
+                    <input class="form-control"  type="number" formControlName="Ph1" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12 pt-2">
+                  <div class="form-group">
+                    <label>Phone Number 2 #</label>
+                    <input class="form-control"  type="number" formControlName="Ph2" />
+                  </div>
+                </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 pt-2">
+                    <div class="position-relative w-100 me-2 form-group mb-0">
+                      <label class="fw-bold" style="margin-bottom: 0px !important;">Date of Birth</label>
+                      <div class="input-groupicon">
+                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker1"
+                          (click)="datepicker1.open()" formControlName="BirthDate" />
+                        <mat-datepicker #datepicker1></mat-datepicker>
+                        <div class="addonset">
+                          <img src="/assets/img/icons/calendars.svg" alt="img">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-sm-6 pt-2">
+                    <div class="position-relative w-100 me-2 form-group mb-0">
+                      <label class="fw-bold" style="margin-bottom: 0px !important;">Date of Join</label>
+                      <div class="input-groupicon">
+                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker2"
+                          (click)="datepicker2.open()" formControlName="AppDate" />
+                        <mat-datepicker #datepicker2></mat-datepicker>
+                        <div class="addonset">
+                          <img src="/assets/img/icons/calendars.svg" alt="img">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Email Address</label>
+                    <input class="form-control"  type="text" formControlName="email" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Mobile Number #</label>
+                    <input class="form-control"  type="number" formControlName="mob" />
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="position-relative w-100 me-2">
+                    <label class="fw-bold">Gender</label>
+                    <ng-select class="bold-placeholder" placeholder="--- Select Gender ---" bindLabel="name" bindValue="id"
+                      formControlName="gender" [dropdownPosition]="'bottom'">
+                      <ng-option value="Male">Male</ng-option>
+                      <ng-option value="Female">Female</ng-option>
+                    </ng-select>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>N.T.N #</label>
+                    <input class="form-control"  type="text" formControlName="ntn" />
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>ThumbId</label>
+                    <input class="form-control" type="text" formControlName="Tumbid" />
+                  </div>
+                </div>
+  
+                <div class="col-lg-6 col-md-6 col-sm-6 pt-2">
+                  <div class="position-relative w-100 me-2">
+                    <label class="fw-bold">Shift</label>
+                    <ng-select class="bold-placeholder" [items]="ShiftList" placeholder="--- Select Shift ---" bindLabel="Shift" bindValue="Id"
+                       formControlName="shift"
+                      [dropdownPosition]="'bottom'">
+                    </ng-select>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="position-relative w-100 me-2">
+                    <label class="fw-bold">Martial Status</label>
+                    <ng-select class="bold-placeholder" placeholder="--- Select Martial Status ---" bindLabel="name" bindValue="id"
+                      formControlName="Marital" [dropdownPosition]="'bottom'">
+                      <ng-option value="Single">Single</ng-option>
+                      <ng-option value="Married">Married</ng-option>
+                    </ng-select>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>N.I.C #</label>
+                    <input class="form-control"  type="text" formControlName="nic" />
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Account Number #</label>
+                    <input class="form-control"  type="text" formControlName="Acctno" />
+                  </div>
+                </div>
+                
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>EOBI #</label>
+                    <input class="form-control"  type="text" formControlName="Eobino" />
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Social #</label>
+                    <input class="form-control"  type="number" formControlName="Ssno" />
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Remarks</label>
+                    <input class="form-control"  type="text" formControlName="remarks" />
+                  </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="mb-2">
+                    <label class="fw-bolder">Active</label>
+                    <div class="row">
+                      <div class="col-lg-12 col-sm-12 col-12">
+                        <ng-select class="bold-placeholder" placeholder="--- Select Status ---"
+                        [items]="StatusList" 
+                        bindLabel="Description"
+                        bindValue="Description"
+                          formControlName="active1"
+                          [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-3 col-12 pt-4">
+                  <input class="form-check-input "  formControlName="ot" type="checkbox" checked>
+                <label class="form-check-label pl-10 ">Over Time</label>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-2">
+                    <label class="fw-bolder">Leave type</label>
+                    <div class="row">
+                      <div class="col-lg-12 col-sm-12 col-12">
+                        <ng-select class="bold-placeholder" placeholder="--- Select Leave type---"
+                        [items]="LeaveTypeList"
+                        bindLabel="Name"
+                        bindValue="HrSetupId"
+                          formControlName="leaveType"
+                          [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-5 col-sm-5 col-12">
+                  <div class="form-group">
+                    <label>No of Days</label>
+                    <input class="form-control" type="number" formControlName="LvAmnt" />
+                  </div>
+                </div>
+
+                <div class="col-lg-1 col-md-1 col-sm-12">
+                  <button class="btn btn-primary btn-sm me-1 mt-4" (click)="onAdd()"> {{btnAdd}} </button>
+                  </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 mt-3 mb-3">
+
+                <div class="table-responsive" style="height: 100px">
+                    <table class="table table-hover" id="tbl-print">
+                      <thead>
+                        <tr>
+                          <th>Leave Id</th>
+                          <th>Leave Name</th>
+                          <th>Leave Allowed</th>
+                          <th class="text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of LeavesEntryList" (click)="rowHighLight($event)">
+          
+                          <td class="d-none">{{ data.sno }}</td>
+                          <td class="">{{ data.leaveType }}</td>
+                          <td class="">{{ data.leaveTypeName }}</td>
+                          <td class="">{{ data.LvAmnt }}</td>
+                          <td class="text-center">
+                            <!-- Edit Button -->
+                            <span (click)="editItem(data)" class="me-3 btnEditItem" style="cursor: pointer">
+                              <i class="fas fa-edit"></i>
+                            </span>
+                            <!-- Delete Button  -->
+                            <span (click)="deleteItem(data)" class="confirm-text btnDelItem" style="cursor: pointer">
+                              <i class="fas fa-trash"></i>
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+
+            </div>
+  
+            <div class="col-lg-4 col-sm-6">
+              <div class="commom-img">
+                <img src="{{ selectedImage }}" alt="img" id="showImage" />
+              </div>
+              <div class="form-group">
+                <label> Employee Profile Photo</label>
+                <input class="form-control" type="file" [(ngModel)]="file" accept="image/jpg, image/jpeg, image/png, image/webp" (change)="onFileSelected($event)" />
+              </div>
+
+                      <!-- <div class="upload-container">
+                        <label for="file-upload" class="upload-label"> Upload Your Documents</label>
+                        <input type="file" id="file-upload" class="upload-input"  [(ngModel)]="file" (change)="onDocumentSelected($event)" />
+                        <p class="file-name">{{ document ? document.name : 'No file chosen' }}</p>
+                    </div>
+
+                    <div class="form-group doc-section"[hidden]="!isShowDocument" >
+                      <a class="doc-link" href="{{ selectedDocument }}"> <i class="fa-solid fa-file"></i>View Your Document</a>
+                    </div> -->
+            </div>
+            <div class="col-lg-12 col-sm-12">
+              <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow" (click)="onClickSave()">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">
+                Refresh
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,154 @@
+<div class="content ListPage" *ngIf="isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Company Group List</h4>
+      <h6>Manage your Company Group</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Products', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Products', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>  
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="table-top table-topm mb-2">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="assets/img/icons/filter.svg" alt="img">
+              <span><img src="assets/img/icons/closes.svg" alt="img"></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <input type="search" (input)="onSearchCompany($event)" />
+          </div>
+        </div>
+        <div class="wordset">
+          <a class="btn btn-addednew btnAdd" (click)=" togglePages()">
+            <i data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"></i> Add New
+          </a>
+        </div>
+      </div>
+      <div class="table-responsive mt-1" style="height:360px;">
+        <table class="table" id="export">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Group</th>
+              <th>Address</th>
+              <th>City</th>
+              <th>NTN</th>
+              <th>Contact</th>
+              <th>Email</th>
+              <th class="text-center noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody #companiesList>
+            <tr *ngFor="let data of companyList">
+              <td>{{data.GrpId}}</td>
+              <td class="limited-text" title="{{data.CompName}}" >{{data.CompName}}</td>
+              <td class="limited-text" title="{{data.CompNaCompAddme}}">{{data.CompAdd}}</td>
+              <td class="limited-text" title="{{data.City}}">{{data.City}}</td>
+              <td class="limited-text" title="{{data.NTN}}">{{data.NTN}}</td>
+              <td class="limited-text" title="{{data.Contact}}">{{data.Contact}}</td>
+              <td class="limited-text" title="{{data.Email}}">{{data.Email}}</td>
+              <td class="text-center noPrint">
+                <span class="me-3" (click)="editCompany(data)">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span class="confirm-text" (click)="deleteCompany(data.GrpId)">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content AddPage" *ngIf="!isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Company Group Management</h4>
+      <h6>Add/Update Company Group</h6>
+    </div>
+    <div class="page-btn">
+      <a class="btn btn-added btnList" (click)="togglePages()">
+        <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+          aria-label="fa fa-th-list"></i> Home
+      </a>
+    </div>
+  </div>
+  <form action="" [formGroup]="companyForm">
+    <div class="card">
+      <div class="card-body">
+        <div class="row" [ngClass]="{ 'disabled': isDisabled }">
+          <div class="col-lg-6 col-sm-6 col-12">
+            <div class="form-group">
+              <label>Group Name</label>
+              <input type="text" formControlName="GroupName">
+              <input type="hidden" formControlName="GrpId">
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-12">
+            <div class="form-group">
+              <label>Address</label>
+              <input type="text" formControlName="Address">
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-12">
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" formControlName="City">
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-12">
+            <div class="form-group">
+              <label>NTN</label>
+              <input type="text" formControlName="NTN">
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-12">
+            <div class="form-group">
+              <label>Contact</label>
+              <input type="text" formControlName="Contact">
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-12">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="text" formControlName="Email">
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-12">
+            <div class="form-group d-flex align-items-center">
+              <input type="checkbox" class="me-1" formControlName="IsMulti" id="multi">
+              <label style="margin-bottom: 0!important;" for="multi">Multi</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">New</button>
+            <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+              (click)="onClickSave()">Save</button>
+            <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

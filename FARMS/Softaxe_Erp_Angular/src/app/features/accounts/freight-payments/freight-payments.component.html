@@ -1,0 +1,231 @@
+<section>
+  <div class="content ListPage" *ngIf="isShowPage">
+    <div class="page-header">
+      <div class="page-title">
+        <h4 class="newcolor">Freight Payments</h4>
+      </div>
+      <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf" id="pdfPrint">
+                <img src="/assets/img/icons/pdf.svg" alt="img">
+              </a>
+            </li>
+            <li>
+              <a href="/Home/Index" role="button">
+                <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row align-items-center mb-2">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <div class="d-flex align-items-center">
+                <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+                <input type="search" class="form-control" placeholder="Search" (input)="searchGrid($event)" />
+              </div>
+            </div>
+            <div class="col-lg-7 col-md-6 col-sm-12">
+              <div class="row align-items-center">
+                <div class="col-lg-2 col-md-2 text-end p-0">
+                  <span class="fw-bolder">From Date</span>
+                </div>
+                <div class="col-lg-3 col-md-4 ps-1">
+                  <div class="form-group mb-0">
+                    <div class="input-groupicon">
+                      <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                        [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                      <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                      <div class="addonset">
+                        <img src="/assets/img/icons/calendars.svg" alt="img">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-2 text-end p-0">
+                  <span class="fw-bolder">To Date</span>
+                </div>
+                <div class="col-lg-3 col-md-4 ps-1">
+                  <div class="form-group mb-0">
+                    <div class="input-groupicon">
+                      <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                        [matDatepicker]="datepicker2" [(ngModel)]="toDate" (click)="datepicker2.open()">
+                      <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                      <div class="addonset">
+                        <img src="/assets/img/icons/calendars.svg" alt="img">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                  <img src="/assets/img/icons/search.svg" alt="img" class="filter-img" (click)="getLabList()">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+              <div class="d-flex align-items-center justify-content-end">
+                <p (click)="togglePages();" class="add-new">
+                  <img src="/assets/img/icons/plus.svg" alt="img" class="filter-img">Add New
+                </p>
+              </div>
+            </div>
+          </div>
+
+        <div class="table-responsive mb-1">
+          <table class="table table-hover" id="tbl-print">
+            <thead>
+              <tr>
+                <th class="text-start">Lab Test No</th>
+                <th class="text-start">Vehicle No</th>
+                <th class="text-start">Lab Date</th>
+                <th class="text-center w-10">Action</th>
+              </tr>
+            </thead>
+            <tbody #voucherLists>
+              <tr *ngFor="let data of voucherList">
+                <td class="text-start">{{data.LabTestNo}}</td>
+                <td class="text-start">{{data.VehicleNo}}</td>
+                <td class="text-start">{{data.ResultDate}}</td>
+                <td class="text-center">
+                  <span class="btnRowPrint me-3">
+                    <img src="/assets/img/icons/printer.svg" style="cursor: pointer;" alt="img">
+                  </span>
+                  <span (click)="editLab(data.LabTestNo)" class="me-3 btnEditCategory">
+                    <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                  </span>
+                  <span (click)="deleteLab(data.LabTestNo)" class="confirm-text btnDelCategory">
+                    <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete">
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content AddPage" *ngIf="!isShowPage">
+    <div class="page-header mb-4">
+      <div class="page-title">
+        <h4>Freight Payments</h4>
+      </div>
+      <div class="page-btn" routerLink="/journal-voucher">
+        <a (click)="togglePages()" class="btn btn-added btnList">
+          <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+            aria-label="fa fa-th-list"></i>
+          Home
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row align-items-center mb-2" [formGroup]="FreightPaymentsForm">
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="position-relative w-100 me-2 form-group mb-0">
+              <label class="fw-bold" style="margin-bottom: 0px !important;">Voucher Date</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="voucherDate"
+                  (click)="voucherDate.open()" formControlName="vchDate" />
+                <mat-datepicker #voucherDate></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="position-relative w-100 me-2 form-group mb-0">
+              <label class="fw-bold" style="margin-bottom: 0px !important;">From Date</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="fromDate1"
+                  (click)="fromDate1.open()" formControlName="fromDate1" />
+                <mat-datepicker #fromDate1></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="position-relative w-100 me-2 form-group mb-0">
+              <label class="fw-bold" style="margin-bottom: 0px !important;">To Date</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="toDate1"
+                  (click)="toDate1.open()" formControlName="toDate1" />
+                <mat-datepicker #toDate1></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="mb-2">
+              <div class="row">
+                <div class="col-lg-2 col-sm-2 col-2 ps-0 pt-3">
+                  <div class="add-icon text-end">
+                    <button (click)="getVchFec('btnSearch')" class="btn btn-primary btn-sm me-1"
+                      style="margin-top: 4px;">Search</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="position-relative w-100 me-2">
+              <label class="fw-bold">Search</label>
+              <input type="text" readonly class="form-control me-2">
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive" style="height: 200px">
+          <table class="table table-hover" id="tbl-print">
+            <thead style="z-index: 1;">
+              <tr>
+                <th class="text-center wd-5">Accept</th>
+                <th class="text-center wd-5">Delete</th>
+                <th class="text-start wd-5">VchNo</th>
+                <th class="text-start wd-5">GPNO</th>
+                <th class="text-start wd-20">Description</th>
+                <th class="text-start wd-5">Freight</th>
+                <th class="text-start wd-10">VchDate</th>
+                <th class="text-start wd-15">Main Account</th>
+                <th class="text-start wd-15">Account</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of detailsList">
+                <td class="text-center"><i (click)="onActionClick(data, true)" style="cursor:pointer;"
+                    class="fa-solid fa-check"></i></td>
+                <td class="text-center"><i (click)="onActionClick(data, false)" style="cursor:pointer;"
+                    class="fa-solid fa-x"></i></td>
+                <td>{{data.VCHNO}}</td>
+                <td>{{data.GPNO}}</td>
+                <td>{{data.DESCRP}}</td>
+                <td class="wd-5"><input [(ngModel)]="data.FREIGHT" type="number" class="form-control"></td>
+                <td class="wd-5"><input [(ngModel)]="data.VCHDATE" type="text" class="form-control"></td>
+                <td class="wd-15">
+                  <ng-select placeholder="Select" [(ngModel)]="data.MAINACCOUNT" [items]="mainAccount"
+                    (change)="getAccountSub($event)" bindLabel="NAME" bindValue="CODE" [clearable]="none">
+                  </ng-select>
+                </td>
+                <td class="wd-15">
+                  <ng-select placeholder="Select" [(ngModel)]="data.SUBACCOUNT" [items]="subAccount" bindLabel="NAME"
+                    bindValue="CODE" [clearable]="none">
+                  </ng-select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

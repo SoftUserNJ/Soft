@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+<div style="float: left; width: 100%;">
+    <h3 style="float: left;">Open Vouchers</h3>
+</div>
+<hr style="clear: both;">
+<div style="float: left; width: 100%;" class="table-responsive">
+    <table  class="table text-white table-hover">
+        <thead>
+            <tr>
+                <th class="ps-2" style="text-align: left;">Inc.No</th>
+                <th class="ps-2" style="text-align: left;">Description</th>
+            </tr>
+        </thead>
+
+
+        <tbody id="tblopenvouchers">
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+
+    function OpenVouchersWidgetFunPartial(fromDate, toDate, location, objects) {
+        try {
+            $.ajax({
+                type: "Get",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                url: "/Home/OpenVouchers/",
+                dataType: "json",
+                async: false,
+                data: { fromDate: fromDate, toDate: toDate, location: location, objects: objects },
+                success: function (data) {
+                    $("#tblopenvouchers").empty();
+                    $.each(data, function (i, item) {
+                        $("#tblopenvouchers").append(`<tr style = "border-bottom: 1px solid #e9ecef;">
+                                                        <td style="float: left; text-align: left;"  >${item.INCNO}</td >
+                                                <td style="text-align: left;" >${item.DETAIL}</td > </tr>`)
+                    });
+
+
+                },
+                error: function (data) {
+                }
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+  
+    OpenVouchersWidgetFunPartial('@ViewBag.FromDate', '@ViewBag.ToDate', '@ViewBag.Location', '@ViewBag.Objects');
+
+                                   // setInterval(OpenVouchersWidgetFunPartial, 5000);
+</script>
+

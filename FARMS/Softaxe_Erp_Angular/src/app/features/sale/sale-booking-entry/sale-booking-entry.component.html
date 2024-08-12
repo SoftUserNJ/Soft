@@ -1,0 +1,391 @@
+<section>
+
+    <div class="content ListPage" *ngIf="isShowPage">
+        <div class="page-header">
+            <div class="page-title">
+                <h4 class="newcolor">Sale Booking Entry</h4>
+            </div>
+            <div class="page-btn">
+                <div class="wordset newwordset">
+                    <ul>
+                        <li>
+                            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf"
+                                id="pdfPrint">
+                                <img src="/assets/img/icons/pdf.svg" alt="img">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Home/Index" role="button">
+                                <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row align-items-center mb-2">
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="search-set">
+                            <div class="search-path">
+                                <a class="btn btn-filter" id="filter_search">
+                                    <img src="/assets/img/icons/filter.svg" alt="img">
+                                    <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+                                </a>
+                            </div>
+                            <div class="search-input">
+                                <input (input)="searchGrid($event)" type="search" id="txtSearch" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7 col-md-6 col-sm-12">
+
+                        <div class="row align-items-center">
+                            <div class="col-lg-2 col-md-2 text-end p-0">
+                                <span class="fw-bolder">From Date</span>
+                            </div>
+                            <div class="col-lg-3 col-md-4 ps-1">
+                                <div class="form-group mb-0">
+                                    <div class="input-groupicon">
+                                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                                            [matDatepicker]="datepicker" [(ngModel)]="fromDate"
+                                            (click)="datepicker.open()" />
+                                        <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                                        <div class="addonset">
+                                            <img src="/assets/img/icons/calendars.svg" alt="img">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 text-end p-0">
+                                <span class="fw-bolder">To Date</span>
+                            </div>
+                            <div class="col-lg-3 col-md-4 ps-1">
+                                <div class="form-group mb-0">
+                                    <div class="input-groupicon">
+                                        <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                                            [matDatepicker]="datepicker2" [(ngModel)]="toDate"
+                                            (click)="datepicker2.open()">
+                                        <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                                        <div class="addonset">
+                                            <img src="/assets/img/icons/calendars.svg" alt="img">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="add-icon" (click)="getSBList()">
+                                    <a class="w-50"><img src="/assets/img/icons/search.svg" alt="img"
+                                            class="searchSvg"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 ps-0">
+                        <div class="wordset ms-4 text-center">
+                            <p class="btn-addednew btnAdd" (click)="togglePages()">
+                                <img src="/assets/img/icons/plus.svg" alt="img" class="me-1">Add New
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive mb-1">
+                    <table class="table table-hover" id="tbl-print">
+                        <thead>
+                            <tr>
+                                <th class="text-start">Vch Type</th>
+                                <th class="text-center">Vch No</th>
+                                <th class="text-center">Vch Date</th>
+                                <th class="text-center w-10">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody #voucherLists>
+                            <tr *ngFor="let data of voucherList">
+                                <td class="text-start">{{data.VCHTYPE}}</td>
+                                <td class="text-center">{{data.VCHNO}}</td>
+                                <td class="text-center">{{data.VCHDATE}}</td>
+                                <td class="text-center">
+                                    <span class="btnRowPrint me-3">
+                                        <img src="/assets/img/icons/printer.svg" style="cursor: pointer;" alt="img">
+                                    </span>
+                                    <span (click)="editSB(data.VCHNO)" class="me-3 btnEditCategory">
+                                        <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                                    </span>
+                                    <span (click)="deleteSB(data.VCHNO)" class="confirm-text btnDelCategory">
+                                        <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete">
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content AddPage" *ngIf="!isShowPage">
+
+        <div class="page-header mb-4">
+            <div class="page-title">
+                <h4>Sale Booking Entry</h4>
+            </div>
+            <div class="page-btn" routerLink="/journal-voucher">
+                <a (click)="togglePages()" class="btn btn-added btnList">
+                    <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title=""
+                        data-bs-original-title="fa fa-th-list" aria-label="fa fa-th-list"></i>
+                    Home
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center mb-2" [formGroup]="saleBookingForm"
+                    [ngClass]="{ 'disabled': isDisabled }">
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Voucher Type</label>
+                            <input type="text" formControlName="voucherType" readonly class="form-control me-2">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">VchNo</label>
+                            <input type="text" formControlName="vchNo" readonly class="form-control me-2">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2 form-group mb-0">
+                            <label class="fw-bold" style="margin-bottom: 0px !important;">Booking Date</label>
+                            <div class="input-groupicon">
+                                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                                    [matDatepicker]="datepicker" (click)="datepicker.open()"
+                                     formControlName="date" />
+                                <mat-datepicker #datepicker></mat-datepicker>
+                                <div class="addonset">
+                                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Crop Year</label>
+                            <ng-select class="bold-placeholder" [items]="cropYear"
+                                placeholder="--- Select Crop Year ---" 
+                                bindLabel="CROPYEAR" bindValue="CROPYEAR"
+                                formControlName="cropYear" [dropdownPosition]="'bottom'">
+                            </ng-select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Delivery Term</label>
+                          <ng-select class="bold-placeholder"
+                           placeholder="--- Select Delivery Term ---"
+                            bindLabel="NAME" bindValue="ID"
+                            formControlName="deliveryTerm" [dropdownPosition]="'bottom'">
+                            <ng-option value="Cash">Cash</ng-option>
+                            <ng-option value="Credit">Credit</ng-option>
+                            <ng-option value="Cad">Cad</ng-option>
+                          </ng-select>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Payment Term</label>
+                          <ng-select class="bold-placeholder"
+                           placeholder="--- Select Payment Term ---"
+                            bindLabel="NAME" bindValue="ID"
+                            formControlName="paymentTerm" [dropdownPosition]="'bottom'">
+                            <ng-option value="Cif">Cif</ng-option>
+                            <ng-option value="Ex Factory">Ex Factory</ng-option>
+                          </ng-select>
+                        </div>
+                      </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Invoice Type</label>
+                        <ng-select class="bold-placeholder"
+                         placeholder="--- Select Invoice Type ---"
+                          bindLabel="NAME" bindValue="ID"
+                          formControlName="invoiceType" [dropdownPosition]="'bottom'">
+                          <ng-option value="Export">Export</ng-option>
+                          <ng-option value="Local">Local</ng-option>
+                        </ng-select>
+                      </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Broker</label>
+                            <ng-select class="bold-placeholder" [items]="brokerList"
+                                placeholder="--- Select Broker ---"
+                                bindLabel="L5NAMES" bindValue="L5CODE"
+                                formControlName="broker" [dropdownPosition]="'bottom'">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Party Main</label>
+                            <ng-select class="bold-placeholder" [items]="partyMainList"
+                                placeholder="--- Select Party Main ---" (change)="getPartySub($event)"
+                                (clear)="onPartyMainClear()" bindLabel="NAME" bindValue="CODE"
+                                formControlName="partyMain" [dropdownPosition]="'bottom'">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Party Sub</label>
+                            <ng-select class="bold-placeholder" [items]="partySubList"
+                                placeholder="--- Select Party Sub ---" bindLabel="NAME" bindValue="CODE"
+                                formControlName="partySub" [dropdownPosition]="'bottom'">
+                            </ng-select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Item Main</label>
+                            <ng-select class="bold-placeholder" [items]="itemMainList"
+                                placeholder="--- Select Item Main ---" (change)="getItemSub($event)"
+                                (clear)="onItemMainClear()" bindLabel="NAME" bindValue="CODE"
+                                formControlName="itemMain" [dropdownPosition]="'bottom'">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Item Sub</label>
+                            <ng-select class="bold-placeholder" [items]="itemSubList"
+                                placeholder="--- Select Item Sub ---" bindLabel="NAME" bindValue="CODE"
+                                formControlName="itemSub" [dropdownPosition]="'bottom'">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Quantity</label>
+                            <input type="text" formControlName="qty" (input)="onlyNumeric($event)"
+                                class="form-control me-2">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Rate</label>
+                            <input type="text" formControlName="rate" (input)="onlyNumeric($event)"
+                                class="form-control me-2">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12 pe-0">
+                        <label class="fw-bold">BrokerComm</label>
+                        <input type="text" formControlName="brokerComm" (input)="onlyNumeric($event)"
+                         class="form-control me-2">
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">B.UOM</label>
+                            <ng-select class="bold-placeholder" [items]="UOMList"
+                                placeholder="--- Select B.UOM ---" bindLabel="UOM" bindValue="UOM"
+                                formControlName="brokerUOM" [dropdownPosition]="'bottom'">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Rate UOM</label>
+                            <ng-select class="bold-placeholder" [items]="UOMList"
+                                placeholder="--- Select Rate UOM ---" bindLabel="UOM" bindValue="UOM"
+                                formControlName="rateUOM" [dropdownPosition]="'bottom'">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <label class="fw-bold">Remarks</label>
+                        <input type="text" formControlName="remarks" class="form-control me-2">
+                    </div>
+
+                    <div class="col-lg-1 col-md-1 col-sm-12">
+                        <button type="submit" (click)="onAdd()" class="btn btn-success btn-sm me-1"
+                            style="margin-top: 20px;">{{btnAdd}}</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive" style="height: 200px">
+                    <table class="table table-hover" id="tbl-print">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Sub</th>
+                                <th>Item Title</th>
+                                <th>Qty</th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+                                <th>CropYear</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of saleBookingList; let i = index" (click)="rowHighLight($event)">
+
+                                <td class="">{{ data.itemSub.substring(0, 9) }}</td>
+                                <td class="">{{ data.itemSub.substring(9, 14) }}</td>
+                                <td class="">{{ data.itemTitle }}</td>
+                                <td class="">{{ data.qty }}</td>
+                                <td class="">{{ data.rate }}</td>
+                                <td class="">{{ data.amount }}</td>
+                                <td class="">{{ data.cropYear }}</td>
+
+                                <td class="text-center">
+                                    <!-- Edit Button -->
+                                    <span (click)="editDetails(data, i)" class="me-3" style="cursor: pointer">
+                                        <img src="/assets/img/icons/edit.svg" alt="Edit" />
+                                    </span>
+                                    <!-- Delete Button  -->
+                                    <span (click)="deleteDetails(i)" class="confirm-text" style="cursor: pointer">
+                                        <img src="/assets/img/icons/delete.svg" alt="Delete" />
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <button class="btn btn-primary btn-sm me-1" [hidden]="isShow"
+                            (click)="onClickNew()">New</button>
+                        <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+                            (click)="onClickSave()">Save</button>
+                        <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

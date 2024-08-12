@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null;
+}
+<div style="float: left; width: 100%;">
+    <h5 style="float: left;">Power Consumption</h5>
+    <button class="ct-btnsHistory" id="btnChartAssetsHistory" style="float: right;">History</button>
+</div>
+<p style="clear: both;"></p>
+<div class="canvas-container" style="width: 100%; height:90%;">
+    <canvas id="ChartAssets"></canvas>
+</div>
+<style>
+
+
+</style>
+
+<script>
+
+    var ChartAssets;
+    function AssetsWidgetFunPartial(fromDate, toDate, location, objects) {
+        try {
+            $.ajax({
+                type: "Get",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                url: "/Home/Assets/",
+                dataType: "json",
+                async: false,
+                data: { fromDate: fromDate, toDate: toDate, location: location, objects: objects },
+                success: function (data1) {
+                    var labelArray = [];
+                    var DataArray = [];
+
+
+                    $.each(data1, function (i, item) {
+                        var labelvalue = item.Xasix.replace(/'/g, '');
+                        labelArray.push(labelvalue);
+
+                        DataArray.push(item.Datavalue);
+                    });
+
+
+                    var mdata = {
+                        labels: labelArray,
+                        datasets: [{
+                            label: 'Dataset 1',
+                            data: DataArray,
+                            borderColor: '#b51716',
+                            backgroundColor: 'transparent',
+                        }]
+                    };
+
+                    var options = {
+
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        title: {
+                            display: false,
+                            text: 'Line Chart Example'
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: false,
+                                    labelString: 'Day',
+                                    fontSize: 3
+                                },
+                                gridLines: {
+                                    display: false,
+                                    color: 'white',
+                                    lineWidth: 1,
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    fontSize: 9
+                                },
+                            }],
+                            yAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: false,
+                                    labelString: 'Value',
+                                    fontSize: 3
+                                },
+                                gridLines: {
+                                    color: '#85888c',
+                                    lineWidth: 1,
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    fontSize: 9
+
+                                },
+                            }]
+                        }
+
+                    };
+
+
+                    var ctx = document.getElementById('ChartAssets').getContext('2d');
+                    if (ChartAssets) {
+                        ChartAssets.destroy();
+                    }
+                    ChartAssets = new Chart(ctx, {
+                        type: 'line',
+                        data: mdata,
+                        options: options
+                    });
+
+
+
+                },
+                error: function (data1) {
+                }
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+    AssetsWidgetFunPartial('@ViewBag.FromDate', '@ViewBag.ToDate', '@ViewBag.Location', '@ViewBag.Objects');
+
+
+</script>
+
+
+
+

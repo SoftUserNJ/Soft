@@ -1,0 +1,697 @@
+<section>
+    
+  <div class="AddPage" style="padding: 6px;" [formGroup]="WeighBridgeForm">
+
+    <div class="card">
+      <!-- <div class="page-title text-center"><h4>Inward Weighment</h4></div> -->
+
+      <div class="" style="padding: 6px;">
+        <div class="d-flex justify-content-between" style="height: 110px;">
+          <div style="width: 20%;">
+            <div class="card" style="height: 100%; margin-bottom: 0px;"></div>
+          </div>
+
+          <div class="w-50" style="padding-left: 8px; padding-right: 8px;">
+            <div class="card" style="height: 100%; margin-bottom: 0px;background-color: lawngreen;">
+            <input class="text-center" [readonly]="isManualAllow" (input)="CalculateNetWeight()" type="number" formControlName="weight" style="font-size: 70px; border: 0; background-color: lawngreen;" value="0">
+            </div>
+          </div>
+
+          <div style="width: 30%;">
+            <div class="card" style="height: 100%; margin-bottom: 0px !important;">
+              <div class="row align-items-center mb-2">
+
+                <div class="col-lg-7 col-md-5 col-sm-12" style="padding: 4px 2px 0px 16px;">
+                  <div class="position-relative w-100 me-2">
+                    <ng-select class="bold-placeholder" [items]="bagsTypeList"
+                  placeholder="--- Select Bag 1---" [readonly]="isSecondWeight"
+                  bindLabel="Names" bindValue="Code"  (change)="onItemSubChange($event,1)"  formControlName="Bag1" 
+                    [dropdownPosition]="'bottom'">
+                  </ng-select>
+                  </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12" style="padding: 4px 2px 0px 2px;">
+                    <div class="position-relative w-100 me-2">
+                      <input type="number" formControlName="UnBag1" (input)="CalculateNetWeight()" [readonly]="isSecondWeight" class="form-control me-2">
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-5 col-sm-12" style="padding: 4px 16px 0px 2px;">
+                    <div class="position-relative w-100 me-2">
+                      
+                      <!-- <ng-select class="bold-placeholder" bindLabel="name" bindValue="id"
+                        formControlName="WBag1"   (change)="CalculateNetWeight()"   [dropdownPosition]="'bottom'" [readonly]="isSecondWeight">
+                        <ng-option value="0.1">0.1</ng-option>
+                      </ng-select> -->
+
+                      <input type="number" formControlName="WBag1" (input)="CalculateNetWeight()" [readonly]="isSecondWeight" class="form-control me-2">
+
+
+                    </div>
+                    </div>
+
+                    <div class="col-lg-7 col-md-5 col-sm-12" style="padding: 4px 2px 0px 16px;">
+                      <div class="position-relative w-100 me-2">
+                        <ng-select class="bold-placeholder" [items]="bagsTypeList"
+                        placeholder="--- Select Bag 2---" [readonly]="isSecondWeight"
+                        bindLabel="Names" bindValue="Code" formControlName="Bag2"  (change)="onItemSubChange($event,2)"
+                          [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                      </div>
+                      <div class="col-lg-2 col-md-2 col-sm-12" style="padding: 4px 2px 0px 2px;">
+                        <div class="position-relative w-100 me-2">
+                          <input type="number" formControlName="UnBag2" (input)="CalculateNetWeight()" [readonly]="isSecondWeight" class="form-control me-2">
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-md-5 col-sm-12" style="padding: 4px 16px 0px 2px;">
+                        <div class="position-relative w-100 me-2">
+                          <!-- <ng-select class="bold-placeholder" bindLabel="name" bindValue="id"
+                            formControlName="WBag2"  (change)="CalculateNetWeight()"  [dropdownPosition]="'bottom'" [readonly]="isSecondWeight">
+                            <ng-option value="0.2">0.2</ng-option>
+                          </ng-select> -->
+                      <input type="number" formControlName="WBag2" (input)="CalculateNetWeight()" [readonly]="isSecondWeight" class="form-control me-2">
+
+                        </div>
+                        </div>
+
+                        <div class="col-lg-7 col-md-5 col-sm-12" style="padding: 4px 2px 0px 16px;">
+                          <div class="position-relative w-100 me-2">
+                            <ng-select class="bold-placeholder" [items]="bagsTypeList"
+                            placeholder="--- Select Bag 3---" [readonly]="isSecondWeight"
+                            bindLabel="Names" bindValue="Code" formControlName="Bag3"  (change)="onItemSubChange($event,3)"
+                              [dropdownPosition]="'bottom'">
+                            </ng-select>
+                          </div>
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-sm-12" style="padding: 4px 2px 0px 2px;">
+                            <div class="position-relative w-100 me-2">
+                              <input type="number" formControlName="UnBag3" (input)="CalculateNetWeight()" [readonly]="isSecondWeight" class="form-control me-2">
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-md-5 col-sm-12" style="padding: 4px 16px 0px 2px;">
+                            <div class="position-relative w-100 me-2">
+                              <!-- <ng-select class="bold-placeholder"  bindLabel="name" bindValue="id"
+                                formControlName="WBag3" (change)="CalculateNetWeight()" [dropdownPosition]="'bottom'" [readonly]="isSecondWeight">
+                                <ng-option value="0.3">0.3</ng-option>
+                              </ng-select> -->
+
+
+                             <input type="number" formControlName="WBag3" (input)="CalculateNetWeight()" [readonly]="isSecondWeight" class="form-control me-2">
+
+                            </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12" style=" padding-left: 1rem; padding-right: 1rem; padding-top: 4px;">
+                              <div class="position-relative w-100 me-2">
+                  <ng-select class="bold-placeholder" [items]="godownList"
+                  placeholder="--- Select Godown ---" [readonly]="isSecondWeight"
+                  bindLabel="GODOWNNAME" bindValue="GODOWNID" formControlName="godowns"
+                    [dropdownPosition]="'bottom'">
+                  </ng-select>
+                              </div>
+                              </div>
+                            
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row align-items-center" style="margin-bottom: 2px;">
+
+          <div class="col-lg-3 col-md-3 col-sm-3 d-none">
+            <div class="form-group d-flex align-items-end pt-1" style="margin-bottom:0px!important;">
+              <div class="d-flex align-items-center me-4">
+                <input type="radio" id="unapproved" value="unapproved" class="me-1" name="approvalStatus">
+                <label for="unapproved" class="mb-0 pt-1">WB 1</label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input type="radio" id="approved" value="approved" class="me-1" name="approvalStatus">
+                <label for="approved" class="mb-0 pt-1">WB 2</label>
+              </div>
+              <!-- <div class="d-flex align-items-center" style="margin-left: 18px;">
+                <input class="form-check-input me-1" formControlName="manualWeight" type="checkbox" (change)="toggleManualAllow($event)" checked>
+                <label for="approved" class="mb-0 pt-2">Manual Weight</label>
+              </div> -->
+              
+
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="position-relative w-100 me-2">
+              <input class="form-check-input me-1" formControlName="manualWeight" type="checkbox" (change)="toggleManualAllow($event)" checked>
+                <label for="approved" class="mb-0 fw-bold" style="margin-left: 16px;">Manual Weight</label>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-3 col-sm-12" style="padding-left: 50px;">
+            <div class="position-relative w-100">
+              <label class="fw-bold">Freight</label>
+              <div class="row">
+                <div class="col-6 pe-0">
+                  <input type="text" formControlName="freight" [readonly]="isDisabled" class="form-control me-2">
+                  <input type="text" formControlName="vchNo" class="form-control me-2 d-none">
+                  <input type="text" formControlName="firstWeight" class="form-control me-2 d-none">                  </div>
+
+                <div class="col-6">
+                  <ng-select class="bold-placeholder disabled" 
+                  placeholder=""
+                  formControlName="freightDD"
+                    [dropdownPosition]="'bottom'">
+                    <ng-option value="S">S</ng-option>
+                    <ng-option value="O">O</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="position-relative w-100 me-2">
+              <label class="fw-bold">Freight</label>
+              <input type="text" formControlName="freight" [readonly]="isDisabled" class="form-control me-2">
+              <input type="text" formControlName="vchNo" class="form-control me-2 d-none">
+              <input type="text" formControlName="firstWeight" class="form-control me-2 d-none">
+            </div>
+          </div> -->
+
+          <div class="col-lg-1 col-md-1 col-sm-12">
+            <div class="position-relative w-100 me-2">
+              <label class="fw-bold">Arrival#</label>
+              <input type="text" formControlName="ArrvNo" [readonly]="isDisabled" class="form-control me-2" style="width:96px;">
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-1 col-sm-12" style="padding-left: 38px; width: 160px; padding-right: 0;">
+            <div class="position-relative w-75 me-2">
+              <input type="text" formControlName="Vehicleno" [readonly]="isDisabled" class="form-control me-2" style="height: 35px !important; margin-top: 4px;background: darkturquoise;font-size:18px !important">
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12" style="padding-left: 0; padding-right: 0; width: 156px;">
+            <div class="position-relative w-100 me-2">
+              <label class="fw-bold">Current Date</label>
+              <input type="text" formControlName="currentdate" [readonly]="isDisabled" class="form-control me-2">
+            </div>
+          </div>
+
+          <!-- <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="position-relative w-100 me-2">
+              <label class="fw-bold">Today's Rate</label>
+              <input type="text" formControlName="TodayRate" [readonly]="isDisabled" class="form-control me-2">
+            </div>
+          </div> -->
+
+          <div class="col-lg-2 col-md-1 col-sm-12" style="padding-left: 8px;">
+            <div class="position-relative w-100 me-2">
+              <label class="fw-bold">Current Time</label>
+              <input type="text" formControlName="time" readonly class="form-control me-2" style="width:210px">
+            </div>
+          </div>
+
+          
+          
+
+        </div>
+
+        <div class=" d-flex d-flex justify-content-between">
+
+          <div class="card" style="width: 20%; margin-bottom: 10px;">
+            <h5 class="text-center">[ First Weight ]</h5>
+            <div class="col-lg-12 px-1" style="padding-bottom: 6px;">
+              <div class="position-relative w-100 me-2">
+                <input type="search" id="txtSearch" class="form-control me-2"
+                 placeholder="Search Here" (input)="searchFirstWtGrid($event)">
+              </div>
+            </div>
+            <div class="table-responsive first-weight" style="height: 100%;">
+                <table class="table table-hover" id="tbl-print">
+                  <thead style="font-size: 10px;">
+                    <tr>
+                      <th class="text-start">Arrival#</th>
+                      <th class="text-center">Vehicle No</th>
+                      <th class="text-center">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of FirstWeightList" (click)="rowHighLight($event)"  (dblclick)="getWeightDetail(data.VchNo, data.ArrivalNo, data.VchType,'true')">
+      
+                      <td class="text-center">{{ data.VchNo }}</td>
+                      <td class="text-center">{{ data.VehicleNo }}</td>
+                      <td class="text-center">{{ data.VchDate }}</td>
+                      <td class="d-none">{{ data.ArrivalNo }}</td>
+                      <td class="d-none">{{ data.VchType }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+          </div>
+
+        <div class="" style="width: 60%; padding: 0px 8px 0px 8px;">
+           
+
+            <div class="row align-items-center mb-2">
+
+              <div class="d-flex justify-content-between">
+
+                <div class="row w-75">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Party Name</label>
+                      <input type="text" formControlName="partyName" readonly class="form-control me-2">
+                    </div>
+                    </div>
+          
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="position-relative w-100">
+                        <label class="fw-bold">Party Bags</label>
+                        <div class="row">
+                          <div class="col-6 pe-0">
+                            <input type="text" formControlName="PartyBags" [readonly]="isDisabled" class="form-control me-2">
+                             </div>
+        
+                          <div class="col-6" >
+                            <select class="bold-placeholder disabled w-100"  label="name" value="id"
+                            formControlName="DrpBag" >
+                            <option value="W">W</option>
+                            <option value="O">O</option>
+                            <option value="S">S</option>
+                            <option value="P">P</option>
+                            <option value="R">R</option>
+                          </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                      
+                      <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Bags</label>
+                          <ng-select class="bold-placeholder disabled" placeholder="-- Bags --" bindLabel="name" bindValue="id"
+                            formControlName="DrpBag" [dropdownPosition]="'bottom'">
+                            <ng-option value="W">W</ng-option>
+                            <ng-option value="O">O</ng-option>
+                            <ng-option value="S">S</ng-option>
+                            <ng-option value="P">P</ng-option>
+                            <ng-option value="R">R</ng-option>
+                          </ng-select>
+                        </div>
+                        </div> -->
+
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Recived Bags</label>
+                            <input type="text" formControlName="NoOfBags" [readonly]="isDisabled" class="form-control me-2">
+                          </div>
+                        </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Item Name</label>
+                        <input type="text" formControlName="ItemName" readonly class="form-control me-2">
+                      </div>
+                      </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Weight type</label>
+                        <ng-select class="bold-placeholder disabled" placeholder="W.Type" bindLabel="name" bindValue="id"
+                          formControlName="WType" [dropdownPosition]="'bottom'">
+                          <ng-option value="O">O</ng-option>
+                          <ng-option value="S">S</ng-option>
+                        </ng-select>
+                      </div>
+                      </div>
+  
+                      <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Ded Kg/Bag</label>
+                          <input type="text" formControlName="DedKgBag" [readonly]="isDisabled" class="form-control me-2">
+                        </div>
+                      </div>
+                      
+  
+                      <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Party Weight</label>
+                          <input type="text" formControlName="PartyWeight" [readonly]="isDisabled" class="form-control me-2">
+                        </div>
+                      </div>
+  
+                      <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Rate</label>
+                          <input type="text" formControlName="Rate" [readonly]="isDisabled" class="form-control me-2">
+                        </div>
+                      </div> -->
+  
+                      <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Gross Difference</label>
+                          <input type="text" formControlName="gDiff" [readonly]="isDisabled" class="form-control me-2">
+                        </div>
+                      </div>
+                      
+                      <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Tare Difference</label>
+                          <input type="text" formControlName="tDiff" [readonly]="isDisabled" class="form-control me-2">
+                        </div>
+                      </div>
+
+
+                      <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">PONO #</label>
+                          <input type="text" formControlName="PONO" class="form-control me-2" readonly>
+                        </div>
+                      </div>
+
+
+                      
+                     
+                        
+
+                       
+  
+                        
+  
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Net Difference</label>
+                            <input type="text" formControlName="nDiff" [readonly]="isDisabled" class="form-control me-2">
+                          </div>
+                        </div>
+  
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Average Bag Wt</label>
+                            <input type="text" formControlName="AvgBagWt" [readonly]="isDisabled" class="form-control me-2">
+                          </div>
+                        </div>
+
+
+                       
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Gross Weight</label>
+                            <input type="text" formControlName="gWeight" [readonly]="isDisabled" class="form-control me-2 ">
+                          </div>
+                        </div>
+ 
+
+
+                             
+  
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Wb Net Weight</label>
+                            <input type="text" formControlName="nWeight" [readonly]="isDisabled" class="form-control me-2" [value]="isSecondWeight ? '0' : ''">
+                          </div>
+                        </div>
+
+
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Bags Wt Ded</label>
+                            <input type="text" formControlName="bagsWtDed" [readonly]="isDisabled" class="form-control me-2">
+                          </div>
+                        </div>
+
+
+  
+                     
+                        
+
+
+                  
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Stock Weight</label>
+                            <input type="text" formControlName="StkWeight" [readonly]="isDisabled" class="form-control me-2">
+                          </div>
+                        </div>
+
+
+
+
+                        <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Lab Ded Stock</label>
+                            <input type="text" formControlName="LabDedStock" [readonly]="isDisabled" class="form-control me-2">
+                          </div>
+                        </div> -->
+
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Party / Our Diff</label>
+                            <input type="text" formControlName="PartyOurDiff2" [readonly]="isDisabled" class="form-control me-2">
+                          </div>
+                        </div>
+
+
+                     
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                          <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Lab Ded Party</label>
+                            <input type="text" formControlName="LabDedParty" [readonly]="isDisabled" class="form-control me-2">
+                          </div>
+                        </div>
+                        
+
+                            <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="position-relative w-100 me-2">
+                                <label class="fw-bold">Party / Our Diff</label>
+                                <input type="text" formControlName="PartyOurDiff2" [readonly]="isDisabled" class="form-control me-2">
+                              </div>
+                            </div> -->
+
+
+                       
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                              <div class="position-relative w-100 me-2">
+                                <label class="fw-bold">Payable Weight</label>
+                                <input type="text" formControlName="payableWeight"    style="color: red; font-weight: bold; font-size: 16px;"  [readonly]="isDisabled" class="form-control me-2">
+                              </div>
+                              
+                            </div>
+
+
+                            <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="position-relative w-100 me-2">
+                                <label class="fw-bold">Party / Our WT Diff (Bilty)</label>
+                                <input type="text" formControlName="PartyOurDiff1" [readonly]="isDisabled" class="form-control me-2">
+                              </div>
+                            </div> -->
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                              <fieldset style="border: 1px solid #cccccc; border-radius: 3px; padding: 5px;">
+                                <legend class="fw-bold" style="font-size: 11px; float:none; margin-bottom:-6px; width: auto; padding:0 2%;">Lab Deduction</legend>
+                                <div class="table-responsive" style="height: 100px;">
+                                  <table class="table table-hover" id="tbl-print" style="font-size: 10px;">
+                                    <thead>
+                                      <tr>
+                                        <th class="text-start">Test</th>
+                                        <th class="text-center">Result</th>
+                                        <th class="text-end">Bag</th>
+                                        <th class="text-end">PartyDed%</th>
+                                        <th class="text-end">StockDed%</th>
+                                        <th class="text-end">PartyDedKg</th>
+                                        <th class="text-end">StockDedKg</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let data of LabDeductionList" (click)="rowHighLight($event)">
+                         
+                                        <td class="text-start">{{ data.LabTestName }}</td>
+                                        <td class="text-center">{{ data.Percentage }}</td>
+                                        <td class="text-end">{{ data.Bags }}</td>
+                                        <td class="text-end">{{ data.PartyDed }}</td>
+                                        <td class="text-end">{{ data.StockDed }}</td>
+                                        <td class="text-end">{{ data.PartyDedKg }}</td>
+                                        <td class="text-end">{{ data.StockDedKg }}</td>
+
+
+
+                                        
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </fieldset>
+                              
+                            </div>
+                          
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                              
+                              <fieldset style="border: 1px solid #cccccc; border-radius: 3px; padding: 3px;">
+                                <legend class="fw-bold" style="font-size: 11px; float:none; margin-bottom:-6px; width: auto; padding:0 2%;">Bags Deduction</legend>
+                                <div class="row">
+                                  <div class="col-lg-12 col-sm-12 col-12">
+                                    <div>
+                                      <input class="form-check-input disabled" formControlName="miniWtasFinal" type="checkbox" [checked]="isMinWtFinal">
+                                      <label class="form-check-label pl-10 " style="margin-left: 8px;">Minimum Weight as Final</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <label class="fw-bold">Bags</label>
+                                      <input type="text" formControlName="bags1" [readonly]="isDisabled" class="form-control me-2">
+                                    </div>
+                                    <div class="position-relative w-100 me-2">
+                                      <input type="text" formControlName="bags2" [readonly]="isDisabled" class="form-control me-2">
+                                    </div>
+                                    <div class="position-relative w-100 me-2">
+                                      <input type="text" formControlName="bags3" [readonly]="isDisabled" class="form-control me-2">
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <label class="fw-bold">Deduction</label>
+                                      <input type="text" formControlName="deduction1" [readonly]="isDisabled" class="form-control me-2">
+                                    </div>
+                                    <div class="position-relative w-100 me-2">
+                                      <input type="text" formControlName="deduction2" [readonly]="isDisabled" class="form-control me-2">
+                                    </div>
+                                    <div class="position-relative w-100 me-2">
+                                      <input type="text" formControlName="deduction3" [readonly]="isDisabled" class="form-control me-2">
+                                    </div>
+                                  </div>
+                                </div>
+                              </fieldset>
+                            </div>
+  
+                              
+                </div>
+                <div class="w-25">
+                  <fieldset style="border: 1px solid #cccccc; border-radius: 3px; padding: 5px;">
+                    <legend class="fw-bold" style="font-size: 11px; float:none; margin-bottom:-6px; width: auto; padding:0 2%;">Bags Deduction</legend>
+                    <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Exp Weight</label>
+                          <input type="text" formControlName="ExpWt" [readonly]="isDisabled" class="form-control me-2">
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Weight Dif</label>
+                          <input type="text" formControlName="WtDiff" [readonly]="isDisabled" class="form-control me-2">
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Allowed Weight Diff</label>
+                          <input type="text" formControlName="AllowedWtDiff" value="{{inlimit}}" [readonly]="isDisabled" class="form-control me-2">
+                        </div>
+                      </div>
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Frg Ded Kg</label>
+                          <input type="text" formControlName="FrgDedKg" [readonly]="isDisabled" class="form-control me-2">
+                        </div>
+                      </div>
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Frg Ded Amnt </label>
+                          <input type="text" formControlName="FrgDedAmnt" [readonly]="isDisabled" class="form-control me-2">
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                <fieldset style="border: 1px solid #cccccc; border-radius: 3px; padding: 3px;">
+                  <legend class="fw-bold" style="font-size: 11px; float:none; margin-bottom:-6px; width: auto; padding:0 2%;">Bilty Information</legend>
+        
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Gross Weight</label>
+                        <input type="text" formControlName="GWeightBilty" [readonly]="isDisabled" class="form-control me-2">
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Tare Weight</label>
+                        <input type="text" formControlName="TWeightBilty" [readonly]="isDisabled" class="form-control me-2">
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Net Weight</label>
+                        <input type="text" formControlName="NWeightBilty" [readonly]="isDisabled" class="form-control me-2">
+                      </div>
+                    </div>
+              </fieldset>
+                </div>
+              
+              </div>
+
+              </div>
+        </div>
+      
+
+      <div class="card" style="width: 20%;margin-bottom: 10px;">
+        <h5 class="text-center">[ Second Weight ]</h5>
+        <div class="col-lg-12 px-1" style="padding-bottom: 6px;">
+          <div class="position-relative w-100 me-2">
+            <input type="search" id="txtSearch" class="form-control me-2"
+             placeholder="Search Here" (input)="searchSecondWtGrid($event)">
+          </div>
+        </div>
+        
+        <div class="table-responsive second-weight" style="height: 100%;">
+            <table class="table table-hover" id="tbl-print">
+              <thead style="font-size: 10px;">
+                <tr>
+                  <th class="text-start">Arrival#</th>
+                  <th class="text-center">Vehicle No</th>
+                  <th class="text-center">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of SecondWeightList" (click)="rowHighLight($event)" (dblclick)="getWeightDetail(data.VchNo, data.ArrivalNo, data.VchType ,'false')">
+  
+                  <td class="text-center">{{ data.VchNo }}</td>
+                      <td class="text-center">{{ data.VehicleNo }}</td>
+                      <td class="text-center">{{ data.VchDate }}</td>
+                      <td class="d-none">{{ data.ArrivalNo }}</td>
+                      <td class="d-none">{{ data.VchType }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    
+
+        </div>
+        
+
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="margin-top:-4px">
+
+            <!-- <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">New</button> -->
+            <button type="submit" class="btn btn-success btn-sm me-1" [disabled]="isShow"  (click)="onClickSave()"
+              >Save</button>
+            <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+            <button style="margin-left: 4px;" class="btn btn-secondary btn-sm" (click)="connectToPort()">Weight</button>
+            
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+

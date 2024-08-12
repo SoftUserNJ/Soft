@@ -1,0 +1,166 @@
+<section>
+  <div class="content AddPage">
+    <div class="page-header mb-4">
+      <div class="page-title">
+        <h4>Purchase Orders</h4>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row align-items-center mb-2">
+          <div class="col-lg-3 col-md-3 col-sm-12 pt-3">
+            <div class="position-relative w-100 me-2">
+              <ng-select class="bold-placeholder" placeholder="--- Select Voucher Type ---" [(ngModel)]="vchType"
+                [dropdownPosition]="'bottom'">
+                <ng-option value="PO-Pur">PO-Pur</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="position-relative w-100 me-2">
+              <label class="fw-bold">Search PO No</label>
+              <input type="text" class="form-control me-2" [(ngModel)]="search" (input)="SearchVch($event)">
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="position-relative w-100 me-2 form-group mb-0">
+              <label class="fw-bold" style="margin-bottom: 0px !important;">Date Range:</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" [(ngModel)]="fromDate" placeholder="DD/MM/YYYY" matInput
+                  [matDatepicker]="datepicker" (click)="datepicker.open()" />
+                <mat-datepicker #datepicker></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="position-relative w-100 me-2 form-group mb-0">
+              <label class="fw-bold" style="margin-bottom: 0px !important;">To:</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" [(ngModel)]="toDate" matInput placeholder="DD/MM/YYYY"
+                  [matDatepicker]="datepicker2" (click)="datepicker2.open()">
+                <mat-datepicker #datepicker2></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 mt-3">
+            <img src="/assets/img/icons/search.svg" alt="img" class="filter-img" (click)="GetVoucher()">
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 pt-2 d-flex">
+            <div class="form-group d-flex align-items-end" style="margin-bottom:0px!important;">
+              <div class="d-flex align-items-center">
+                <input type="radio" id="unapproved" value="unapproved" [checked]="unapproved"
+                  class="me-1" name="approvalStatus" (click)="onClickFilter($event)">
+                <label for="unapproved" class="mb-0">Unapproved</label>
+              </div>
+              <div class="d-flex align-items-center pl-15">
+                <input type="radio" id="approved" value="approved" [checked]="approved"
+                  class="me-1" name="approvalStatus" (click)="onClickFilter($event)">
+                <label for="approved" class="mb-0">Approved</label>
+              </div>
+              <!-- <div class="d-flex align-items-center pl-15">
+                <input  type="radio" id="UnAdited" value="UnAdited" [checked]="UnAdited"
+                  class="me-1" name="approvalStatus" (click)="onClickFilter($event)">
+                <label for="UnAdited" class="mb-0">UnAudited</label>
+              </div>
+              <div class="d-flex align-items-center pl-15">
+                <input type="radio" id="Audited" value="Audited" [checked]="Audited"
+                  class="me-1" name="approvalStatus" (click)="onClickFilter($event)">
+                <label for="Audited" class="mb-0">Audited</label>
+              </div>
+              <div class="d-flex align-items-center pl-15">
+                <input type="radio" id="UnVerified" value="UnVerified" [checked]="UnVerified"
+                  class="me-1" name="approvalStatus" (click)="onClickFilter($event)">
+                <label for="UnVerified" class="mb-0">UnVerified</label>
+              </div>
+              <div class="d-flex align-items-center pl-15">
+                <input type="radio" id="Verified" value="Verified" [checked]="Verified"
+                  class="me-1" name="approvalStatus" (click)="onClickFilter($event)">
+                <label for="Verified" class="mb-0">Verified</label>
+              </div> -->
+              <div class="d-flex align-items-center pl-15">
+                <input type="radio" id="Pending" value="Pending" [checked]="Pending"
+                  class="me-1" name="approvalStatus" (click)="onClickFilter($event)">
+                <label for="Pending" class="mb-0">Cancel</label>
+              </div>
+              <div class="d-flex align-items-center pl-15">
+                <input  type="radio" id="All" value="All" [checked]="All" class="me-1"
+                  name="approvalStatus" (click)="onClickFilter($event)">
+                <label for="All" class="mb-0">All</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive vouchers" style="height: 300px">
+          <table class="table table-hover" id="tbl-print">
+            <thead>
+              <tr>
+                <th>PO No</th>
+                <th>PO Date</th>
+                <th>Party</th>
+                <th>Description</th>
+                <th class="text-center">Approve</th>
+                <!-- <th class="text-center">Verify</th>
+                <th class="text-center">Audit</th> -->
+                <th class="text-center">Cancel</th>
+                <!-- <th>Status</th> -->
+                <th class="text-center">Print</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of VoucherAppListFiltered" (click)="rowHighLight($event)">
+                <td class="">{{ data.VchNo }}</td>
+                <td class="">{{ data.VchDate | date: "dd/MM/yyyy" }}</td>
+                <td class="">{{ data.PartyName }}</td>
+                <td class="">{{ data.Description }}</td>
+                <td class="text-center">
+                  <input type="checkbox" [(ngModel)]="data.Aprove">
+                </td>
+                <!-- <td class="text-center">
+                  <input type="checkbox" [(ngModel)]="data.Verify">
+                </td>
+                <td class="text-center">
+                  <input type="checkbox" [(ngModel)]="data.AuditByN">
+                </td> -->
+                <td class="text-center">
+                  <input type="checkbox" [(ngModel)]="data.Rcvd">
+                </td>
+                <!-- <td class="text-center">
+                </td> -->
+                <td class="text-center">
+                  <span (click)="onViewReport(data)">
+                    <i class="fas fa-print"></i>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <button type="submit" class="btn btn-success btn-sm me-1" (click)="onClickSave()">Save</button>
+            <div class="d-flex float-end">
+              <div class="me-3 d-flex align-items-center">
+                <input class="me-1" type="checkbox" (change)="toggleAll('approve', $event)">
+                <label class="fw-bold">Approve All</label>
+              </div>
+              <div class="me-3 d-flex align-items-center">
+                <input class="me-1" type="checkbox" (change)="toggleAll('verify', $event)">
+                <label class="fw-bold">Verfiy All</label>
+              </div>
+              <div class="me-3 d-flex align-items-center">
+                <input class="me-1" type="checkbox" (change)="toggleAll('audit', $event)">
+                <label class="fw-bold">Audit All</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,154 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Play Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content AddPage pt-1">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["PlaySecond"]</label>
+                        <input type="text" class="" id="txtPlaySecond" skinid="Enter Play Second....!">
+                        <input type="hidden" id="txtSettingsId">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["PlayTime"]</label>
+                        <input type="text" class="" id="txtPlayTime" skinid="Enter Play Time....!">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["PlayPer"]</label>
+                        <input type="text" class="disabled" value="Hour" id="txtPlayPer" skinid="">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["RateB2B"]</label>
+                        <input type="text" class="" id="txtRateB2B" skinid="Enter B2B Rate....!">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["RateB2C"]</label>
+                        <input type="text" class="" id="txtRateB2C" skinid="Enter B2C Rate....!">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["ApplyB2CRateOnAllScreens"]</label>
+                        <input type="checkbox" checked id="chkB2C" style="margin-top:10px; height:19px; width:19px;" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="mb-2">
+                    <button class="btn btn-success btn-sm ct-btns" id="btnSave">@Localizer["Save"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(function () {
+            GetSettingList();
+        })
+
+        //====================== Get ========================\\
+
+        function GetSettingList() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/GetPlaySettings/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+
+                        $("#txtSettingsId").val(data.id);
+                        $("#txtPlaySecond").val(data.playSeconds);
+                        $("#txtPlayTime").val(data.playTimes);
+
+                        $("#txtRateB2B").val(parseFloat(data.rateB2b).toFixed(2));
+                        $("#txtRateB2C").val(parseFloat(data.rateB2c).toFixed(2));
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#btnSave").click(function () {
+
+            var appllyB2c = false;
+            if ($("#chkB2C").is(':checked')) { appllyB2c = true; }
+
+            if (CheckValidation("AddPage") == false) {
+
+                return false;
+            }
+
+            var formData = new FormData();
+
+            formData.append("id", $("#txtSettingsId").val());
+            formData.append("pSecond", $("#txtPlaySecond").val());
+            formData.append("pTime", $("#txtPlayTime").val());
+            formData.append("pPer", $("#txtPlayPer").val());
+            formData.append("b2bRate", $("#txtRateB2B").val());
+            formData.append("b2cRate", $("#txtRateB2C").val());
+            formData.append("appllyB2c", appllyB2c);
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/SavePlaySettings/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetSettingList();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+    </script>
+}

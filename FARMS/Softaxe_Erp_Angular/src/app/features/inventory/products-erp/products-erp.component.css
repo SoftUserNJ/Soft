@@ -1,0 +1,31 @@
+.fa-plus-square {
+    color: #cccccc;
+    font-size: 23px;
+    line-height: 1.07;
+    cursor: pointer;
+  }
+
+.commom-img {
+    border: 1px solid #e9e4e4;
+    height: 356px;
+    width: 100%;
+}
+
+.commom-img img {
+    height: 100%;
+    width: 100%;
+}
+
+.imgBox img, .imgBox iframe {
+    height: 317px;
+    width: 100%;
+}
+
+
+.form-control {
+    height: 22px !important;
+}
+
+.form-group input[type=text] {
+    height: 22px !important;
+}

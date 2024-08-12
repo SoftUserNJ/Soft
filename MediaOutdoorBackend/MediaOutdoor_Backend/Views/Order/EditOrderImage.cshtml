@@ -1,0 +1,557 @@
+﻿
+@{
+    ViewData["Title"] = "Edit Order Image";
+}
+
+
+<style>
+    #editable-image {
+        max-width: 100%;
+        height: auto;
+        position: absolute;
+    }
+
+    #editable-image2 {
+        max-width: 100%;
+        height: auto;
+        position: absolute;
+    }
+
+    #editable-image3 {
+        max-width: 100%;
+        height: auto;
+        position: absolute;
+    }
+
+    .text-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 24px;
+        white-space: nowrap;
+        cursor: grab;
+    }
+
+    .text-overlay2 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 24px;
+        white-space: nowrap;
+        cursor: grab;
+    }
+
+    .remove-button {
+        display: none;
+    }
+
+    .text-overlay3 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 24px;
+        cursor: grab;
+        white-space: nowrap;
+    }
+
+    .slideshow-container {
+        max-width: 1000px;
+        position: relative;
+        margin: auto;
+    }
+
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -22px;
+        color: black;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+    /* Caption text */
+    .text {
+        color: #f2f2f2;
+        font-size: 15px;
+        padding: 8px 12px;
+        position: absolute;
+        bottom: 8px;
+        width: 100%;
+        text-align: center;
+    }
+
+
+    /* The dots/bullets/indicators */
+    .dot {
+        cursor: pointer;
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+    }
+
+
+    /* Fading animation */
+    .fade {
+        animation-name: fade;
+        animation-duration: 1.5s;
+    }
+
+    /*.loader {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #FFF;
+        border-bottom-color: #FF3D00;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+        Top: 100%;
+    }*/
+
+</style>
+
+
+<hr class="my-4">
+
+<div class="col-lg-12" style="text-align:center;">
+    <div class="section-title">
+        <span>Screen</span>
+        <div id="screenTitle"></div>
+    </div>
+</div>
+
+<section class="imgUploadContainer">
+    <div class="container-fluid">
+        <div class="slideshow-container">
+            <div id="SingleScreen">
+            </div>
+            <div id="DoubleScreen">
+            </div>
+
+            <input type="hidden" id="selected-slide" value="1">
+            <div id="TripleScreen">
+            </div>
+
+
+
+
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+        </div>
+
+    </div>
+
+</section>
+
+@*<span id="loader" class="loader"></span>*@
+
+
+<div id="slide1" class="container mt-3">
+</div>
+
+
+
+
+
+<div style="margin-top: 20px;padding: 38px;" class="section-title">
+
+    <button class="btn btn-success" onclick="SaveDesign();" id="Bookingbtn" style="float: right;">Save </button>
+</div>
+
+    @section scripts{
+    <script>
+
+        $(document).ready(function () {
+            GetSelectedScreens();
+        
+        });
+
+        function getUrlParameter(name) {
+            
+            name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        function GetSelectedScreens() {
+            
+            var orderNo = getUrlParameter('orderNo');
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                url: '/Order/GetCartbyCustomer?orderNo=' + orderNo,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    $('#SingleScreen').empty();
+                    $('#DoubleScreen').empty();
+                    $('#TripleScreen').empty();
+
+                    data.forEach(item => {
+                        if (item.ScreenSize == "Single") {
+                            $('#SingleScreen').show();
+                            const singleScreenDiv = `
+                                                                                                <div  class="mySlides " ScreenId="${item.ScreenId}">
+                                                                                                    <div class="image-container" style="background-image: url('/img/banner/SingleUpload.jpg');height: 400px;width: 100%;background-position: center; border-radius:28px;background-size: cover;background-repeat: no-repeat;"></div>
+                                                                                                                    <img id="editable-image${item.ScreenId}"  src="http://mediaoutdoorbackend.softaxe.com/${item.orderimage}"style=" position:absolute; top: 31px;left: 401px;height: 339px;width: 199px;">
+                                                                            <div id="text-overlay${item.ScreenId}1" class="text-overlay"></div>
+                                                                                    <div id="text-overlay${item.ScreenId}2" class="text-overlay2"></div>
+                                                                                    <div id="text-overlay${item.ScreenId}3" class="text-overlay3"></div>
+                                                                        </div>`;
+                            $('#SingleScreen').append(singleScreenDiv);
+
+
+                        }
+                        else if (item.ScreenSize == "Double") {
+                            $('#DoubleScreen').show();
+
+                            const DoubleScreenDiv = `        <div  class="mySlides " ScreenId="${item.ScreenId}">
+                                                                        <div class="image-container" style="background-image: url('/img/banner/DoubleUpload.jpg');height: 400px;width: 100%;background-position: center; border-radius:28px;background-size: cover;background-repeat: no-repeat;"></div>
+                                                                                                    <img id="editable-image${item.ScreenId}"  src="http://mediaoutdoorbackend.softaxe.com/${item.orderimage}" style=" position:absolute; top: 46px;left: 312px;height: 310px;width: 387px;">
+                                                                            <div id="text-overlay${item.ScreenId}1" class="text-overlay"></div>
+                                                                            <div id="text-overlay${item.ScreenId}2" class="text-overlay2"></div>
+                                                                                    <div id="text-overlay${item.ScreenId}3" class="text-overlay3"></div> </div>`;
+
+                            $('#DoubleScreen').append(DoubleScreenDiv);
+
+                        }
+                        else if (item.ScreenSize == "Triple") {
+                            $('#TripleScreen').show();
+
+                            const tripleScreenDiv = `
+                                                                                                <div  class="mySlides" ScreenId="${item.ScreenId}">
+                                                                                     <div class="image-container" style="background-image: url('/img/banner/UploadBanner.jpg');height: 400px;width: 100%;background-position:  center; border-radius:28px;background-size: cover;background-repeat: no-repeat;"></div>
+                                                                                                                    <img id="editable-image${item.ScreenId}" src="http://mediaoutdoorbackend.softaxe.com/${item.orderimage}" style=" position:absolute; top: 58px; left: 217px; height: 289px; width: 566px; ">
+                                                                                    <div id="text-overlay${item.ScreenId}1" class="text-overlay"></div>
+                                                                                    <div id="text-overlay${item.ScreenId}2" class="text-overlay2"></div>
+                                                                                    <div id="text-overlay${item.ScreenId}3" class="text-overlay3"></div>
+                                                                        </div>`;
+                            $('#TripleScreen').append(tripleScreenDiv);
+
+                        }
+                        const head = `<div id="ScreenTitle${item.ScreenId}" style="display:none;" class="screenTitle"><h3 >${item.StationName} - ${item.ScreenName}</h3><div><h4 style=" margin-top: 10px;margin-bottom: 10px; "> Screen Size: ${item.ScreenSize}</h4><div></div>`;
+                        $('#screenTitle').append(head);
+
+
+                        const slide1 = `<div id="ScreenConfigure${item.ScreenId}" style="display:none;" class="ScreenConfigure"><div class="d-flex justify-content-center mb-3">
+
+
+                                                            <div class="p-2"><input id="text-input${item.ScreenId}1" placeholder="Type your text" class="form-control form-control-lg" disabled></div>
+                                                    <div class="p-2">
+
+                                            <select id="font-select${item.ScreenId}1" style=" height: 46px; " class="form-control" disabled>
+                                          <option value="Arial">Arial</option>
+                                                                    <option value="Times New Roman">Times New Roman</option>
+                                                                    <option value="Courier New">Courier New</option>
+                                        </select>
+                                                    </div>
+
+                                                              <div class="p-2">
+                                                                                                                             <select id="font-input${item.ScreenId}1" class="form-control" style=" width: 80px; " disabled >
+                                                                                  <option value="16">Size</option>
+                                                              <option value="18">18</option>
+                                                              <option value="24">24</option>
+                                                              <option value="28">28</option>
+                                                              <option value="32">32</option>
+                                                              <option value="42">42</option>
+                                                                          </select>
+
+                                                                                                     </div>
+
+                                                    <div class="p-2">
+                                                                        <input class="form-control form-control-lg" type="color" id="color-picker${item.ScreenId}1" style=" width: 70px; font-size: 16px; " value="#000000" disabled>
+                                                        </div>
+
+
+
+
+                                                    <div class="p-2">
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-center mb-3">
+                                                                    <div class="p-2"><input id="text-input${item.ScreenId}2" placeholder="Type your text" class="form-control form-control-lg" disabled></div>
+                                                    <div class="p-2">
+                                                                                             <select id="font-select${item.ScreenId}2" style=" height: 46px; " class="form-control" disabled>
+                                          <option value="Arial">Arial</option>
+                                                                    <option value="Times New Roman">Times New Roman</option>
+                                                                    <option value="Courier New">Courier New</option>
+                                        </select>
+                                                    </div>
+
+                                                              <div class="p-2">
+                                                                                                                             <select id="font-input${item.ScreenId}2" class="form-control" style=" width: 80px; " disabled>
+                                                                                   <option value="16">Size</option>
+                                                              <option value="18">18</option>
+                                                              <option value="24">24</option>
+                                                              <option value="28">28</option>
+                                                              <option value="32">32</option>
+                                                              <option value="42">42</option>
+                                                                          </select>
+
+                                                                                                     </div>
+
+                                                    <div class="p-2">
+                                                                        <input class="form-control form-control-lg" type="color" id="color-picker${item.ScreenId}2" style=" width: 70px; font-size: 16px; " value="#000000" disabled>
+                                                    </div>
+                                                    <div class="p-2">
+
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-center mb-3">
+                                                                                    <div class="p-2"><input id="text-input${item.ScreenId}3" placeholder="Type your text" class="form-control form-control-lg" disabled></div>
+                                                    <div class="p-2">
+                                                                                                    <select id="font-select${item.ScreenId}3" style=" height: 46px; " class="form-control" disabled>
+                                          <option value="Arial">Arial</option>
+                                                                    <option value="Times New Roman">Times New Roman</option>
+                                                                    <option value="Courier New">Courier New</option>
+                                        </select>
+                                                    </div>
+
+                                                              <div class="p-2">
+                                                                                                                             <select id="font-input${item.ScreenId}3" class="form-control" style=" width: 80px; " disabled >
+                                                                                   <option value="16">Size</option>
+                                                              <option value="18">18</option>
+                                                              <option value="24">24</option>
+                                                              <option value="28">28</option>
+                                                              <option value="32">32</option>
+                                                              <option value="42">42</option>
+                                                                          </select>
+
+                                                                                                     </div>
+
+                                                    <div class="p-2">
+                                                                        <input class="form-control form-control-lg" type="color" id="color-picker${item.ScreenId}3" style=" width: 70px; font-size: 16px; " value="#000000" disabled>
+                                                    </div>
+
+
+
+
+                                                    <div class="p-2">
+                                                    </div>
+                                                        </div> </div>`;
+
+                        $('#slide1').append(slide1);
+
+                        plusSlides(slideIndex);
+                        bindDataToElements(item);
+
+                    });
+
+
+
+                    EnableActiveScreen();
+                },
+                error: function () {
+                    console.log("Error fetching data from the server.");
+                }
+            });
+
+
+
+        }
+
+
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+
+        }
+
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+
+            showSlides(slideIndex += n);
+            EnableActiveScreen();
+        }
+
+        function showSlides(n) {
+
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            if (slides.length === 0) return; // No slides to display
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+
+
+
+        function EnableActiveScreen() {
+            let currentSlide = document.querySelector('.mySlides[style*="block"]');
+            var screenId = currentSlide.getAttribute("ScreenId");
+            $(".ScreenConfigure").css("display", "none");
+            $(".screenTitle").css("display", "none");
+
+            if (screenId) {
+                $(`#ScreenConfigure${screenId}`).css("display", "block");
+                $(`#ScreenTitle${screenId}`).css("display", "block");
+            }
+        }
+
+
+        function bindDataToElements(item) {
+            console.log(item);
+            for (let i = 1; i <= 3; i++) {
+                const textInput = $(`#text-input${item.ScreenId}${i}`);
+                const fontSelect = $(`#font-select${item.ScreenId}${i}`);
+                const colorPicker = $(`#color-picker${item.ScreenId}${i}`);
+                const FontSize = $(`#font-input${item.ScreenId}${i}`);
+
+                textInput.val(item[`text${i}`]);
+                fontSelect.val(item[`text${i}font`]);
+                colorPicker.val(item[`Text${i}Color`]);
+                FontSize.val(item[`Text${i}Size`]);
+
+                const textOverlay = $(`#text-overlay${item.ScreenId}${i}`);
+                textOverlay.text(textInput.val());
+                textOverlay.css("font-family", fontSelect.val());
+                textOverlay.css("color", colorPicker.val());
+
+                // Set font size from JSON data
+                const fontSize = item[`Text${i}Size`];
+                textOverlay.css("font-size", fontSize + "px");
+
+                // Set position from JSON data
+                const topPosition = item[`Text${i}TopPosition`];
+                const leftPosition = item[`Text${i}LeftPosition`];
+                textOverlay.css({ top: topPosition, left: leftPosition });
+
+                makeTextOverlayDraggable(item.ScreenId, i, item.ScreenSize);
+            }
+
+
+        }
+
+
+
+        function makeTextOverlayDraggable(screenId, suffix, screenSize) {
+            
+            var isDragging = false;
+            var offsetX, offsetY;
+            var textOverlay = $("#text-overlay" + screenId + suffix);
+
+            textOverlay.mousedown(function (e) {
+                isDragging = true;
+                offsetX = e.clientX - textOverlay.position().left;
+                offsetY = e.clientY - textOverlay.position().top;
+            });
+
+            $(document).mousemove(function (e) {
+                if (isDragging) {
+                    var x = e.clientX - offsetX;
+                    var y = e.clientY - offsetY;
+
+                    // Define the boundaries based on screen size
+                    var maxWidth, maxHeight;
+                    var screenSize = "Single"; // Modify this based on your data
+
+                    if (screenSize == "Single") {
+                        maxWidth = 800;
+                        maxHeight = 300;
+                    } else if (screenSize == "Double") {
+                        maxWidth = 800;
+                        maxHeight = 300;
+                    } else if (screenSize == "Triple") {
+                        maxWidth = 800;
+                        maxHeight = 300;
+                    }
+
+                    // Ensure the text stays within the boundaries
+                    x = Math.min(Math.max(x, 0), maxWidth);
+                    y = Math.min(Math.max(y, 0), maxHeight);
+
+                    textOverlay.css({ left: x + "px", top: y + "px" });
+                }
+            });
+
+            $(document).mouseup(function () {
+                isDragging = false;
+            });
+        }
+
+        var ScreenDataArray = [];
+
+        function SaveDesign() {
+
+            var OrderNo = getUrlParameter('orderNo');
+
+            var divElements = document.querySelectorAll('.mySlides');
+
+            // Loop through the div elements
+            for (var i = 0; i < divElements.length; i++) {
+                // Check if the "screenid" attribute exists for the current div
+                var screenid = divElements[i].getAttribute('screenid');
+                if (screenid !== null) {
+
+                    var screenData = {
+
+                        ScreenId: screenid,
+                        TopValue1: $("#text-overlay" + screenid + "1").css("top"),
+                        LeftValue1: $("#text-overlay" + screenid + "1").css("left"),
+                        TopValue2: $("#text-overlay" + screenid + "2").css("top"),
+                        LeftValue2: $("#text-overlay" + screenid + "2").css("left"),
+                        TopValue3: $("#text-overlay" + screenid + "3").css("top"),
+                        LeftValue3: $("#text-overlay" + screenid + "3").css("left")
+                    };
+
+                    ScreenDataArray.push(screenData);
+                }
+            }
+
+
+            var requestData = {
+                screenDataArray: ScreenDataArray
+            };
+            console.log(requestData);
+
+            $.ajax({
+                type: "POST",
+                url: "/Order/EditDesign?OrderNo=" + OrderNo,
+                data: JSON.stringify(requestData),
+                contentType: "application/json",
+                success: function (response) {
+                    ScreenDataArray = [];
+                    toastr.success("Design Updated Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    window.location.href = "/Order/OrderPending";
+
+                },
+                error: function () {
+                    ScreenDataArray = [];
+                    toastr.error("Please Try Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                }
+            });
+        }
+
+
+    </script>
+    
+    
+    }

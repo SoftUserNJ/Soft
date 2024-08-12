@@ -1,0 +1,287 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using MediaOutDoor.Models
+@inject IViewLocalizer Localizer
+
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@inject MediaOutdoorContext _context
+@{
+    var uid = Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString("UserId"));
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Media Outdoor</title>
+    <link rel="icon" href="~/img/favicon.png" sizes="32x32" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/MediaOutDoor.styles.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/elegant-icons.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/css/nice-select.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/slicknav.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link href="~/lib/toastr/toatr.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500;600;700&display=swap" rel="stylesheet">
+
+
+    <style>
+        .dropdown:hover > .dropdown-menu {
+            display: block;
+        }
+
+
+        .dropdown-item:focus, .dropdown-item:hover {
+            color: #16181b;
+            background-color: transparent;
+        }
+
+    </style>
+</head> 
+
+<body>
+
+        <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a asp-controller="MOD" asp-action="SignIn">Sign in</a>
+                @*<a href="JavaScript:void(0)">FAQs</a>*@
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>EUR </span>
+            </div>
+        </div>
+        <div class="offcanvas__nav__option">
+            <a href="JavaScript:void(0)" class="search-switch"><img src="/img/icon/search.png" alt="search"></a>
+            <a href="JavaScript:void(0)"><img src="/img/icon/heart.png" alt=""></a>
+            <a  asp-controller="Cart" asp-action="Cart"><img src="/img/icon/cart.png" alt=""></a>
+            <div id="cartRate" class="cartRate">€0.00</div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>@Localizer["VisibleMetroStation"].</p>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-7">
+                        <div class="header__top__left">
+                            <p>@Localizer["VisibleMetroStation"].</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                        <div class="header__top__right">
+                            <div class="header__top__links d-flex justify-content-end align-items-center">
+
+                                @if (uid != 0)
+                                {
+                                    <div class="dropdown" style="cursor:pointer;">
+                                        <a class="dropdown-item" data-toggle="dropdown">@Localizer["Account"]</a>
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" asp-controller="Order" asp-action="MyOrders">@Localizer["MyOrders"]</a>
+                                            <a class="dropdown-item" asp-controller="MOD" asp-action="ProfileSetting">@Localizer["Profile"]</a>
+                                            <a class="dropdown-item" asp-controller="MOD" asp-action="Logout">@Localizer["SignOut"]</a>
+                                        </div>
+                                    </div>
+                                    @*<a href="JavaScript:void(0)">@Localizer["Faqs"]</a>*@
+
+                                    <a class="mr-1" href="@Url.Action("SetLanguage", "Language", new { culture = "nl-NL", returnUrl = Context.Request.Path })">
+                                        <img src="~/img/dutch-flag.png" style="width:16px;">
+                                    </a>
+                                    <a href="@Url.Action("SetLanguage", "Language", new { culture = "en-US", returnUrl = Context.Request.Path })">
+                                        <img src="~/img/eng-flag.png" style="width:17px;">
+                                    </a>
+                                }
+                                else
+                                {
+                                    <div>
+                                        <a asp-controller="MOD" asp-action="Register">@Localizer["Register"]</a>
+                                        <a asp-controller="MOD" asp-action="SignIn">@Localizer["SignIn"]</a>
+                                        @*<a href="JavaScript:void(0)">@Localizer["Faqs"]</a>*@
+
+                                        <a class="mr-1" href="@Url.Action("SetLanguage", "Language", new { culture = "nl-NL", returnUrl = Context.Request.Path })">
+                                            <img src="~/img/dutch-flag.png" style="width:16px;">
+                                        </a>
+                                        <a href="@Url.Action("SetLanguage", "Language", new { culture = "en-US", returnUrl = Context.Request.Path })">
+                                            <img src="~/img/eng-flag.png" style="width:17px;">
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-3">
+                    <div class="">
+                        <a asp-controller="MOD" asp-action="index"><img src="/img/logo.png" style="height:70px;" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li class="active"><a asp-controller="MOD" asp-action="index">Home</a></li>
+                            <li><a asp-controller="order" asp-action="Private">@Localizer["Private"]</a></li>
+                            <li><a asp-controller="order" asp-action="Commercial">@Localizer["Commercial"]</a></li>
+                            @*<li><a href="JavaScript:void(0)">Shop</a></li>*@
+                            <li>
+                                <a href="JavaScript:void(0)">@Localizer["More"]</a>
+                                <ul class="dropdown">
+                                    <li><a asp-controller="MOD" asp-action="AboutUs">@Localizer["AboutUs"]</a></li>
+                                    <li><a asp-controller="MOD" asp-action="ContactUs">@Localizer["Contact"]</a></li>
+                                    <li><a asp-controller="Cart" asp-action="Cart">@Localizer["ShoppingCart"]</a></li>
+                                    @*<li><a href="JavaScript:void(0)">Shop Details</a></li>
+                                    <li><a href="JavaScript:void(0)">Shopping Cart</a></li>
+                                    <li><a href="JavaScript:void(0)">Check Out</a></li>
+                                    <li><a href="JavaScript:void(0)">Blog Details</a></li>*@
+                                    <li><a asp-controller="MOD" asp-action="PrivacyPolicy">@Localizer["PrivacyPolicy"]</a></li>
+                                </ul>
+                            </li>
+                            @*<li><a href="JavaScript:void(0)">Blog</a></li>*@
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__nav__option">
+                        <a href="JavaScript:void(0)" class="search-switch"><img src="/img/icon/search.png" alt=""></a>
+                        <a href="JavaScript:void(0)"><img src="/img/icon/heart.png" alt=""></a>
+                        <a asp-controller="Cart" asp-action="Cart"><img src="/img/icon/cart.png" alt=""></a>
+                        <div class="price"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+    @RenderBody()
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="JavaScript:void(0)"><img src="/img/logo.png" alt=""></a>
+                        </div>
+                        <p>@Localizer["VisibleMetroStation"]</p>
+                        <a href="JavaScript:void(0)"><img src="img/payment.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>@Localizer["Booking"]</h6>
+                        <ul>
+                            <li><a href="JavaScript:void(0)">@Localizer["MultipleStations"]</a></li>
+                            <li><a href="JavaScript:void(0)">@Localizer["AllLocations"]</a></li>
+                            <li><a href="JavaScript:void(0)">@Localizer["ScreensSpecification"]</a></li>
+                            <li><a href="JavaScript:void(0)">@Localizer["Pricing"]</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Support</h6>
+                        <ul>
+                            <li><a href="JavaScript:void(0)">@Localizer["ContactUs"]</a></li>
+                            <li><a href="JavaScript:void(0)">@Localizer["PaymentMethods"]</a></li>
+                            <li><a href="JavaScript:void(0)">@Localizer["Available"]  24/7</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>@Localizer["NEWSLETTER"]</h6>
+                        <div class="footer__newslatter">
+                            <p>@Localizer["KnowAboutNewLocations"]
+                                @*Be the first to know about new Locations, look Stations, sales & promos!*@
+                                </p>
+                            <form action="JavaScript:void(0)">
+                                <input type="text" placeholder="@Localizer["YourEmail"]">
+                                <button type="submit"><span class="icon_mail_alt"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" hidden>
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>
+                            Copyright ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>2020
+                            All rights reserved | This template is made with <i class="fa fa-heart-o"
+                                                                                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        </p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="@Localizer["SearchHere"]">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    <script src="~/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+    @*<script src="~/js/jquery.nice-select.min.js" asp-append-version="true"></script>*@
+    <script src="~/js/jquery.nicescroll.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.magnific-popup.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.countdown.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.slicknav.js" asp-append-version="true"></script>
+    <script src="~/js/mixitup.min.js" asp-append-version="true"></script>
+    <script src="~/js/owl.carousel.min.js" asp-append-version="true"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/script.js"></script>
+
+    <script src="~/lib/toastr/toastr.js" asp-append-version="true"></script>
+    <script src="~/lib/toastr/toastr.min.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

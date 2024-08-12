@@ -1,0 +1,550 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Sliders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content AddPage pt-1">
+    <div class="card">
+        <div class="card-body">
+            
+
+            <div class="row activeForm disabled">
+
+                <div class="border rounded border-secondary mb-2" style="height:800px; width:1358px; ">
+                    <img src="" id="ImageUser" />
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+
+                        <div class="d-flex">
+                            <label>@Localizer["SliderHeading"]</label>
+                            <div class="ms-auto">
+                                <input type="color" style="height:20px; width:30px;" class="border-0" id="headingStyle" skinid="">
+                            </div>
+                        </div>
+
+                        <input type="text" class="" id="txtSliderHeading" skinid="">
+                        <input type="hidden" id="txtSliderId">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+
+                        <div class="d-flex">
+                            <label>@Localizer["SliderText"]</label>
+                            <div class="ms-auto">
+                                <input type="color" style="height:20px; width:30px;" class="border-0" id="textStyle" skinid="">
+                            </div>
+                        </div>
+
+                        <input type="text" class="" id="txtSliderText" skinid="">
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input class="form-control" type="file" id="userImg" accept="image/jpg, image/jpeg, image/png" />
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="row">
+                <div class="mb-3">
+                    <button class="btn btn-primary btn-sm ct-btns" id="btnNew">@Localizer["New"]</button>
+                    <button class="btn btn-success btn-sm ct-btns" id="btnSave">@Localizer["Save"]</button>
+                    <button class="btn btn-secondary btn-sm ct-btns" id="btnRefresh">@Localizer["Refresh"]</button>
+                </div>
+            </div>
+
+            <div class="table-top table-topm mb-2">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch" skinid="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:270px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />Id</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["SliderHeading"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["SliderText"]</th>
+                            <th class="text-center pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Image"]</th>
+                            <th class="text-center pe-3 last-th-sticky"><input type="checkbox" class="printCheckBox notPrintCol" hidden>@Localizer["Action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sliderList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ImgDownloadModal">
+    <div class="modal-dialog" style="max-width:1200px;">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div class="card mb-0">
+                    <div class="card-body p-3">
+                        <div class="">
+
+                            <div class="d-flex justify-content-end" style="margin-top: 5px; margin-right: 5px;">
+                                <button type="button" class="btn-close1 bg-dark" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div style="margin-top: -25px;" class="d-flex justify-content-center">
+                                <img src="" id="modalImgDownload">
+                            </div>
+
+                        </div>
+                        <div class="mt-2">
+                            <button class="ct-btns btn btn-primary btn-sm" id="btnDownloadOrderImg">@Localizer["Download"]</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        $(function () {
+            GetSliderList();
+            $("#btnRefresh").click();
+        })
+
+        $('#headingStyle, #textStyle').on('input', function () {
+            var selectedColor = $(this).val();
+            $(this).closest('.d-flex').next('input').css('color', selectedColor);
+        });
+        
+        //====================== Sliders Get ========================\\
+
+        function GetSliderList() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/GetSliders/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#sliderList").empty();
+                        $.each(data, function (i, item) {
+
+                            var htmlStyling = "";
+                            if (item.htmlStyling != null) {
+                                htmlStyling = JSON.parse(item.htmlStyling);
+                            }
+
+                            var image = item.image;
+                            var linkContainS = "https://mediaoutdoorbackend.softaxe.com/";
+                            var linkContain = "http://mediaoutdoorbackend.softaxe.com/";
+
+                            if (image.includes(linkContainS)) {
+                                image = image.replace(linkContainS, "");
+                            }
+
+                            if (image.includes(linkContain)) {
+                                image = image.replace(linkContain, "");
+                            }
+
+                            $("#sliderList").append(`
+                             <tr>
+                                 <td class="sliderId ps-2">${item.slideNo}</td>
+                                 <td class="heading" style="color: ${htmlStyling.headingcolor}">${item.heading}</td>
+                                 <td class="text" style="color: ${htmlStyling.textcolor}">${item.text}</td>
+
+                                 <td class="text-center">
+                                     <span class="me-2 btnView cursor-pointer" >
+                                       <i class="fas fa-eye fs-22" style="color: #000000;" data-bs-toggle="modal" data-bs-target="#ImgDownloadModal"></i>
+                                     </span>
+                                 </td>
+
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-2 btnEdit cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDel cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                                 <td class="sliderImage d-none">${image}</td>
+                             </tr>
+                            `)
+                        });
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSave").click(function () {
+
+            if (CheckValidation("AddPage") == false) {
+                return false;
+            }
+
+            var textcolor = $("#textStyle").val();
+            var headingcolor = $("#headingStyle").val();
+
+
+            var htmlStyling = { textcolor: textcolor, headingcolor: headingcolor }
+                htmlStyling = JSON.stringify(htmlStyling);
+
+
+            var formData = new FormData();
+
+            var totalFiles = document.getElementById("userImg").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("userImg").files[i];
+                formData.append("image", file);
+            }
+
+            formData.append("id", $("#txtSliderId").val());
+            formData.append("heading", $("#txtSliderHeading").val());
+            formData.append("text", $("#txtSliderText").val());
+            formData.append("htmlStyling", htmlStyling);
+            formData.append("baseUrl", window.location.origin + "/");
+
+            ////CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            //if (CheckDuplicateEntry($("#txtUserName").val().trim(), "#allUsersList", ".userName", $("#txtUserId").val(), ".userId") == false) {
+            //    toastr.info("User Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+            //    $("#txtUserName").focus();
+            //    return false;
+            //}
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/SaveSliders/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetSliderList();
+                            $("#txtSliderId").val("");
+                            $("#btnRefresh").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDel", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".sliderId").text();
+            obj.image = $(this).closest('tr').find(".sliderImage").text();
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/DelSliders/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+
+                        if (data == "InUse") {
+                            toastr.success("Already In Use", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            return false;
+                        }
+
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetSliderList();
+                            $("#txtSliderId").val("");
+                            $("#btnRefresh").click();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEdit', function () {
+
+            $(".activeForm").removeClass('disabled');
+
+            var id = $(this).closest('tr').find('.sliderId').text();
+            var heading = $(this).closest('tr').find('.heading').text();
+            var text = $(this).closest('tr').find('.text').text();
+
+            $("#txtSliderId").val(id);
+            $("#txtSliderHeading").val(heading);
+            $("#txtSliderText").val(text);
+
+
+            var headingColor = $(this).closest('tr').find('.heading').attr("style");
+            var headingcolorCode = /color:\s*#([0-9a-fA-F]+)/i.exec(headingColor);
+
+            if (headingcolorCode != null) {
+                headingColor = "#" + headingcolorCode[1];
+            }
+            else{
+                headingColor = "";
+            }
+
+            var textColor = $(this).closest('tr').find('.text').attr("style");
+            var textcolorCode = /color:\s*#([0-9a-fA-F]+)/i.exec(textColor);
+
+            if (textcolorCode != null) {
+                textColor = "#" + textcolorCode[1];
+            }
+            else {
+                textColor = "";
+            }
+
+
+            $("#textStyle").val(textColor);
+            $("#headingStyle").val(headingColor);
+
+            $("#txtSliderHeading").css('color', headingColor);
+            $("#txtSliderText").css('color', textColor);
+
+
+            var userImg = $(this).closest('tr').find('.sliderImage').text();
+            var path = window.location.origin;
+            $("#ImageUser").attr('src', path + "/" + userImg);
+
+            $("#btnSave").show();
+            $("#btnNew").hide();
+            $("#btnSave").text('Update');
+
+        });
+
+
+        //====================== Buttons ========================\\
+
+        $("#btnNew").click(function () {
+
+            $("#txtSliderId").val("");
+            $("#btnRefresh").click();
+
+            $(".activeForm").removeClass('disabled');
+
+            $(this).hide();
+            $("#btnSave").text('Save');
+            $("#btnSave").show();
+            $("#txtSliderHeading").focus();
+
+        });
+
+        $("#btnRefresh").click(function () {
+
+            var uId = $("#txtSliderId").val();
+
+            if (uId != 0) {
+                $(".sliderId").each(function () {
+                    const userIdValue = $(this).text().trim();
+                    if (userIdValue === uId) {
+                        $(this).closest('tr').find('.btnEdit').click();
+                        return false;
+                    }
+                });
+            }
+            else {
+
+                $(".activeForm").addClass('disabled');
+
+                $("#btnSave").hide();
+                $("#btnNew").show();
+
+                $("#txtSliderId").val('');
+                $("#txtSliderHeading").val('');
+                $("#txtSliderText").val('');
+
+                $("#txtSliderHeading").css("color", "");
+                $("#txtSliderText").css("color", "");
+
+                $("#textStyle").val('#000000');
+                $("#headingStyle").val('#000000');
+
+                $("#ImageUser").attr('src', '');
+                $("#userImg").val('');
+            }
+        });
+
+
+        $('body').on('click', ".btnView", function () {
+
+            var userImg = $(this).closest('tr').find('.sliderImage').text();
+            var path = window.location.origin;
+            $("#modalImgDownload").attr('src', path + "/" + userImg);
+
+            //var sliderImage = $(this).closest('tr').find('.sliderImage').text();
+            //$("#modalImgDownload").attr('src', sliderImage);
+        });
+
+        $("#btnDownloadOrderImg").click(function () {
+            var userImg = $("#modalImgDownload").attr("src");
+
+            var downloadLink = document.createElement("a");
+            downloadLink.href = userImg;
+
+            downloadLink.download = downloadLink.pathname; // Optional, specify the desired filename
+
+            // Trigger a click event on the <a> element to start the download
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+
+        });
+
+
+        //====================== Search ========================\\
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#sliderList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        //====================== User Image ========================\\
+        $("body #userImg").change(function (event) {
+            $("#ImageUser").attr('src', URL.createObjectURL(event.target.files[0]));
+        });
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]" + ".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+
+    </script>
+}

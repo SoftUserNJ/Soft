@@ -1,0 +1,441 @@
+<section>
+
+    <div class="content ListPage" *ngIf="isShowPage">
+        <div class="page-header">
+            <div class="page-title">
+                <h4 class="newcolor">Store Purchase Entry</h4>
+                <h6 class="newcolor">Manage Store Purchase Entry</h6>
+            </div>
+            <div class="page-btn">
+                <div class="wordset newwordset">
+                    <ul>
+                        <li>
+                            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf"
+                                id="pdfPrint">
+                                <img src="/assets/img/icons/pdf.svg" alt="img">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Home/Index" role="button">
+                                <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row align-items-center mb-2">
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="search-set">
+                            <div class="search-path">
+                                <a class="btn btn-filter" id="filter_search">
+                                    <img src="/assets/img/icons/filter.svg" alt="img">
+                                    <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+                                </a>
+                            </div>
+                            <div class="search-input">
+                                <input (input)="searchGrid($event)" type="search" id="txtSearch" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7 col-md-6 col-sm-12">
+
+                        <div class="row align-items-center">
+                            <div class="col-lg-2 col-md-2 text-end p-0">
+                                <span class="fw-bolder">From Date</span>
+                            </div>
+                            <div class="col-lg-3 col-md-4 ps-1">
+                                <div class="form-group mb-0">
+                                    <div class="input-groupicon">
+                                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                                            [matDatepicker]="datepicker" [(ngModel)]="fromDate"
+                                            (click)="datepicker.open()" />
+                                        <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                                        <div class="addonset">
+                                            <img src="/assets/img/icons/calendars.svg" alt="img">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 text-end p-0">
+                                <span class="fw-bolder">To Date</span>
+                            </div>
+                            <div class="col-lg-3 col-md-4 ps-1">
+                                <div class="form-group mb-0">
+                                    <div class="input-groupicon">
+                                        <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                                            [matDatepicker]="datepicker2" [(ngModel)]="toDate"
+                                            (click)="datepicker2.open()">
+                                        <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                                        <div class="addonset">
+                                            <img src="/assets/img/icons/calendars.svg" alt="img">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="add-icon" (click)="getRQList()">
+                                    <a class="w-50"><img src="/assets/img/icons/search.svg" alt="img"
+                                            class="searchSvg"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 ps-0">
+                        <div class="wordset ms-4 text-center">
+                            <p class="btn-addednew btnAdd" (click)="togglePages()">
+                                <img src="/assets/img/icons/plus.svg" alt="img" class="me-1">Add New
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive mb-1">
+                    <table class="table table-hover" id="tbl-print">
+                        <thead>
+                            <tr>
+                                <th class="text-start">Vch Type</th>
+                                <th class="text-center">Vch No</th>
+                                <th class="text-center">Vch Date</th>
+                                <th class="text-center w-10">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody #voucherLists>
+                            <tr *ngFor="let data of voucherList">
+                                <td class="text-start">{{data.VCHTYPE}}</td>
+                                <td class="text-center">{{data.VCHNO}}</td>
+                                <td class="text-center">{{data.VCHDATE}}</td>
+                                <td class="text-center">
+                                    <span class="btnRowPrint me-3">
+                                        <img src="/assets/img/icons/printer.svg" style="cursor: pointer;" alt="img">
+                                    </span>
+                                    <span (click)="editRP(data.VCHNO)" class="me-3 btnEditCategory">
+                                        <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                                    </span>
+                                    <span (click)="deleteRP(data.VCHNO)" class="confirm-text btnDelCategory">
+                                        <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete">
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content AddPage" *ngIf="!isShowPage">
+
+        <div class="page-header mb-4">
+            <div class="page-title">
+                <h4>Store Purchase From</h4>
+            </div>
+            <div class="page-btn" routerLink="/journal-voucher">
+                <a (click)="togglePages()" class="btn btn-added btnList">
+                    <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title=""
+                        data-bs-original-title="fa fa-th-list" aria-label="fa fa-th-list"></i>
+                    Home
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row" [ngClass]="{ 'disabled': isDisabled }">
+                    <div class="col-md-9 col-lg-9 col-sm-12">
+
+                        <div class="row align-items-center mb-2" [formGroup]="storePurchaseForm">
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                    <label class="fw-bold">Voucher Type</label>
+                                    <input type="text" formControlName="vchType" readonly class="form-control me-2">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                    <label class="fw-bold">VchNo</label>
+                                    <input type="text" formControlName="vchNo" readonly class="form-control me-2">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <div class="position-relative w-100 me-2 form-group mb-0">
+                                    <label class="fw-bold" style="margin-bottom: 0px !important;">Date</label>
+                                    <div class="input-groupicon">
+                                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                                            [matDatepicker]="datepicker" (click)="datepicker.open()"
+                                            formControlName="date" />
+                                        <mat-datepicker #datepicker></mat-datepicker>
+                                        <div class="addonset">
+                                            <img src="/assets/img/icons/calendars.svg" alt="img">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                    <label class="fw-bold">Party</label>
+                                    <ng-select class="bold-placeholder" [items]="partyList"
+                                        placeholder="--- Select Party ---" bindLabel="NAME" bindValue="CODE"
+                                        formControlName="party" [dropdownPosition]="'bottom'">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                    <label class="fw-bold">Group</label>
+                                    <input type="text" formControlName="group" readonly class="form-control me-2">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                    <label class="fw-bold">Brand</label>
+                                    <input type="text" formControlName="brand" readonly class="form-control me-2">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                    <label class="fw-bold">Item</label>
+                                    <input type="text" formControlName="item" readonly class="form-control me-2">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                    <label class="fw-bold">Stock Bal</label>
+                                    <input type="text" formControlName="stockBal" readonly class="form-control me-2">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label class="fw-bold">DemandNo</label>
+                                <input type="text" formControlName="demandNo" readonly class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label class="fw-bold">DemandQty</label>
+                                <input type="text" formControlName="demandQty" readonly class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label class="fw-bold">Rcvd</label>
+                                <input type="text" formControlName="rcvd" (input)="onRcvdInput($event)" class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label class="fw-bold">RejectedQty</label>
+                                <input type="text" formControlName="rejectedQty" readonly class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label class="fw-bold">Rate</label>
+                                <input type="text" formControlName="rate" (input)="onRateInput($event)" class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label class="fw-bold">Gross Amount</label>
+                                <input type="text" formControlName="grossAmount" readonly class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label class="fw-bold">NetValue</label>
+                                <input type="text" formControlName="netValue" readonly class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label class="fw-bold">Remarks</label>
+                                <input type="text" formControlName="remarks" class="form-control me-2">
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-2" [formGroup]="storePurchaseForm">
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label class="fw-bold">Mannual GPNO/Bill #</label>
+                                <input type="text" formControlName="mannualBill" class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <label class="fw-bold">Tax Rate</label>
+                                <input type="text" formControlName="taxRate" (input)="onlyNumeric($event)" class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <label class="fw-bold">Tax Amount</label>
+                                <input type="text" formControlName="taxAmount" (input)="onlyNumeric($event)" class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <label class="fw-bold">Carraige</label>
+                                <input type="text" formControlName="carraige" (input)="onlyNumeric($event)" class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <label class="fw-bold">Freight</label>
+                                <input type="text" formControlName="freight" (input)="onCarraigeInput($event)" class="form-control me-2">
+                            </div>
+
+                            <div class="col-lg-1 col-md-1 col-sm-12 ps-0">
+                                <button type="submit" (click)="onAdd()" class="btn btn-success btn-sm ms-2"
+                                    style="margin-top: 20px;">{{btnAdd}}</button>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive" style="height: 122px">
+                            <table class="table table-hover" id="tbl-print">
+                                <thead>
+                                    <tr>
+                                        <th>Dem.No</th>
+                                        <th>Code</th>
+                                        <th>Sub</th>
+                                        <th>ItemTitle</th>
+                                        <th>D.Qty</th>
+                                        <th>Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of demandDetail" (dblclick)="demandToFields($event)">
+                                        <td class="vchNo">{{ data.VCHNO }}</td>
+                                        <td class="code">{{ data.Dmcode }}</td>
+                                        <td class="sub">{{ data.Code }}</td>
+                                        <td class="names">{{ data.Names }}</td>
+                                        <td class="dqty">{{ data.DQty }}</td>
+                                        <td class="qty">{{ data.QTY }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive" style="height: 200px">
+                            <table class="table table-hover" id="tbl-print">
+                                <thead>
+                                    <tr>
+                                        <th>Item Title</th>
+                                        <th>Acc Qty</th>
+                                        <th>Rate</th>
+                                        <th>TaxRate</th>
+                                        <th>NetAmt</th>
+                                        <th>D.Qty</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of storePurchaseList; let i = index" (click)="rowHighLight($event)">
+                                        <td>{{ data.item }}</td>
+                                        <td>{{ data.rcvd }}</td>
+                                        <td>{{ data.rate }}</td>
+                                        <td>{{ data.taxRate }}</td>
+                                        <td>{{ data.netValue }}</td>
+                                        <td>{{ data.demandQty }}</td>
+                                        <td class="text-center">
+                                            <!-- Edit Button -->
+                                            <span (click)="editItem(data, i)" class="me-3 btnEditItem"
+                                                style="cursor: pointer">
+                                                <img src="/assets/img/icons/edit.svg" alt="Edit" />
+                                            </span>
+                                            <!-- Delete Button  -->
+                                            <span (click)="deleteItem(i)" class="confirm-text btnDelItem"
+                                                style="cursor: pointer">
+                                                <img src="/assets/img/icons/delete.svg" alt="Delete" />
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 col-sm-12">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="position-relative w-100 me-2 form-group mb-0">
+                                <label class="fw-bold" style="margin-bottom: 0px !important;">From Date</label>
+                                <div class="input-groupicon">
+                                    <input type="text" [(ngModel)]="fromLDate" class="form-control" placeholder="DD/MM/YYYY" matInput
+                                        [matDatepicker]="datepickerLD"  (click)="datepickerLD.open()" />
+                                    <mat-datepicker #datepickerLD [startAt]="fromLDate"></mat-datepicker>
+                                    <div class="addonset">
+                                        <img src="/assets/img/icons/calendars.svg" alt="img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="position-relative w-100 me-2 form-group mb-0">
+                                <label class="fw-bold" style="margin-bottom: 0px !important;">To Date</label>
+                                <div class="input-groupicon">
+                                    <input type="text" [(ngModel)]="toLDate" class="form-control" placeholder="DD/MM/YYYY" matInput
+                                        [matDatepicker]="datepickerLT" (click)="datepickerLT.open()" />
+                                    <mat-datepicker #datepickerLT [startAt]="toLDate"></mat-datepicker>
+                                    <div class="addonset">
+                                        <img src="/assets/img/icons/calendars.svg" alt="img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <button class="btn btn-primary btn-sm w-100 mt-2" (click)="getDemand()">Show List</button>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="fw-bold">Search</label>
+                            <input type="text" class="form-control me-2" (input)="searchGridDemand($event)">
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="table-responsive mt-2" style="max-height: 465px;">
+                                <table class="table table-hover" id="tbl-print">
+                                    <thead>
+                                        <tr>
+                                            <th>NO</th>
+                                            <th>Type</th>
+                                            <th>Date</th>
+                                            <th>Qty1</th>
+                                            <th>Qty2</th>
+                                            <th>Qty3</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody #demand>
+                                        <tr *ngFor="let data of demandList" (dblclick)="getDemandDetail($event)">
+                                            <td class="vchNo">{{ data.NO }}</td>
+                                            <td class="">{{ data.TYPE }}</td>
+                                            <td class="">{{ data.DATE }}</td>
+                                            <td class="">{{ data.QTY1 }}</td>
+                                            <td class="">{{ data.QTY2 }}</td>
+                                            <td class="">{{ data.QTY3 }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <button class="btn btn-primary btn-sm me-1" [hidden]="isShow"
+                            (click)="onClickNew()">New</button>
+                        <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+                            (click)="onClickSave()">Save</button>
+                        <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

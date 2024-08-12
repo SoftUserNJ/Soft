@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewData["Title"] = "Book Now";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="~/img/favicon.png" sizes="32x32" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/elegant-icons.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/nice-select.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/slicknav.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500;600;700&display=swap" rel="stylesheet">
+
+
+</head>
+
+
+<body>
+
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+
+    <section id="mapSection" class="map">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2.5 p-0 responsive">
+                    <div id="searchMap" style="height:100%; background-color:#393a55; border-radius:15px; margin-right:10px;">
+                        <h3 style="padding: 18px;font-family: 'Montserrat';font-size: 27px;text-align: center;"> Search Stations</h3>
+                        <div style=" padding-left: 20px; padding-right: 10px; "> <div class="input-group"> <div class="form-outline"> <input type="search" style="width: 258px;" id="searchMapsBtn" class="form-control"> </div> <button style=" margin-left: 4px; " type="button" class="btn btn-primary"> <i class="fas fa-search"></i> </button> </div> </div>
+                        <div style="padding:30px;overflow-y:scroll;height: 180px;" id="SearchMapLocations">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 p-0"><div id="map"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SideBar -->
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <center>
+        <h4>Order Overview</h4>
+        <h4 style="padding: 0px 0px 0px 0px;margin-bottom: 20px;">___________________</h4>
+    </center>
+    <div id="sideBarBody" style="height:320px; overflow-y:scroll;">
+    </div>
+    <div id="sidebarFooter">
+    </div>
+    <div style="padding-left: 12px; padding-bottom:10px; position:absolute;bottom:0">
+            <button type="button" class="btn btn-info" onclick="navigateToDesign()" style="padding-left: 20px;padding-right: 20px;font-size:14px" id="designButton">Proceed To Design</button>
+            <button type="button" class="btn btn-info" onclick="navigateToDesignMV()" style="padding-left: 20px;padding-right: 20px;font-size:14px;" id="designButtonMV">Proceed To Design</button>
+        <button type="button" onclick="navigateToCart()" class="btn btn-success" style="margin-left:10px;"><img src="~/img/icon/cart.png" /></button>
+        
+    </div>
+
+
+</div>
+
+
+    <!--Cart Button-->
+    <a onclick="openNav()" class="float" title="Click to Open Your Cart" style=" position: fixed; width: 60px; height:60px; bottom: 40px; right: 40px; cursor:pointer; background-color: #152a25; color:#FFF; border-radius:50px; text-align:center; box-shadow: 0px 2px 3px #999; ">
+        <img src="/img/icon/cart1.png" alt="" style=" margin-top: 18px; height: 25px; width: 28px;">
+    </a>
+    <!--Cart Button-->
+
+    <!--Modal-->
+    <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" id="modalHead">
+                    <center>
+                        <h3>Select Your Screens</h3>
+                    </center><button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="stationPopup" style="height: 450px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.nicescroll.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.magnific-popup.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.countdown.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.slicknav.js" asp-append-version="true"></script>
+    <script src="~/js/mixitup.min.js" asp-append-version="true"></script>
+    <script src="~/js/owl.carousel.min.js" asp-append-version="true"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/script.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkm76bzi-jCEicB-wsTV7DqxfJrR478tM&callback=loadProducts"></script>
+
+</body>
+</html>
+

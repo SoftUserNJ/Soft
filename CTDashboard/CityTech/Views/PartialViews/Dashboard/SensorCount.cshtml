@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+@{
+    Layout = null;
+}
+<div style="float: left; width: 100%;">
+    <h3 style="float: left;">SENSOR COUNT</h3>
+    <hr style="clear: both; background:DIMGREY;">
+
+    <table style="width: 100%; margin-top:20px">
+        <tr>
+            <td style="float: left;"><h5>GLASS SENSOR</h5></td>
+            <td style="float: right">
+                <h2 id="txtglasssensorcount" style="
+    MARGIN-TOP: -18PX;
+    FONT-WEIGHT: BOLD;
+    FONT-SIZE: 40PX;">
+    </h2>
+    </td>
+        </tr>
+        <tr>
+            <td style="float: left;"><h5>DOOR SENSOR</h5></td>
+
+            <td style="float: right">
+                <h2 id="txtdoorsensorcount" style="
+    MARGIN-TOP: -18PX;
+    FONT-WEIGHT: BOLD;
+    FONT-SIZE: 40PX;">
+                    3
+                </h2>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<script>
+    function SensorCountFunPartial(fromDate, toDate, location, objects) {
+
+        $("#txtglasssensorcount").text("0");
+        $("#txtdoorsensorcount").text("0");
+
+
+        try {
+            $.ajax({
+                type: "Get",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                url: "/Home/SensorCount/",
+                dataType: "json",
+                async: false,
+                data: { fromDate: fromDate, toDate: toDate, location: location, objects: objects },
+                success: function (data) {
+                    $.each(data.SensorCount, function (i, SensorCount) {
+                        if (SensorCount.DETAIL == "GLASS SENSOR")
+                        {
+                            $("#txtglasssensorcount").text(SensorCount.COUNT);
+
+                        }
+                        if (SensorCount.DETAIL == "DOOR SENSOR") {
+                            $("#txtdoorsensorcount").text(SensorCount.COUNT);
+                        }
+                    });
+
+                },
+                error: function (data) {
+                }
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    SensorCountFunPartial('@ViewBag.FromDate', '@ViewBag.ToDate', '@ViewBag.Location', '@ViewBag.Objects');
+
+
+               // setInterval(updateIncidentCountsWidgetFunPartial, 5000);
+</script>

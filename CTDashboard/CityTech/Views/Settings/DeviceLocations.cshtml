@@ -1,0 +1,159 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer;
+@{
+    ViewData["Title"] = "Device Locations";
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["DevicesLocationsOnGoogleMaps"]</h4>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            <div id="map" style="height: 400px;width: 100%;border-radius: 20px;"></div>
+
+            <script>
+                function initMap() {
+                    debugger;
+                    $.ajax({
+                        type: "GET",
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                        url: "/Settings/GetDeviceLocations/",
+                        async: true,
+                        dataType: "json",
+                        success: function (data) {
+                            try {
+                                console.log(data);
+                                const mapCenter = { lat: 52.3676, lng: 4.9041 };
+                                const map = new google.maps.Map(document.getElementById('map'), {
+                                    center: mapCenter,
+                                    zoom: 11
+                                });
+                                const greenIcon = 'https://maps.google.com/mapfiles/ms/icons/green-dot.png';
+                                const redIcon = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
+
+                                function getUniqueObjectNames(locId) {
+                                    const uniqueObjectNames = new Set();
+                                    data.forEach(device => {
+                                        if (device.LocId === locId && device.ObjectName) {
+                                            uniqueObjectNames.add(device.ObjectName);
+                                        }
+                                    });
+                                    return Array.from(uniqueObjectNames);
+                                }
+
+                                function hasIssueStatus(locId) {
+                                    return data.some(device => device.LocId === locId && device.Status === "Issue");
+                                }
+
+                                const markerData = data.map(device => {
+                                    const deviceLocation = `http://citytech.softaxe.com/${device.LocPath}`;
+                                    const status = device.Status;
+                                    const objectName = device.ObjectName;
+                                    const locId = device.LocId;
+
+                                    // Filter the devices with the same LocId
+                                    const devicesWithSameLocId = data.filter(dev => dev.LocId === locId);
+
+                                    // Filter ObjectNames with Status "No Issue" for the current LocId
+                                    const noIssueObjectNames = devicesWithSameLocId
+                                        .filter(dev => dev.Status === "No Issue")
+                                        .map(dev => dev.ObjectName);
+
+                                    // Filter ObjectNames with Status "Issue" for the current LocId
+                                    const issueObjectNames = devicesWithSameLocId
+                                        .filter(dev => dev.Status === "Issue")
+                                        .map(dev => dev.ObjectName);
+
+                                    return {
+                                        position: { lat: parseFloat(device.Lati), lng: parseFloat(device.Longi) },
+                                        imageUrl: deviceLocation,
+                                        label: device.LocName,
+                                        Status: status,
+                                        ObjectName: objectName,
+                                        locHasIssue: hasIssueStatus(locId),
+                                        noIssueObjectNames: noIssueObjectNames,
+                                        issueObjectNames: issueObjectNames,
+                                    };
+                                });
+
+                                const infoWindow = new google.maps.InfoWindow();
+
+                                markerData.forEach(data => {
+                                    const iconToUse = data.locHasIssue ? redIcon : greenIcon;
+
+                                    const marker = new google.maps.Marker({
+                                        position: data.position,
+                                        map: map,
+                                        icon: iconToUse
+                                    });
+
+                                    marker.addListener('click', () => {
+                                        const locId = data.LocId;
+                                        const issueObjectNames = data.issueObjectNames;
+                                        const noIssueObjectNames = data.noIssueObjectNames;
+
+                                        const content = `<div data-bs-toggle="modal" data-bs-target="#LocationModal" style="color:black;font-weight: 600;">
+                                                <img src="${data.imageUrl}" alt="Marker Image" width="300" height="200">
+                                                <ul style="display:inline-block;float:left;margin-right:14px">
+                                                                    <li style="color: red; "><b>Not Working:</b></li>
+                                                    ${issueObjectNames.map(name => `<li>${name}</li>`).join('')}
+                                                                    <li style="color: green; "><b>Working:</b></li>
+                                                    ${noIssueObjectNames.map(name => `<li>${name}</li>`).join('')}
+                                                </ul>
+                                                <br><br>${data.label}
+                                            </div>`;
+                                        infoWindow.setContent(content);
+                                        infoWindow.open(map, marker);
+                                        document.getElementById('popup-content').innerHTML = `<center><h3>${data.label}</h3></center><br><div data-bs-toggle="modal" data-bs-target="#LocationModal" style="color:black;font-weight: 600;"><img style="border-radius:20px;" src="${data.imageUrl}" alt="Marker Image" width="800" height="200"></div>`;
+                                        //$('#LocationModal').modal('show'); // Show the modal
+                                    });
+                                });
+                            } catch (err) {
+                                alert(err);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.error("AJAX Error: " + textStatus, errorThrown);
+                        }
+                    });
+                }
+            </script>
+
+
+
+
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkm76bzi-jCEicB-wsTV7DqxfJrR478tM&callback=initMap"></script>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade AddTypePage" id="LocationModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="height: 500px;">
+            <div class="modal-body p-0">
+                <div class="card mb-0">
+                    <div class="card-body p-3" style="height: 550px;">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn-close1" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="card mb-0 pt-2 pb-1 scroll" style=" height: 500px;">
+                            <div class="table-responsive p-2 pt-0 pb-0">
+                                <div id="popup-content">
+                                    <!-- Content for the popup will go here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

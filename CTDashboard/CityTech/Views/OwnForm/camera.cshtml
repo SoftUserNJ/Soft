@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Reader</title>
+</head>
+<body>
+
+    <!-- Include the library -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <!-- HTML placeholders -->
+    <div id="qr-reader" style="width:500px"></div>
+    <div id="qr-reader-results"></div>
+
+    <script>
+        var resultContainer = document.getElementById('qr-reader-results');
+        var lastResult, countResults = 0;
+
+        function onScanSuccess(decodedText, decodedResult) {
+            if (decodedText !== lastResult) {
+                ++countResults;
+                lastResult = decodedText;
+                resultContainer.innerHTML = `Scan #${countResults}: ${decodedText}`;
+                console.log(`Scan result ${decodedText}`, decodedResult);
+            }
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader",
+            { fps: 10, qrbox: 250 },
+                /* verbose= */ false
+        );
+
+        html5QrcodeScanner.render(onScanSuccess, function (error) {
+            // Handle errors
+            console.log(`Camera Error: ${error}`);
+        }, function (videoError) {
+            // Handle video errors
+            console.log(`Video Error: ${videoError}`);
+        });
+    </script>
+
+</body>
+</html>

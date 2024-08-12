@@ -1,0 +1,142 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Order Position</h4>
+      <h6>Manage your orders</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Order Position', 'pdf')" title="pdf">
+              <img src="assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Order Position', 'xlxs')" title="excel">
+              <img src="assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-1">
+            <input type="search" class="form-control" id="txtSearch" placeholder="Search...">
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="form-group" style="margin-bottom:0.25rem!important;">
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                [(ngModel)]="fromDate" (click)="datepicker.open()" />
+              <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="form-group" style="margin-bottom:0.25rem!important;">
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker1"
+                [(ngModel)]="toDate" (click)="datepicker1.open()" />
+              <mat-datepicker #datepicker1 [startAt]="toDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-6">
+          <div class="mb-1 mt-1">
+            <button class="btn btn-secondary btn-sm" (click)="getDOList()" >Refresh</button>
+          </div>
+        </div>
+        <div class="col-md-3 d-flex justify-content-end align-items-center">
+          <div class="d-flex align-items-end">
+            <div class="d-flex align-items-center me-3 dohand">
+              <input type="radio" id="pending" class="me-1" name="bill" (click)="onClickStatus(false, '0')" checked="checked">
+              <label for="pending" class="mb-0 fw-bolder">Pending</label>
+            </div>
+            <div class="d-flex align-items-center me-3 bill">
+              <input type="radio" id="del" class="me-1" name="bill" (click)="onClickStatus(true, '1')">
+              <label for="del" class="mb-0 fw-bolder">Delivered</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height:370px;">
+        <table class="table" id="export">
+          <thead id="tblheadInvoice">
+            <tr>
+              <th class="text-center noPrint">Loc</th>
+              <th class="text-center">InvNo</th>
+              <th class="text-center">InvDate</th>
+              <th class="text-center">DoNo</th>
+              <th class="text-center">EntryDate</th>
+              <th class="text-center">Time</th>
+              <th class="text-center">DoDate</th>
+              <th>Name</th>
+              <th>OrderTaker</th>
+              <th>MainArea</th>
+              <th>SubArea</th>
+              <th>Remarks</th>
+              <th>SaleManager</th>
+              <th *ngIf="!status" class="text-center noPrint">D.C</th>
+              <th *ngIf="!status" class="text-center noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of orderList" >
+                <td class="btnLoc noPrint">
+                    <button (click)="onClickLocation(item.LAT, item.LONG)" class="btn btn-info btn-sm w-100 px-2 p-0">
+                        <i class="fas fa-map-marker-alt" style="color: #f32828;"></i>
+                    </button>
+                </td>
+                <td class="invno text-center">{{item.INVNO}}</td>
+                <td class="invDate text-center">{{item.INVDATE}}</td>
+                <td class="dono text-center">{{item.DONO}}</td>
+                <td class="entryDate text-center">{{item.ENTRYDATE}}</td>
+                <td class="doDateTime text-center">{{item.DODATETIME}}</td>
+                <td class="doDate text-center">{{item.DODATE}}</td>
+                <td class="name limited-text" title="{{item.NAMES}}">{{item.NAMES}}</td>
+                <td class="orderTaker limited-text" title="{{item.ORDERTAKER}}" >{{item.ORDERTAKER}}</td>
+                <td class="mainArea limited-text" title="{{item.MAINAREA}}">{{item.MAINAREA}}</td>
+                <td class="subArea limited-text" title="{{item.SUBAREA}}">{{item.SUBAREA}}</td>
+                <td class="remarks limited-text" title="{{item.REMARKS}}">{{item.REMARKS}}</td>
+                <td class="saleManager limited-text">{{item.SALEMANAGER}}</td>
+                <td *ngIf="!status" class="noPrint"><button class="btn btn-secondary btn-sm w-100 p-0 px-1" (click)="onViewInvoice(item, 'loading')">D.C</button></td>
+                <td *ngIf="!status" class="noPrint"><button class="btn btn-secondary btn-sm w-100 p-0 px-1" (click)="onClickDelivered(item)">Delivered</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOCATION MODAL -->
+<div class="modal fade" id="LocationModal">
+    <div class="modal-dialog" style="max-width:65%;">
+      <div class="modal-content">
+        <div class="modal-header p-2 align-items-center">
+          <h5 class="modal-title">DO Location</h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-0">
+              <div class="float-end" id="map" style="height: 250px; width: 100%; margin: auto"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

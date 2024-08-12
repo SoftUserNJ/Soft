@@ -1,0 +1,386 @@
+<div class="content" *ngIf="!isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Sales Invoice</h4>
+      <h6>Manage your sales invoice</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Sales by order', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Sales by order', 'xlxs')" title="excel">
+              <img src="assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-12">
+          <div class="mb-1">
+            <input type="search" class="form-control" placeholder="Search..." [(ngModel)]="searchQuery"
+              (input)="searchGrid()">
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="form-group">
+            <div class="input-groupicon">
+              <input matInput class="form-control" [matDatepicker]="datepicker" placeholder="DD-MM-YYYY"
+                (click)="datepicker.open()" [(ngModel)]="fromDate">
+              <mat-datepicker #datepicker></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="form-group">
+            <div class="input-groupicon">
+              <input matInput class="form-control" [matDatepicker]="datepicker1" placeholder="DD-MM-YYYY"
+                (click)="datepicker1.open()" [(ngModel)]="toDate">
+              <mat-datepicker #datepicker1></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-1 col-sm-6">
+          <div class="mb-1 mt-2">
+            <button class="btn btn-secondary btn-sm me-1" (click)="getDOList()">Refresh</button>
+            <button class="btn btn-info btn-sm" (click)="onViewDoSummary()">DO Summary</button>
+          </div>
+        </div>
+        <div class="col-md-3 d-flex justify-content-end align-items-center">
+          <div class="d-flex align-items-end">
+            <div class="d-flex align-items-center me-3 dohand">
+              <input type="radio" (click)="onClickDOInHand('doinhand')" id="doInHand" class="me-1" name="bill"
+                [checked]="true">
+              <label for="doInHand" class="mb-0 fw-bolder">Do In Hand</label>
+            </div>
+            <div class="d-flex align-items-center me-3 bill">
+              <input type="radio" (click)="onClickBilled('billed')" id="billed" class="me-1" name="bill">
+              <label for="billed" class="mb-0 fw-bolder">Billed</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height:380px;">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th class="text-center noPrint">Loc</th>
+              <th *ngIf="!isBilled" class="noPrint">Invoice</th>
+              <th *ngIf="isBilled">InvNo</th>
+              <th>DoNo</th>
+              <th class="text-center">EntryDate</th>
+              <th class="text-center">Time</th>
+              <th class="text-center">DoDate</th>
+              <th>Name</th>
+              <th>OrderTaker</th>
+              <th>MainArea</th>
+              <th>SubArea</th>
+              <th class="text-end">Amount</th>
+              <th class="text-end">AmountRec</th>
+              <th>Remarks</th>
+              <th>SaleManager</th>
+              <th *ngIf="isBilled" class="noPrint">Invoice</th>
+            </tr>
+          </thead>
+          <tbody #doLists>
+            <tr *ngFor="let item of orderList">
+              <td class="noPrint">
+                <button class="btn btn-info btn-sm w-100 px-2 p-0" (click)="onClickLocation(item.LAT, item.LAN)">
+                  <i class="fas fa-map-marker-alt" style="color: #f32828;"></i>
+                </button>
+              </td>
+              <td class="text-center noPrint" *ngIf="!isBilled">
+                <i class="far fa-arrow-alt-circle-right fs-18" (click)="onClickInv(item)"></i>
+              </td>
+              <td *ngIf="isBilled">{{item.INVNO}}</td>
+              <td>{{item.DONO}}</td>
+              <td class="text-center">{{item.ENTRYDATE}}</td>
+              <td class="text-center">{{item.DODATETIME}}</td>
+              <td class="text-center">{{item.DODATE}}</td>
+              <td class="limited-text" title="{{item.NAMES}}">{{item.NAMES}}</td>
+              <td class="limited-text" title="{{item.ORDERTAKER}}">{{item.ORDERTAKER}}</td>
+              <td class="limited-text" title="{{item.MAINAREA}}">{{item.MAINAREA}}</td>
+              <td class="limited-text" title="{{item.SUBAREA}}">{{item.SUBAREA}} </td>
+              <td class="text-end amount">{{item.TOALAMOUNT | number : "1.2-2" }} </td>
+              <td class="text-end recAmount"> {{item.RECEIVEAMOUNT | number : "1.2-2" }}</td>
+              <td class="limited-text" title="{{item.REMARKS}}"> {{item.REMARKS}}</td>
+              <td class="limited-text" title="{{item.SALEMANAGER}}">{{item.SALEMANAGER}}</td>
+              <td *ngIf="isBilled"><button class="btn btn-secondary btn-sm w-100 p-0 px-1 noPrint" (click)="onClickInvoice(item.DONO, item.INVNO)">Invoice</button></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="10" class="text-end">TOTAL: </td>
+              <td class="text-end">{{totalAmount | number : "1.2-2" }}</td>
+              <td class="text-end">{{totalRecAmount | number : "1.2-2" }}</td>
+              <td *ngIf="!isBilled" colspan="2"></td>
+              <td *ngIf="isBilled" colspan="3"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- NEW PAGE -->
+<div *ngIf="isShowPage" class="content">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Sales Invoice Details</h4>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-10 col-sm-12 col-md-10">
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6 px-1">
+              <div class="form-group">
+                <label>Party Name</label>
+                <input type="text" [(ngModel)]="partyName" class="form-control" [disabled]="true">
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 px-1">
+              <div class="form-group">
+                <label>Party Address</label>
+                <input type="text" [(ngModel)]="partyAddress" class="form-control" [disabled]="true">
+              </div>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-6 px-1">
+              <div class="form-group">
+                <label>DoNo</label>
+                <input type="number" class="form-control" [(ngModel)]="doNo" [disabled]="true">
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-6 px-1">
+              <div class="form-group text-end">
+                <label>Amount</label>
+                <input type="number" class="form-control text-end" [(ngModel)]="amount" [disabled]="true">
+              </div>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-6 px-1">
+              <div class="form-group mt-4">
+                <button class="btn btn-info text-white w-100" *ngIf="isHideInvoice" (click)="onClickInvoice(doNo, 0)" >Invoice</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1 col-sm-12 col-md-2">
+        </div>
+        <div class="col-lg-1 col-sm-12 col-md-2">
+          <div class="form-group mt-4 text-end">
+            <button class="btn bg-orange text-white w-100" (click)="onClickBack()">Back</button>
+          </div>
+        </div>
+      </div>
+      <hr class="m-0">
+      <div class="row">
+        <div class="col-8 col-md-8 col-sm-6 p-1">
+          <div class="table-responsive border" style="height:350px">
+            <table class="table  mb-0">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Des</th>
+                  <th class="text-center">Stock</th>
+                  <th class="text-center">Qty</th>
+                  <th class="text-center">Rem Qty</th>
+                  <th>Uom</th>
+                  <th class="text-end">Rate</th>
+                  <th class="text-end">Amt</th>
+                  <th class="text-center">Code</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of productList">
+                  <td class="limited-text" title="{{item.PRODUCT}}">{{item.PRODUCT}} </td>
+                  <td class="limited-text" title="{{item.DES}}">{{item.DES}}</td>
+                  <td class="text-center" [ngClass]="item.BALANCE <= 0 ? 'text-danger fw-bolder' : ''">{{item.STOCK}}
+                  </td>
+                  <td class="text-center">{{item.QTY}}</td>
+                  <td class="text-center">{{item.REMQTY}}</td>
+                  <td class="text-center">{{item.UOM}}</td>
+                  <td class="text-end">{{item.RATE}}</td>
+                  <td class="text-end">{{item.AMMOUNT | number : "1.2-2" }}</td>
+                  <td class="text-center">{{item.PCODE}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-4 col-md-4 col-sm-6 p-1">
+          <div class="table-responsive border" style="height:350px">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th class="bg-info">Code</th>
+                  <th class="bg-info">Location</th>
+                  <th class="bg-info">Batch No</th>
+                  <th class="bg-info text-center">Expiry</th>
+                  <th class="bg-info text-end">Uom</th>
+                  <th class="bg-info text-end">Balance</th>
+                  <th class="bg-info text-end w-20">DelQty</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of producDetailList;let i = index">
+                  <td>{{item.CODE}}</td>
+                  <td>{{item.LOCATION}}</td>
+                  <td>{{item.BATCHNO}}</td>
+                  <td class="text-center">{{item.EXPIRYDATE}}</td>
+                  <td>{{item.UOM}}</td>
+                  <td class="text-center">{{item.STOCKHAND}}</td> 
+                  <td>
+                    <input type="number" class
+                    class="form-control px-1 p-0 text-end input-small-height {{item.CLASS}}" 
+                    [(ngModel)]="item.NQTY" (input)="onInpuQty($event, item, i)">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-12 col-md-12 col-sm-12 p-1">
+          <table class="table mb-0">
+            <tfoot>
+              <tr>
+                <td class="text-end">TOTAL AMOUNT: </td>
+                <td class="text-end">{{nTotalAmount | number: "1.2-2"}}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAKE INVOICE -->
+<div class="modal fade" id="invoiceModel" >
+  <div class="modal-dialog" style="max-width: 55%;">
+    <div class="modal-content">
+      <div class="modal-header p-2  align-items-center">
+        <h5 class="modal-title ">Make Invoice
+        </h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close" (click)="onClickBack()">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="modal-body p-2">
+            <div class="row">
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                  <div class="form-group">
+                    <label>Invoice No</label>
+                    <input type="text" class="form-control" id="txtInvNo" [value]="invoiceNo" disabled="disabled">
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                  <div class="form-group">
+                    <label>Invoice Date</label>
+                    <div class="input-groupicon">
+                      <input class="form-control" 
+                        matInput 
+                        placeholder="DD-MM-YYYY"
+                        [matDatepicker]="datepicker3" 
+                        [(ngModel)]="invDate"
+                        (click)="datepicker3.open()">
+                      <mat-datepicker #datepicker3></mat-datepicker>
+                      <div class="addonset">
+                        <img src="/assets/img/icons/calendars.svg" alt="img">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                  <div class="">
+                    <label class="fw-bolder">Due Days</label>
+                    <div class="position-relative w-100">
+                      <ng-select 
+                          placeholder="---Due Days---" 
+                          [(ngModel)]="termsDays" 
+                          [dropdownPosition]="'bottom'">
+                          <ng-option [value]="0">Same Day</ng-option>
+                        <ng-option *ngFor="let item of termsList" [value]="item.name">
+                          {{ item.name + " Days" }}
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                  <div class="">
+                    <label class="fw-bolder">Location</label>
+                    <div class="position-relative w-100">
+                      <ng-select bindLabel="NAME" bindValue="ID" [items]="locList"
+                        placeholder="---Select Location---"[(ngModel)]="LocId" 
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                  <div class="">
+                    <label class="fw-bolder">Delivery Person</label>
+                    <div class="position-relative w-100">
+                      <ng-select 
+                          placeholder="---Select Delivery Person---" 
+                          [items]="deliveryPersonList"
+                          bindLabel="name"
+                          bindValue="id" 
+                          [(ngModel)]=" deliveryPerson " 
+                          [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
+                  <button class="btn btn-sm btn-success me-1" *ngIf="!isPrint" (click)="onClickMakeInvoice()">Make Invoice</button>
+                  <button class="btn btn-sm btn-success me-1" *ngIf="isPrint" (click)="onClickUpdate()" >Update</button>
+                  <button class="btn btn-sm btn-info me-1" *ngIf="isPrint" (click)="onViewReport('invoice')">Print Invoice</button>
+                  <button class="btn btn-sm btn-info me-1" *ngIf="isPrint" (click)="onViewReport('loading')">Print Loading</button>
+                  <button class="btn btn-sm btn-danger me-1" *ngIf="isPrint" (click)="onClickDelete()" >Delete</button>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOCATION MODAL -->
+<div class="modal fade" id="LocationModal">
+  <div class="modal-dialog" style="max-width:65%;">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">DO Location</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-0">
+            <div class="float-end" id="map" style="height: 250px; width: 100%; margin: auto"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

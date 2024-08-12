@@ -1,0 +1,452 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer;
+@{
+    ViewData["Title"] = "Requirement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["RequirementManagement"]</h4>
+            <h6>@Localizer["Add/UpdateRequirement"]</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #1265c3; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="PDF" id="pdfPrint">
+                            <i class="far fa-file-pdf" style="color: #ea5455; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" id="convertExcel">
+                            <i class="far fa-file-excel" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="CSV" id="convertCsv">
+                            <i class="fa-solid fa-file-csv" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="Dashboard" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch" class="rounded-pill">
+                    </div>
+                </div>
+                <div class="wordset">
+                    <p href="javascript:void(0);" class="btn btn-addednew btnAdd ct-btns">
+                        <img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">@Localizer["AddNew"]
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="ps-2 w-5imp"><input type="checkbox" checked class="printCheckBox notPrintCol" />Id</th>
+                            <th class="w-85imp"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Requirement"]</th>
+                            <th class="text-center pe-3 ps-2 last-th-sticky"><input type="checkbox" hidden class="printCheckBox notPrintCol" />@Localizer["Action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requirementDetail">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content AddPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["RequirementAdd"]</h4>
+        </div>
+        <div class="page-btn">
+            <a href="javascript:void(0);" class="btn btn-added btnList ct-btns">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="" aria-label="fa fa-th-list"></i> @Localizer["Requirement"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row activeForm disabled">
+
+                <div class="col-lg-4 col-4 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">@Localizer["Requirement"]</label>
+                        <input type="text" class="form-control rounded-pill" id="txtRequirement" skinid="Enter Requirement....!">
+                        <input type="hidden" id="txtRequirementId">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-2">
+                    <button class="btn btn-primary btn-sm ct-btns" id="btnNewRequirement">@Localizer["New"]</button>
+                    <button class="btn btn-success btn-sm ct-btns" id="btnSaveRequirement">@Localizer["Save"]</button>
+                    <button class="btn btn-secondary btn-sm ct-btns" id="btnRefreshRequirement">@Localizer["Refresh"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        $(function(){
+            $(".AddPage").hide();
+            GetRequirement();
+            $("#btnRefreshRequirement").click();
+            UserPageRights();
+        })
+
+        $(".btnAdd").click(function () {
+            $(".ListPage").hide();
+            $(".AddPage").show();
+            $("#txtRequirementId").val('');
+            $("#btnRefreshRequirement").click();
+        });
+
+        $(".btnList").click(function () {
+            $(".ListPage").show();
+            $(".AddPage").hide();
+        });
+
+        //====================== Get Data ========================\\
+        function GetRequirement() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/GetRequirement/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#requirementDetail").empty();
+
+                        $.each(data, function (i, item) {
+                            $("#requirementDetail").append(`
+                             <tr>
+                                 <td class="requirementId ps-2">${item.id}</td>
+                                 <td class="requirementName">${item.requirement}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditRequirement cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelRequirement cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                             </tr>
+                            `)
+                        })
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#btnSaveRequirement").click(function () {
+
+            if (CheckValidation("AddPage") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtRequirementId").val();
+            obj.requirement = $("#txtRequirement").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtRequirement").val(), "#requirementDetail", ".requirementName", $("#txtRequirementId").val(), ".requirementId") == false) {
+                toastr.info("Requirement Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtRequirement").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/SaveRequirement/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetRequirement();
+                            $("#btnRefreshRequirement").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelRequirement", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".requirementId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/DelRequirement/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetRequirement();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditRequirement', function () {
+
+            var id = $(this).closest('tr').find('.requirementId').text();
+            var name = $(this).closest('tr').find('.requirementName').text();
+
+            $("#txtRequirementId").val(id);
+            $("#txtRequirement").val(name);
+            $(".activeForm").removeClass('disabled');
+            $("#btnSaveRequirement").show();
+            $("#btnNewRequirement").hide();
+            $("#btnSaveRequirement").text('Update');
+
+            $(".ListPage").hide();
+            $(".AddPage").show();
+
+        });
+        //====================== Buttons ========================\\
+
+
+        $("#btnNewRequirement").click(function () {
+            $(this).hide();
+            $(".activeForm").removeClass('disabled');
+            $("#btnSaveRequirement").text('Save');
+            $("#btnSaveRequirement").show();
+            $("#txtRequirement").focus();
+        });
+
+
+        $("#btnRefreshRequirement").click(function () {
+
+            var uId = $("#txtRequirementId").val();
+
+            if (uId != 0) {
+                $(".requirementId").each(function () {
+                    const userIdValue = $(this).text().trim();
+                    if (userIdValue === uId) {
+                        $(this).closest('tr').find('.btnEditRequirement').click();
+                        return false;
+                    }
+                });
+            }
+            else {
+                $("#btnSaveRequirement").hide();
+                $("#btnNewRequirement").show();
+
+                $(".activeForm").addClass('disabled');
+
+                $("#txtRequirementId").val('');
+                $("#txtRequirement").val('');
+            }
+        });
+
+        //====================== Search ========================\\
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#requirementDetail tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]"+".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+        //================ User Page Rights ==================\\
+
+        function UserPageRights(){
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/UserPageRights/",
+                    data: { url: window.location.pathname },
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.word == false) { $("#convertWord").closest('li').remove(); }
+                        if(data.pdf == false){ $("#pdfPrint").closest('li').remove(); }
+                        if (data.excel == false) { $("#convertExcel").closest('li').remove(); }
+                        if (data.csv == false) { $("#convertCsv").closest('li').remove(); }
+                        if (data.delete == false) { $(".btnDelRequirement").remove(); }
+                        if (data.edit == false) { $(".btnEditRequirement").remove(); }
+
+                        if(data.save == false){
+                            $(".btnAdd").closest('div').remove();
+                            $("#btnRefreshRequirement").remove();
+                        }
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+    </script>
+}

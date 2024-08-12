@@ -1,0 +1,475 @@
+<section>
+
+    <div class="content ListPage" *ngIf="isShowPage">
+      <div class="page-header">
+        <div class="page-title">
+          <h4 class="newcolor">Requisition Voucher</h4>
+          <h6 class="newcolor">Manage Requisition Voucher</h6>
+        </div>
+        <div class="page-btn">
+          <div class="wordset newwordset">
+            <ul>
+              <li>
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf" id="pdfPrint">
+                  <img src="/assets/img/icons/pdf.svg" alt="img">
+                </a>
+              </li>
+              <li>
+                <a href="/Home/Index" role="button">
+                  <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+  
+          <div class="row align-items-center mb-2">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <div class="search-set">
+                <div class="search-path">
+                  <a class="btn btn-filter" id="filter_search">
+                    <img src="/assets/img/icons/filter.svg" alt="img">
+                    <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+                  </a>
+                </div>
+                <div class="search-input">
+                  <input (input)="searchGrid($event)" type="search" id="txtSearch" />
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-lg-7 col-md-6 col-sm-12">
+  
+              <div class="row align-items-center">
+                <div class="col-lg-2 col-md-2 text-end p-0">
+                  <span class="fw-bolder">From Date</span>
+                </div>
+                <div class="col-lg-3 col-md-4 ps-1">
+                  <div class="form-group mb-0">
+                    <div class="input-groupicon">
+                      <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                        [matDatepicker]="datepicker" [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                      <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                      <div class="addonset">
+                        <img src="/assets/img/icons/calendars.svg" alt="img">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-2 text-end p-0">
+                  <span class="fw-bolder">To Date</span>
+                </div>
+                <div class="col-lg-3 col-md-4 ps-1">
+                  <div class="form-group mb-0">
+                    <div class="input-groupicon">
+                      <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                        [matDatepicker]="datepicker2" [(ngModel)]="toDate" (click)="datepicker2.open()">
+                      <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                      <div class="addonset">
+                        <img src="/assets/img/icons/calendars.svg" alt="img">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                  <div class="add-icon" (click)="getRQList()">
+                    <a class="w-50"><img src="/assets/img/icons/search.svg" alt="img" class="searchSvg"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 ps-0">
+              <div class="wordset ms-4 text-center">
+                <p class="btn-addednew btnAdd" (click)="togglePages()">
+                  <img src="/assets/img/icons/plus.svg" alt="img" class="me-1">Add New
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive mb-1">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th class="text-start">Vch Type</th>
+                  <th class="text-center">Vch No</th>
+                  <th class="text-center">Vch Date</th>
+                  <th class="text-center w-10">Action</th>
+                </tr>
+              </thead>
+              <tbody #voucherLists>
+                <tr *ngFor="let data of voucherList">
+                  <td class="text-start">{{data.VCHTYPE}}</td>
+                  <td class="text-center">{{data.VCHNO}}</td>
+                  <td class="text-center">{{data.VCHDATE}}</td>
+                  <td class="text-center">
+                    <span class="btnRowPrint me-3">
+                      <img src="/assets/img/icons/printer.svg" style="cursor: pointer;" alt="img">
+                    </span>
+                    <span (click)="editRQ(data.VCHNO)" class="me-3 btnEditCategory">
+                      <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                    </span>
+                    <span (click)="deleteRQ(data.VCHNO)" class="confirm-text btnDelCategory">
+                      <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete">
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="content AddPage" *ngIf="!isShowPage">
+  
+      <div class="page-header mb-4">
+        <div class="page-title">
+          <h4>Requisition From</h4>
+        </div>
+        <div class="page-btn" routerLink="/journal-voucher">
+          <a (click)="togglePages()" class="btn btn-added btnList">
+            <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+              aria-label="fa fa-th-list"></i>
+            Home
+          </a>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <div class="row align-items-center mb-2" [formGroup]="requisitionForm">
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Voucher Type</label>
+                <input type="text" formControlName="voucherType" readonly class="form-control me-2">
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Req.Trans-No</label>
+                <input type="text" formControlName="transNo" readonly class="form-control me-2">
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="position-relative w-100 me-2 form-group mb-0">
+                <label class="fw-bold" style="margin-bottom: 0px !important;">Date</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                    (click)="datepicker.open()" formControlName="date" />
+                  <mat-datepicker #datepicker></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Balance</label>
+                <input type="text" formControlName="balance" readonly class="form-control me-2">
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Request For</label>
+                <ng-select class="bold-placeholder" placeholder="--- Select Request For ---" bindLabel="name" bindValue="id"
+                  formControlName="requestFor" [dropdownPosition]="'bottom'">
+                  <ng-option value="Expense">Expense</ng-option>
+                  <ng-option value="Waste">Waste</ng-option>
+                  <ng-option value="Capital">Capital</ng-option>
+                  <ng-option value="Reject">Reject</ng-option>
+                  <ng-option value="Sale">Sale</ng-option>
+                  <ng-option value="Transfer">Transfer</ng-option>
+                  <ng-option value="Repair">Repair</ng-option>
+                </ng-select>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-2">
+                <label class="fw-bolder">Main Department</label>
+                <div class="row">
+                  <div class="col-lg-10 col-sm-10 col-10">
+                    <ng-select class="bold-placeholder" placeholder="--- Select Main Department ---" 
+                    [items]="mainDepartmentList" 
+                    bindLabel="name" 
+                    bindValue="id"
+                      (change)="getSubDepartment($event)" 
+                      (clear)="onMainDepartmentClear()"
+                      formControlName="mainDepartment"
+                      [dropdownPosition]="'bottom'">
+                    </ng-select>
+                  </div>
+                  <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                    <div class="add-icon text-end">
+                      <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                        data-bs-target="#MainDepartmentModal" (click)="refreshMainDepartment()"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="mb-2">
+                <label class="fw-bolder">Sub Department</label>
+                <div class="row">
+                  <div class="col-lg-10 col-sm-10 col-10">
+                    <ng-select class="bold-placeholder" placeholder="--- Select Sub Department ---" 
+                    [items]="subDepartmentList" 
+                    bindLabel="name" 
+                    bindValue="id"
+                      formControlName="subDepartment"
+                      [dropdownPosition]="'bottom'">
+                    </ng-select>
+                  </div>
+                  <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                    <div class="add-icon text-end">
+                      <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                        data-bs-target="#SubDepartmentModal" (click)="refreshSubDepartment()"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <label class="fw-bold">Remarks</label>
+              <input type="text" formControlName="remarks" class="form-control me-2">
+            </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Item</label>
+                <ng-select class="bold-placeholder" [items]="itemsList" placeholder="--- Select Item ---" bindLabel="name" bindValue="code"
+                  (change)="getItemsCategory($event)" (clear)="onItemClear()" formControlName="items"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Item Category</label>
+                <input type="text" formControlName="itemCategory" readonly class="form-control me-2">
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Item Sub Category</label>
+                <input type="text" formControlName="itemSubCategory" readonly class="form-control me-2">
+              </div>
+            </div>
+  
+            <div class="col-lg-2 col-md-2 col-sm-12">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Quantity</label>
+                <input type="number" formControlName="quantity" (input)="onlyNumeric($event)" class="form-control me-2">
+              </div>
+            </div>
+  
+            <div class="col-lg-1 col-md-1 col-sm-12">
+              <button type="submit" (click)="onAdd()" class="btn btn-success btn-sm me-1"
+                style="margin-top: 20px;">{{btnAdd}}</button>
+            </div>
+          </div>
+  
+          <div class="table-responsive" style="height: 200px">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Sub</th>
+                  <th>Item Title</th>
+                  <th>Qty</th>
+                  <th>Main Dept</th>
+                  <th>Sub Dept</th>
+                  <th>Request For</th>
+                  <th>Remarks</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of requisitionList" (click)="rowHighLight($event)">
+  
+                  <td class="d-none">{{ data.sno }}</td>
+                  <td class="">{{ data.code }}</td>
+                  <td class="">{{ data.sub }}</td>
+                  <td class="">{{ data.itemName }}</td>
+                  <td class="">{{ data.qty }}</td>
+                  <td class="">{{ data.mainDidName }}</td>
+                  <td class="">{{ data.subDidName }}</td>
+  
+                  <td class="d-none">{{ data.did }}</td>
+                  <td class="d-none">{{ data.didMain }}</td>
+                  <td class="">{{ data.requestFor }}</td>
+                  <td class="">{{ data.remarks }}</td>
+                  <td class="text-center">
+                    <!-- Edit Button -->
+                    <span (click)="editItem(data)" class="me-3 btnEditItem" style="cursor: pointer">
+                      <img src="/assets/img/icons/edit.svg" alt="Edit" />
+                    </span>
+                    <!-- Delete Button  -->
+                    <span (click)="deleteItem(data)" class="confirm-text btnDelItem" style="cursor: pointer">
+                      <img src="/assets/img/icons/delete.svg" alt="Delete" />
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+  
+              <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+                (click)="onClickSave()">Save</button>
+              <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  
+  
+  <!-- Main Department Modal -->
+  <div class="modal fade" id="MainDepartmentModal" aria-labelledby="MainDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center">
+          <h5 class="modal-title ">Main Department
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12 mb-1">
+                    <label class="form-label mb-1">Main Department</label>
+                    <input type="text" class="form-control" [(ngModel)]="mainDepartMentName" [disabled]="isDisabledMainDepartment">
+                  </div>
+                </div>
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newMainDepartment()" [hidden]="isShowMainDepartment">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateMainDepartment()"
+                  [hidden]="!isShowMainDepartment">Save</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshMainDepartment()">Refresh</button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Main Department</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of mainDepartmentList">
+                        <td>{{item.id}}</td>
+                        <td>{{ item.name }}</td>
+                        <td class="text-center">
+                          <span (click)=" editMainDepartment(item.id, item.name)"
+                            class="me-3 btnEditLevel1">
+                            <img src="/assets/img/icons/edit.svg" alt="Edit">
+                          </span>
+                          <span (click)="deleteMainDepartment(item.id)" class="confirm-text btnDelLevel1">
+                            <img src="/assets/img/icons/delete.svg" alt="Delete">
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  <!-- Sub Department Modal -->
+  <div class="modal fade" id="SubDepartmentModal" aria-labelledby="SubDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center">
+          <h5 class="modal-title ">Sub Department
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12 mb-1">
+                    <label class="form-label mb-1">Sub Department</label>
+                    <input type="text" class="form-control" [(ngModel)]="subDepartMentName" [disabled]="isDisabledSubDepartment">
+                  </div>
+                </div>
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newSubDepartment()" [hidden]="isShowSubDepartment">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateSubDepartment()"
+                  [hidden]="!isShowSubDepartment">Save</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshSubDepartment()">Refresh</button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Sub Department</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of subDepartmentList">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td class="text-center">
+                          <span (click)=" editSubDepartment(item.id, item.name)"
+                            class="me-3 btnEditLevel1">
+                            <img src="/assets/img/icons/edit.svg" alt="Edit">
+                          </span>
+                          <span (click)="deleteSubDepartment(item.id)" class="confirm-text btnDelLevel1">
+                            <img src="/assets/img/icons/delete.svg" alt="Delete">
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

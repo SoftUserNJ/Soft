@@ -1,0 +1,2444 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer;
+@model CityTech.Models.ViewModel.PlanningViewModel
+@{
+
+}
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<style>
+    table {
+        width: auto;
+        position: relative;
+    }
+
+    th, td {
+        border: 1px solid black;
+        height: 2px;
+        position: relative;
+    }
+
+    .date-column {
+        background-color: #f5f5f5;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        text-align: center;
+    }
+
+    .task {
+        background-color: orange;
+        width: 100%;
+        cursor: move;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin-left: -5px;
+        overflow-y: scroll;
+    }
+
+    /* Set a fixed width for user columns */
+    .user-column {
+        width: 200px;
+    }
+
+    .table tbody tr td {
+        color: #1e1f20;
+        font-weight: 700;
+        border-bottom: 1px solid #666c72;
+        vertical-align: middle;
+        white-space: nowrap;
+        font-size: 12px;
+        height: 25px;
+    }
+
+    .sticky-column {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background-color: white;
+    }
+
+    /* Container div for horizontal scrolling */
+    .table-container {
+        background: #c8c5ef;
+        overflow-x: auto;
+        max-width: 100%; /* Adjust as needed */
+    }
+
+        /* Handle on hover */
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background-color: #555; /* Color of the scrollbar handle on hover */
+        }
+
+    .sticky-column .user-column {
+        width: 250px !important;
+    }
+
+
+    .detaildisplay {
+        font-size: xx-small;
+        font-style: oblique;
+        text-wrap: wrap;
+    }
+</style>
+@*
+<i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="workorder" data-bs-toggle="modal" data-bs-target="#Workorder"></i>*@
+
+<button id="createTaskButton" style="display:none">Create Task</button>
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="sticky-column" style="width:10px;">
+                 
+                    
+                     <input type="date" style="width: 22px" id="datePicker" value='@(ViewBag.SelectedDate.ToString("yyyy-MM-dd"))'>
+
+
+
+                </th>
+
+                <th class="sticky-column" style="width:10px;">Time</th>
+                @foreach (var user in Model.Users)
+                {
+
+                    <th class="sticky-column user-column" userid="@user.UserId">
+
+                        <img style="    max-width: 30px; max-height: 30px;" src="/@user.ImgPath" onerror="this.onerror=null;this.src='/Images/User/user-profile-image.jpg';" class="user-profile-image" />
+
+                        @user.UserName
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+
+
+
+
+            @foreach (var slot in Model.PlanningSlots)
+            {
+                <tr>
+                    @if (slot == Model.PlanningSlots.First() || slot.Date != Model.PlanningSlots.ElementAt(Model.PlanningSlots.IndexOf(slot) - 1).Date)
+                    {
+                        <td rowspan="@Model.PlanningSlots.Count(s => s.Date == slot.Date)" class="date-column">@slot.Date</td>
+                    }
+                    <td data-date="@slot.Date" data-time="@slot.TimeSlot.ToString(@"hh\:mm")">@slot.TimeSlot.ToString(@"hh\:mm")</td>
+
+
+                    @for (int i = 0; i < Model.Users.Count; i++)
+                    {
+                        var userId = Model.Users[i].UserId;
+
+                        <td data-date="@slot.Date" data-time="@slot.TimeSlot.ToString(@"hh\:mm")" data-person="@userId" TimeSlot="@slot.TimeSlot.ToString(@"hh\:mm")" Date="@slot.Date">
+                            @if (@i == 1)
+                            {
+
+                                // <div class="task" >
+                                //     <div class="timeDisplay">
+                                //     </div>
+
+                                // </div>
+
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" style="width:90%" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBodyContent">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade Workorder" id="Workorder">
+    @*  @Html.Partial("~/Views/PartialViews/Workorder/Workorder.cshtml",ViewData["WorkOrder"])*@
+
+
+    <div class="modal-dialog" style="max-width:800px !important;">
+        <div class="modal-content">
+            @*<div class="modal-header p-2 align-items-center">
+            <h5 class="modal-title">User Types</h5>
+            <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+            </div>*@
+            <div class="modal-body p-0">
+                <div class="card mb-0">
+
+
+
+                    <div class="table-responsive display: none" style="height:395px;">
+                        <table class="table text-white table-hover" id="tbl-print">
+                            <thead>
+                                <tr>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["OrderNo"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Date"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Detail"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Prepration"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Requirement"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Customer"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />Email</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Telephone"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["WorkAddress"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />Station</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["ContactPerson"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Incident"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Object"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["User"]</th>
+                                    <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Mechanic"]</th>
+                                    <th class="text-center pe-3 last-th-sticky"><input type="checkbox" class="printCheckBox notPrintCol" hidden>@Localizer["Action"]</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allWorkOrdersList">
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+                    <div class="content AddPage pt-1">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <h4>@Localizer["WorkOrderAdd"]</h4>
+                            </div>
+
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-2col-md-8 col-sm-12">
+                                        <div class="row activeForm disabled">
+
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["WorkOrderNumber"]</label>
+                                                    <input type="text" class="rounded-pill disabled" id="txtWorkOrderNumber" skinid="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["WorkDetail"]</label>
+                                                    <textarea class="rounded textarea" id="txtWorkDetail">
+                                </textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["Customer"]</label>
+                                                    <div class="row">
+                                                        <div class="col-lg-10 col-sm-10 col-10">
+                                                            <select class="js-example-basic-single select2" id="drpCustomer" skinid="Select Customer....!"></select>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                                            <div @*class="add-icon text-end"*@>
+                                                                <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="Customer" data-bs-toggle="modal" data-bs-target="#WorkOrderCustomerModal"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["ContactPerson"]</label>
+                                                    <input type="text" class="rounded-pill" id="txtWContactPerson" skinid="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["WorkAddress"]</label>
+                                                    <div class="row">
+                                                        <div class="col-lg-10 col-sm-10 col-10">
+                                                            <select class="js-example-basic-single select2" id="drpWorkAddress" skinid="Select Work Address....!"></select>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                                            <div @*class="add-icon text-end"*@>
+                                                                <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="Address" data-bs-toggle="modal" data-bs-target="#WorkAddressModal"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["WorkAddressName"]</label>
+                                                    <input type="text" class="rounded-pill" id="txtWorkAddressName" skinid="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["Residence"]</label>
+                                                    <input type="text" class="rounded-pill" id="txtResidence" skinid="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["Region"]</label>
+                                                    <input type="text" class="rounded-pill" id="txtRegion" skinid="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["PostalCode"]</label>
+                                                    <input type="text" class="rounded-pill" id="txtPostalCode" skinid="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Station</label>
+                                                    <input type="text" class="rounded-pill" id="txtStationName" skinid="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Email</label>
+                                                    <input type="text" class="rounded-pill" id="txtEmail" skinid="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["Telephone"]</label>
+                                                    <input type="text" class="rounded-pill" id="txtTelephone" skinid="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["Mechanic"]</label>
+                                                    <select class="js-example-basic-single select2" id="drpMechanic" skinid="Select Mechanic....!"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["Object"]</label>
+                                                    <div class="row">
+                                                        <div class="col-lg-10 col-sm-10 col-10">
+                                                            <select class="js-example-basic-single select2" id="drpObject" skinid=""></select>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                                            <div @*class="add-icon text-end"*@>
+                                                                <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="Objects" data-bs-toggle="modal" data-bs-target="#WorkObjectsModal"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["IncidentTypes"]</label>
+                                                    <div class="row">
+                                                        <div class="col-lg-10 col-sm-10 col-10">
+                                                            <select class="js-example-basic-single select2" id="drpIncidentTypes" skinid="Select Incident Types....!"></select>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                                            <div @*class="add-icon text-end"*@>
+                                                                <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="Incident Types" data-bs-toggle="modal" data-bs-target="#IncidentTypesModal"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["SecureDate"]</label>
+                                                    <input type="datetime-local" class="rounded-pill date-input" id="txtWorkSecureDate" skinid="Select Secure Date....!" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["FixedDate"]</label>
+                                                    <input type="datetime-local" class="rounded-pill date-input" id="txtWorkFixedDate" skinid="Select Fixed Date....!" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["Prepration"]</label>
+                                                    <input type="text" class="rounded-pill" id="txtPrepration" skinid="Enter Prepration....!">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["Requirement"]</label>
+                                                    <input type="text" class="rounded-pill" id="txtRequirement" skinid="Enter Requirement....!">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label>@Localizer["Own Form"]</label>
+                                                    <select skinid="" name="multi_search_filter" id="multi_search_filter" style="width:200px;" multiple="multiple" class="multi_search_filter form-control ">
+
+                                                        @foreach (var item in ViewData["WorkOrder"] as List<CityTech.Models.Tblownform>)
+                                                        {
+                                                            <option value="@item.Formid">@item.Formname</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 activeForm disabled">
+                                        <div class="commom-img mb-2 mt-1">
+                                            <img src="" id="ImageWorkOrder" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control text-white" type="file" id="InputImageWorkOrder" accept="image/jpg, image/jpeg, image/png" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-2">
+                                        <button class="btn btn-primary btn-sm ct-btns" id="btnNewWorkOrder">@Localizer["New"]</button>
+                                        <button class="btn btn-success btn-sm ct-btns" id="btnSaveWorkOrder">@Localizer["Save"]</button>
+                                        <button class="btn btn-secondary btn-sm ct-btns" id="btnRefreshWorkOrder">@Localizer["Refresh"]</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="formMode" />
+                    <input type="hidden" id="maxOrderNumber" />
+
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+
+
+
+
+
+    <script>
+        const rowHeight = 25;
+        const taskHeight = 26;
+        $(function () {
+        
+            GetCustomerList();
+            GetWorkOrder();
+            GetObjects();
+            GetMechanic();
+            GetIncidentTypes();
+            GetIncidentTypesDropDowns();
+            GetStation();
+            $("#btnRefreshWorkOrder").click();
+            $("#btnRefreshObject").click();
+            $("#btnRefreshCustomer").click();
+            $("#btnRefreshObjectLocation").click();
+            $("#btnRefreshIncidentType").click();
+            $("#drpCustomer").trigger('change');
+
+            UserPageRights();
+            $("#txtWorkSecureDate").val(moment().format("YYYY-MM-DDTHH:mm"));
+            $("#txtWorkFixedDate").val(moment().format("YYYY-MM-DDTHH:mm"));
+
+            initializeTaskFeatures($(".task"));
+            Planningtask();
+
+       
+
+
+       document.querySelector('#datePicker').addEventListener('change', function() {
+                var selectedDate = this.value;
+                window.location.href = '/Planning/Planning?date=' + selectedDate;
+            });
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+        function updateTimeDisplay(taskElement) {
+            let topPosition = taskElement.position().top + taskElement.parent().position().top;
+
+            // Determine the starting and ending rows based on the top position and height of the task element.
+            let startRow = closestTimeRow(topPosition);
+            let endRow = closestTimeRow(topPosition + taskElement.height());
+
+            // Extract the start and end time from the rows' data attributes.
+            let startTime = startRow.data('time');
+            let endTime = endRow.data('time');
+            var startdate = startRow.data('date');
+
+            var enddate = endRow.data('date');
+
+            // If for any reason the times aren't valid, log an error.
+            if (!startTime || !endTime) {
+                console.error("Invalid start or end time", startTime, endTime);
+                return;
+            }
+
+            // Since we're working with 15-minute increments, we'll adjust the time based on the position within that increment.
+            let startOffsetMinutes = Math.round((topPosition - startRow.position().top) / 6.25) * 15;
+            let endOffsetMinutes = Math.round((topPosition + taskElement.height() - endRow.position().top) / 6.25) * 15;
+
+            startTime = adjustTimeByMinutes(startTime, startOffsetMinutes);
+            endTime = adjustTimeByMinutes(endTime, endOffsetMinutes);
+
+            taskElement.find(".timeDisplay").text(startTime + " - " + endTime);
+            let columnIndex = taskElement.parent().index();
+            let userId = taskElement.closest('table').find('tr th.user-column').eq(columnIndex - 2).attr('userid'); // -2 because you have two other th elements before the user columns
+
+            taskElement.attr({
+                'starttime': startTime,
+                'endtime': endTime,
+                'startdate': startdate,
+                'enddate': enddate,
+                'taskperson': userId
+            });
+
+
+            let userid = taskElement.parent().data('person');
+            var Taskno = taskElement.attr('taskno');
+            Updateplanningtask(startTime, endTime, Taskno, startdate, enddate, userid);
+        }
+
+
+        function Updateplanningtask(mstartTime, mendTime, mincidentno, startdate, enddate, userid) {
+            debugger;
+
+            var startDateTime = moment(startdate, 'DD-MM-YYYY').format('YYYY-MM-DD') + 'T' + mstartTime;
+            var startDateTimeUtc = moment(startDateTime).utc().format("YYYY-MM-DDTHH:mm:ss");
+            var endDateTime = moment(enddate, 'DD-MM-YYYY').format('YYYY-MM-DD') + 'T' + mendTime;
+            var endDateTimeUtc = moment(endDateTime).utc().format("YYYY-MM-DDTHH:mm:ss");
+
+            var obj = {
+                startTime: mstartTime,
+                endTime: mendTime,
+                incidentno: mincidentno,
+                startdate: startdate,
+                enddate: enddate,
+                userid: userid,
+                startDateTimeUtc: startDateTimeUtc,
+                endDateTimeUtc: endDateTimeUtc
+
+
+            };
+
+            try {
+                $.ajax({
+                    type: "POST",  // Changed to POST
+                    url: "/Planning/UpdatePlanningtask/",
+                    data: obj,
+                    dataType: "json",
+                    success: function (data) {
+
+                        GetWorkOrder();
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                        alert('An error occurred while processing your request. Please try again.');
+                    }
+                });
+            } catch (err) {
+                alert(err);
+            }
+        }
+
+        function adjustTimeByMinutes(time, minutes) {
+            if (!time) {
+                console.error("No time provided to adjustTimeByMinutes");
+                return;
+            }
+
+            const [hours, origMinutes] = time.split(':').map(Number);
+            const totalMinutes = hours * 60 + origMinutes;
+
+            // Calculate the adjusted time in minutes
+            const adjustedTotalMinutes = totalMinutes + minutes;
+
+            // Calculate the adjusted hours and minutes
+            const adjustedHours = Math.floor(adjustedTotalMinutes / 60);
+            const adjustedMinutes = adjustedTotalMinutes % 60;
+
+            return String(adjustedHours).padStart(2, '0') + ":" + String(adjustedMinutes).padStart(2, '0');
+        }
+
+
+
+
+        function closestTimeRow(position) {
+            let closestTr = null;
+            let minDistance = Infinity;
+
+            // Iterate over each row in the table
+            $('tr').each(function () {
+                let trTop = $(this).position().top; // Get the top position of the row
+
+                let distance = Math.abs(position - trTop);  // Calculate the distance
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestTr = $(this);  // Save the closest row
+                }
+            });
+
+            // If we found the closest row, return the time slot (2nd column)
+            return closestTr ? closestTr.find('td:nth-child(2)') : null;
+        }
+
+
+
+
+
+        function createTask(taskno, date, person, fromTime, toTime, workDetail) {
+            debugger;
+            // Convert time to minutes
+            function timeToMinutes(time) {
+                const [hours, minutes] = time.split(':').map(Number);
+                return (hours * 60) + minutes;
+            }
+
+            // Calculate duration
+            const startMinutes = timeToMinutes(fromTime);
+            const endMinutes = timeToMinutes(toTime);
+            const durationMinutes = endMinutes - startMinutes;
+
+            var heigHeightPerMinute = ((rowHeight) / 60);
+            heigHeightPerMinute = heigHeightPerMinute * durationMinutes;
+            // Create the task div
+
+
+
+
+
+            const taskDiv = $(`<div class="task"  taskno ="${taskno}"   startTime="${fromTime}"   endTime="${toTime}"   startdate="${date}"   enddate="${date}"          taskperson="${person}"   ><div class="timeDisplay">${fromTime} - ${toTime}</div> <div class="detaildisplay">${workDetail}</div>       </div>`);
+            taskDiv.css('height', heigHeightPerMinute + 'px'); // Assuming each minute corresponds to a pixel height, adjust accordingly
+
+            // Find the starting cell
+
+            const roundedHour = ("0" + Math.floor(startMinutes / 60)).slice(-2) + ":00";
+            const fromTd = $(`td[data-date="${date}"][data-time="${roundedHour}"][data-person="${person}"]`);
+
+
+            // const fromTd = $(`td[data-date="${date}"][data-time="${fromTime}"][data-person="${person}"]`);
+
+            // Adjust top offset if task doesn't start at the beginning of the hour
+            const offsetMinutes = startMinutes % 60;
+            taskDiv.css('top', (offsetMinutes * ((rowHeight - 2) / 60)) + 'px');
+
+            // Append the task div to the corresponding <td>
+            fromTd.append(taskDiv);
+            initializeTaskFeatures($(".task"));
+        }
+
+        function timeToMinutes(timeStr) {
+            const [hour, minute] = timeStr.split(":").map(Number);
+            return hour * 60 + minute;
+        }
+
+        // Bind the createTask function to the button click event
+        $("#createTaskButton").click(function () {
+            // Example usage:
+
+            Planningtask();
+            // createTask('19-10-2023', '2', '08:00', '10:00');
+        });
+
+
+
+
+
+        function initializeTaskFeatures(element) {
+
+            $("td").droppable({
+                accept: ".task",
+                tolerance: "pointer",
+                greedy: true,
+                drop: function (event, ui) {
+                    ui.draggable.appendTo($(this)); // Append the task to the td
+                    console.log('Dropped into: ', $(this).position());
+
+
+                    updateTimeDisplay(ui.draggable);
+
+
+                }
+            });
+
+            element.draggable({
+                containment: "table",
+                grid: [1, 6.25],
+                revert: "invalid", // Only revert when not dropped on a valid target
+                helper: "clone",
+                drag: function (event, ui) {
+                    // Update time display while dragging
+                    console.log('Dragging: ', ui.position, ui.helper.width(), ui.helper.height());
+                    updateTimeDisplay(ui.helper);
+                }
+                ,
+                // stop: function (event, ui) {
+                //     debugger;
+                //     updateTimeDisplay(ui.helper);
+                //     let startTime = ui.helper.attr('startTime');
+                //     let endTime = ui.helper.attr('endTime');
+                //     let Taskno = ui.helper.attr('taskno');
+                //     let startdate = ui.helper.attr('startdate');
+                //     let enddate = ui.helper.attr('enddate');
+                //     let userid = ui.helper.attr('taskperson');
+                //     Updateplanningtask(startTime, endTime, Taskno, startdate, enddate, userid);
+                // }
+            });
+
+            element.resizable({
+                handles: 'n,s',
+                grid: [1, 6.25],
+                resize: function (event, ui) {
+                    updateTimeDisplay(ui.element);
+                }
+            });
+        }
+
+
+
+
+        function Planningtask() {
+          
+              var selectedDate = $('#datePicker').val();
+
+                var obj = {
+                    date: selectedDate
+                };
+  try{
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Planning/Planningtask/",
+                    data: obj,
+                    dataType: "json",
+                    success: function (data) {
+                        //   $(".task").remove();
+                        debugger;
+
+                        for (let task of data) {
+
+
+
+                            const date = task.assignedSecureDate;
+                            const person = task.userId.toString();
+                            // const fromTime = task.timeAssignSecure;
+                            // const toTime = task.timeAssignFixed;
+
+
+                            const fromTime = moment.utc(task.startDateTimeUtc).local().format('HH:mm');
+                            const toTime = moment.utc(task.endDateTimeUtc).local().format('HH:mm');
+                            const workDetail = task.workDetail;
+                            const taskno = task.incidentNo;
+                            createTask(taskno, date, person, fromTime, toTime, workDetail);
+                        }
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $(".table").on("dblclick", function () {
+            $("#formMode").val('');
+            $("#btnRefreshWorkOrder").click();
+            $("#Workorder").modal("show");
+
+
+        });
+
+
+
+        $(".table").on("click", ".task", function (event) {
+
+
+
+
+
+
+            // Fetch taskno from the clicked .task element
+            var taskNo = $(this).attr("taskno");
+
+            // Loop through each row in the table with ID 'allWorkOrdersList'
+            $("#allWorkOrdersList tr").each(function () {
+                // Find the td with class 'orderNo' in the current row
+                var orderCell = $(this).find("td.orderNo");
+
+                // Check if the text matches taskNo
+                if (orderCell.text().trim() === taskNo) {
+                    // If it does, find the .btnEditWorkOrder button in the current row and click it
+                    $(this).find(".btnEditWorkOrder").click();
+                    $("#Workorder").modal("show");
+                }
+            });
+
+
+
+        });
+
+
+
+
+
+
+
+
+        $(".btnAdd").click(function () {
+
+
+            $("#formMode").val('');
+            $("#btnRefreshWorkOrder").click();
+        });
+
+
+
+
+
+        function GetWorkOrder() {
+            debugger;
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/WorkOrder/GetWorkOrder/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#maxOrderNumber").val(data.maxNoUnique);
+
+                        $("#allWorkOrdersList").empty();
+                        $.each(data.workorder, function (i, item) {
+
+                            const Date = moment(item.DATE).format('DD-MMM-YYYY');
+
+                            $("#allWorkOrdersList").append(`
+                                                                                                     <tr>
+                                                                                                         <td class="orderNo ps-2">${item.ORDERNO}</td>
+                                                                                                         <td class="orderSecureDate d-none ps-2">${item.SECUREDATE}</td>
+                                                                                                         <td class="orderNoFixedDate d-none ps-2">${item.FIXEDDATE}</td>
+                                                                                                         <td class="orderDate ps-2">${Date}</td>
+                                                                                                         <td class="workDetail ps-2" title="${item.WORKDETAIL}">${ToolTipAuto(item.WORKDETAIL, 22)}</td>
+                                                                                                         <td class="workImgPath d-none">${item.IMGPATH}</td>
+                                                                                                         <td class="workPrepration">${item.PREPRATION}</td>
+                                                                                                         <td class="workRequirement">${item.REQUIREMENT}</td>
+                                                                                                         <td class="customerId d-none ps-2">${item.CUSTOMERID}</td>
+                                                                                                         <td class="customerName ps-2">${item.CUSTOMERNAME}</td>
+                                                                                                         <td class="customerEmail ps-2">${item.CUSTOMEREMAIL}</td>
+                                                                                                         <td class="customerPhone ps-2">${item.CUSTOMERPHONE}</td>
+                                                                                                         <td class="workAddress ps-2">${item.WORKADDRESS}</td>
+                                                                                                         <td class="workAddressId d-none ps-2">${item.LOCID}</td>
+                                                                                                         <td class="stationName ps-2">${item.STATION}</td>
+                                                                                                         <td class="contactPerson ps-2">${item.CONTACTPERSON}</td>
+                                                                                                         <td class="workIncidentTypeId d-none ps-2">${item.INCIDENTTYPEID}</td>
+                                                                                                         <td class="workIncident ps-2">${item.INCIDENTNAME}</td>
+                                                                                                         <td class="workObjectId d-none ps-2">${item.OBJECTID}</td>
+                                                                                                         <td class="workObjectName ps-2">${item.OBJECTNAME}</td>
+                                                                                                         <td class="workUserName ps-2">${item.USERNAME}</td>
+                                                                                                         <td class="workMechanicId d-none ps-2">${item.MECHANICID}</td>
+                                                                                                         <td class="workMechanicName ps-2">${item.MECHANICNAME}</td>
+                                                                                                                  <td class="ownform  d-none ps-2">${item.OWNFORM}</td>
+                                                                                                         <td class="text-center last-td-sticky">
+                                                                                                             <span class="me-3 btnEditWorkOrder cursor-pointer" >
+                                                                                                                 <img src="/assets/img/icons/edit.svg" alt="img">
+                                                                                                             </span>
+                                                                                                             <span class="confirm-text btnDelWorkOrder cursor-pointer" >
+                                                                                                                 <img src="/assets/img/icons/delete.svg" alt="img">
+                                                                                                             </span>
+                                                                                                         </td>
+                                                                                                     </tr>
+                                                                                                    `)
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#btnSaveWorkOrder").click(function () {
+            debugger;
+            orderNo = 0;
+
+            if ($('#formMode').val().length > 0) {
+                orderNo = $("#txtWorkOrderNumber").val();
+            }
+
+            var txtCustomerEmail = $('#txtEmail').val();
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (txtCustomerEmail.length > 0) {
+                if (!emailRegex.test(txtCustomerEmail)) {
+                    toastr.warning("Invalid Email Address", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    $('#txtEmail').focus();
+                    return false;
+                }
+            }
+
+        @*  if (CheckValidation("AddPage") == false) {
+            return false;
+            }*@
+
+                                                                                                                                                            var formData = new FormData();
+
+            var totalFiles = document.getElementById("InputImageWorkOrder").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("InputImageWorkOrder").files[i];
+                formData.append("Image", file);
+            }
+        @*obj.selectedForms = $(this).closest('.modal-body-cs').find('.multi_search_filter').val();;*@
+                                                                                                                                                            debugger;
+            formData.append("id", orderNo);
+            formData.append("workDetail", $("#txtWorkDetail").val());
+            formData.append("customerId", $("#drpCustomer option:selected").val());
+            formData.append("locId", $("#drpWorkAddress option:selected").val());
+            formData.append("incidentDate", moment().utc().format("YYYY-MM-DDTHH:mm:ss"));
+            formData.append("incidentSecureDate", moment($("#txtWorkSecureDate").val()).utc().format("YYYY-MM-DDTHH:mm:ss"));
+            formData.append("incidentFixedDate", moment($("#txtWorkFixedDate").val()).utc().format("YYYY-MM-DDTHH:mm:ss"));
+            formData.append("incidentTypeId", $("#drpIncidentTypes").val());
+            formData.append("prepration", $("#txtPrepration").val());
+            formData.append("requirement", $("#txtRequirement").val());
+            formData.append("objectId", $("#drpObject").val());
+            formData.append("mechanicId", $("#drpMechanic option:selected").val());
+            formData.append("activityLogDateTime", moment().format('YYYY-MM-DD HH:mm:ss'));
+            formData.append("selectedForms", $(".multi_search_filter").val());
+
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/WorkOrder/SaveWorkOrder/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+
+                            GetWorkOrder();
+                            $("#formMode").val('');
+                            $("#btnRefreshWorkOrder").click();
+                            debugger;
+                            Planningtask();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelWorkOrder", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".orderNo").text();
+            obj.image = $(this).closest('tr').find(".workImgPath").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/WorkOrder/DelWorkOrder/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEditWorkOrder', function () {
+            $(".activeForm").removeClass('disabled');
+
+            var orderNo = $(this).closest('tr').find('.orderNo').text();
+            var detail = $(this).closest('tr').find('.workDetail').text();
+            var customer = $(this).closest('tr').find('.customerId').text();
+            var email = $(this).closest('tr').find('.customerEmail').text();
+            var telephone = $(this).closest('tr').find('.customerPhone').text();
+            var workAddres = $(this).closest('tr').find('.workAddressId').text();
+            var contactPerson = $(this).closest('tr').find('.contactPerson').text();
+            var mechanic = $(this).closest('tr').find('.workMechanicId').text();
+            var object = $(this).closest('tr').find('.workObjectId').text();
+            var incidentType = $(this).closest('tr').find('.workIncidentTypeId').text();
+            var prepration = $(this).closest('tr').find('.workPrepration').text();
+            var requirement = $(this).closest('tr').find('.workRequirement').text();
+            var orderSecureDate = $(this).closest('tr').find('.orderSecureDate').text();
+            var orderNoFixedDate = $(this).closest('tr').find('.orderNoFixedDate').text();
+            var ownformselected = $(this).closest('tr').find('.ownform').text().split(',');
+            $('.multi_search_filter').val(ownformselected);
+            $('.multi_search_filter').trigger('change');
+
+            var orderImage = $(this).closest('tr').find('.workImgPath').text();
+
+            $("#txtWorkOrderNumber").val(orderNo);
+            $("#txtWorkDetail").val(detail);
+            $("#drpCustomer").val(customer);
+            $("#drpCustomer").trigger('change');
+            $("#drpCustomer").next('span').find('.select2-selection__rendered').html($("#drpCustomer option:selected").text());
+
+            $("#drpWorkAddress").val(workAddres);
+            $("#drpWorkAddress").trigger('change');
+            $("#drpWorkAddress").next('span').find('.select2-selection__rendered').html($("#drpWorkAddress option:selected").text());
+
+            $("#txtEmail").val(email);
+            $("#txtTelephone").val(telephone);
+            $("#txtWContactPerson").val(contactPerson);
+            $("#drpMechanic").val(mechanic);
+            $("#drpMechanic").next('span').find('.select2-selection__rendered').html($("#drpMechanic option:selected").text());
+
+            $("#drpObject").val(object);
+            $("#drpIncidentTypes").val(incidentType);
+            $("#drpIncidentTypes").next('span').find('.select2-selection__rendered').html($("#drpIncidentTypes option:selected").text());
+
+            $("#txtPrepration").val(prepration);
+            $("#txtRequirement").val(requirement);
+
+
+
+            $("#txtWorkSecureDate").val(moment.utc(orderSecureDate).local().format("YYYY-MM-DDTHH:mm"));
+            $("#txtWorkFixedDate").val(moment.utc(orderNoFixedDate).local().format("YYYY-MM-DDTHH:mm"));
+
+
+
+
+            var path = window.location.origin;
+            $("#ImageWorkOrder").attr('src', path + "/" + orderImage);
+
+            $("#formMode").val("Edit");
+
+            $("#btnSaveWorkOrder").show();
+            $("#btnNewWorkOrder").hide();
+            $("#btnSaveWorkOrder").text('Update');
+
+            $(".ListPage").hide();
+            $(".AddPage").show();
+        });
+
+
+        //====================== Objects ========================\\
+        function GetObjects() {
+            var obj = {};
+            obj.customerId = $("#drpCustomer option:selected").val();
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/GetCustomerObjects/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        //if(data.length == 0){
+                        //    $("#drpObject").empty();
+                        //    $("#drpObject").append(`<option value="0"> --- Select Object --- </option>`);
+                        //}
+
+                        $("#objectsList").empty();
+                        $("#drpObject").empty();
+                        $("#drpObject").append(`<option value="0"> --- Select Object --- </option>`);
+
+                        $.each(data, function (i, item) {
+                            $("#drpObject").append(`<option value="${item.ID}">${item.NAME}</option>`);
+                            $("#objectsList").append(`
+                                                                                                                                                                             <tr>
+                                                                                                                                                                                <td class="ObjectId ps-2">${item.ID}</td>
+                                                                                                                                                                                <td class="objectName">${item.NAME}</td>
+                                                                                                                                                                                <td class="objectCustomerName">${item.CUSTOMER}</td>
+                                                                                                                                                                                <td class="objectLocation">${item.LOCATION}</td>
+                                                                                                                                                                                <td class="text-center last-td-sticky">
+                                                                                                                                                                                    <span class="me-3 btnEditObject cursor-pointer" >
+                                                                                                                                                                                        <img src="/assets/img/icons/edit.svg" alt="img">
+                                                                                                                                                                                    </span>
+                                                                                                                                                                                    <span class="confirm-text btnDelObject cursor-pointer" >
+                                                                                                                                                                                        <img src="/assets/img/icons/delete.svg" alt="img">
+                                                                                                                                                                                    </span>
+                                                                                                                                                                                </td>
+                                                                                                                                                                                <td class="objectLocationid d-none">${item.LOCATIONID}</td>
+                                                                                                                                                                                <td class="objectCustomerNameid d-none">${item.CUSTOMERID}</td>
+                                                                                                                                                                             </tr>
+                                                                                                                                                                            `)
+
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#btnSaveObject").click(function () {
+
+            if ($("#drpCustomer").val() == "0") {
+                toastr.warning("Select Customer....!", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#drpCustomer").focus();
+                return false;
+            }
+
+            if (CheckValidation("WorkObjects") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtObjectsId").val();
+            obj.name = $("#txtObjects").val();
+            obj.customerId = $("#drpCustomer option:selected").val();
+            obj.locId = $("#drpObjLocation option:selected").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtObjects").val(), "#objectsList", ".objectName", $("#txtObjectsId").val(), ".ObjectId") == false) {
+                toastr.info("Object Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtObjects").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/SaveObjects/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetObjects();
+                            $("#txtObjectsId").val("");
+                            $("#btnRefreshObject").click();
+                            Planningtask();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelObject", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".ObjectId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/DelObjects/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Already In Use") {
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        } else
+                            if (data != false) {
+                                toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                                GetObjects();
+                            }
+                            else {
+                                toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditObject', function () {
+
+            var id = $(this).closest('tr').find('.ObjectId').text();
+            var name = $(this).closest('tr').find('.objectName').text();
+            //var customer = $(this).closest('tr').find('.objectCustomerNameid').text();
+            var location = $(this).closest('tr').find('.objectLocationid').text();
+
+            $("#txtObjectsId").val(id);
+            $("#txtObjects").val(name);
+            $("#txtObjects").removeClass('disabled');
+
+            //$("#drpCustomer").val(customer);
+            //$("#drpCustomer").trigger('change');
+            //$("#drpCustomer").next('span').find('.select2-selection__rendered').html($("#drpCustomer option:selected").text());
+
+            $("#drpObjLocation").val(location);
+            $("#drpObjLocation").next('span').find('.select2-selection__rendered').html($("#drpObjLocation option:selected").text());
+            $("#drpObjLocation").closest('div').removeClass('disabled');
+
+            $("#btnSaveObject").show();
+            $("#btnNewObject").hide();
+            $("#btnSaveObject").text('Update');
+
+            $(".ListPage").hide();
+            $(".AddPage").show();
+        });
+
+
+        $("#btnNewObject").click(function () {
+            $(this).hide();
+            $("#txtObjects").removeClass('disabled');
+            $("#drpObjLocation").closest('div').removeClass('disabled');
+
+            $("#btnSaveObject").text('Save');
+            $("#btnSaveObject").show();
+            $("#txtObjects").focus();
+        });
+
+        $("#btnRefreshObject").click(function () {
+
+            $("#btnSaveObject").hide();
+            $("#btnNewObject").show();
+
+            $("#txtObjectsId").val('');
+            $("#txtObjects").val('');
+            $("#txtObjects").addClass('disabled');
+
+            $("#drpObjLocation").val('0');
+            $("#drpObjLocation").next('span').find('.select2-selection__rendered').html($("#drpObjLocation option:selected").text());
+            $("#drpObjLocation").closest('div').addClass('disabled');
+
+        });
+
+        //====================== Mechanics ========================\\
+        function GetMechanic() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/WorkOrder/GetWorkOrderMechanics/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpMechanic").empty();
+                        $("#drpMechanic").append(`<option value="0"> --- Select Mechanic --- </option>`);
+
+                        $.each(data, function (i, item) {
+                            $("#drpMechanic").append(`<option value="${item.id}">${item.name}</option>`);
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        //====================== Incedent Types ========================\\
+        function GetIncidentTypes() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/GetIncidentTypes/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#incidentTypeList").empty();
+                        $("#drpIncidentTypes").empty();
+                        $("#drpIncidentTypes").append(`<option value="0"> --- Select Incident Type --- </option>`);
+
+                        $.each(data, function (i, item) {
+                            $("#drpIncidentTypes").append(`<option
+                                                                                                                                                                            prepration="${item.PREPRATION}"
+                                                                                                                                                                            requirement="${item.REQUIREMENTS}"
+                                                                                                                                                                            secureDate="${item.SLASECURE}"
+                                                                                                                                                                            fixedDate="${item.SLAFIXED}"
+                                                                                                                                                                            value="${item.INCIDENTTYPEID}">${item.INCIDENTNAME}</option>`);
+
+                            $("#incidentTypeList").append(`
+                                                                                                                                                                             <tr>
+                                                                                                                                                                                 <td class="incidentTypeId ps-2">${item.INCIDENTTYPEID}</td>
+                                                                                                                                                                                 <td class="incidentTypeName">${item.INCIDENTNAME}</td>
+                                                                                                                                                                                 <td class="incidentTypePrepration">${item.PREPRATION}</td>
+                                                                                                                                                                                 <td class="incidentTypeRequirements">${item.REQUIREMENTS}</td>
+                                                                                                                                                                                 <td class="incidentPrioType">${item.PRIOTYPE}</td>
+                                                                                                                                                                                 <td class="incidentTypeSlaresponse">${item.SLARESPONSE}</td>
+                                                                                                                                                                                 <td class="incidentTypeSlasecure">${item.SLASECURE}</td>
+                                                                                                                                                                                 <td class="incidentTypeSlafixed">${item.SLAFIXED}</td>
+                                                                                                                                                                                 <td class="incidentTypeSkill">${item.SKILLNAME}</td>
+                                                                                                                                                                                 <td class="text-center last-td-sticky">
+                                                                                                                                                                                     <span class="me-2 btnEditIncidentType cursor-pointer" >
+                                                                                                                                                                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                                                                                                                                                                     </span>
+                                                                                                                                                                                     <span class="confirm-text btnDelIncidentType cursor-pointer" >
+                                                                                                                                                                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                                                                                                                                                                     </span>
+                                                                                                                                                                                 </td>
+                                                                                                                                                                                 <td class="incidentTypeSkillsId d-none">${item.SKILLID}</td>
+                                                                                                                                                                             </tr>
+                                                                                                                                                                            `)
+
+
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSaveIncidentType").click(function () {
+
+            if (CheckValidation("IncidentTypes") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtIncidentTypeId").val();
+            obj.name = $("#txtIncidentType").val();
+            obj.skillId = $("#drpSkills option:selected").val();
+            obj.prepration = $("#drpIncidentPrepration").val();
+            obj.requirements = $("#drpIncidentRequirement").val();
+            obj.priotype = $("#drpIncidentPrio").val();
+            obj.slaresponse = $("#txtIncidentResponse").val();
+            obj.slasecure = $("#txtIncidentSecure").val();
+            obj.slafixed = $("#txtIncidentFixed").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtIncidentType").val(), "#incidentTypeList", ".incidentTypeName", $("#txtIncidentTypeId").val(), ".incidentTypeId") == false) {
+                toastr.info("Incident Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtIncidentType").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/SaveIncidentTypes/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetIncidentTypes();
+                            $("#txtIncidentTypeId").val("");
+                            $("#btnRefreshIncidentType").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelIncidentType", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".incidentTypeId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/DelIncidentTypes/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Already In Use") {
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        } else
+                            if (data != false) {
+                                toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                                GetIncidentTypes();
+                            }
+                            else {
+                                toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditIncidentType', function () {
+
+            var id = $(this).closest('tr').find('.incidentTypeId').text();
+            var name = $(this).closest('tr').find('.incidentTypeName').text();
+            var prepration = $(this).closest('tr').find('.incidentTypePrepration').text();
+            var requirement = $(this).closest('tr').find('.incidentTypeRequirements').text();
+            var priotype = $(this).closest('tr').find('.incidentPrioType').text();
+            var response = $(this).closest('tr').find('.incidentTypeSlaresponse').text();
+            var secure = $(this).closest('tr').find('.incidentTypeSlasecure').text();
+            var fixed = $(this).closest('tr').find('.incidentTypeSlafixed').text();
+            var skillId = $(this).closest('tr').find('.incidentTypeSkillsId').text();
+
+            $("#txtIncidentTypeId").val(id);
+            $("#txtIncidentType").val(name);
+            $("#txtIncidentType").removeClass('disabled');
+
+            $("#drpIncidentPrepration").val(prepration);
+            $("#drpIncidentPrepration").next('span').find('.select2-selection__rendered').html($("#drpIncidentPrepration option:selected").text());
+            $("#drpIncidentPrepration").closest('div').removeClass('disabled');
+
+            $("#drpIncidentRequirement").val(requirement);
+            $("#drpIncidentRequirement").next('span').find('.select2-selection__rendered').html($("#drpIncidentRequirement option:selected").text());
+            $("#drpIncidentRequirement").closest('div').removeClass('disabled');
+
+            $("#drpIncidentPrio").val(priotype);
+            $("#drpIncidentPrio").next('span').find('.select2-selection__rendered').html($("#drpIncidentPrio option:selected").text());
+            $("#drpIncidentPrio").closest('div').removeClass('disabled');
+
+            $("#txtIncidentResponse").val(response);
+            $("#txtIncidentResponse").removeClass('disabled');
+
+            $("#txtIncidentSecure").val(secure);
+            $("#txtIncidentSecure").removeClass('disabled');
+
+            $("#txtIncidentFixed").val(fixed);
+            $("#txtIncidentFixed").removeClass('disabled');
+
+            $("#drpSkills").val(skillId);
+            $("#drpSkills").next('span').find('.select2-selection__rendered').html($("#drpSkills option:selected").text());
+            $("#drpSkills").closest('div').removeClass('disabled');
+
+            $("#btnSaveIncidentType").show();
+            $("#btnNewIncidentType").hide();
+            $("#btnSaveIncidentType").text('Update');
+        });
+
+
+        $("#btnNewIncidentType").click(function () {
+            $(this).hide();
+
+            $("#txtIncidentType").removeClass('disabled');
+            $("#drpIncidentPrepration").closest('div').removeClass('disabled');
+            $("#drpIncidentRequirement").closest('div').removeClass('disabled');
+            $("#drpIncidentPrio").closest('div').removeClass('disabled');
+            $("#txtIncidentResponse").removeClass('disabled');
+            $("#txtIncidentSecure").removeClass('disabled');
+            $("#txtIncidentFixed").removeClass('disabled');
+            $("#drpSkills").closest('div').removeClass('disabled');
+
+            $("#btnSaveIncidentType").text('Save');
+            $("#btnSaveIncidentType").show();
+            $("#txtIncidentType").focus();
+        });
+
+        $("#btnRefreshIncidentType").click(function () {
+
+            $("#btnSaveIncidentType").hide();
+            $("#btnNewIncidentType").show();
+
+            $("#txtIncidentTypeId").val('');
+
+            $("#txtIncidentType").val('');
+            $("#txtIncidentType").addClass('disabled');
+
+            $("#drpIncidentPrepration").val('0');
+            $("#drpIncidentPrepration").next('span').find('.select2-selection__rendered').html($("#drpIncidentPrepration option:selected").text());
+            $("#drpIncidentPrepration").closest('div').addClass('disabled');
+
+
+            $("#drpIncidentRequirement").val('0');
+            $("#drpIncidentRequirement").next('span').find('.select2-selection__rendered').html($("#drpIncidentRequirement option:selected").text());
+            $("#drpIncidentRequirement").closest('div').addClass('disabled');
+
+            $("#drpIncidentPrio").val('0');
+            $("#drpIncidentPrio").next('span').find('.select2-selection__rendered').html($("#drpIncidentPrio option:selected").text());
+            $("#drpIncidentPrio").closest('div').addClass('disabled');
+
+            $("#txtIncidentResponse").val('');
+            $("#txtIncidentResponse").addClass('disabled');
+
+            $("#txtIncidentSecure").val('');
+            $("#txtIncidentSecure").addClass('disabled');
+
+            $("#txtIncidentFixed").val('');
+            $("#txtIncidentFixed").addClass('disabled');
+
+            $("#drpSkills").val('0');
+            $("#drpSkills").next('span').find('.select2-selection__rendered').html($("#drpSkills option:selected").text());
+            $("#drpSkills").closest('div').addClass('disabled');
+
+        });
+
+
+        $("#drpIncidentTypes").change(function () {
+            var selectedOption = $(this).find(":selected");
+
+
+            var secure = selectedOption.attr("secureDate");
+            const currentDateTimeS = moment();
+            const newDateTimeS = currentDateTimeS.add(secure, "hours");
+            var finalSecure = newDateTimeS.format("HH:mm D-M-YYYY")
+            var secureDateVal = newDateTimeS.format("YYYY-MM-DDTHH:mm");
+
+            var fixed = selectedOption.attr("fixedDate");
+            const currentDateTimeF = moment();
+            const newDateTimeF = currentDateTimeF.add(fixed, "hours");
+            var finalFixed = newDateTimeF.format("HH:mm D-M-YYYY")
+            var fixedDateVal = newDateTimeF.format("YYYY-MM-DDTHH:mm");
+
+            $("#txtPrepration").val(selectedOption.attr("prepration"));
+            $("#txtRequirement").val(selectedOption.attr("requirement"));
+            $("#txtWorkSecureDate").val(secureDateVal);
+            $("#txtWorkFixedDate").val(fixedDateVal);
+        });
+
+
+        function GetIncidentTypesDropDowns() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/WorkOrder/GetIncidentTypeDropDowns/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpIncidentPrepration").empty();
+                        $("#drpIncidentPrepration").append(`<option value="0"> --- Select Prepration --- </option>`);
+
+                        $("#drpIncidentRequirement").empty();
+                        $("#drpIncidentRequirement").append(`<option value="0"> --- Select Requirement --- </option>`);
+
+                        $("#drpIncidentPrio").empty();
+                        $("#drpIncidentPrio").append(`<option value="0"> --- Select Prio --- </option>`);
+
+                        $("#drpSkills").empty();
+                        $("#drpSkills").append(`<option value="0"> --- Select Skill --- </option>`);
+
+                        $.each(data.prepration, function (i, item) {
+                            $("#drpIncidentPrepration").append(`<option value="${item.prepration}">${item.prepration}</option>`);
+                        });
+
+                        $.each(data.requirement, function (i, item) {
+                            $("#drpIncidentRequirement").append(`<option value="${item.requirement}">${item.requirement}</option>`);
+                        });
+
+                        $.each(data.prio, function (i, item) {
+                            $("#drpIncidentPrio").append(`<option value="${item.prioName}">${item.prioName}</option>`);
+                        });
+
+                        $.each(data.skill, function (i, item) {
+                            $("#drpSkills").append(`<option value="${item.skillId}">${item.skillName}</option>`);
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        //====================== Customer ========================\\
+
+
+        function GetCustomerList() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/CustomerGet/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+
+                        $("#allCustomersList").empty();
+                        $("#drpCustomer").empty();
+                        $("#drpCustomer").append(`<option value="0">--- Select Customer ---</option>`);
+
+                        $.each(data, function (i, item) {
+                            $("#drpCustomer").append(`<option email="${item.email}" phone="${item.phone}" value="${item.id}">${item.name}</option>`);
+
+                            $("#allCustomersList").append(`
+                                                                                                                                                                             <tr>
+                                                                                                                                                                                 <td class="customerId ps-2">${item.id}</td>
+                                                                                                                                                                                 <td class="customerName ps-2">${item.name}</td>
+                                                                                                                                                                                 <td class="customerEmail ps-2">${item.email}</td>
+                                                                                                                                                                                 <td class="customerPhone ps-2">${item.phone}</td>
+                                                                                                                                                                                 <td class="customerGender ps-2">${item.gender}</td>
+                                                                                                                                                                                 <td class="businessName ps-2">${item.business}</td>
+                                                                                                                                                                                 <td class="customerVatNo ps-2">${item.vatno}</td>
+                                                                                                                                                                                 <td class="customerChamberCommerce ps-2">${item.commercechamber}</td>
+                                                                                                                                                                                 <td class="text-center last-td-sticky">
+                                                                                                                                                                                     <span class="me-1 btnEditCustomer cursor-pointer" >
+                                                                                                                                                                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                                                                                                                                                                     </span>
+                                                                                                                                                                                     <span class="confirm-text btnDelCustomer cursor-pointer" >
+                                                                                                                                                                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                                                                                                                                                                     </span>
+                                                                                                                                                                                 </td>
+                                                                                                                                                                             </tr>
+                                                                                                                                                                            `)
+                        })
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#drpCustomer").change(function () {
+
+            var selectedOption = $(this).find(":selected");
+            $("#txtEmail").val(selectedOption.attr("email"));
+            $("#txtTelephone").val(selectedOption.attr("phone"));
+
+            GetWorkAddress();
+            GetObjects();
+        });
+
+        function GetWorkAddress() {
+
+            var obj = {};
+            obj.id = $("#drpCustomer option:selected").val();
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/GetObjectLocations/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#objectLocationList").empty();
+                        $("#drpObjLocation").empty();
+                        $("#drpObjLocation").append(`<option value="0"> --- Select Location --- </option>`);
+
+                        $("#drpWorkAddress").empty();
+                        $("#drpWorkAddress").append(`<option value="0"> --- Select Work Address --- </option>`);
+
+                        $.each(data, function (i, item) {
+
+                            $("#drpObjLocation").append(`<option value="${item.ID}">${item.ADDRESS}</option>`);
+
+                            $("#drpWorkAddress").append(`<option
+                                                                                                                                                                            contactperson="${item.CONTACTPERSONPHONE}"
+                                                                                                                                                                            wordaddressname="${item.ADDRESS2}"
+                                                                                                                                                                            residence="${item.RESIDENCE}"
+                                                                                                                                                                            region="${item.REGION}"
+                                                                                                                                                                            postalCode="${item.POSTALCODE}"
+                                                                                                                                                                            station="${item.STATION}"
+                                                                                                                                                                            value="${item.ID}">${item.ADDRESS}</option>`);
+
+                            $("#objectLocationList").append(`
+                                                                                                                                                                             <tr>
+                                                                                                                                                                                <td class="ObjectLocId d-none ps-2">${item.ID}</td>
+                                                                                                                                                                                <td class="objectLocName">${item.ADDRESS}</td>
+                                                                                                                                                                                <td class="objectLocName2">${item.ADDRESS2}</td>
+                                                                                                                                                                                <td class="objectStationId d-none">${item.STATIONID}</td>
+                                                                                                                                                                                <td class="objectStation">${item.STATION}</td>
+                                                                                                                                                                                <td class="objectCustomerId d-none">${item.CUSTOMERID}</td>
+                                                                                                                                                                                <td class="objectCustomerName">${item.CUSTOMER}</td>
+                                                                                                                                                                                <td class="objectPerson">${item.CONTACTPERSON}</td>
+                                                                                                                                                                                <td class="objectPersonPhone">${item.CONTACTPERSONPHONE}</td>
+                                                                                                                                                                                <td class="objectResidence">${item.RESIDENCE}</td>
+                                                                                                                                                                                <td class="objectRegion">${item.REGION}</td>
+                                                                                                                                                                                <td class="objectPostalCode">${item.POSTALCODE}</td>
+                                                                                                                                                                                <td class="objectLati">${item.LATI}</td>
+                                                                                                                                                                                <td class="objectLongi">${item.LONGI}</td>
+                                                                                                                                                                                <td class="text-center last-td-sticky">
+                                                                                                                                                                                    <span class="me-2 btnEditObjectLoc cursor-pointer" >
+                                                                                                                                                                                        <img src="/assets/img/icons/edit.svg" alt="img">
+                                                                                                                                                                                    </span>
+                                                                                                                                                                                    <span class="confirm-text btnDelObjectLoc cursor-pointer" >
+                                                                                                                                                                                        <img src="/assets/img/icons/delete.svg" alt="img">
+                                                                                                                                                                                    </span>
+                                                                                                                                                                                </td>
+                                                                                                                                                                             </tr>
+                                                                                                                                                                            `)
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#drpWorkAddress").change(function () {
+            var selectedOption = $(this).find(":selected");
+
+            $("#txtWContactPerson").val(selectedOption.attr("contactperson"));
+            $("#txtWorkAddressName").val(selectedOption.attr("wordaddressname"));
+            $("#txtResidence").val(selectedOption.attr("residence"));
+            $("#txtRegion").val(selectedOption.attr("region"));
+            $("#txtPostalCode").val(selectedOption.attr("postalCode"));
+            $("#txtStationName").val(selectedOption.attr("station"));
+        });
+
+
+        $("#btnSaveCustomer").click(function () {
+
+            var txtCustomerEmail = $('#txtCustomerEmail').val();
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (txtCustomerEmail.length > 0) {
+                if (!emailRegex.test(txtCustomerEmail)) {
+                    toastr.warning("Invalid Email Address", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    $('#txtCustomerEmail').focus();
+                    return false;
+                }
+            }
+
+            if (CheckValidation("ObjCustomers") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+
+            obj.id = $("#txtCustomerId").val();
+            obj.name = $("#txtCustomerName").val();
+            obj.phone = $("#txtCustomerPhone").val();
+            obj.email = $("#txtCustomerEmail").val();
+            obj.address = $("#txtCustomerAddress").val();
+            obj.gender = $("#drpCustomerGender").val();
+            obj.businessName = $("#txtCustomerBusiness").val();
+            obj.vatNo = $("#txtCustomerVatNo").val();
+            obj.ChamberOfCommerceNo = $("#txtCustomerChamberCommerce").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtCustomerName").val(), "#allCustomersList", ".customerName", $("#txtCustomerId").val(), ".customerId") == false) {
+                toastr.info("Customer Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtCustomerName").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/CustomerSave/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetCustomerList();
+                            $("#txtCustomerId").val("");
+                            $("#btnRefreshCustomer").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelCustomer", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".customerId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/DelCustomer/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Already In Use") {
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        } else
+                            if (data != false) {
+                                toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                                GetCustomerList();
+                            }
+                            else {
+                                toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEditCustomer', function () {
+
+            $(".activeForm").removeClass('disabled');
+
+            var id = $(this).closest('tr').find('.customerId').text();
+            var name = $(this).closest('tr').find('.customerName').text();
+            var customerPhone = $(this).closest('tr').find('.customerPhone').text();
+            var customerEmail = $(this).closest('tr').find('.customerEmail').text();
+            var customerGender = $(this).closest('tr').find('.customerGender').text();
+            var businessName = $(this).closest('tr').find('.businessName').text();
+            var customerVatNo = $(this).closest('tr').find('.customerVatNo').text();
+            var customerChamberCommerce = $(this).closest('tr').find('.customerChamberCommerce').text();
+
+            $("#txtCustomerId").val(id);
+            $("#txtCustomerName").val(name);
+            $("#txtCustomerPhone").val(customerPhone);
+            $("#txtCustomerEmail").val(customerEmail);
+            $("#drpCustomerGender").val(customerGender);
+            $("#txtCustomerBusiness").val(businessName);
+            $("#txtCustomerVatNo").val(customerVatNo);
+            $("#txtCustomerChamberCommerce").val(customerChamberCommerce);
+
+            $("#btnSaveCustomer").show();
+            $("#btnNewCustomer").hide();
+            $("#btnSaveCustomer").text('Update');
+
+            $("#txtCustomerName").removeClass('disabled');
+            $("#txtCustomerPhone").removeClass('disabled');
+            $("#txtCustomerEmail").removeClass('disabled');
+            $("#drpCustomerGender").removeClass('disabled');
+            $("#txtCustomerBusiness").removeClass('disabled');
+            $("#txtCustomerVatNo").removeClass('disabled');
+            $("#txtCustomerChamberCommerce").removeClass('disabled');
+
+        });
+
+
+        $("#btnNewCustomer").click(function () {
+
+            $("#txtCustomerName").removeClass('disabled');
+            $("#txtCustomerPhone").removeClass('disabled');
+            $("#txtCustomerEmail").removeClass('disabled');
+            $("#drpCustomerGender").removeClass('disabled');
+            $("#txtCustomerBusiness").removeClass('disabled');
+            $("#txtCustomerVatNo").removeClass('disabled');
+            $("#txtCustomerChamberCommerce").removeClass('disabled');
+
+            $(this).hide();
+            $("#btnSaveCustomer").text('Save');
+            $("#btnSaveCustomer").show();
+            $("#txtCustomerName").focus();
+
+        });
+
+        $("#btnRefreshCustomer").click(function () {
+
+            $("#txtCustomerName").addClass('disabled');
+            $("#txtCustomerPhone").addClass('disabled');
+            $("#txtCustomerEmail").addClass('disabled');
+            $("#drpCustomerGender").addClass('disabled');
+            $("#txtCustomerBusiness").addClass('disabled');
+            $("#txtCustomerVatNo").addClass('disabled');
+            $("#txtCustomerChamberCommerce").addClass('disabled');
+
+            $("#btnSaveCustomer").hide();
+            $("#btnNewCustomer").show();
+
+            $("#txtCustomerId").val('');
+            $("#txtCustomerName").val('');
+            $("#txtCustomerPhone").val('');
+            $("#txtCustomerEmail").val('');
+            $("#drpCustomerGender").val('');
+            $("#txtCustomerBusiness").val('');
+            $("#txtCustomerVatNo").val('');
+            $("#txtCustomerChamberCommerce").val('');
+            $("drpLocation").trigger('change');
+        });
+
+
+        //====================== Locations ========================\\
+
+        $("#btnSaveObjectLocation").click(function () {
+
+            if ($("#drpCustomer").val() == "0") {
+                toastr.warning("Select Customer....!", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#drpCustomer").focus();
+                return false;
+            }
+
+            if (CheckValidation("WorkAddress") == false) {
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtObjectLocationId").val();
+            obj.address = $("#txtObjectLocation").val();
+            obj.address2 = $("#txtObjectLocation2").val();
+            obj.stationId = $("#drpLocationStation").val();
+            obj.customerId = $("#drpCustomer").val();
+            obj.contactPerson = $("#txtLocationContactPerson").val();
+            obj.contactPersonPhone = $("#txtLocationPersonPhone").val();
+            obj.residence = $("#txtLocationResidence").val();
+            obj.region = $("#txtLocationRegion").val();
+            obj.postalCode = $("#txtLocationPostalCode").val();
+            obj.lati = $("#txtLocationLatitude").val();
+            obj.longi = $("#txtLocationLongitude").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtObjectLocation").val(), "#objectLocationList", ".objectLocName", $("#txtObjectLocationId").val(), ".ObjectLocId") == false) {
+                toastr.info("Object Location Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtObjectLocation").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/SaveLocations/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            $("#drpCustomer").trigger('change');
+                            $("#btnRefreshObjectLocation").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+
+        $('body').on('click', ".btnDelObjectLoc", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".ObjectLocId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/DelLocations/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Already In Use") {
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        } else
+                            if (data != false) {
+                                toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                                $("#drpCustomer").trigger('change');
+                            }
+                            else {
+                                toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditObjectLoc', function () {
+
+            var id = $(this).closest('tr').find('.ObjectLocId').text();
+            var locName = $(this).closest('tr').find('.objectLocName').text();
+            var locName2 = $(this).closest('tr').find('.objectLocName2').text();
+            var stationid = $(this).closest('tr').find('.objectStationId').text();
+            var person = $(this).closest('tr').find('.objectPerson').text();
+            var personPhone = $(this).closest('tr').find('.objectPersonPhone').text();
+            var residence = $(this).closest('tr').find('.objectResidence').text();
+            var region = $(this).closest('tr').find('.objectRegion').text();
+            var postalCode = $(this).closest('tr').find('.objectPostalCode').text();
+            var lati = $(this).closest('tr').find('.objectLati').text();
+            var longi = $(this).closest('tr').find('.objectLongi').text();
+
+            $("#txtObjectLocationId").val(id);
+            $("#txtObjectLocation").val(locName);
+            $("#txtObjectLocation2").val(locName2);
+            $("#drpLocationStation").val(stationid);
+            $("#drpLocationStation").next('span').find('.select2-selection__rendered').html($("#drpLocationStation option:selected").text());
+
+            $("#txtLocationContactPerson").val(person);
+            $("#txtLocationPersonPhone").val(personPhone);
+            $("#txtLocationResidence").val(residence);
+            $("#txtLocationRegion").val(region);
+            $("#txtLocationPostalCode").val(postalCode);
+            $("#txtLocationLatitude").val(lati);
+            $("#txtLocationLongitude").val(longi);
+
+            $("#txtObjectLocation").removeClass('disabled');
+            $("#txtObjectLocation2").removeClass('disabled');
+            //$("#drpLocationStation").removeClass('disabled');
+            $("#drpLocationStation").closest('div').removeClass('disabled');
+
+            $("#txtLocationContactPerson").removeClass('disabled');
+            $("#txtLocationPersonPhone").removeClass('disabled');
+            $("#txtLocationResidence").removeClass('disabled');
+            $("#txtLocationRegion").removeClass('disabled');
+            $("#txtLocationPostalCode").removeClass('disabled');
+            $("#txtLocationLatitude").removeClass('disabled');
+            $("#txtLocationLongitude").removeClass('disabled');
+
+            $("#btnSaveObjectLocation").show();
+            $("#btnNewObjectLocation").hide();
+            $("#btnSaveObjectLocation").text('Update');
+        });
+
+
+        $("#btnNewObjectLocation").click(function () {
+            $(this).hide();
+            $("#txtObjectLocation").removeClass('disabled');
+            $("#txtObjectLocation2").removeClass('disabled');
+            //$("#drpLocationStation").removeClass('disabled');
+            $("#drpLocationStation").closest('div').removeClass('disabled');
+
+            $("#txtLocationContactPerson").removeClass('disabled');
+            $("#txtLocationPersonPhone").removeClass('disabled');
+            $("#txtLocationResidence").removeClass('disabled');
+            $("#txtLocationRegion").removeClass('disabled');
+            $("#txtLocationPostalCode").removeClass('disabled');
+            $("#txtLocationLatitude").removeClass('disabled');
+            $("#txtLocationLongitude").removeClass('disabled');
+
+            $("#btnSaveObjectLocation").text('Save');
+            $("#btnSaveObjectLocation").show();
+            $("#txtObjectLocation").focus();
+        });
+
+        $("#btnRefreshObjectLocation").click(function () {
+
+            $("#btnSaveObjectLocation").hide();
+            $("#btnNewObjectLocation").show();
+            $("#txtObjectLocation").addClass('disabled');
+            $("#txtObjectLocation2").addClass('disabled');
+
+            //$("#drpLocationStation").addClass('disabled');
+            $("#drpLocationStation").closest('div').addClass('disabled');
+
+            $("#txtLocationContactPerson").addClass('disabled');
+            $("#txtLocationPersonPhone").addClass('disabled');
+            $("#txtLocationResidence").addClass('disabled');
+            $("#txtLocationRegion").addClass('disabled');
+            $("#txtLocationPostalCode").addClass('disabled');
+            $("#txtLocationLatitude").addClass('disabled');
+            $("#txtLocationLongitude").addClass('disabled');
+
+            $("#txtObjectLocationId").val('');
+            $("#txtObjectLocation").val('');
+            $("#txtObjectLocation2").val('');
+            $("#drpLocationStation").val('0');
+            $("#drpLocationStation").next('span').find('.select2-selection__rendered').html($("#drpLocationStation option:selected").text());
+
+            $("#txtLocationContactPerson").val('');
+            $("#txtLocationPersonPhone").val('');
+            $("#txtLocationResidence").val('');
+            $("#txtLocationRegion").val('');
+            $("#txtLocationPostalCode").val('');
+            $("#txtLocationLatitude").val('');
+            $("#txtLocationLongitude").val('');
+        });
+
+        function GetStation() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/GetStation/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpLocationStation").empty();
+                        $("#drpLocationStation").append(`<option value="0">--- Select Station ---</option>`);
+
+                        $.each(data, function (i, item) {
+                            $("#drpLocationStation").append(`<option value="${item.id}">${item.station}</option>`);
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        //====================== Buttons ========================\\
+        $("#btnNewWorkOrder").click(function () {
+            GetWorkOrder();
+            $(".activeForm").removeClass('disabled');
+
+            $(this).hide();
+            $("#btnSaveWorkOrder").text('Save');
+            $("#btnSaveWorkOrder").show();
+            $("#txtWorkDetail").focus();
+        });
+
+        $("#btnRefreshWorkOrder").click(function () {
+
+            var formMode = $("#formMode").val();
+            var orderNo = $("#txtWorkOrderNumber").val();
+
+            if (formMode.length > 0) {
+                $(".orderNo").each(function () {
+                    const userIdValue = $(this).text().trim();
+                    if (userIdValue === orderNo) {
+                        $(this).closest('tr').find('.btnEditWorkOrder').click();
+                        return false;
+                    }
+                });
+            }
+            else {
+                $(".activeForm").addClass('disabled');
+                $("#btnSaveWorkOrder").hide();
+                $("#btnNewWorkOrder").show();
+
+                $("#txtWorkOrderNumber").val($("#maxOrderNumber").val());
+                $("#txtWorkDetail").val('');
+                $("#drpCustomer").val('0');
+                $("#drpCustomer").next('span').find('.select2-selection__rendered').html($("#drpCustomer option:selected").text());
+
+                $("#txtWContactPerson").val('');
+                $("#drpWorkAddress").val('0');
+                $("#drpWorkAddress").next('span').find('.select2-selection__rendered').html($("#drpWorkAddress option:selected").text());
+
+                $("#txtWorkAddressName").val('');
+                $("#txtResidence").val('');
+                $("#txtRegion").val('');
+                $("#txtPostalCode").val('');
+                $("#txtEmail").val('');
+                $("#txtTelephone").val('');
+                $("#drpMechanic").val('0');
+                $("#drpMechanic").next('span').find('.select2-selection__rendered').html($("#drpMechanic option:selected").text());
+
+                $("#drpObject").val('0');
+                $("#drpObject").next('span').find('.select2-selection__rendered').html($("#drpObject option:selected").text());
+
+                $("#drpIncidentTypes").val('0');
+                $("#drpIncidentTypes").next('span').find('.select2-selection__rendered').html($("#drpIncidentTypes option:selected").text());
+
+                $("#txtPrepration").val('');
+                $("#txtRequirement").val('');
+
+                $("#ImageWorkOrder").attr('src', '');
+                $("#InputImageWorkOrder").val('');
+
+                $("#txtWorkSecureDate").val(moment().format("YYYY-MM-DDTHH:mm"));
+                $("#txtWorkFixedDate").val(moment().format("YYYY-MM-DDTHH:mm"));
+            }
+        });
+
+        //====================== Search ========================\\
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#allWorkOrdersList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        document.getElementById('txtTelephone').addEventListener('input', function (event) {
+            const inputValue = event.target.value;
+            event.target.value = inputValue.replace(/[^0-9+]/g, '');
+        });
+
+        document.getElementById('txtCustomerPhone').addEventListener('input', function (event) {
+            const inputValue = event.target.value;
+            event.target.value = inputValue.replace(/[^0-9+]/g, '');
+        });
+
+        document.getElementById('txtLocationPersonPhone').addEventListener('input', function (event) {
+            const inputValue = event.target.value;
+            event.target.value = inputValue.replace(/[^0-9+]/g, '');
+        });
+
+        //====================== Work Order Image ========================\\
+        $("body #InputImageWorkOrder").change(function (event) {
+            $("#ImageWorkOrder").attr('src', URL.createObjectURL(event.target.files[0]));
+        });
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]" + ".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+        //================ User Page Rights ==================\\
+
+        function UserPageRights() {
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/UserPageRights/",
+                    data: { url: window.location.pathname },
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.word == false) { $("#convertWord").closest('li').remove(); }
+                        if (data.pdf == false) { $("#pdfPrint").closest('li').remove(); }
+                        if (data.excel == false) { $("#convertExcel").closest('li').remove(); }
+                        if (data.csv == false) { $("#convertCsv").closest('li').remove(); }
+                        if (data.delete == false) { $(".btnDelWorkOrder").remove(); }
+                        if (data.edit == false) { $(".btnEditWorkOrder").remove(); }
+
+                        if (data.save == false) {
+                            $(".btnAdd").closest('div').remove();
+                            $("#btnRefreshWorkOrder, #btnNewCustomer, #btnSaveCustomer, #btnRefreshCustomer, .btnEditCustomer, .btnDelCustomer, #btnNewObjectLocation, #btnSaveObjectLocation, #btnRefreshObjectLocation, .btnEditObjectLoc, .btnDelObjectLoc, #btnNewIncidentType, #btnSaveIncidentType, #btnRefreshIncidentType, .btnEditIncidentType, .btnDelIncidentType, #btnNewObject, #btnSaveObject, #btnRefreshObject, .btnEditObject, .btnDelObject").remove();
+                            $("#drpWorkAddress, #drpCustomer, #drpObject, #drpIncidentTypes").closest('.row').find('.custom-plus-icon').addClass('disabled');
+                        }
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+    </script>
+
+}

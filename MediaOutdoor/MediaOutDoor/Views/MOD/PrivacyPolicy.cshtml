@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer
+
+<style>
+    p {
+        font-size: 18px;
+    }
+
+    .masthead {
+        height: 100vh;
+        min-height: 200px;
+        max-height: 350px;
+        background-image: url('/img/privacy-policy.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+        .masthead::before {
+            content: "";
+            background: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 129px;
+            left: 0;
+            width: 100%;
+            height: 350px;
+        }
+</style>
+
+<header class="masthead">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="fw-light">@Localizer["PrivacyPolicyHeading"]</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container px-5">
+
+    @Localizer["FirstPartWithouLink"]
+@*
+    <p class="mb-3 mt-5">
+        If you visit the city-media.nl website, your privacy-sensitive data or personal data may be processed.
+        City Media considers your privacy to be of great importance.
+        To guarantee your privacy as best as possible, we apply a number of core values.
+    </p>
+
+    <h2 class="mt-5">To inform.</h2>
+    <p class="mb-3">We want to inform you as well as possible about how and why we process personal data. We do this via this privacy and cookie statement.</p>
+
+    <h2 class="mt-5">Limit collection.</h2>
+    <p class="mb-3">We pay close attention to ensuring that our collection of personal data is limited to what is necessary for the proper functioning of the website and the services you request.</p>
+
+    <h2 class="mt-5">To secure.</h2>
+    <p class="mb-3">We take appropriate security measures to protect your personal data and also require this from parties that process personal data on our behalf.</p>
+
+    <h2 class="mt-5">Permission.</h2>
+    <p class="mb-3">We request explicit consent to process your personal data in cases where your consent is required by law.</p>
+
+    <h2 class="mt-5">Rights of data subjects.</h2>
+    <p class="mb-3">We respect your right to view, correct or delete the personal data we process about you and any other rights you have under applicable privacy legislation. In this privacy and cookie statement you can read how we put these core values ​​into practice and respect and protect your right to privacy.</p>
+
+    <h2 class="mt-5">The use of personal data.</h2>
+    <p class="mb-3">When using our website, you may leave certain information with us. This can also be personal data. We only collect, store and use personal data that you provide directly (for example via the contact form on the website) or for which it is clear that it is provided to us for processing.</p>
+    <p class="mb-3">We will not use your personal data for purposes other than those for which we obtained it, unless you have given your prior permission or we are allowed or required to do so by law.</p>
+    <p class="mb-3">Depending on which functionalities you use via the website, we may process the following personal data from you:</p>
+
+    <ul class="text-white ml-4">
+        <li>name and address details;</li>
+        <li>phone number;</li>
+        <li>billing address;</li>
+        <li>e-mail address;</li>
+        <li>payment details;</li>
+        <li>sex;</li>
+        <li>IP address.</li>
+    </ul>
+
+    <h2 class="mt-5">Your personal data will be used by us for the purposes below (and for purposes closely related to them):</h2>
+    
+    <ul class="text-white ml-4 mt-3">
+        <li>creating your account;</li>
+        <li>controlling access to your account;</li>
+        <li>handling your orders;</li>
+        <li>invoicing the services purchased;</li>
+        <li>sending newsletters;</li>
+        <li>improving and evaluating our website and services;</li>
+        <li>answering and handling questions you ask;</li>
+        <li>offering targeted advertisements via search engines.</li>
+    </ul>
+
+    <h2 class="mt-5">Contact forms and emails</h2>
+    <p class="mb-3">If you have any questions about City Media or the services we offer, please contact us. You can contact us via the contact form on our website and by e-mail. Please see our contact page for current contact details.</p>
+    
+    <p class="mb-3">If you fill in the contact form on the contact page, or if you send us an e-mail, the data you send us will be kept for as long as the nature of the form or the content of your e-mail requires it for a complete response and handling thereof.</p>
+
+    <h2 class="mt-5">Cookies</h2>
+    <p class="mb-3">Cookies are used on our website. A cookie is a small file that is sent with the pages of our website and stored in the memory of your device. The information stored in a cookie can be transferred to our own secure server or that of a third party.</p>
+
+    <h2 class="mt-5">We distinguish three types of cookies:</h2>
+    <h2 class="mt-5">Functional cookies</h2>
+    <p class="mb-3">These cookies ensure the proper functioning of our website. In addition, they ensure that you can use the website more easily by, for example, remembering your personal settings.</p>
+*@
+
+    @Localizer["FirstLinks"]
+
+   @* <h2 class="mt-5">Analytical cookies</h2>
+    <p class="mb-3">General visitor data is kept on the City Media website. In this context, in particular, the IP address of your computer, any user name, the time of request and data that a visitor's browser sends can be registered and used for statistical analyzes of visiting and clicking behavior on the website. City Media also optimizes the operation of the website.</p>
+
+    <p class="mb-3">City Media tries to anonymize this data as much as possible. This information is not provided to third parties.</p>
+    
+    <p class="mb-3">City Media uses Google Analytics. For example, cookies from Google Analytics may be placed with the aim of collecting data to ultimately provide you with an optimal user experience. By collecting data via Google Analytics, City Media gains insight into usage and these statistics can be applied to its website. Google's cookie is deleted after a maximum of 2 years. Google does not share your data with third parties. 
+        Read  Google's <a href="https://policies.google.com/privacy?hl=nl">Privacy Statement here</a>.
+    </p>
+    
+    <p class="mb-3">When you visit our website for the first time, a banner will be shown indicating that if you click further on the website, you give us permission to use all cookies and plug-ins as described in this privacy and cookie statement.</p>
+    
+    <p class="mb-3">We have no control over what any third parties do with your data obtained via the placed cookies. More information about how these parties store the data obtained and what they do with this data can be found in the privacy statement of the relevant party. (Note: these can change regularly). You can inquire with us via the contact form.</p>
+
+
+    <h2 class="mt-5">Tracking cookies</h2>
+    <p class="mb-3">Provided you have given permission for this, City Media also uses tracking cookies so that advertisements on the websites you visit can be better tailored to your needs and interests, and to keep track of how many and which advertisements have been shown to you (to prevent that you always see the same advertisement) and to check whether you have clicked on an advertisement.</p>
+    
+    <p class="mb-3">The Google AdWords cookie remembers which pages you visit, so that you can receive targeted and relevant offers from us. Google's cookie is deleted after a maximum of 2 years. Google does not share your data with third parties. 
+        Read  Google's <a href="https://policies.google.com/privacy?hl=nl">Privacy Statement here</a>.
+    </p>*@
+
+    @Localizer["SecondPartWithouLink"]
+
+
+   @* <h2 class="mt-5">Enabling and disabling cookies</h2>
+    <p class="mb-3">You can disable the placing of cookies by changing your browser settings. Check your browser manual for exact instructions. Please note that (certain functionalities on) the website may not work or not work fully if you disable cookies.</p>
+
+    <h2 class="mt-5">Delete cookies</h2>
+    <p class="mb-3">Most cookies have an expiration date. This means that they expire automatically after a certain period and no longer record data from your site visit. You can also choose to manually delete the cookies before the expiry date has expired. For more information about this, please consult your browser manual.</p>
+
+    <h2 class="mt-5">Third party websites</h2>
+    <p class="mb-3">This privacy and cookie statement does not apply to third-party websites that are connected to our website through links. We cannot guarantee that these third parties handle your personal data in a reliable or secure manner. We recommend that you read the privacy statement of these websites before using these websites.</p>
+
+    <h2 class="mt-5">Confidentiality and disclosure to third parties</h2>
+    <p class="mb-3">We handle your personal data confidentially. We will not provide the personal data that we collect via our website to other parties, unless this is necessary in the context of the execution of the agreement or in cases where we are allowed or required to do so by law.</p>
+
+    <h2 class="mt-5">Security</h2>
+    <p class="mb-3">We take appropriate security measures to limit misuse of and unauthorized access to your personal data. In this way we ensure that only the necessary persons have access to your data and that access to your personal data is protected.</p>
+
+    <h2 class="mt-5">Retention period</h2>
+    <p class="mb-3">We do not store your personal data for longer than is necessary for the purposes for which the data was provided or obtained, taking into account the purposes of the processing and any legal retention periods.</p>
+
+    <h2 class="mt-5">Rights of data subjects</h2>
+    <p class="mb-3">If you have provided us with personal data, you can send us a request to view, change, move or delete this data. You can address your requests to:</p>
+
+    <p class="mb-3">
+        City Media<br />
+        Waldeck Pyrmontlaan 20 – 3LA<br />
+        1075 BX Amsterdam<br />
+        0650203599<br />
+    </p>
+
+    <p class="mb-3">To prevent misuse, we may ask you to identify yourself before we send data. When it concerns access to personal data linked to a cookie, you must send a copy of the relevant cookie. You can find this in the settings of your browser.</p>
+
+    <h2 class="mt-5">Changes to privacy and cookie statement</h2>
+    <p class="mb-3">We reserve the right to amend this privacy and cookie statement. Changes will be published on our website. It is therefore recommended that you consult this statement regularly so that you are aware of any changes.</p>
+*@
+
+    @Localizer["SecondsLinks"]
+
+ @*   <h2 class="mt-5">Dutch Data Protection Authority</h2>
+    <p class="mb-3">We are happy to help you if you have complaints about the processing of your personal data. Under the applicable privacy legislation, you also have the right to file a complaint with the Dutch Data Protection Authority against this processing of personal data.
+        You can contact the <a href="https://autoriteitpersoonsgegevens.nl/">Dutch Data Protection Authority</a> for this.
+    </p>
+
+    <p class="mb-3">
+        If City Media processes personal data on behalf of the user, the user will accept the <a href="https://media.solid-use.nl/verwerkersovereenkomst/">Processing Agreement placed on this site in which agreements are recorded about the processing and security of this personal data</a>. Users can make changes at any time in consultation with City Media.
+    </p>
+
+    <h2 class="mt-5">Contact</h2>
+    <p class="mb-3">If you have any questions or comments after reading our privacy and cookie statement, you can contact us via the contact details below.</p>
+    
+    <p class="mb-3">
+        <a href="mailto:info@city-media.nl">info@city-media.nl</a><br />
+        0650203599
+    </p>*@
+
+</div>

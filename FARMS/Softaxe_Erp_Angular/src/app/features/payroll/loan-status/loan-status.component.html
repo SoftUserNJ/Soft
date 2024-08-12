@@ -1,0 +1,89 @@
+
+<div class="content ListPage">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Loan Status</h4>
+        <h6>Manage your Loan Status</h6>
+      </div>
+      <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="pdfPrint" data-bs-original-title="pdf">
+                <img src="/assets/img/icons/pdf.svg" alt="img">
+              </a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="convertExel"
+                data-bs-original-title="excel">
+                <img src="/assets/img/icons/excel.svg" alt="img">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card" [formGroup]="LoanStatusForm">
+      <div class="card-body">
+        <div class="row mb-1">
+          <div class="col-lg-9 col-md-9 col-sm-9 d-flex">
+            <div class="form-group d-flex align-items-end" style="margin-bottom:0px!important;">
+             
+              <div class="d-flex align-items-center me-4">
+                <input type="radio" id="running" [checked]="1" (change)="changeStatus($event)" class="me-1" name="status">
+                <label for="running"  class="mb-0">Running</label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input type="radio" id="stop" [checked]="0" (change)="changeStatus($event)" class="me-1" name="status">
+                <label for="stop" class="mb-0">Temporary Stop</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="position-relative w-100 me-2">
+                    <ng-select class="bold-placeholder" placeholder="--- Select Type ---" (clear)="OnClearType()" (change)="GetVouchers()" bindLabel="name" bindValue="id" [dropdownPosition]="'bottom'" formControlName="type">
+                      <ng-option value="Staff Loan">Staff Loan</ng-option>
+                      <ng-option value="Vehicle Loan">Vehicle Loan</ng-option>
+                    </ng-select>
+                  </div>
+
+                  </div>
+        </div>
+        
+        <div class="table-responsive" style="height:330px;">
+          <table class="table" id="tbl-print">
+            <thead>
+              <tr>
+                <th>Employee Id</th>
+                <th class="text-start">Name</th>
+                <th class="text-center">Status</th>
+              </tr>
+            </thead>
+            <tbody id="detailList">
+              <tr *ngFor="let item of StatusData">
+                <td title="{{item.empy_id}}">{{item.empy_id}}</td>
+                <td class="text-start" title="{{item.EmployeeName}}">{{item.EmployeeName}}
+                </td>
+                <td class="d-none">{{item.Type}}
+                </td>
+                <td class="text-center">
+                  <input type="checkbox" [checked]="item.Active" (change)="updateSentStatus($event, item)">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-8 col-md-8 col-sm-12">
+            <button class="btn btn-success btn-sm" id="btnSave" (click)="onClickSave()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+  
+  
+  

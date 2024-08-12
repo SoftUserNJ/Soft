@@ -1,0 +1,259 @@
+<div class="content ListPage">
+  <div class="page-header mb-1" *ngIf="showContentAboveForm">
+    <div class="page-title">
+      <h4>Users List</h4>
+      <h6>Manage your Users</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" id="pdfPrint">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel" id="convertExel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="showContentAboveForm">
+    <div class="card-body">
+      <div class="table-top table-topm">
+        <div class="search-set">
+          <div class="search-path" *ngIf="showContentAboveForm">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="/assets/img/icons/filter.svg" alt="img">
+              <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+            </a>
+          </div>
+          <div class="search-input" *ngIf="showContentAboveForm">
+            <input type="search" id="txtSearch" />
+          </div>
+        </div>
+        <div class="wordset" style="background-color: #ff9f43; color: rgb(14, 14, 141); border-radius: 7px;">
+          <p style="color: white;" href="javascript:void(0);" class="btn btn-addednew btnAdd"
+            (click)="toggleUserManagementForm()" *ngIf="showContentAboveForm">
+            <img src="/assets/img/icons/plus.svg" alt="img" class="me-1" style="color: white;">Add New
+          </p>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table" id="tbl-print" *ngIf="showContentAboveForm">
+          <thead>
+            <tr>
+              <th>User Name</th>
+              <th>Password</th>
+              <th>Designation</th>
+              <th>CNIC</th>
+              <th>Mobile</th>
+              <th>Type</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody id="detailList">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content AddPage">
+  <div class="page-header mb-1">
+    <div class="page-title" *ngIf="showUserManagementForm">
+      <h4>User Management</h4>
+      <h6>Add/Update User</h6>
+    </div>
+    <div class="page-btn" *ngIf="showUserManagementForm">
+      <a href="javascript:void(0);" class="btn btn-added btnList" (click)="toggleContentAboveForm()">
+        <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+          aria-label="fa fa-th-list"></i> Home
+      </a>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="showUserManagementForm">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-8 activeForm disabled">
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+
+                <label>Select Group</label>
+                <ng-select class="js-example-basic-single select2" id="drpCompanyGroup" [items]="groupOptions"
+                  bindLabel="name" placeholder="---Select Group ---" [searchable]="true" [(ngModel)]="selectedGroup"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+
+
+                <!-- <mat-form-field>
+                                        <input
+                                        matInput
+                                        type="text"
+                                        placeholder="Search-Group..."
+                                        [matAutocomplete]="auto"
+                                        [(ngModel)]="searchTerm"
+                                        (ngModelChange)="filterGroups()"
+                                        />
+                                        <mat-autocomplete #auto="matAutocomplete" class="custom-autocomplete-panel">
+                                          <mat-option
+                                          *ngFor="let group of filteredGroups" [value]="group"
+                                            [value]="group.name"
+                                          >
+                                            {{ group.name }}
+                                          </mat-option>
+                                        </mat-autocomplete>
+                                      </mat-form-field>  -->
+
+
+
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <!-- <label>Select Company</label>
+                                <select class="js-example-basic-single select2" id="drpUserType" skinid="Select User Type....!">
+                                    <option value="0">--- Select User Type ---</option>
+                                    <option value="User">User</option>
+                                    <option value="OT">OT</option>
+                                    <option value="SM">SM</option>
+                                    <option value="Admin">Admin</option>
+                                </select> -->
+                <label>Select Company</label>
+                <ng-select class="js-example-basic-single select2" id="drpCompanyGroup" [items]="companyOptions"
+                  bindLabel="name" placeholder="---Select Company---" [searchable]="true" [(ngModel)]="selectedCompany"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <!-- <label>Select Location</label>
+                                                    <select class="js-example-basic-single select2" id="drpLocation" skinid="Select Location....!">
+                                                    <option value="0">---Select Location---</option>
+                                                    <option value="1">Location 1</option>
+                                                    <option value="2">Location 2</option>
+                                                    <option value="3">Location 3</option>
+                                                    <option value="4">Location 4</option>
+                                                    </select> -->
+                <label>Select Location</label>
+                <ng-select class="js-example-basic-single select2" id="drpCompanyGroup" [items]="locationOptions"
+                  bindLabel="name" placeholder="---Select Location---" [searchable]="true"
+                  [(ngModel)]="selectedLocation" [dropdownPosition]="'bottom'">
+                </ng-select>
+
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Select User Type</label>
+                <ng-select class="js-example-basic-single select2" id="drpCompanyGroup" [items]="companyOptions"
+                  bindLabel="name" placeholder="---Select User Type ---" [searchable]="true" [(ngModel)]="selectedUser"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>User Name</label>
+                <input type="text" id="txtUserName" skinid="Enter User Name...!">
+                <input type="hidden" id="txtUserId">
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Email</label>
+                <input type="text" id="txtEmail" skinid="Enter Email...!">
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Password</label>
+                <div class="pass-group">
+                  <input type="password" class=" pass-input" id="txtPassword" skinid="Enter Password...!">
+                  <span class="fas toggle-password fa-eye-slash"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Confirm Password</label>
+                <div class="pass-group">
+                  <input type="password" class=" pass-inputs" id="txtConfirmPassword"
+                    skinid="Enter Confirm Password...!">
+                  <span class="fas toggle-passworda fa-eye-slash"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Designation</label>
+                <input type="text" id="txtDesignation" skinid="Enter Designation...!">
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>CNIC</label>
+                <input type="text" id="txtCNIC" skinid="Enter CNIC...!">
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Mobile</label>
+                <input type="number" id="txtMobile" skinid="Enter Mobile Number...!">
+              </div>
+            </div>
+            <div class="box col-lg-3 col-sm-3 col-12">
+              <div class="form-group">
+                <label>Permission</label>
+                <select
+                  style="width: 100%; max-width: 205px; height: 32px; border-radius: 5px; border-color: rgba(0, 0, 0, 0.219); font-size: 14px;"
+                  class="js-example-basic-single select2" id="drpPermission" skinid="">
+                  <option value="Self">Self</option>
+                  <option value="All">All</option>
+                </select>
+              </div>
+            </div>
+            <div class="box col-lg-3 col-sm-3 col-12">
+              <div class="form-group">
+                <label>Dashboard</label>
+                <select
+                  style="width: 100%; max-width: 205px; height: 32px; border-radius: 5px; border-color: rgba(0, 0, 0, 0.219); font-size: 14px;"
+                  class="custom-select" id="drpDashboard">
+                  <option value="false">Not Allow</option>
+                  <option value="true">Allow</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="commom-img"
+            style="width: 100%; max-width: 400px; height: 250px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+            <img *ngIf="selectedImage" src="{{ selectedImage }}" alt="img" id="showImage"
+              style="max-width: 100%; max-height: 100%;">
+            <p *ngIf="!selectedImage" style="margin: 0;">Upload an image</p>
+          </div>
+          <div class="form-group">
+            <label style="margin-top: 10px;"> User Image</label>
+            <input class="form-control" type="file" (change)="onFileSelected($event)"
+              accept="image/jpg, image/jpeg, image/png, image/webp" />
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <button class="btn btn-success btn-sm" id="btnSave">Save</button>
+          <button class="btn btn-primary btn-sm" id="btnNew">New</button>
+          <button class="btn btn-secondary btn-sm" id="btnRefresh">Refresh</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

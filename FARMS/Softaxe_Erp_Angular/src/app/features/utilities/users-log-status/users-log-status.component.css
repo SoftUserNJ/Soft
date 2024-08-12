@@ -1,0 +1,14 @@
+label {
+    margin-bottom: 3px !important;
+    font-weight: 900 !important;
+}
+ label {
+    margin-bottom: 8px;
+    color: #212b36;
+    font-weight: 500;
+    font-size: 14px;
+    display: block;
+}
+.form-label {
+    margin-bottom: 0.5rem;
+}

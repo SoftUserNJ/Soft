@@ -1,0 +1,199 @@
+<section *ngIf="showPage1">
+
+<div class="content ListPage">
+    <div class="page-header mb-1">
+        <div class="page-title">
+            <h4>Services List</h4>
+            <h6>Manage your Services</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" id="pdfPrint">
+                            <img src="/assets/img/icons/pdf.svg" alt="img">
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel">
+                            <img src="/assets/img/icons/excel.svg" alt="img">
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="print">
+                            <i class="fas fa-print"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search">
+                            <img src="/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch" />
+                    </div>
+                </div>
+                <div class="wordset">
+                    <p (click)="togglePages()" class="btn btn-addednew btnAdd">
+                        <img src="/assets/img/icons/plus.svg" alt="img" class="me-1">Add New
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Service Name</th>
+                            <th>Period</th>
+                            <th class="text-end pe-5">Rate</th>
+                            <th class="text-end pe-5">Tax</th>
+                            <th class="text-center w-0 pe-4">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="servicesList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<section *ngIf="!showPage1">
+
+
+<div class="content AddPage">
+    <div class="page-header mb-1">
+        <div class="page-title">
+            <h4>Services Management</h4>
+            <h6>Add/Update Services</h6>
+        </div>
+        <div class="page-btn">
+            <a (click)="togglePages()"  class="btn btn-added btnList">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="Home" aria-label="fa fa-th-list"></i> Home
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="row activeForm disabled">
+
+                    <div class="col-lg-6 col-sm-6 col-12 mx-auto activeForm disabled">
+
+                        <div class="form-group">
+                            <label class="form-label">Customer</label>
+
+                            <!-- <ng-select class="js-example-basic-single select2" id="drpCompanyGroup" [items]="groupOptions"
+                  bindLabel="name" placeholder="---Select Group ---" [searchable]="true" [(ngModel)]="selectedGroup"
+                  [dropdownPosition]="'bottom'">
+                </ng-select> -->
+
+                            <!-- <select class="js-example-basic-single select2" id="drpCustomers" skinid="Select Customer....!">
+                            </select> -->
+                        </div>
+
+                        <div class="form-group">
+                            <p class="mb-2">
+                                <span class="fw-bold">City: </span><span id="txtCustomerCity"></span>&nbsp;&nbsp;&nbsp;
+                                <span class="fw-bold"> Address: </span><span id="txtCustomerAddress"></span>
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Service</label>
+                            <!-- <select class="js-example-basic-single select2" id="drpService" skinid="Select Service....!">
+                            </select> -->
+<!-- 
+                            <ng-select class="js-example-basic-single select2" id="drpService" [items]="groupOptions"
+                  bindLabel="name" placeholder="---Select Group ---" [searchable]="true" [(ngModel)]="selectedGroup"
+                  [dropdownPosition]="'bottom'">
+                </ng-select> -->
+
+                        </div>
+
+                        <div class="form-group d-flex justify-content-between">
+                            <div>
+                                <span class="fw-bold">Rate: </span><span id="txtServiceRate"></span>
+                            </div>
+
+                            <div>
+                                <span class="fw-bold"> Tax: </span><span id="txtServiceTax"></span>%
+                            </div>
+
+                            <div>
+                                <span class="fw-bold"> Tax Amount: </span><span id="txtServiceTaxAmount"></span>
+                            </div>
+
+                            <div>
+                                <span class="fw-bold"> Total: </span><span id="txtServicePriceTotal"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Rate Bill</label>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-4 col-4 pe-1">
+                                    <input type="number" id="txtAvailServiceRate" skinid="Enter Service Rate ....!">
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-4 ps-2 pt-2">
+                                    <span id="txtServiceTimePeriod"></span>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-4 ps-2 pt-2 text-end">
+                                    <span class="fw-bold"> Total: </span><span id="txtServiceRateTotal"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <div class="input-groupicon">
+                                <input type="text" bsDatepicker placeholder="DD-MM-YYYY" class="" id="txtStartDate" skinid="Select Start Date ....!">
+                               
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Billing Date</label>
+                            <div class="input-groupicon">
+                                <input type="text" placeholder="DD-MM-YYYY" class="datetimepicker" id="txtBillingDate" skinid="Select Billing Date ....!">
+                                <div class="addonset">
+                                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Time Period</label>
+                            <input type="number" id="txtAvailServiceTimePeriod" skinid="">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Total Bill</label>
+                            <input type="number" id="txtAvailServiceBill" skinid="">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mx-auto">
+                    <button class="btn btn-success btn-sm" id="btnSave">Save</button>
+                    <button class="btn btn-primary btn-sm" id="btnNew">New</button>
+                    <button class="btn btn-secondary btn-sm" id="btnRefresh">Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>

@@ -1,0 +1,1069 @@
+<div class="px-3 pb-3 mb-5 bg-white">
+  <div class="row mt-2">
+    <div class="col-lg-9 col-sm-12 newbody" [ngClass]="{ disabled: isDisabled }">
+      <div class="row mb-1">
+        <div class="col-lg-4 col-md-6 col-sm-12 pe-0">
+          <ng-select [items]="categoryList" bindLabel="name" bindValue="id" [(ngModel)]="category" [disabled]="isCategory"
+            placeholder="---Select Category---" (change)="onChangeCategory($event)" [dropdownPosition]="'bottom'">
+          </ng-select>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-12 px-1">
+          <input type="search" class="form-control" [(ngModel)]="productName" (input)="onInputSearchProduct($event)"
+            placeholder="Search Product..." />
+        </div>
+        <div class="col-lg-4 col-md-3 col-sm-12 ps-0">
+          <!-- <input type="search" class="form-control" [(ngModel)]="barCode" placeholder="Search Bar/QR Code..."
+            (click)="onInputSearchBarcode($event)"> -->
+            <div class="" *ngIf="costCenter == 'true'">
+              <ng-select placeholder="---Select Job No---" [items]="JobList" bindLabel="NAME" bindValue="ID"
+                [dropdownPosition]="'bottom'" [(ngModel)]="jobNo" (change)="onChangeJobNo()">
+              </ng-select>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-2 col-sm-12 ps-0">
+          <span class="text-danger fw-bolder fs-24">{{formStatus}}</span>
+        </div>
+      </div> 
+      <div class="card mb-2">
+        <div class="table-responsive" style="height: 174px">
+          <table class="table mb-0 table-product">
+            <thead>
+              <tr>
+                <th class="text-start limited-text">Product</th>
+                <th class="text-start">Desc</th>
+                <th class="text-start limited-text">Category</th>
+                <th class="text-start">Brand</th>
+                <th class="text-start">Made In</th>
+                <th class="text-start" *ngIf="!SR">Balance</th>
+                <th class="text-center" *ngIf="!SR">Location</th>
+                <th class="text-center" *ngIf="!SR">Batch No</th>
+                <th class="text-center" *ngIf="!SR">Expiry</th>
+                <th class="text-center w-10">UOM</th>
+                <th class="text-end">Rate</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="product-list">
+              <tr *ngFor="let item of productList">
+                <td class="productimgname">
+                  <span class="product-img">
+                    <img src="{{basePath + item.IMAGE}}" alt="">
+                  </span>
+                  <span class="product limited-text">{{ item.PRODUCT }}</span>
+                </td>
+                <td class="text-start">{{ item.DES }}</td>
+                <td class="text-start">{{ item.CATEGORY }}</td>
+                <td class="text-start">{{ item.BRAND }}</td>
+                <td class="text-start">{{ item.MADEIN }}</td>
+                <td class="text-start" *ngIf="!SR">{{ item.BALANCE }}</td>
+                <td class="text-center" *ngIf="!SR">{{ item.LOCATION }}</td>
+                <td class="text-center" *ngIf="!SR">{{ item.BATCHNO }}</td>
+                <td class="text-center" *ngIf="!SR">{{ item.EXPIRYDATE }}</td>
+                <td>
+                  <div class="d-flex justify-content-center">
+                    <select class="form-select form-select-sm" (change)="onChangeUom($event, item.UomList)">
+                      <option *ngFor="let i of item.UomList" value="{{i.UOMID}}">{{i.UOM}}</option>
+                    </select>
+                  </div>
+                </td>
+                <td class="text-end">{{ item.MAXRATE | number : "1.2-2" }}</td>
+                <td class="text-center">
+                  <span (click)="openProductModal(item)" class="me-2">
+                    <i class="fas fa-eye"></i>
+                  </span>
+                  <span class="confirm-text btnAddProduct me-2">
+                    <button (click)="onClickPlusQty(item)" class="btn btn-sm">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </span>
+                  <span class="confirm-text btnRemoveQty">
+                    <button (click)="onClickMinusQty(item)" class="btn btn-sm">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card mb-0">
+        <div class="table-responsive border" style="height: 561px">
+          <table class="table my-table mb-0" >
+            <thead>
+              <tr rowspan="2">
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="text-center" *ngIf="!SR">Sale</th>
+                <th class="text-center">Return</th>
+                <th class="text-center">NET</th>
+                <th class="text-center"></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="text-center">Dis</th>
+                <th class="text-center">Dis</th>
+                <th class="text-center">TAX</th>
+                <th class="text-center">TAX</th>
+                <th class="text-center">NET</th>
+                <th rowspan="2"></th>
+              </tr>
+              <tr>
+                <th class="text-start limited-text">CATEGORY</th>
+                <th class="text-start limited-text">PRODUCT NAME</th>
+                <th class="text-start limited-text">Desc</th>
+                <th class="text-center" *ngIf="!SR">Qty</th>
+                <th class="text-center">Qty</th>
+                <th class="text-center">Qty</th>
+                <th class="text-center"></th>
+                <th class="text-center">Rate</th>
+                <th class="text-center">R.Diff</th>
+                <th class="text-center">Value</th>
+                <th class="text-center">%</th>
+                <th class="text-center">Amount</th>
+                <th class="text-center">%</th>
+                <th class="text-center">Amount</th>
+                <th class="text-center">Value</th>
+              </tr>
+            </thead>
+            <tbody id="productDetail">
+              <tr *ngFor="let item of appendedData; let i = index">
+                <td class="tex-start" title="{{ item.CATEGORY }}">
+                  {{ item.CATEGORY }}
+                </td>
+                <td class="limited-text text-start" title="{{ item.PRODUCT }}">
+                  {{ item.PRODUCT }}
+                </td>
+                <td class="text-start">{{ item.DES }}</td>
+                <td>
+                  <div class="d-flex justify-content-center">
+                    <input type="number" class="txtTbl text-center" [(ngModel)]="item.QTY"
+                      (input)="onInputQty($event, item, i)" />
+                  </div>
+                </td>
+                <td *ngIf="!SR">
+                  <div class="d-flex justify-content-center">
+                    <input type="number" class="txtTbl text-center" [(ngModel)]="item.RETQTY"
+                    (input)="calculation(); onZero($event)" />
+                  </div>
+                </td>
+                <td class="text-center">{{item.NETQTY}}</td>
+                <td class="text-center">
+                  {{ item.UOM }}
+                </td>
+                <td>
+                  <div class="d-flex justify-content-center">
+                    <input type="number" class="txtTbl text-center" [(ngModel)]="item.RATE"
+                    (input)="calculation(); onZero($event)" />
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-center">
+                    <input type="number" class="txtTbl text-center" [(ngModel)]="item.RATEDIFF"
+                    (input)="calculation(); onZero($event)" />
+                  </div>
+                </td>
+                <td class="text-center">{{ item.VALUE }}</td>
+                <td class="">
+                  <div class="d-flex justify-content-center">
+                    <input type="number" class="txtTbl text-center" [(ngModel)]="item.DISCOUNT"
+                    (input)="calculation(); onZero($event); onLength($event, 100)" />
+                  </div>
+                </td>
+                <!-- <td class="text-center">
+                  <div class="d-flex justify-content-center">
+                    <input type="number" class="txtTbl text-center" [(ngModel)]="item.DISAMOUNT"
+                    (input)="rowDisAmt(item); onZero($event); onLength($event, item.VALUE)"  />
+                  </div>
+                </td> -->
+                <td class="text-center">{{item.DISAMOUNT}}</td>
+                <td class="">
+                  <div class="d-flex justify-content-center">
+                    <input type="number" class="txtTbl text-center" [(ngModel)]="item.SALETAX"
+                      (input)="calculation(item); onZero($event); onLength($event, 100)" [disabled]="isTaxDisable" />
+                  </div>
+                </td>
+                <td class="text-center">{{item.SALETAXAMT}}</td>
+                <td class="text-end totalNetBill">
+                  {{ item.NETVALUE }}
+                </td>
+                <td class="text-center">
+                  <a class="confirm-text me-2" href="javascript:void(0);" (click)="onClickPlus(item, i)">
+                    <i class="fas fa-plus"></i>
+                  </a>
+                  <a class="confirm-text" href="javascript:void(0);" (click)="onClickRemove(item, i)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ms-2 my-1 fw-bold d-flex align-items-center">
+          <label class="w-10">Total Qty</label>
+          <input type="number" class="form-control" style="width: 100px;" [(ngModel)]="totalQty" [disabled]="true" />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-12 newBill">
+      <div class="row align-items-center" [formGroup]="saleInvoiceForm">
+        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+          <div class="form-group">
+            <input type="text" class="form-control text-center px-0" formControlName="doNo" placeholder="0" [disabled]="true">
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-2 col-sm-12 px-1">
+          <div class="form-group">
+            <input type="text" class="form-control text-center px-1" formControlName="invNo" placeholder="0" [disabled]="true">
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 ps-0 pe-1">
+          <div class="form-group">
+            <div class="input-groupicon">
+              <input type="text" class="form-control" matInput [matDatepicker]="datepicker" formControlName="vchDate"
+                (click)="datepicker.open()"/>
+              <mat-datepicker #datepicker></mat-datepicker>
+              <div class="addonset">
+                <img src="assets/img/icons/calendars.svg" alt="img" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 px-0">
+          <div class="form-group d-flex align-items-end justify-content-center sp-Bg">
+            <div class="d-flex align-items-center me-2">
+              <input type="radio" id="SP" name="Vch" value="SP" formControlName="vchType" [checked]="true" (click)="onClickSP($event)">
+              <label for="SP" class="mb-0" style="margin-bottom:0!important">SP</label>
+            </div>
+            <div class="d-flex align-items-center">
+              <input type="radio" id="SR" name="Vch" value="SR" (click)="onClickSR($event)">
+              <label for="SR" class="mb-0" style="margin-bottom:0!important">SR</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 px-0" [ngClass]="{ disabled: isDisabled }">
+          <div class="row mb-2">
+            <div class="col-lg-4 col-sm-4 col-4 pe-0">
+              <div class="position-relative w-100">
+                <ng-select bindLabel="ID" bindValue="ID" [items]="locList"
+                  placeholder="---Select Location---" formControlName="locId"
+                  [dropdownPosition]="'bottom'"></ng-select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-6 pe-0 ps-1">
+              <div class="position-relative w-100">
+                <ng-select bindLabel="name" bindValue="id" [items]="deliveryPerList"
+                  placeholder="---Select Delivery Person---" formControlName="deliveryBoy"
+                  [dropdownPosition]="'bottom'"></ng-select>
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-2 col-2">
+              <div class="add-icon">
+                <a data-bs-toggle="modal" data-bs-target="#DeliveryPersonModal" style="background: #e9ecef;">
+                  <img src="/assets/img/icons/plus1.svg" alt="img" class="plusSvg">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 px-0" [ngClass]="{ disabled: isDisabled }">
+          <div class="row mb-2">
+            <div class="col-lg-10 col-sm-10 col-10 pe-0">
+              <div class="position-relative w-100">
+                <ng-select bindLabel="userName" bindValue="id" placeholder="---Select Order Taker---"
+                  [items]="orderTakerList" formControlName="orderTaker" [dropdownPosition]="'bottom'"></ng-select>
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-2 col-2">
+              <div class="add-icon" id="btnCashPayment">
+                <a data-bs-toggle="modal" data-bs-target="#PaymentModal" style="background: #e9ecef; color:#5e5e5e;">
+                  <i class="fas fa-money-check-alt orderhdicon"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-9 col-sm-9 col-9 px-0 mb-2" [ngClass]="{ disabled: isDisabled }">
+          <ng-select bindLabel="name" bindValue="code" formControlName="party" placeholder="---Select Customer---"
+            [items]="customerList" [dropdownPosition]="'bottom'" (change)="onChangeParty()" >
+          </ng-select>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-3 ps-1 px-0 mb-2">
+          <button data-bs-toggle="modal" data-bs-target="#InvoiceListModal" class="btn btn-secondary w-100 p-1" (click)="getInvoices()" >Invoices</button>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 px-0" [ngClass]="{ disabled: isDisabled }">
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="walkingName" placeholder="Name on Bill">
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 ps-1 pe-0" [ngClass]="{ disabled: isDisabled }">
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="walkingContact"
+              placeholder="Contact">
+          </div>
+        </div>
+      </div>
+      <div class="card card-order border" style="margin: 0 -11px; width: auto;">
+        <table class="table productTable fs-13 mb-0" [ngClass]="{ disabled: isDisabled }">
+            <thead>
+                <tr>
+                  <th class="text-center" style="font-size: 18px;">Bill</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="card-body p-1" [ngClass]="{ disabled: isDisabled }" [formGroup]="saleInvoiceForm">
+            <div class="mb-1 d-flex align-items-center">
+                <div class="col-sm-4 px-1">
+                    <span class="fs-13">Gross Amount </span>
+                </div>
+                <div class="col-sm-4 px-1">
+                </div>
+                <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="grossAmount" >
+                    <p class="currency">$</p>
+                </div>
+            </div>
+            <div class="mb-1 d-flex align-items-center">
+                <div class="col-sm-4 px-1">
+                    <span class="fs-13">Discount %</span>
+                </div>
+                <div class="col-sm-4 px-1 text-end">
+                    <input type="number" class="txtDis" formControlName="discount" (input)="onInputDis()">
+                </div>
+                <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="discountAmt" (input)="onInputDisAmt()">
+                    <p class="currency">$</p>
+                </div>
+            </div>
+            <div class="mb-1 d-flex align-items-center">
+                <div class="col-sm-4 px-1">
+                    <span class="fs-13">Other Credit</span>
+                </div>
+                <div class="col-sm-4 px-1">
+                </div>
+                <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="otherCredit" (input)="calculation(); onZero($event)" >
+                    <p class="currency">$</p>
+                </div>
+            </div>
+            <div class="mb-1 d-flex align-items-center">
+                <div class="col-sm-12 px-1 d-flex">
+                    <input type="text" placeholder="Remarks" class="txtBills" formControlName="remarks">
+                    <p class="currency" style="color:transparent; user-select:none">$</p>
+                </div>
+            </div>
+            <div class="mb-1 d-flex align-items-center">
+                <div class="col-sm-4 px-1">
+                    <span class="fs-13">Shipment</span>
+                </div>
+                <div class="col-sm-4 px-1">
+                </div>
+                <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="shipment" (input)="calculation(); onZero($event)">
+                    <p class="currency">$</p>
+                </div>
+            </div>
+            <div class="mb-1 d-flex align-items-center">
+                <div class="col-sm-4 px-1">
+                    <span class="fs-13">F.Tax</span>
+                </div>
+                <div class="col-sm-4 px-1 text-end">
+                    <input type="number" class="txtDis" formControlName="fTax" (input)="calculation(); onZero($event); onLength($event, 100);">
+                </div>
+                <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="fTaxAmt">
+                    <p class="currency">$</p>
+                </div>
+            </div>
+            <div class="mb-1 d-flex align-items-center">
+                <div class="col-sm-4 px-1">
+                    <span class="fs-13">W.H.T</span>
+                </div>
+                <div class="col-sm-4 px-1 text-end">
+                    <input type="number" class="txtDis" formControlName="whTax" (input)="calculation(); onZero($event); onLength($event, 100);">
+                </div>
+                <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="whTaxAmt" >
+                    <p class="currency">$</p>
+                </div>
+            </div>
+            <div class="mb-1 d-flex align-items-center">
+                <div class="col-sm-4 px-1">
+                    <span class="fs-13">Total Due</span>
+                </div>
+                <div class="col-sm-4 px-1">
+                </div>
+                <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="totalDue">
+                    <p class="currency">$</p>
+                </div>
+            </div>
+            <div class="mb-1 d-flex align-items-center">
+                <div class="col-sm-5 px-1">
+                    <span class="fs-13">Amount Recieved</span>
+                </div>
+                <div class="col-sm-3 px-1">
+                </div>
+                <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="recAmount" (input)="calculation(); onZero($event)">
+                    <p class="currency">$</p>
+                </div>
+            </div>
+            <div class="mb-1 d-flex align-items-center">
+                <div class="col-sm-12 px-1 d-flex">
+                    <input type="text" placeholder="Remarks Amount Recieved" class="txtBills" formControlName="remarksAmountPaid">
+                    <p class="currency" style="color:transparent; user-select:none">$</p>
+                </div>
+            </div>
+            <div class="mb-1 d-flex align-items-center">
+                <div class="col-sm-4 px-1">
+                    <span class="fs-13">Return Amount</span>
+                </div>
+                <div class="col-sm-4 px-1">
+                </div>
+                <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="retAmount">
+                    <p class="currency">$</p>
+                </div>
+            </div>
+            <div class="mb-1 d-flex mt-2">
+              <div class="col-sm-10 px-1 d-flex">
+                <select class="txtTerms" formControlName="termsDay">
+                  <option value="0">Same Day</option>
+                  <option *ngFor="let item of termsList" [value]="item.name">
+                    {{ item.name }} Days
+                  </option>
+                </select>
+              </div>
+              <div class="col-sm-2 px-1 d-flex">
+                <div class="terms-add-icon">
+                  <a href="javascript:void(0);" class="w-100" data-bs-toggle="modal" data-bs-target="#TermsModal">
+                    <img src="/assets/img/icons/plus1.svg" alt="img">
+                  </a>
+                </div>
+                <p class="currency" style="color:transparent; user-select:none">$</p>
+              </div>
+            </div>
+            <div class="mb-1 d-flex align-items-center">
+              <div class="col-sm-12 px-1 d-flex">
+                  <input type="text" placeholder="Enter Sale Remarks" class="txtBills" formControlName="saleRemarks">
+                  <p class="currency" style="color:transparent; user-select:none">$</p>
+              </div>
+          </div>
+            <div class="setvaluecash mt-2">
+              <ul class="p-0">
+                <li>
+                  <a href="javascript:void(0);" class="paymentmethod cash activePaymnet"
+                    (click)="onClickPayment($event, 'Cash')">
+                    <img src="/assets/img/icons/cash.svg" alt="img" class="me-2">
+                    Cash
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0);" class="paymentmethod debit" (click)="onClickPayment($event, 'Debit')">
+                    <img src="/assets/img/icons/debitcard.svg" alt="img" class="me-2">
+                    Debit
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0);" class="paymentmethod scan" (click)="onClickPayment($event, 'Scan')">
+                    <img src="/assets/img/icons/scan.svg" alt="img" class="me-2">
+                    Scan
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="btn-totallabel">
+                <h5>Net Due</h5>
+                <h6 id="txtNetDue">{{netDue}}</h6>
+            </div>
+        </div>
+        <div class="card-body py-0 px-2 mb-2">
+            <div class="row text-end">
+                <div class="col-lg-12 px-1">
+                  <button class="btn btn-success btn-sm me-1" *ngIf="!isDisabled"
+                    (click)="onClickSave()">
+                    Save
+                  </button>
+                  <button class="btn btn-primary btn-sm me-1" *ngIf="isDisabled"
+                    (click)="onClickNew()">
+                    New
+                  </button>
+                  <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">
+                    Refresh
+                  </button>
+                  <button class="btn btn-info btn-sm me-1" *ngIf="isPrint" (click)="onClickPrint('invoice')">
+                    Print
+                  </button>
+                  <button class="btn btn-info btn-sm me-1" *ngIf="isPrint" (click)="onClickPrint('loading')">
+                    Loading
+                  </button>
+                  <button class="btn btn-info btn-sm me-1" *ngIf="isPrint" (click)="onClickPrint('vch')">
+                    VCH
+                  </button>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODALS -->
+
+<!-- INVOICE MODAL -->
+<div class="modal fade" id="InvoiceListModal">
+  <div class="modal-dialog" style="max-width: 60%">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Invoice List</h5>
+        <button type="button" class="close fs-30 autoClose" data-bs-dismiss="modal" aria-label="Close">
+          x
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="row">
+              <div class="form-group col-md-5 col-lg-5 col-sm-12">
+                <label class="form-label">From Date</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" matInput [matDatepicker]="datepicker1" [(ngModel)]="fromDate"
+                    class="custom-datepicker" (click)="datepicker1.open()" />
+                  <mat-datepicker #datepicker1 [startAt]="fromDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="assets/img/icons/calendars.svg" alt="img" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-5 col-lg-5 col-sm-12">
+                <label class="form-label">To Date</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" matInput [matDatepicker]="datepicker2"
+                    class="custom-datepicker" [(ngModel)]="toDate" (click)="datepicker2.open()" />
+                  <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="assets/img/icons/calendars.svg" alt="img" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-2 col-lg-2 col-sm-12">
+                <div class="add-icon mt-4" id="btnSearchInvoice">
+                  <a id="filterReset" class="refreshicon text-decoration-none" (click)="getInvoices()">
+                    <i class="fa fa-undo text-white"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="form-group col-md-10 col-lg-10 col-sm-12">
+                <input type="text" class="form-control" (input)="onSearchInput($event)"
+                  placeholder="Search Customer..." />
+              </div>
+              <div class="form-group col-md-2 col-lg-2 col-sm-12 d-flex align-items-end p-0">
+                <div class="d-flex align-items-center me-2">
+                  <input type="radio" class="me-1" name="inv" id="chkAll" checked="checked" />
+                  <label for="chkAll" class="form-label fs-13" style="margin: 0!important;">All</label>
+                </div>
+                <div class="d-flex align-items-center">
+                  <input type="radio" name="inv" class="me-1" id="chkPendding" />
+                  <label for="chkPendding" class="form-label fs-13" style="margin: 0!important;">Pendding</label>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 250px">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Inv No</th>
+                      <th class="text-start">Customer</th>
+                      <th class="text-center">Inv Date</th>
+                      <th class="text-center">Due Date</th>
+                      <th class="text-end">Inv Amount</th>
+                      <th class="text-center w-5">INV</th>
+                      <th class="text-center w-5">LDG</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody #InvoiceList>
+                    <tr *ngFor="let item of invoiceList">
+                      <td class="text-center">{{ item.INVOIVENO }}</td>
+                      <td class="text-start limited-text" title="{{ item.CUSTOMER }}">{{ item.CUSTOMER }}</td>
+                      <td class="text-center">{{ item.INVDATE }}</td>
+                      <td class="text-center">{{ item.DUEDATE }}</td>
+                      <td class="text-end">
+                        {{ isRound(item.AMOUNT.toFixed(2)) }}
+                      </td>
+                      <td class="text-center">
+                        <span (click)="onClickRowReport(item.INVOIVENO, item.INVDATE, 'invoice')">
+                          <i class="fas fa-print"></i>
+                        </span>
+                      </td>
+                      <td class="text-center">
+                        <span (click)="onClickRowReport(item.INVOIVENO, item.INVDATE, 'loading')">
+                          <i class="fas fa-print"></i>
+                        </span>
+                      </td>
+                      <td class="text-center">
+                        <span (click)="editInvoice(item.INVOIVENO, item.INVDATE)" class="me-3" style="cursor: pointer">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span (click)="deleteInvoice(item.INVOIVENO)" class="confirm-text" style="cursor: pointer">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QTY MODAL -->
+<div class="modal fade" id="QtyModal">
+  <div class="modal-dialog" style="max-width: 30%; margin: 180px auto">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Current Stock {{balance}}</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-md-6 text-center">
+                <div class="form-group">
+                  <label class="form-label" style="font-size: 24px">Quantity</label>
+                  <input type="number" class="text-center fw-bolder onQty" [(ngModel)]="onQty"
+                    (input)="onInputModalCla($event, 'Q')" (keyup.enter)="appendData()" />
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-12 col-md-6">
+                <div class="">
+                  <label class="form-label fw-bolder">Select Location</label>
+                  <ng-select placeholder="--- Select Location ---" [disabled]="!SR" [items]="locationList" bindValue="id"
+                    bindLabel="name" [(ngModel)]="location" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-12 col-md-6">
+                <div class="">
+                  <label class="form-label fw-bolder">Job No</label>
+                  <div class="" *ngIf="costCenter == 'true'">
+                    <ng-select placeholder="---Select Job No---" [items]="JobList" bindLabel="NAME" bindValue="ID"
+                      [dropdownPosition]="'bottom'" [disabled]="true">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">Vehicle No</label>
+                  <input type="text" [(ngModel)]="batchNo" (keyup.enter)="appendData()" />
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">Expiry Date</label>
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" [disabled]="!SR" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepicker3" [(ngModel)]="expiryDate" (click)="datepicker3.open()" />
+                    <mat-datepicker #datepicker3 [startAt]="expiryDate"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="assets/img/icons/calendars.svg" alt="img" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">Sale Rate</label>
+                  <input type="number" [(ngModel)]="saleRate" (input)="onInputModalCla($event, 'A')"
+                    (keyup.enter)="appendData()" />
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">Amount</label>
+                  <input type="text" [(ngModel)]="amount" [disabled]="true" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="modal fade" id="PDModal">
+  <div class="modal-dialog" style="max-width: 70%">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Product Detail</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">
+          ×
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="row">
+          <div class="col-lg-8 col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="bar-code-view ms-3">
+                  <div id="barcodeTarget" class="barcodeTarget" style="padding: 0px; overflow: auto; width: 264px">
+                  </div>
+                  <div>
+
+                  </div>
+                  <canvas id="canvasTarget" width="200" height="200" style="display: none"></canvas>
+                </div>
+              </div>
+              <div class="productdetails me-4">
+                <ul class="product-bar">
+                  <li>
+                    <h4>Product</h4>
+                    <h6>{{mProduct}}</h6>
+                  </li>
+                  <li>
+                    <h4>Description</h4>
+                    <h6>{{mDescriptiion}}</h6>
+                  </li>
+                  <li>
+                    <h4>Category</h4>
+                    <h6>{{mCategory}}</h6>
+                  </li>
+                  <li>
+                    <h4>Brand</h4>
+                    <h6>{{mBrand}}</h6>
+                  </li>
+                  <li>
+                    <h4>Made In</h4>
+                    <h6>{{mMadeIn}}</h6>
+                  </li>
+                  <li>
+                    <h4>Unit of Measurement</h4>
+                    <h6>{{mUom}}</h6>
+                  </li>
+                  <li>
+                    <h4>SKU</h4>
+                    <h6>{{mSku}}</h6>
+                  </li>
+                  <li>
+                    <h4>Warehouse</h4>
+                    <h6>{{mWarehouse}}</h6>
+                  </li>
+                  <li>
+                    <h4>Rack</h4>
+                    <h6>{{mRack}}</h6>
+                  </li>
+                  <li>
+                    <h4>Shelf</h4>
+                    <h6>{{mShelf}}</h6>
+                  </li>
+                  <li>
+                    <h4>Expiry</h4>
+                    <h6>{{mExpiry}}</h6>
+                  </li>
+                  <li>
+                    <h4>Stock</h4>
+                    <h6>{{mStock}}</h6>
+                  </li>
+                  <li>
+                    <h4>Tax</h4>
+                    <h6>{{mTax}}</h6>
+                  </li>
+                  <li>
+                    <h4>Discount</h4>
+                    <h6>{{mDiscount}}</h6>
+                  </li>
+                  <li>
+                    <h4>Rate</h4>
+                    <h6>{{mRate}}</h6>
+                  </li>
+                  <li>
+                    <h4>Status</h4>
+                    <h6>{{mStatus}}</h6>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-sm-12">
+            <div class="card">
+              <div class="productImage image-container">
+                <img src="{{mImage}}" class="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TERMS MODAL -->
+<div class="modal fade" id="TermsModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Terms</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">
+          x
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Terms Days</label>
+              <input type="number" class="form-control" [(ngModel)]="termsDays" [disabled]="isDisabledTerms" />
+            </div>
+            <div class="py-2">
+              <button class="btn btn-primary btn-sm me-1" (click)="newTerms()" [hidden]="isShowTerms">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateTerms()"
+                [hidden]="!isShowTerms">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshTerms()">
+                Refresh
+              </button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 205px">
+                <table class="table mb-0">
+                  <thead class="limited-text">
+                    <tr>
+                      <th class="text-center">Id</th>
+                      <th class="text-start w-75">Days</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of termsList">
+                      <td class="text-center id">{{ item.id }}</td>
+                      <td class="text-start names">{{ item.name }} Days</td>
+                      <td class="text-center">
+                        <span (click)="editTerms(item.id, item.name)" class="me-3">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span (click)="deleteTerms(item.id)" class="confirm-text">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELIVERY PERSON -->
+<div class="modal fade" id="DeliveryPersonModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Delivery Person</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">
+          x
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Name</label>
+              <input type="text" class="form-control" [(ngModel)]="delPer" [disabled]="isDisabledDelPer" />
+            </div>
+            <div class="py-2">
+              <button class="btn btn-primary btn-sm me-1" (click)="newDelPer()" [hidden]="isShowDelPer">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateDeliveryPer()"
+                [hidden]="!isShowDelPer">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshDelPer()">
+                Refresh
+              </button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 205px">
+                <table class="table mb-0">
+                  <thead class="limited-text">
+                    <tr>
+                      <th class="text-center">Id</th>
+                      <th class="text-start w-75">Delivery Person</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of deliveryPerList">
+                      <td class="text-center id">{{item.id}}</td>
+                      <td class="text-start names">{{item.name}}</td>
+                      <td class="text-center">
+                        <span (click)="editDelPer(item.id, item.name)" class="me-3">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span (click)="deleteDelPer(item.id)" class="confirm-text">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal fade AddPayment " id="PaymentModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Payment</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <input type="hidden" id="txtPaymentVchno">
+            <input type="hidden" id="txtminusPayment">
+            <div class="card mb-0 mb-2 h100">
+              <div class="table-responsive fs-12 " style="height:130px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-start">Vch-No</th>
+                      <th class="text-start">Vch-Type</th>
+                      <th class="text-center">Vch-Date</th>
+                      <th class="text-start">Name</th>
+                      <th class="text-end">Amount</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="paymentDetail">
+                    <tr *ngFor="let item of paymentList">
+                      <td class="text-start">{{item.vchno}}</td>
+                      <td class="text-start">{{item.vchtype}}</td>
+                      <td class="text-center">{{item.vchdate}}</td>
+                      <td class="text-start">{{item.names}}</td>
+                      <td class="text-end">{{item.amount}}</td>
+                      <td class="text-center">
+                        <span (click)="deleteBankCash(item)" class="confirm-text">
+                          <img src="assets/img/icons/delete.svg" alt="Delete" />
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row1">
+              <div class="col-sm-12">
+                <div class=" row align-items-center mb-2">
+                  <label class="col-lg-4 col-form-label mb-0 ">Select Bank/Cash</label>
+                  <div class="col-lg-8">
+                    <div class="position-relative w-100">
+                      <ng-select bindLabel="name" bindValue="code" placeholder="---Select ---"
+                        [dropdownPosition]="'bottom'" [items]="bankCashList" [(ngModel)]="bankCash"
+                        style="max-width: auto; justify-content: center" [disabled]="isDisabledPayment"></ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group row align-items-center">
+                  <label class="col-lg-4 col-form-label mb-0">Date</label>
+                  <div class="col-lg-8">
+                    <div class="input-groupicon">
+                      <input type="text" class="form-control" matInput [matDatepicker]="datepicker4"
+                        [(ngModel)]="paymentDate" (click)="datepicker4.open()" [disabled]="isDisabledPayment" />
+                      <mat-datepicker #datepicker4 [startAt]="today"></mat-datepicker>
+                      <div class="addonset">
+                        <img src="assets/img/icons/calenda.svg" alt="img" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group row align-items-center">
+                  <label class="col-lg-4 col-form-label mb-0">Amount</label>
+                  <div class="col-lg-4">
+                    <input type="number" class="form-control" id="txtPaymentAmt" [(ngModel)]="payment"
+                      [disabled]="isDisabledPayment">
+                  </div>
+                  <div class="col-lg-4">
+                    <input type="number" class="form-control fw-bolder text-danger" [(ngModel)]="payment"
+                      id="txtTotalPaymentAmt" disabled="disabled">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 CR">
+                <div class="form-group row align-items-center">
+                  <label class="col-lg-4 col-form-label mb-0">Cheque #</label>
+                  <div class="col-lg-8">
+                    <input type="text" class="form-control" id="txtChqNumber" [(ngModel)]="chequeNo"
+                      [disabled]="isDisabledPayment">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 CR">
+                <div class="form-group row align-items-center">
+                  <label class="col-lg-4 col-form-label mb-0">Cheque Date</label>
+                  <div class="col-lg-8">
+                    <div class="input-groupicon">
+                      <input type="text" class="form-control" matInput [matDatepicker]="datepicker5"
+                        [(ngModel)]="chequeDate" (click)="datepicker5.open()" [disabled]="isDisabledPayment" />
+                      <mat-datepicker #datepicker5 [startAt]="today"></mat-datepicker>
+                      <div class="addonset">
+                        <img src="assets/img/icons/calenda.svg" alt="img" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-2 ms-2 float-end">
+            <button class="btn btn-primary btn-sm me-1" (click)="newPayment()" (click)="getPaymentList()"
+              [hidden]="isShowPayment">
+              New
+            </button>
+            <button type="submit" class="btn btn-success btn-sm me-1" (click)="saveBankCash()"
+              [hidden]="!isShowPayment">
+              Save
+            </button>
+            <button class="btn btn-secondary btn-sm" (click)="refreshPayment()">
+              Refresh
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

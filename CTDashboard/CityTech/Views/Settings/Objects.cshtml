@@ -1,0 +1,1102 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer;
+@{
+    ViewData["Title"] = "Objects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["ObjectsManagement"]</h4>
+            <h6>@Localizer["Add/UpdateObjects"]</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #1265c3; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="PDF" id="pdfPrint">
+                            <i class="far fa-file-pdf" style="color: #ea5455; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" id="convertExcel">
+                            <i class="far fa-file-excel" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="CSV" id="convertCsv">
+                            <i class="fa-solid fa-file-csv" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="Dashboard" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch" class="rounded-pill">
+                    </div>
+                </div>
+                <div class="wordset">
+                    <p href="javascript:void(0);" class="btn btn-addednew btnAdd ct-btns">
+                        <img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">@Localizer["AddNew"]
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />Id</th>
+                            <th class="w-20imp"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["ObjectsName"]</th>
+                            <th class="w-20imp"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Customer"]</th>
+                            <th class="w-45imp"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Location"]</th>
+                            <th class="text-center pe-3 ps-2 last-th-sticky"><input type="checkbox" hidden class="printCheckBox notPrintCol" />@Localizer["Action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="objectsList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content AddPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["ObjectsAdd"]</h4>
+        </div>
+        <div class="page-btn">
+            <a href="javascript:void(0);" class="btn btn-added btnList ct-btns">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="" aria-label="fa fa-th-list"></i> @Localizer["Objects"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row activeForm disabled">
+
+                <div class="col-lg-4 col-4 col-sm-6">
+                    <div class="form-group">
+                        <label>@Localizer["ObjectsName"]</label>
+                        <input type="text" id="txtObjects" class="rounded-pill" skinid="Enter Objects Name....!">
+                        <input type="hidden" id="txtObjectsId">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>@Localizer["Customer"]</label>
+                        <div class="row">
+                            <div class="col-lg-10 col-sm-10 col-10">
+                                <select class="js-example-basic-single select2" id="drpCustomer" skinid="Select Customer....!"></select>
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                <div @*class="add-icon text-end"*@>
+                                    <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="Customer" data-bs-toggle="modal" data-bs-target="#CustomersModal"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>@Localizer["Location"]</label>
+                        <div class="row">
+                            <div class="col-lg-10 col-sm-10 col-10">
+                                <select class="js-example-basic-single select2" id="drpLocation" skinid="Select Location....!"></select>
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                <div @*class="add-icon text-end"*@>
+                                    <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="Locations" data-bs-toggle="modal" data-bs-target="#LocationsModal"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="mb-2">
+                    <button class="btn btn-primary btn-sm ct-btns" id="btnNewObject">@Localizer["New"]</button>
+                    <button class="btn btn-success btn-sm ct-btns" id="btnSaveObject">@Localizer["Save"]</button>
+                    <button class="btn btn-secondary btn-sm ct-btns" id="btnRefreshObject">@Localizer["Refresh"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade ObjLocations" id="LocationsModal">
+    @Html.Partial("~/Views/PartialViews/Objects/Locations.cshtml")
+</div>
+
+<div class="modal fade ObjCustomers" id="CustomersModal">
+    @Html.Partial("~/Views/PartialViews/Objects/Customers.cshtml")
+</div>
+
+@section scripts{
+    <script>
+
+        $(function () {
+            $(".AddPage").hide();
+            $("#btnRefreshObject").click();
+            GetObjects();
+            GetLocations();
+            GetCustomerList();
+            GetStation();
+
+            $("#btnRefreshObjectLocation").click();
+            $("#btnRefreshObjectStation").click();
+            $("#btnRefreshCustomer").click();
+
+            UserPageRights();
+        });
+
+        $(".btnAdd").click(function () {
+            $(".ListPage").hide();
+            $(".AddPage").show();
+            $("#txtObjectsId").val('');
+            $("#btnRefreshObject").click();
+        });
+
+        $(".btnList").click(function () {
+            $(".ListPage").show();
+            $(".AddPage").hide();
+        });
+
+        
+        //====================== Get Data ========================\\
+
+
+        function GetObjects() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/GetObjects/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#objectsList").empty();
+
+                        $.each(data, function (i, item) {
+                            $("#objectsList").append(`
+                             <tr>
+                                <td class="ObjectId ps-2">${item.ID}</td>
+                                <td class="objectName">${item.NAME}</td>
+                                <td class="objectCustomerName">${item.CUSTOMER}</td>
+                                <td class="objectLocation">${item.LOCATION}</td>
+                                <td class="text-center last-td-sticky">
+                                    <span class="me-3 btnEditObject cursor-pointer" >
+                                        <img src="/assets/img/icons/edit.svg" alt="img">
+                                    </span>
+                                    <span class="confirm-text btnDelObject cursor-pointer" >
+                                        <img src="/assets/img/icons/delete.svg" alt="img">
+                                    </span>
+                                </td>
+                                <td class="objectLocationid d-none">${item.LOCATIONID}</td>
+                                <td class="objectCustomerNameid d-none">${item.CUSTOMERID}</td>
+                             </tr>
+                            `)
+                        })
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSaveObject").click(function () {
+
+            if (CheckValidation("AddPage") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtObjectsId").val();
+            obj.name = $("#txtObjects").val();
+            obj.customerId = $("#drpCustomer option:selected").val();
+            obj.locId = $("#drpLocation option:selected").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtObjects").val(), "#objectsList", ".objectName", $("#txtObjectsId").val(), ".ObjectId") == false) {
+                toastr.info("Object Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtObjects").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/SaveObjects/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetObjects();
+                            $("#txtObjectsId").val("");
+                            $("#btnRefreshObject").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelObject", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".ObjectId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/DelObjects/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Already In Use") {
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        } else
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetObjects();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEditObject', function () {
+
+            var id = $(this).closest('tr').find('.ObjectId').text();
+            var name = $(this).closest('tr').find('.objectName').text();
+            var customer = $(this).closest('tr').find('.objectCustomerNameid').text();
+            var location = $(this).closest('tr').find('.objectLocationid').text();
+
+            $("#txtObjectsId").val(id);
+            $("#txtObjects").val(name);
+            $("#drpCustomer").val(customer);
+            $("#drpCustomer").trigger('change');
+            $("#drpCustomer").next('span').find('.select2-selection__rendered').html($("#drpCustomer option:selected").text());
+
+            $("#drpLocation").val(location);
+            $("#drpLocation").next('span').find('.select2-selection__rendered').html($("#drpLocation option:selected").text());
+
+
+            $(".activeForm").removeClass('disabled');
+
+
+            $("#btnSaveObject").show();
+            $("#btnNewObject").hide();
+            $("#btnSaveObject").text('Update');
+
+            $(".ListPage").hide();
+            $(".AddPage").show();
+        });
+
+        //====================== Buttons ========================\\
+
+        $("#btnNewObject").click(function () {
+            $(this).hide();
+            $(".activeForm").removeClass('disabled');
+
+            $("#btnSaveObject").text('Save');
+            $("#btnSaveObject").show();
+            $("#txtObjects").focus();
+        });
+
+        $("#btnRefreshObject").click(function () {
+
+            var uId = $("#txtObjectsId").val();
+
+            if (uId != 0) {
+                $(".ObjectId").each(function () {
+                    const userIdValue = $(this).text().trim();
+                    if (userIdValue === uId) {
+                        $(this).closest('tr').find('.btnEditObject').click();
+                        return false;
+                    }
+                });
+            }
+            else {
+                $("#btnSaveObject").hide();
+                $("#btnNewObject").show();
+                $(".activeForm").addClass('disabled');
+
+                $("#txtObjectsId").val('');
+                $("#txtObjects").val('');
+                $("#drpCustomer").val('0');
+                $("#drpCustomer").next('span').find('.select2-selection__rendered').html($("#drpCustomer option:selected").text());
+
+                $("#drpLocation").val('0');
+                $("#drpLocation").next('span').find('.select2-selection__rendered').html($("#drpLocation option:selected").text());
+
+            }
+        });
+
+        //====================== Locations ========================\\
+
+        $("#drpCustomer").change(function(){
+            GetLocations();
+        });
+
+        function GetLocations() {
+            var id = $("#drpCustomer").val();
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/GetObjectLocations/" + id,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+
+                        $("#drpLocation").empty();
+                        $("#drpLocation").append(`<option value="0">--- Select Location ---</option>`);
+                        
+                        $("#objectLocationList").empty();
+
+                        $.each(data, function (i, item) {
+
+                            $("#drpLocation").append(`<option value="${item.ID}">${item.ADDRESS}</option>`);
+
+                            $("#objectLocationList").append(`
+                             <tr>
+                                <td class="ObjectLocId d-none ps-2">${item.ID}</td>
+                                <td class="objectLocName">${item.ADDRESS}</td>
+                                <td class="objectLocName2">${item.ADDRESS2}</td>
+                                <td class="objectStationId d-none">${item.STATIONID}</td>
+                                <td class="objectStation">${item.STATION}</td>
+                                <td class="objectCustomerId d-none">${item.CUSTOMERID}</td>
+                                <td class="objectCustomerName">${item.CUSTOMER}</td>
+                                <td class="objectPerson">${item.CONTACTPERSON}</td>
+                                <td class="objectPersonPhone">${item.CONTACTPERSONPHONE}</td>
+                                <td class="objectResidence">${item.RESIDENCE}</td>
+                                <td class="objectRegion">${item.REGION}</td>
+                                <td class="objectPostalCode">${item.POSTALCODE}</td>
+                                <td class="objectLati">${item.LATI}</td>
+                                <td class="objectLongi">${item.LONGI}</td>
+                                <td class="text-center last-td-sticky">
+                                    <span class="me-2 btnEditObjectLoc cursor-pointer" >
+                                        <img src="/assets/img/icons/edit.svg" alt="img">
+                                    </span>
+                                    <span class="confirm-text btnDelObjectLoc cursor-pointer" >
+                                        <img src="/assets/img/icons/delete.svg" alt="img">
+                                    </span>
+                                </td>
+                             </tr>
+                            `)
+                        })
+                        
+                        //$.each(data, function (i, item) {
+                        //    $("#drpLocation").append(`<option value="${item.ID}">${item.ID}</option>`);
+
+                        //    $("#objectLocationList").append(`
+                        //     <tr>
+                        //         <td class="ObjectLocId d-none ps-2">${item.ID}</td>
+                        //         <td class="objectLocName">${item.ADDRESS}</td>
+                        //         <td class="text-center last-td-sticky">
+                        //             <span class="me-3 btnEditObjectLoc cursor-pointer" >
+                        //                 <img src="/assets/img/icons/edit.svg" alt="img">
+                        //             </span>
+                        //             <span class="confirm-text btnDelObjectLoc cursor-pointer" >
+                        //                 <img src="/assets/img/icons/delete.svg" alt="img">
+                        //             </span>
+                        //         </td>
+                        //     </tr>
+                        //    `)
+                        //});
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#btnSaveObjectLocation").click(function () {
+
+            if($("#drpCustomer").val() == "0"){
+                toastr.warning("Select Customer....!", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#drpCustomer").focus();
+                return false;
+            }
+
+            if (CheckValidation("ObjLocations") == false) {
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtObjectLocationId").val();
+            obj.address = $("#txtObjectLocation").val();
+            obj.address2 = $("#txtObjectLocation2").val();
+            obj.stationId = $("#drpLocationStation").val();
+            obj.customerId = $("#drpCustomer").val();
+            obj.contactPerson = $("#txtLocationContactPerson").val();
+            obj.contactPersonPhone = $("#txtLocationPersonPhone").val();
+            obj.residence = $("#txtLocationResidence").val();
+            obj.region = $("#txtLocationRegion").val();
+            obj.postalCode = $("#txtLocationPostalCode").val();
+            obj.lati = $("#txtLocationLatitude").val();
+            obj.longi = $("#txtLocationLongitude").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtObjectLocation").val(), "#objectLocationList", ".objectLocName", $("#txtObjectLocationId").val(), ".ObjectLocId") == false) {
+                toastr.info("Object Location Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtObjectLocation").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/SaveLocations/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetLocations();
+                            $("#btnRefreshObjectLocation").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+
+        $('body').on('click', ".btnDelObjectLoc", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".ObjectLocId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/DelLocations/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Already In Use") { 
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        } else  
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetLocations();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditObjectLoc', function () {
+
+            var id = $(this).closest('tr').find('.ObjectLocId').text();
+            var locName = $(this).closest('tr').find('.objectLocName').text();
+            var locName2 = $(this).closest('tr').find('.objectLocName2').text();
+            var stationid = $(this).closest('tr').find('.objectStationId').text();
+            var person = $(this).closest('tr').find('.objectPerson').text();
+            var personPhone = $(this).closest('tr').find('.objectPersonPhone').text();
+            var residence = $(this).closest('tr').find('.objectResidence').text();
+            var region = $(this).closest('tr').find('.objectRegion').text();
+            var postalCode = $(this).closest('tr').find('.objectPostalCode').text();
+            var lati = $(this).closest('tr').find('.objectLati').text();
+            var longi = $(this).closest('tr').find('.objectLongi').text();
+
+            $("#txtObjectLocationId").val(id);
+            $("#txtObjectLocation").val(locName);
+            $("#txtObjectLocation2").val(locName2);
+            $("#drpLocationStation").val(stationid);
+            $("#drpLocationStation").next('span').find('.select2-selection__rendered').html($("#drpLocationStation option:selected").text());
+
+            $("#txtLocationContactPerson").val(person);
+            $("#txtLocationPersonPhone").val(personPhone);
+            $("#txtLocationResidence").val(residence);
+            $("#txtLocationRegion").val(region);
+            $("#txtLocationPostalCode").val(postalCode);
+            $("#txtLocationLatitude").val(lati);
+            $("#txtLocationLongitude").val(longi);
+
+            $("#txtObjectLocation").removeClass('disabled');
+            $("#txtObjectLocation2").removeClass('disabled');
+            //$("#drpLocationStation").removeClass('disabled');
+            $("#drpLocationStation").closest('div').removeClass('disabled');
+
+            $("#txtLocationContactPerson").removeClass('disabled');
+            $("#txtLocationPersonPhone").removeClass('disabled');
+            $("#txtLocationResidence").removeClass('disabled');
+            $("#txtLocationRegion").removeClass('disabled');
+            $("#txtLocationPostalCode").removeClass('disabled');
+            $("#txtLocationLatitude").removeClass('disabled');
+            $("#txtLocationLongitude").removeClass('disabled');
+
+            $("#btnSaveObjectLocation").show();
+            $("#btnNewObjectLocation").hide();
+            $("#btnSaveObjectLocation").text('Update');
+        });
+
+
+        $("#btnNewObjectLocation").click(function () {
+            $(this).hide();
+            $("#txtObjectLocation").removeClass('disabled');
+            $("#txtObjectLocation2").removeClass('disabled');
+            //$("#drpLocationStation").removeClass('disabled');
+            $("#drpLocationStation").closest('div').removeClass('disabled');
+
+            $("#txtLocationContactPerson").removeClass('disabled');
+            $("#txtLocationPersonPhone").removeClass('disabled');
+            $("#txtLocationResidence").removeClass('disabled');
+            $("#txtLocationRegion").removeClass('disabled');
+            $("#txtLocationPostalCode").removeClass('disabled');
+            $("#txtLocationLatitude").removeClass('disabled');
+            $("#txtLocationLongitude").removeClass('disabled');
+
+            $("#btnSaveObjectLocation").text('Save');
+            $("#btnSaveObjectLocation").show();
+            $("#txtObjectLocation").focus();
+        });
+
+        $("#btnRefreshObjectLocation").click(function () {
+
+            $("#btnSaveObjectLocation").hide();
+            $("#btnNewObjectLocation").show();
+            $("#txtObjectLocation").addClass('disabled');
+            $("#txtObjectLocation2").addClass('disabled');
+            //$("#drpLocationStation").addClass('disabled');
+            $("#drpLocationStation").closest('div').addClass('disabled');
+
+            $("#txtLocationContactPerson").addClass('disabled');
+            $("#txtLocationPersonPhone").addClass('disabled');
+            $("#txtLocationResidence").addClass('disabled');
+            $("#txtLocationRegion").addClass('disabled');
+            $("#txtLocationPostalCode").addClass('disabled');
+            $("#txtLocationLatitude").addClass('disabled');
+            $("#txtLocationLongitude").addClass('disabled');
+
+            $("#txtObjectLocationId").val('');
+            $("#txtObjectLocation").val('');
+            $("#txtObjectLocation2").val('');
+            $("#drpLocationStation").val('0');
+            $("#drpLocationStation").next('span').find('.select2-selection__rendered').html($("#drpLocationStation option:selected").text());
+
+            $("#txtLocationContactPerson").val('');
+            $("#txtLocationPersonPhone").val('');
+            $("#txtLocationResidence").val('');
+            $("#txtLocationRegion").val('');
+            $("#txtLocationPostalCode").val('');
+            $("#txtLocationLatitude").val('');
+            $("#txtLocationLongitude").val('');
+        });
+
+        function GetStation() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/GetStation/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpLocationStation").empty();
+                        $("#drpLocationStation").append(`<option value="0">--- Select Station ---</option>`);
+
+                        $.each(data, function (i, item) {
+                            $("#drpLocationStation").append(`<option value="${item.id}">${item.station}</option>`);
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        //====================== Customers ========================\\
+
+        function GetCustomerList() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/CustomerGet/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+
+                        $("#allCustomersList").empty();
+
+                        $("#drpCustomer").empty();
+                        $("#drpCustomer").append(`<option value="0">--- Select Customer ---</option>`);
+
+                        $.each(data, function (i, item) {
+
+                            $("#drpCustomer").append(`<option value="${item.id}">${item.name}</option>`);
+                            $("#allCustomersList").append(`
+                             <tr>
+                                 <td class="customerId ps-2">${item.id}</td>
+                                 <td class="customerName ps-2">${item.name}</td>
+                                 <td class="customerEmail ps-2">${item.email}</td>
+                                 <td class="customerPhone ps-2">${item.phone}</td>
+                                 <td class="customerGender ps-2">${item.gender}</td>
+                                 <td class="businessName ps-2">${item.business}</td>
+                                 <td class="customerVatNo ps-2">${item.vatno}</td>
+                                 <td class="customerChamberCommerce ps-2">${item.commercechamber}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-1 btnEditCustomer cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelCustomer cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                             </tr>
+                            `)
+                        })
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#btnSaveCustomer").click(function () {
+
+            var txtCustomerEmail = $('#txtCustomerEmail').val();
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (txtCustomerEmail.length > 0) {
+                if (!emailRegex.test(txtCustomerEmail)) {
+                    toastr.warning("Invalid Email Address", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    $('#txtCustomerEmail').focus();
+                    return false;
+                }
+            }
+
+            if (CheckValidation("ObjCustomers") == false) {
+
+                    return false;
+            }
+
+            var obj = {};
+
+            obj.id = $("#txtCustomerId").val();
+            obj.name = $("#txtCustomerName").val();
+            obj.phone = $("#txtCustomerPhone").val();
+            obj.email = $("#txtCustomerEmail").val();
+            obj.gender = $("#drpCustomerGender").val();
+            obj.businessName = $("#txtCustomerBusiness").val();
+            obj.vatNo = $("#txtCustomerVatNo").val();
+            obj.ChamberOfCommerceNo = $("#txtCustomerChamberCommerce").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtCustomerName").val(), "#allCustomersList", ".customerName", $("#txtCustomerId").val(), ".customerId") == false) {
+                toastr.info("Customer Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtCustomerName").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/CustomerSave/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetCustomerList();
+                            $("#txtCustomerId").val("");
+                            $("#btnRefreshCustomer").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelCustomer", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".customerId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/DelCustomer/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Already In Use") { 
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        } else  
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetCustomerList();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEditCustomer', function () {
+
+            $(".activeForm").removeClass('disabled');
+
+            var id = $(this).closest('tr').find('.customerId').text();
+            var name = $(this).closest('tr').find('.customerName').text();
+            var customerPhone = $(this).closest('tr').find('.customerPhone').text();
+            var customerEmail = $(this).closest('tr').find('.customerEmail').text();
+            var customerGender = $(this).closest('tr').find('.customerGender').text();
+            var businessName = $(this).closest('tr').find('.businessName').text();
+            var customerVatNo = $(this).closest('tr').find('.customerVatNo').text();
+            var customerChamberCommerce = $(this).closest('tr').find('.customerChamberCommerce').text();
+
+            $("#txtCustomerId").val(id);
+            $("#txtCustomerName").val(name);
+            $("#txtCustomerPhone").val(customerPhone);
+            $("#txtCustomerEmail").val(customerEmail);
+            $("#drpCustomerGender").val(customerGender);
+            $("#txtCustomerBusiness").val(businessName);
+            $("#txtCustomerVatNo").val(customerVatNo);
+            $("#txtCustomerChamberCommerce").val(customerChamberCommerce);
+
+            $("#btnSaveCustomer").show();
+            $("#btnNewCustomer").hide();
+            $("#btnSaveCustomer").text('Update');
+
+            $("#txtCustomerName").removeClass('disabled');
+            $("#txtCustomerPhone").removeClass('disabled');
+            $("#txtCustomerEmail").removeClass('disabled');
+            $("#drpCustomerGender").removeClass('disabled');
+            $("#txtCustomerBusiness").removeClass('disabled');
+            $("#txtCustomerVatNo").removeClass('disabled');
+            $("#txtCustomerChamberCommerce").removeClass('disabled');
+
+        });
+
+
+        $("#btnNewCustomer").click(function () {
+
+            $("#txtCustomerName").removeClass('disabled');
+            $("#txtCustomerPhone").removeClass('disabled');
+            $("#txtCustomerEmail").removeClass('disabled');
+            $("#drpCustomerGender").removeClass('disabled');
+            $("#txtCustomerBusiness").removeClass('disabled');
+            $("#txtCustomerVatNo").removeClass('disabled');
+            $("#txtCustomerChamberCommerce").removeClass('disabled');
+            
+            $(this).hide();
+            $("#btnSaveCustomer").text('Save');
+            $("#btnSaveCustomer").show();
+            $("#txtCustomerName").focus();
+
+        });
+
+        $("#btnRefreshCustomer").click(function () {
+
+            $("#txtCustomerName").addClass('disabled');
+            $("#txtCustomerPhone").addClass('disabled');
+            $("#txtCustomerEmail").addClass('disabled');
+            $("#drpCustomerGender").addClass('disabled');
+            $("#txtCustomerBusiness").addClass('disabled');
+            $("#txtCustomerVatNo").addClass('disabled');
+            $("#txtCustomerChamberCommerce").addClass('disabled');
+
+            $("#btnSaveCustomer").hide();
+            $("#btnNewCustomer").show();
+
+            $("#txtCustomerId").val('');
+            $("#txtCustomerName").val('');
+            $("#txtCustomerPhone").val('');
+            $("#txtCustomerEmail").val('');
+            $("#drpCustomerGender").val('');
+            $("#txtCustomerBusiness").val('');
+            $("#txtCustomerVatNo").val('');
+            $("#txtCustomerChamberCommerce").val('');
+            $("drpLocation").trigger('change');
+        });
+
+
+        //====================== Search ========================\\
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#objectsList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $(document).on('input', '#txtSearchObjectStation', function () {
+            var value = $(this).val().toLowerCase();
+            $("#objectStationList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $(document).on('input', '#txtSearchObjectLocation', function () {
+            var value = $(this).val().toLowerCase();
+            $("#objectLocationList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        document.getElementById('txtCustomerPhone').addEventListener('input', function (event) {
+            const inputValue = event.target.value;
+            event.target.value = inputValue.replace(/[^0-9+]/g, '');
+        });
+
+        document.getElementById('txtLocationPersonPhone').addEventListener('input', function (event) {
+            const inputValue = event.target.value;
+            event.target.value = inputValue.replace(/[^0-9+]/g, '');
+        });
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]" + ".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+        //================ User Page Rights ==================\\
+
+        function UserPageRights(){
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/UserPageRights/",
+                    data: { url: window.location.pathname },
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.word == false) { $("#convertWord").closest('li').remove(); }
+                        if(data.pdf == false){ $("#pdfPrint").closest('li').remove(); }
+                        if (data.excel == false) { $("#convertExcel").closest('li').remove(); }
+                        if (data.csv == false) { $("#convertCsv").closest('li').remove(); }
+                        if (data.delete == false) { $(".btnDelObject").remove(); }
+                        if (data.edit == false) { $(".btnEditObject").remove(); }
+
+                        if(data.save == false){
+                            $(".btnAdd").closest('div').remove();
+                            $("#btnRefreshObject, #btnNewCustomer, #btnSaveCustomer, #btnRefreshCustomer, .btnEditCustomer, .btnDelCustomer, #btnNewObjectLocation, #btnSaveObjectLocation, #btnRefreshObjectLocation, .btnEditObjectLoc, .btnDelObjectLoc").remove();
+                            $("#drpCustomer, drpLocation").closest('.row').find('.custom-plus-icon').addClass('disabled');
+
+                        }
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+    </script>
+}

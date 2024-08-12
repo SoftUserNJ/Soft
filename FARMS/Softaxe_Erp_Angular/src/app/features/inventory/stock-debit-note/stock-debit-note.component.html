@@ -1,0 +1,315 @@
+<div class="content ListPage" *ngIf="isShowPage">
+  <div class="page-header d-block mb-1">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="page-title">
+          <h4 class="newcolor">Stock Adjustment</h4>
+          <h6 class="newcolor">Manage your Stock Adjustment</h6>
+        </div>
+      </div>
+      <div class="col-sm-4 text-center">
+        <div class="page-title">
+          <h3 class="text-danger fw-bolder headerText">DEBIT NOTE</h3>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="page-btn float-end">
+          <div class="wordset newwordset">
+            <ul>
+              <li>
+                <a (click)="export('Stock-Debit-Note', 'pdf')" title="pdf">
+                  <img src="/assets/img/icons/pdf.svg" alt="img">
+                </a>
+              </li>
+              <li>
+                <a (click)="export('Stock-Debit-Note', 'xlxs')" title="excel">
+                  <img src="/assets/img/icons/excel.svg" alt="img">
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row align-items-center mb-2">
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="d-flex align-items-center">
+            <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+            <input type="search" class="form-control" placeholder="Search" (input)="searchGrid($event)" />
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-6 col-sm-12">
+          <div class="row align-items-center">
+            <div class="col-lg-2 col-md-2 text-end p-0">
+              <span class="fw-bolder">From Date</span>
+            </div>
+            <div class="col-lg-3 col-md-4 ps-1">
+              <div class="form-group mb-0">
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                    [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                  <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 text-end p-0">
+              <span class="fw-bolder">To Date</span>
+            </div>
+            <div class="col-lg-3 col-md-4 ps-1">
+              <div class="form-group mb-0">
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                    [matDatepicker]="datepicker2" [(ngModel)]="toDate" (click)="datepicker2.open()">
+                  <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+              <img src="/assets/img/icons/search.svg" alt="img" class="filter-img" (click)="getStockDebitList()">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 ps-0">
+          <div class="d-flex align-items-center justify-content-end">
+            <p (click)="togglePages(); editDisabled= false" class="add-new">
+              <img src="/assets/img/icons/plus.svg" alt="img" class="filter-img">Add New
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive mb-1" style="height:400px;">
+        <table class="table mb-0 custom-table-padding" id="export">
+          <thead>
+            <tr>
+              <th class="text-center">Vch No</th>
+              <th class="text-center">Vch Type</th>
+              <th class="text-center">Vch Date</th>
+              <th class="text-center w-0 noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody #stockDebitLists>
+            <tr *ngFor="let item of stockDebitList">
+              <td class="vchno text-center">{{item.vchno}}</td>
+              <td class="vchtype text-center">{{item.vchType}}</td>
+              <td class="vchdate text-center">{{item.vchDate}}</td>
+              <td class="text-center noPrint">
+                <span class="me-3 btnPrintInvoice" (click)="openRowReport(item)">
+                  <i class="fas fa-print"></i>
+                </span>
+                <span (click)="editDebitNote(item.vchno)" class="me-3 btnEditData">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span (click)="deleteDebitNote(item.vchno)" class="btnDelData">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Page -->
+<div class="content AddPage" *ngIf="!isShowPage">
+  <div class="row align-items-center">
+    <div class="col-lg-4 col-md-12">
+      <div class="page-header mb-1">
+        <div class="page-title">
+          <h4 class="newcolor">Stock Adjustment</h4>
+          <h6 class="newcolor">Manage your Stock Adjustment</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-12 text-center">
+      <div class="page-title">
+        <h5 class="text-danger fw-bolder headerText">DEBIT NOTE</h5>
+      </div>
+    </div>
+    <div class="col-lg-1 col-md-4 pe-0">
+      <input type="number" id="voucherNo" [(ngModel)]="vchno" class="form-control" disabled="">
+    </div>
+    <div class="col-lg-2 col-md-4">
+      <div class="form-group" style="margin-bottom:0!important;">
+        <div class="input-groupicon">
+          <input type="text" class="form-control" 
+            placeholder="DD/MM/YYYY" 
+            matInput 
+            [matDatepicker]="datepicker3"
+            [(ngModel)]="vchDate" 
+            (click)="datepicker3.open()" />
+          <mat-datepicker #datepicker3 [startAt]="vchDate"></mat-datepicker>
+          <div class="addonset">
+            <img src="/assets/img/icons/calendars.svg" alt="img">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1 col-md-4 p-0">
+      <div class="page-header mb-1">
+        <div class="page-btn">
+          <a (click)="togglePages()" class="btn btn-added btnList">
+            <i class="fa me-2 fa-th-list"></i> Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form action="" [formGroup]="stockDebitForm" [ngClass]="{ 'disabled': isPageDisabled }">
+        <div class="row AddAdjust activeForm">
+          <div class="col-lg-4 col-md-4">
+            <div class="mb-2">
+              <label class="fw-bolder">Product</label>
+              <div class="position-relative w-100">
+                <ng-select 
+                  placeholder="---Select Product---" 
+                  [items]="productList"
+                  bindLabel="name" 
+                  bindValue="code" 
+                  [dropdownPosition]="'bottom'" 
+                  formControlName="productCode"
+                  (change)="onChangeProduct($event)">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-2">
+            <div class="mb-2">
+              <label class="fw-bolder">Location</label>
+              <div class="position-relative w-100">
+                <ng-select 
+                  placeholder="---Select Location---" 
+                  formControlName="locationId"
+                  [clearable]="false"
+                  [dropdownPosition]="'bottom'"
+                  (change)="onLocationChange()" >
+                  <ng-option *ngFor="let item of locationList" [value]="item.SHELFID">
+                    {{ item.LOCATION + " - " + item.EXPIRYDATE + " - (" + item.STOCK + ")" }}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-2">
+            <div class="mb-2">
+              <label class="fw-bolder">Expiry</label>
+              <input type="text" class="form-control" 
+                formControlName="expiryDate" 
+                placeholder="DD/MM/YYYY" 
+                matInput
+                [matDatepicker]="datepicker4" 
+                (click)="datepicker4.open()" />
+              <mat-datepicker #datepicker4 [startAt]="expiryDate"></mat-datepicker>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-4">
+            <div class="mb-2">
+              <label class="fw-bolder">UOM</label>
+              <div class="position-relative w-100">
+                <ng-select 
+                  placeholder="---Select UOM---" 
+                  [items]="uomList"
+                  bindLabel="UOM" 
+                  bindValue="UOMID" 
+                  [clearable]="false"
+                  formControlName="uomId"
+                  (change)="OnInputQty()" 
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-4">
+            <div class="form-group">
+              <label>Qty</label>
+              <input type="number" class="form-control" (input)="OnInputQty()" formControlName="qty" id="txtQty">
+            </div>
+          </div>
+          <div class="col-lg-5 col-sm-5">
+            <div class="form-group">
+              <label>Remarks</label>
+              <input type="text" class="form-control" formControlName="remarks" id="txtRemarks">
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-2">
+            <div class="mb-2" *ngIf="costCenter == 'true'">
+              <label class="fw-bolder mb-3px">Job No</label>
+              <ng-select placeholder="---Select Job No---" [items]="JobList" bindLabel="NAME" bindValue="ID"
+                [dropdownPosition]="'bottom'" formControlName="jobNo">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-1 col-md-1 d-flex align-items-end justify-content-end">
+            <div class="form-group">
+              <button class="btn btn-primary btn-sm" (click)="appendData()" id="btnAdd">
+                {{ isRowEdit ? 'Update' : 'Add' }}</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive mb-2" style="height:280px;" [ngClass]="{ 'disabled': isPageDisabled }">
+        <table class="table mb-0 custom-table-padding">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th class="text-center w-7">Location</th>
+              <th class="text-center w-10">Expiry Date</th>
+              <th class="text-center">Uom</th>
+              <th class="text-center pe-2">Qty</th>
+              <th class="text-start">Remarks</th>
+              <th class="jobNo" *ngIf="costCenter == 'true'">Job No</th>
+              <th class="text-center w-0">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of stockDebit_List;">
+              <td class="text-center d-none">{{ data.sno }}</td>
+              <td class="limited-text text-start" title="{{data.productName}}">{{data.productName}}</td>
+              <td class="text-center d-none">{{data.locationId}}</td>
+              <td class="text-center">{{data.location}}</td>
+              <td class="text-center">{{data.expiryDate}}</td>
+              <td class="text-center d-none">{{data.uomId}}</td>
+              <td class="text-center">{{data.uomName}}</td>
+              <td class="text-center">{{data.qty}}</td>
+              <td class="limited-text text-start" title="{{data.remarks}}">{{data.remarks}}</td>
+              <td class="limited-text" *ngIf="costCenter == 'true'">{{ data.jobName}}</td>
+              <td class="text-center">
+                <span (click)="editRow(data)" class="me-3 btnEditData">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span (click)="removeRow(data)" class="btnDelData">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12 col-lg-12 col-md-12 text-end">
+          <div class="mt-2">
+            <button class="btn btn-primary btn-sm me-1" *ngIf="!isNewClick" (click)="onClickNew()">New</button>
+            <button *ngIf="isNewClick" (click)="saveDebitNote()" class="btn btn-success btn-sm  me-1">Save</button>
+            <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">Refresh</button>
+            <button class="btn btn-info btn-sm" *ngIf="isPrint" (click)=" printReport()">Print</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

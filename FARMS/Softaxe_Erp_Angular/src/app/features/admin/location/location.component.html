@@ -1,0 +1,185 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Location List</h4>
+      <h6>Manage your Location</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Location', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Location', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 s">
+          <div class="mb-2">
+            <label class="fw-bolder">Company Group</label>
+            <ng-select placeholder="---Select Group---" [items]="companyGroup" bindLabel="CompName" bindValue="GrpId"
+              [(ngModel)]="selectedCompanyGroup" (change)="onGroupChange($event)" [dropdownPosition]="'bottom'">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder">Company</label>
+            <ng-select placeholder="---Select Company---" [items]="company" bindLabel="name" bindValue="id"
+              [(ngModel)]="selectedCompany" (change)="onCompanyChange($event)" [dropdownPosition]="'bottom'">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder">Location</label>
+            <div class="row">
+              <div class="col-lg-10 col-sm-10 col-10">
+                <ng-select placeholder="---Select Location---" [items]="location" bindLabel="NAME" bindValue="ID"
+                  [(ngModel)]="selectedLocation" (change)="onChangeLocation($event)" [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+              <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                <div class="add-icon text-end">
+                  <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                    data-bs-target="#LocationsModal" (click)="refreshLocation()"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height:380px;">
+        <table class="table" id="export">
+          <thead>
+            <tr>
+              <th>Company Group</th>
+              <th>Company</th>
+              <th>Loc Id</th>
+              <th>Location</th>
+              <th>City</th>
+              <th>Address</th>
+              <th class="text-center noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody #locationLists>
+            <tr *ngFor="let item of locationList">
+              <td class="limited-text groupName" title="{{ item.GROUPNAME }}">{{ item.GROUPNAME }}</td>
+              <td class="limited-text cmpName" title="{{ item.COMPANYNAME }}">{{ item.COMPANYNAME }}</td>
+              <td class="limited-text" title="{{ item.LOCID }}">{{ item.LOCID }}</td>
+              <td class="limited-text locName" title="{{ item.LOCATIONNAME }}">{{ item.LOCATIONNAME }}</td>
+              <td class="limited-text" title="{{ item.CITY }}">{{ item.CITY }}</td>
+              <td class="limited-text" title="{{ item.ADDRESS }}">{{ item.ADDRESS }}</td>
+              <td class="text-center noPrint">
+                <span (click)=" editLocation(item, 'row')" class="me-3">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span (click)="deleteLocation(item.LOCID)" class="confirm-text btnDelLevel1">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="LocationsModal" aria-labelledby="locationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2  align-items-center">
+        <h5 class="modal-title ">Location
+        </h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-4 mb-1">
+                  <label class="form-label mb-1">Loc Id</label>
+                  <input type="text" class="form-control" [(ngModel)]="locationId" [disabled]="isLocId">
+                </div>
+                <div class="col-md-8 mb-1">
+                  <label class="form-label mb-1">Location</label>
+                  <input type="text" class="form-control" [(ngModel)]="locationName" [disabled]="isDisabledLocation">
+                </div>
+                <div class="col-md-4 mb-1">
+                  <label class="form-label mb-1">Contact</label>
+                  <input type="text" class="form-control" [(ngModel)]="contact" [disabled]="isDisabledLocation">
+                </div>
+                <div class="col-md-4 mb-1">
+                  <label class="form-label mb-1">Email</label>
+                  <input type="text" class="form-control" [(ngModel)]="email" [disabled]="isDisabledLocation">
+                </div>
+                <div class="col-md-4 mb-1">
+                  <label class="form-label mb-1">City</label>
+                  <input type="text" class="form-control" [(ngModel)]="city" [disabled]="isDisabledLocation">
+                </div>
+                <div class="col-md-12 mb-1">
+                  <label class="form-label mb-1">Address</label>
+                  <input type="text" class="form-control" [(ngModel)]="address" [disabled]="isDisabledLocation">
+                </div>
+                <div class="col-md-12 mb-1">
+                  <label class="form-label mb-1">Company Name</label>
+                  <input type="text" class="form-control" [(ngModel)]="cmpNameLoc" [disabled]="isDisabledLocation">
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <button class="btn btn-primary btn-sm me-1" (click)="newLocation()" [hidden]="isShowLocation">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateLocation()"
+                [hidden]="!isShowLocation">Save</button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshLocation()">Refresh</button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height:205px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Location</th>
+                      <th>City</th>
+                      <th>Address</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of location">
+                      <td class="limited-text" title="{{ item.ID }}">{{ item.ID }}</td>
+                      <td class="limited-text" title="{{ item.NAME }}">{{ item.NAME }}</td>
+                      <td class="limited-text" title="{{ item.CITY }}">{{ item.CITY }}</td>
+                      <td class="limited-text" title="{{ item.ADDRESS }}">{{ item.ADDRESS }}</td>
+                      <td class="text-center">
+                        <span (click)=" editLocation(item, '')" class="me-3 btnEditLevel1">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span (click)="deleteLocation(item.ID)" class="confirm-text btnDelLevel1">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

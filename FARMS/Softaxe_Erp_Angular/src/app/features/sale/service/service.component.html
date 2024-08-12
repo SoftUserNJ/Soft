@@ -1,0 +1,293 @@
+<div class="content ListPage" *ngIf="isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Services List</h4>
+      <h6>Manage your Services</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title=""
+              id="pdfPrint"
+              data-bs-original-title="pdf"
+            >
+              <img src="/assets/img/icons/pdf.svg" alt="img" />
+            </a>
+          </li>
+          <li>
+            <a
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title=""
+              data-bs-original-title="excel"
+            >
+              <img src="/assets/img/icons/excel.svg" alt="img" />
+            </a>
+          </li>
+          <li>
+            <a
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title=""
+              data-bs-original-title="print"
+            >
+              <img src="/assets/img/icons/printer.svg" alt="img" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-body">
+      <div class="table-top table-topm mb-2">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="/assets/img/icons/filter.svg" alt="img" />
+              <span><img src="/assets/img/icons/closes.svg" alt="img" /></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <input type="search" (input)="searchGrid($event)" id="txtSearch" />
+          </div>
+        </div>
+        <div class="wordset ms-4 text-center">
+          <p (click)="togglePages()" class="btn-addednew btnAdd">
+            <img src="/assets/img/icons/plus.svg" alt="img" class="me-1" />Add
+            New
+          </p>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th class="text-start">Service Name</th>
+              <th class="text-center">Period</th>
+              <th class="text-end ">Rate</th>
+              <th class="text-end ">Tax</th>
+              <th class="text-center  ">Action</th>
+            </tr>
+          </thead>
+          <tbody id="servicesList" #servicesLists>
+            <tr *ngFor="let item of servicesList">
+              <td class="text-start d-none">{{item.CODE}}</td>
+              <td class="text-start">{{item.NAME}}</td>
+              <td class="text-center">{{item.TIMEPERIOD}}</td>
+              <td class="text-end">{{item.RATE | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.TAX | number : "1.2-2"}}</td>
+              <td class="text-center">
+                <span
+                  (click)="editServices(item)"
+                  class="me-3">
+                  <img src="assets/img/icons/edit.svg" alt="Edit" />
+                </span>
+                <span
+                  (click)="deleteService(item.CODE)"
+                  class="confirm-text">
+                  <img src="assets/img/icons/delete.svg" alt="Delete" />
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Page -->
+<div class="content AddPage"  *ngIf="!isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Services Management</h4>
+      <h6>Add/Update Services</h6>
+    </div>
+    <div class="page-btn">
+      <a (click)="togglePages()" class="btn btn-added btnList">
+        <i
+          class="fa me-2 fa-th-list"
+          data-bs-toggle="tooltip"
+          title=""
+          data-bs-original-title="Home"
+          aria-label="fa fa-th-list"
+        ></i>
+        Home
+      </a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="row activeForm" [formGroup]="serviceForm" [ngClass]="{ 'disabled': isPageDisabled }">
+          <div class="col-lg-6 col-sm-6 col-12 mx-auto activeForm">
+            <div class="form-group">
+              <label>Service Name</label>
+              <input
+                type="text"
+                id="txtServiceName"
+                formControlName="serviceName"
+              />
+              <input type="hidden" id="txtServiceId" value="" />
+            </div>
+
+            <div class="mb-2" >
+              <label class="fw-bolder">Time Period</label>
+              <div class="row" data-select2-id="6">
+                <div class="col-lg-10 col-sm-10 col-10 pe-1"
+                  data-select2-id="5">
+                  <div class="position-relative w-100" data-select2-id="4">
+                    <ng-select
+                      bindLabel="name"
+                      bindValue="id"
+                      [items]="timePeriodList"
+                      placeholder="---Select Time Period---"
+                      [dropdownPosition]="'bottom'"
+                      formControlName="timePeriodId"
+                    >
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                  <div class="add-icon text-end">
+                    <i
+                      class="fa fa-plus custom-plus-icon text-center"
+                      aria-label="fa fa-plus"
+                      data-bs-toggle="modal"
+                      data-bs-target="#TimePeriodModal"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Rate</label>
+              <input
+                type="number"
+                id="txtServiceRate"
+                formControlName="rate"/>
+            </div>
+
+            <div class="form-group">
+              <label>Tax</label>
+              <input type="number" id="txtServiceTax"  formControlName="tax" />
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mx-auto ms-8">
+          <button
+            class="btn btn-primary btn-sm me-1"
+            *ngIf="!isNewClick"
+            (click)="onClickNew()">
+            New
+          </button>
+          <button *ngIf="isNewClick" class="btn btn-success btn-sm me-1" (click)="onClickSave()" >
+            Save
+          </button>
+          <button
+            class="btn btn-secondary btn-sm me-1"
+            (click)="onClickRefresh()"
+            >
+            Refresh
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Time Period Modal -->
+
+<div class="modal fade" id="TimePeriodModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Time Period</h5>
+        <button
+          type="button"
+          class="close fs-30"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          x
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Time Period</label>
+              <input
+                type="number"
+                class="form-control"
+                [(ngModel)]="timePeriodName"
+                [disabled]="isDisabledTP"
+              />
+              <input type="hidden" />
+            </div>
+            <div class="py-2">
+              <button
+                class="btn btn-primary btn-sm me-1"
+                [hidden]="isShowTP"
+                (click)="newTimePeriod()"
+              >
+                New
+              </button>
+              <button
+                type="submit"
+                class="btn btn-success btn-sm me-1"
+                [hidden]="!isShowTP"
+                (click)="createUpdateTimePeriod()"
+                
+              >
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshTP()">
+                Refresh
+              </button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 205px">
+                <table class="table mb-0">
+                  <thead class="limited-text">
+                    <tr>
+                      <th class="text-start w-75">Time Period</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of timePeriodList">
+                      <td class="text-start names">{{ item.name }} </td>
+                      <td class="notChange d-none">{{ item.notChange }}</td>
+                      <td class="text-center">
+                        <span
+                          (click)="editTTimePeriod(item.id, item.name)"
+                          class="me-3"
+                        >
+                          <img src="assets/img/icons/edit.svg" alt="Edit" />
+                        </span>
+                        <span
+                          (click)="deleteTimePeriod(item.id)"
+                          class="confirm-text"
+                        >
+                          <img src="assets/img/icons/delete.svg" alt="Delete" />
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

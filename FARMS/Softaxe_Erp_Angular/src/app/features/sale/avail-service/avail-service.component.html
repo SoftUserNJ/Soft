@@ -1,0 +1,967 @@
+<div class="content ListPage" *ngIf="isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Services List</h4>
+      <h6>Manage your Services</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="pdfPrint" data-bs-original-title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="print">
+              <img src="/assets/img/icons/printer.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+
+      <div class="row">
+        <div class="col-lg-2 col-md-6 col-sm-12">
+          <div class="form-group">
+            <label>Search</label>
+            <input type="search" (input)="searchGrid($event)" class="form-control" id="txtSearch">
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="form-group">
+            <label>From Date:</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" matInput [matDatepicker]="datepicker3" [(ngModel)]="fromDate"
+                class="custom-datepicker" (click)="datepicker3.open()" />
+              <mat-datepicker #datepicker3 [startAt]="fromDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="assets/img/icons/calendars.svg" alt="img" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="form-group">
+            <div class="form-group">
+              <label>To Date:</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" matInput [matDatepicker]="datepicker4" [(ngModel)]="toDate"
+                  class="custom-datepicker" (click)="datepicker4.open()" />
+                <mat-datepicker #datepicker4 [startAt]="toDate"></mat-datepicker>
+                <div class="addonset">
+                  <img src="assets/img/icons/calendars.svg" alt="img" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 d-flex">
+          <div class="form-group d-flex align-items-end">
+            <div class="d-flex align-items-center me-4">
+              <input type="radio" id="inProcess" class="me-1" name="Vch" value="inProcess"
+                (click)="onClickFilter($event)" checked="checked">
+              <label for="inProcess" class="mb-0">In Process</label>
+            </div>
+            <div class="d-flex align-items-center me-4">
+              <input type="radio" id="due" class="me-1" name="Vch" value="due" (click)="onClickFilter($event)">
+              <label for="due" class="mb-0">Due</label>
+            </div>
+            <div class="d-flex align-items-center me-4">
+              <input type="radio" id="clear" class="me-1" name="Vch" value="clear" (click)="onClickFilter($event)">
+              <label for="clear" class="mb-0">Clear</label>
+            </div>
+            <div class="d-flex align-items-center">
+              <input type="radio" id="all" class="me-1" name="Vch" value="all" (click)="onClickFilter($event)">
+              <label for="all" class="mb-0">All</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 mt-4">
+          <div class="wordset ms-4 text-center">
+            <p (click)="togglePages()" class="btn-addednew btnAdd">
+              <img src="/assets/img/icons/plus.svg" alt="img" class="me-1" />Add
+              New
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" id="print-tbl">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-start">Trans-No</th>
+              <th class="text-center">Trans-Date</th>
+              <th class="text-center">Billing-Date</th>
+              <th class="text-start">Customer-Name</th>
+              <th class="text-center">Contact</th>
+              <th class="text-start">Main-Area</th>
+              <th class="text-start">Sub-Area</th>
+              <th class="text-end">NetDue</th>
+              <th class="text-end">RecAmt</th>
+              <th class="text-end">Balance</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody id="servicesList" #availServiceLists>
+            <tr *ngFor="let item of availServiceList">
+              <td>{{item.TRANSNO}}</td>
+              <td class="text-center" title="{{item.TRANSDATE | date: 'dd/MM/yyyy'}}">
+                {{item.TRANSDATE | date: 'dd/MM/yyyy' }}</td>
+              <td class="text-center" title="{{item.BILLINGDATE | date: 'dd/MM/yyyy'}}">
+                {{item.BILLINGDATE | date: 'dd/MM/yyyy' }}</td>
+              <td class="text-start limited-text" title="{{item.CUSTOMERNAME}}">{{item.CUSTOMERNAME}}</td>
+              <td class="text-center" title="{{item.CONTACT}}">{{item.CONTACT}}</td>
+              <td title="{{item.MAINAREA}}">{{item.MAINAREA}}</td>
+              <td title="{{item.SUBAREA}}">{{item.SUBAREA}}</td>
+              <td class="text-end totalBill" title="{{item.TOTALBILL}}">{{item.TOTALBILL }}</td>
+              <td class="text-end">{{item.RECAMT  | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.BALANCE  | number : "1.2-2"}}</td>
+              <td class="text-center">
+                <span (click)="editAvailService(item.TRANSNO)" class="me-3">
+                  <img src="assets/img/icons/edit.svg" alt="Edit" />
+                </span>
+                <span (click)="deleteService(item.TRANSNO)" class="confirm-text">
+                  <img src="assets/img/icons/delete.svg" alt="Delete" />
+                </span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot style="border-top: 0px;" id="print-tbl">
+            <tr >
+              <td class="text-end" colspan="7">Total = </td>
+              <td class="text-end">{{ totalNetDue | number : "1.2-2" }}</td>
+              <td class="text-end" id="tRecAmt">{{ totalRecAmt | number : "1.2-2" }}</td>
+              <td class="text-end" id="tBalance">{{totalBalance | number : "1.2-2" }}</td>
+              <td colspan="1"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content AddPage" *ngIf="!isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Services Management</h4>
+      <h6>Add/Update Services</h6>
+    </div>
+
+    <h4 id="page-mode" class="ms-auto me-2"></h4>
+
+    <div class="page-btn">
+      <a (click)="togglePages()" class="btn btn-added btnList">
+        <i class="fa me-2 fa-th-list" title="" data-bs-original-title="Home" aria-label="fa fa-th-list"></i>
+        Home
+      </a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row activeForm"  [formGroup]="availServiceForm" [ngClass]="{ disabled: isPageDisabled }">
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Transaction No</label>
+            <input type="number" id="txtAvailServiceId" formControlName="transNo" disabled="" />
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Transaction Date</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" matInput [matDatepicker]="datepicker3" 
+                formControlName="transDate"  (click)="datepicker3.open()" />
+              <mat-datepicker #datepicker3 [startAt]="today"></mat-datepicker>
+              <div class="addonset">
+                <img src="assets/img/icons/calendars.svg" alt="img" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Billing Date</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" matInput [matDatepicker]="datepicker4" 
+                formControlName="billingDate"  (click)="datepicker4.open()" />
+              <mat-datepicker #datepicker4 [startAt]="today"></mat-datepicker>
+              <div class="addonset">
+                <img src="assets/img/icons/calendars.svg" alt="img" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="">
+            <label class="form-label fw-bolder mb-1">Customer</label>
+            <div class="position-relative w-100">
+              <ng-select bindLabel="name" bindValue="id" [items]="customerList" placeholder="---Select Customer---"
+                [dropdownPosition]="'bottom'" formControlName="customerCode">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="txtCustomerName" formControlName="customerName" />
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>Contact</label>
+            <input type="number" id="txtCustomerContact" formControlName="customerContact" />
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="">
+            <label class="form-label fw-bolder mb-1">Main Area</label>
+            <div class="row">
+              <div class="col-lg-10 col-sm-10 col-10 pe-1">
+                <div class="position-relative w-100">
+                  <ng-select bindLabel="name" bindValue="id" [items]="mainAreaList" placeholder="---Select Main Area---"
+                    [dropdownPosition]="'bottom'" formControlName="mainAreaId" (change)="onChangeMainAera($event)"
+                    (clear)="onClearMainArea()">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                <div class="add-icon text-end">
+                  <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                    data-bs-target="#CustomerMainAreaModal"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class=" ">
+            <label class="form-label fw-bolder mb-1">Sub Area</label>
+            <div class="row">
+              <div class="col-lg-10 col-sm-10 col-10 pe-1">
+                <div class="position-relative w-100">
+                  <ng-select bindLabel="name" bindValue="id" [items]="subAreaList" placeholder="---Select Sub Area---"
+                    [dropdownPosition]="'bottom'" formControlName="subAreaId">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                <div class="add-icon text-end">
+                  <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                    data-bs-target="#CustomerSubAreaModal"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6 mannual-entry" *ngIf="showFirstDiv">
+          <div class="">
+            <label class="form-label fw-bolder mb-1">Service</label>
+            <div class="position-relative w-100">
+              <ng-select bindLabel="NAME" bindValue="CODE" [items]="services" placeholder="---Select Service---"
+                [dropdownPosition]="'bottom'" formControlName="service" (change)="onChangeService($event)" (clear)="onClearService()" >
+              </ng-select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-9 col-md-9 col-sm-9 d-flex mannual-entry" *ngIf="showFirstDiv">
+          <div class="form-group mt-4 pt-2 w-10 me-2">
+            <span id="txtTimePeriod"></span>
+          </div>
+
+          <div class="form-group me-2 w-10">
+            <label class="form-label">Rate</label>
+            <input type="number" formControlName="productRate" class="disabled text-end" id="txtServiceRate" />
+          </div>
+
+          <div class="form-group me-2 w-10">
+            <label class="form-label">Tax</label>
+            <input type="number" class="disabled text-end" formControlName="productTax" id="txtServiceTax" />
+          </div>
+
+          <div class="form-group me-2 w-10">
+            <label class="form-label">Tax-Amt</label>
+            <input type="number" class="disabled text-end" formControlName="productTaxAmount"
+              id="txtServiceTaxAmount" />
+          </div>
+
+          <div class="form-group me-2 w-20">
+            <label class="form-label">Total</label>
+            <input type="number" class="disabled text-end" formControlName="total" id="txtServicePriceTotal" />
+          </div>
+
+          <div class="form-group mt-4 pt-2" style="margin-left: auto">
+            <button class="btn btn-success btn-sm" (click)="toggleDivs()" id="db-button">
+              Accessories
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row activeForm mannual-entry" *ngIf="showFirstDiv"  [formGroup]="availServiceForm" [ngClass]="{disabled: isPageDisabled }">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="pt-1" style="background: #1b2950 !important; height: 26px">
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6" style="margin-top: -22px">
+          <div class="">
+            <label class="text-white mb-1">Product</label>
+            <div class="row">
+              <div class="col-lg-10 col-sm-10 col-10 pe-1">
+                <div class="position-relative w-100">
+                  <ng-select bindLabel="ProductName" bindValue="Id" placeholder="---Select Product---"
+                    [items]="serviceProdList" formControlName="productName" (change)="onChangeProduct($event)"
+                    [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                <div class="add-icon text-end">
+                  <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                    data-bs-target="#ServiceProductModal"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-9 col-md-9 col-sm-9 d-flex" style="margin-top: -22px">
+          <div class="form-group me-2 w-10">
+            <label class="form-label text-white">Qty</label>
+            <input type="number" id="txtProductQty" (input)="onInputQty()" formControlName="qty" class="text-end" value="0" />
+          </div>
+
+          <div class="form-group me-2 w-10">
+            <label class="form-label text-white">Rate</label>
+            <input type="number" id="txtProductRate" (input)="onInputQty()" formControlName="productRate" class="text-end" />
+          </div>
+
+          <div class="form-group me-2 w-10">
+            <label class="form-label text-white">Value</label>
+            <input type="number" formControlName="totalAmount" class="disabled text-end" id="txtProductRateVal" />
+          </div>
+
+          <div class="form-group me-2 w-10">
+            <label class="form-label text-white">Tax</label>
+            <input type="number" id="txtProductTax" formControlName="productTax" class="text-end" />
+          </div>
+
+          <div class="form-group me-2 w-10">
+            <label class="form-label text-white">Tax-Amt</label>
+            <input type="number" id="txtProductTaxAmount" formControlName="productTaxAmount" class="text-end" />
+          </div>
+
+          <div class="form-group me-2 w-20">
+            <label class="form-label text-white">Total</label>
+            <input type="number" id="txtProductRateTotal" formControlName="totalAmount" class="disabled text-end" />
+          </div>
+
+          <div class="form-group me-2 w-20">
+            <label class="form-label text-white">Remarks</label>
+            <input type="text" id="txtProductRemarks" formControlName="productRemarks" style="width: 200px" />
+          </div>
+
+          <div class="form-group mt-4 pt-1" style="margin-left: auto">
+            <button class="btn btn-success btn-sm" (click)="appendData()" id="addProduct">Add</button>
+            <input type="hidden" id="txtProductSno" value="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="row activeForm db-entry"  [formGroup]="availServiceForm" [ngClass]="{disabled: isPageDisabled }" *ngIf="!showFirstDiv">
+        <div class="col-lg-4 col-md-5 col-sm-12">
+          <div class="">
+            <label class="form-label fw-bolder mb-1">Select Category</label>
+            <div class="position-relative w-100">
+              <ng-select bindLabel="name" bindValue="id" [items]="category" formControlName="category"
+                (change)="onChangeCategory($event)" placeholder="---Select Category---" [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-5 col-sm-12">
+          <div class="form-group">
+            <label>Search Category</label>
+            <input type="search" class="form-control" id="txtSearchAccessories" (input)="onInputSearchProduct($event)"
+              placeholder="Search Category..." />
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-2 col-sm-12">
+          <div class="form-group">
+            <label>Search Bar/QR Code</label>
+
+            <input type="search" class="form-control" id="txtBarcode" placeholder="Search Bar/QR Code..." />
+          </div>
+        </div>
+
+        <div class="col-lg-1 col-md-1 col-sm-12 p-0">
+          <div class="form-group mt-4">
+            <button class="btn btn-success btn-sm mt-1" (click)="toggleDivs()" id="mannual-button">
+              Services
+            </button>
+          </div>
+        </div>
+
+        <div class="table-responsive" style="height: 138px; font-size: 12px" [ngClass]="{disabled: isPageDisabled }">
+          <table class="table mb-0 customTable">
+            <thead id="appendProductHead">
+              <tr>
+                <th class="text-start limited-text">Product</th>
+                <th class="text-start">Desc</th>
+                <th class="text-start">Category</th>
+                <th class="text-start">Brand</th>
+                <th class="text-start">Made In</th>
+                <th class="text-center">Balance</th>
+                <th class="text-center">Location</th>
+                <th class="text-center">Expiry</th>
+                <th class="text-center">UOM</th>
+                <th class="text-center">Rate</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productDetailList">
+              <tr *ngFor="let item of piProductList">
+                <td class="text-start limited-text">{{ item.PRODUCT }}</td>
+                <td class="text-start">{{ item.DES }}</td>
+                <td class="text-start">{{ item.CATEGORY }}</td>
+                <td class="text-start">{{ item.BRAND }}</td>
+                <td class="text-start">{{ item.MADEIN }}</td>
+                <td class="text-center">{{item.BALANCE}}</td>
+                <td class="text-center">{{ item.LOCATION }}</td>
+                <td class="text-center">{{ item.EXPIRYDATE }}</td>
+                <td>
+                  <div class="d-flex justify-content-center">
+                    <select class="form-select form-select-sm uomconversion"
+                    (change)="onChangeUom($event, item.UomList)">
+                    <option *ngFor="let i of item.UomList" value="{{i.UOMID}}">{{i.UOM}}</option>
+                    </select>
+                  </div>
+                </td>
+                <td class="text-center">{{ item.MAXRATE }}</td>
+                <td class="text-center">
+                  <span class="confirm-text btnAddProduct me-3">
+                    <button (click)="appendDataToOtherTable(item)" class="btn btn-sm">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: -8px">
+        <div class="col-lg-9 col-md-9 col-sm-6 activeForm" [ngClass]="{ disabled: isPageDisabled }">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-start">Sno</th>
+                  <th class="text-start limited-text">Product</th>
+                  <th>Service</th>
+                  <th class="text-center">Qty</th>
+                  <th class="text-center">Rate</th>
+                  <th class="text-center">Value</th>
+                  <th class="text-center">Tax</th>
+                  <th class="text-center">TaxAmount</th>
+                  <th class="text-center">Total</th>
+                  <th class="text-center w-0 pe-4">Action</th>
+                </tr>
+              </thead>
+              <tbody id="prodList">
+                <tr *ngFor="let item of appendedData let i = index">
+                  <td class="text-start">{{ i + 1}}</td>
+                  <td class="text-start limited-text">{{item.PRODUCT}}</td>
+                  <td></td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <input type="number" class="txtTbl text-center txtQty NoDecimal" [(ngModel)]="item.QTY" value="1" (input)="calculateTotal(item)" />
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <input type="number" class="txtTbl text-center txtRate NoDecimal" [(ngModel)]="item.MAXRATE" (input)="calculateTotal(item)"
+                        value="0" />
+                    </div>
+                  </td>
+                  <td class="text-center txtPurchaseValue">{{ item.VALUE }}</td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <input type="number" class="txtTbl text-center txtTax NoDecimal" [(ngModel)]="item.TAX" (input)="calculateTotal(item)" (input)="onLength($event, 100)" value="0" />
+                    </div>
+                  </td>
+                  <td class="text-center txtTaxAmount">{{ item.TAXAMOUNT.toFixed(2) }}</td>
+                  <td class="text-center txtTotal">{{ item.TOTAL.toFixed(2) }}</td>
+                  <td class="text-center">
+                    <span (click)="removeRow(item)" class="confirm-text">
+                      <img src="assets/img/icons/delete.svg" alt="Delete" />
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-12">
+          <div class="row align-items-center activeForm"  [formGroup]="availServiceForm" [ngClass]="{ disabled: isPageDisabled }">
+            <div class="card card-order ps-0">
+              <table class="table productTable fs-13">
+                <thead>
+                  <tr>
+                    <th class="text-center billHead">Bill</th>
+                  </tr>
+                </thead>
+              </table>
+
+              <div class="card-body px-0 py-0">
+                <div class="mb-1 d-flex align-items-center justify-content-between">
+                  <div class="col-sm-6 px-1">
+                    <span class="fs-13">Total Bill</span>
+                  </div>
+
+                  <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" id="totalBill" formControlName="totalAmount" class="txtBills" />
+                    <p class="currency">$</p>
+                  </div>
+                </div>
+
+                <div class="mb-1 d-flex align-items-center">
+                  <div class="col-sm-4 px-1">
+                    <span class="fs-13">Discount %</span>
+                  </div>
+                  <div class="col-sm-4 px-1 text-end">
+                    <input type="number" class="txtDis" formControlName="discount" (input)="calculateTotals()"  (input)="onLength($event, 100)" id="txtAllDis" style="width: 60px" />
+                  </div>
+                  <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="discountAmount" (input)="calculateTotals()" id="txtAllDisAmount" />
+                    <p class="currency">$</p>
+                  </div>
+                </div>
+                <div class="mb-1 d-flex align-items-center justify-content-between">
+                  <div class="col-sm-6 px-1">
+                    <span class="fs-13">Total Due</span>
+                  </div>
+
+                  <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="totalDue" id="txtTotalDue" />
+                    <p class="currency">$</p>
+                  </div>
+                </div>
+
+                <div class="mb-1 d-flex align-items-center justify-content-between">
+                  <div class="col-sm-6 px-1">
+                    <span class="fs-13">Amount Received</span>
+                  </div>
+
+                  <div class="col-sm-4 px-1 d-flex align-items-center">
+                    <input type="number" class="txtBills" formControlName="paidAmount" id="txtAmountReceived" />
+                    <p class="currency">$</p>
+                  </div>
+                </div>
+
+                <div class="mb-1 d-flex align-items-center d-none">
+                  <div class="col-sm-12 px-1 d-flex">
+                    <input type="text" placeholder="Remarks" formControlName="remarks" class="txtBills"
+                      id="txtRemarks" />
+                    <p class="currency" style="color: transparent; user-select: none">
+                      $
+                    </p>
+                  </div>
+                </div>
+                <div class="setvaluecash mt-2 activeForm" style="margin-right: 30px" formControlName="paymentMethod">
+                  <ul>
+                    <li>
+                      <a class="paymentmethod cash" data-bs-toggle="modal" data-bs-target="#PaymentModel">
+                        <img src="/assets/img/icons/cash.svg" alt="img" class="me-2" />
+                        Cash
+                      </a>
+                    </li>
+                    <li>
+                      <a class="paymentmethod debit" data-bs-toggle="modal" data-bs-target="#PaymentModel">
+                        <img src="/assets/img/icons/debitcard.svg" alt="img" class="me-2" />
+                        Debit
+                      </a>
+                    </li>
+                    <li>
+                      <a class="paymentmethod">
+                        <img src="/assets/img/icons/scan.svg" alt="img" class="me-2" />
+                        Scan
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="btn-totallabel" >
+                  <h5>Net Due</h5>
+                  <h6 id="txtNetDue">{{netDue}}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body py-0 ">
+            <div class="row text-end me-0" >
+              <div class="col-lg-12 me-0" >
+                <button class="btn btn-success btn-sm" id="btnSave" style="margin-right: 3px" (click)="onClickSave()" *ngIf="!isPageDisabled">
+                  Save
+                </button>
+                <button class="btn btn-primary btn-sm" id="btnNew" style="margin-right: 3px" *ngIf="isPageDisabled"
+                  (click)="enablePage()">
+                  New
+                </button>
+                <button class="btn btn-secondary btn-sm" id="btnRefresh" (click)="resetForm()"
+                  (click)="onClickRefresh()">
+                  Refresh
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Main Area Modal -->
+
+<div class="modal fade" id="CustomerMainAreaModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Main Area</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">
+          x
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Main Area</label>
+              <input type="text" class="form-control" [(ngModel)]="mainAreaName" [disabled]="isDisabledTP" />
+              <input type="hidden" [(ngModel)]="mainAreaId">
+            </div>
+            <div class="py-2">
+              <button class="btn btn-primary btn-sm me-1" [hidden]="isShowTP" (click)="newMainArea()">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShowTP"
+                (click)="createUpdateMainArea()">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshMA()">
+                Refresh
+              </button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 205px">
+                <table class="table">
+                  <thead class="limited-text">
+                    <tr>
+                      <th class="text-start w-75">Main Area</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of mainAreaList">
+                      <td class="notChange d-none">{{item.id}}</td>
+                      <td class="text-start names">{{item.name}}</td>
+                      <td class="text-center">
+                        <span (click)="editMainArea(item.id, item.name)" class="me-3">
+                          <img src="assets/img/icons/edit.svg" alt="Edit" />
+                        </span>
+                        <span (click)="deleteMainArea(item.id)" class="confirm-text">
+                          <img src="assets/img/icons/delete.svg" alt="Delete" />
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sub Area Modal -->
+
+<div class="modal fade" id="CustomerSubAreaModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Sub Area</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">
+          x
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Sub Area</label>
+              <input type="text" class="form-control" [(ngModel)]="subAreaName" [disabled]="isDisabledTP" />
+              <input type="hidden" [(ngModel)]="subAreaId" />
+            </div>
+            <div class="py-2">
+              <button class="btn btn-primary btn-sm me-1" [hidden]="isShowTP" (click)="newSubArea()">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShowTP"
+                (click)="createUpdateSubArea()">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshSA()">
+                Refresh
+              </button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 205px">
+                <table class="table">
+                  <thead class="limited-text">
+                    <tr>
+                      <th class="text-start w-75">Sub Area</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of subAreaList">
+                      <td class="notChange d-none">{{item.id}}</td>
+                      <td class="text-start names">{{item.name}}</td>
+                      <td class="text-center">
+                        <span (click)="editSubArea(item.id, item.name)" class="me-3">
+                          <img src="assets/img/icons/edit.svg" alt="Edit" />
+                        </span>
+                        <span (click)="deleteSubArea(item.id)" class="confirm-text">
+                          <img src="assets/img/icons/delete.svg" alt="Delete" />
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Service Product Modal -->
+
+<div class="modal fade" id="ServiceProductModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Service Product</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">
+          x
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Service Product</label>
+              <input type="text" class="form-control" [(ngModel)]="product" [disabled]="isDisabledTP" />
+              <input type="hidden" [(ngModel)]="productId" />
+            </div>
+            <div class="row ">
+              <div class="col-md-6">
+                <div class="form-group mb-1">
+                  <label class="form-label mb-0">Cost Rate</label>
+                  <input type="text" class="form-control" [(ngModel)]="costRate" [disabled]="isDisabledTP">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-1">
+                  <label class="form-label mb-0">Sale Rate</label>
+                  <input type="text" class="form-control" [(ngModel)]="saleRate" [disabled]="isDisabledTP">
+                </div>
+              </div>
+            </div>
+            <div class="py-2">
+              <button class="btn btn-primary btn-sm me-1" [hidden]="isShowTP" (click)="newServiceProduct()">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShowTP"
+                (click)="createUpdateProducts()">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshSP()">
+                Refresh
+              </button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 205px">
+                <table class="table">
+                  <thead class="limited-text">
+                    <tr>
+                      <th class="text-start w-35">Products</th>
+                      <th class="text-end w-35">Cost Rate</th>
+                      <th class="text-end w-35">Sale Rate</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of serviceProdList">
+                      <td class="notChange d-none">{{item.Id}}</td>
+                      <td class="text-start names">{{item.ProductName}}</td>
+                      <td class="text-end ">{{item.CostRate}}</td>
+                      <td class="text-end ">{{item.SaleRate}}</td>
+                      <td class="text-center">
+                        <span (click)="editProduct(item.Id, item.ProductName, item.CostRate, item.SaleRate)"
+                          class="me-3">
+                          <img src="assets/img/icons/edit.svg" alt="Edit" />
+                        </span>
+                        <span (click)="deleteProduct(item.Id)" class="confirm-text">
+                          <img src="assets/img/icons/delete.svg" alt="Delete" />
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CASH  &  DEBIT  Modal -->
+
+<div class="modal fade Payment" id="PaymentModel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Payment</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <input type="hidden" id="txtPaymentVchno">
+            <input type="hidden" id="txtminusPayment">
+            <div class="card">
+              <div class="table-responsive fs-12" style="height: 108px;">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Vch-No</th>
+                      <th>Vch-Type</th>
+                      <th>Vch-Date</th>
+                      <th>Name</th>
+                      <th class="text-end">Amount</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="paymentDetail">
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row activeForm1 mt-2">
+              <div class="col-sm-12">
+                <div class="row align-items-center">
+                  <label class="col-lg-4 col-form-label mb-0 fw-bolder">Select Bank/Cash</label>
+                  <div class="col-lg-8">
+                    <div class="position-relative w-100">
+                      <ng-select bindLabel="NAMES" bindValue="CODE" [dropdownPosition]="'bottom'" [items]="bankCash">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 mt-2">
+                <div class="form-group row align-items-center">
+                  <label class="col-lg-4 col-form-label mb-0">Date</label>
+                  <div class="col-lg-8">
+                    <div class="input-groupicon">
+                      <input type="text" class="form-control" matInput [matDatepicker]="datepicker5" [(ngModel)]="today"
+                        [disabled]="isDisabledTP" class="custom-datepicker" (click)="datepicker5.open()" />
+                      <mat-datepicker #datepicker5 [startAt]="today"></mat-datepicker>
+                      <div class="addonset">
+                        <img src="assets/img/icons/calendars.svg" alt="img" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group row align-items-center">
+                  <label class="col-lg-4 col-form-label mb-0">Amount</label>
+                  <div class="col-lg-8">
+                    <input type="number" class="form-control" [disabled]="isDisabledTP" id="txtPaymentAmt">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 CR" style="display: none;">
+                <div class="form-group row align-items-center">
+                  <label class="col-lg-4 col-form-label mb-0">Cheque #</label>
+                  <div class="col-lg-8">
+                    <input type="text" class="form-control" id="txtChqNumber" skinid="">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 CR" style="display: none;">
+                <div class="form-group row align-items-center">
+                  <label class="col-lg-4 col-form-label mb-0">Cheque Date</label>
+                  <div class="col-lg-8">
+                    <div class="input-groupicon">
+                      <input type="text" placeholder="DD-MM-YYYY" class="datetimepicker" id="txtChqDate">
+                      <div class="addonset">
+                        <img src="/assets/img/icons/calendars.svg" alt="img">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-0 float-end">
+              <button class="btn btn-primary btn-sm me-1" [hidden]="isShowTP" (click)="newServiceProduct()">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShowTP"
+                (click)="createUpdateProducts()">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshSP()">
+                Refresh
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

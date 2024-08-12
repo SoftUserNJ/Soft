@@ -1,0 +1,563 @@
+<section>
+  <div class="content ListPage" *ngIf="isShowPage">
+    <div class="page-header">
+      <div class="page-title">
+        <h4 class="newcolor">Purchase Order Entry</h4>
+      </div>
+      <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf" id="pdfPrint">
+                <img src="/assets/img/icons/pdf.svg" alt="img">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row align-items-center mb-2">
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="d-flex align-items-center">
+              <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+              <input type="search" class="form-control" placeholder="Search" (input)="searchGrid($event)" />
+            </div>
+          </div>
+          <div class="col-lg-7 col-md-6 col-sm-12">
+            <div class="row align-items-center">
+              <div class="col-lg-2 col-md-2 text-end p-0">
+                <span class="fw-bolder">From Date</span>
+              </div>
+              <div class="col-lg-3 col-md-4 ps-1">
+                <div class="form-group mb-0">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepicker" [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                    <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-2 text-end p-0">
+                <span class="fw-bolder">To Date</span>
+              </div>
+              <div class="col-lg-3 col-md-4 ps-1">
+                <div class="form-group mb-0">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                      [matDatepicker]="datepicker2" [(ngModel)]="toDate" (click)="datepicker2.open()">
+                    <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-2">
+                <img src="/assets/img/icons/search.svg" alt="img" class="filter-img" (click)="getVouchersList()">
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="col-lg-1 col-md-1">
+            <button (click)="onViewTestReport()">t</button>
+          </div> -->
+
+
+          <div class="col-lg-2 col-md-2 ps-0">
+            <div class="d-flex align-items-center justify-content-end">
+              <p (click)="togglePages(); editDisabled= false" class="add-new w-100">
+                <img src="/assets/img/icons/plus.svg" alt="img" class="filter-img">Add New
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive mb-1">
+          <table class="table table-hover" id="tbl-print">
+            <thead>
+              <tr>
+                <th class="text-start">PO No</th>
+                <th class="text-start">Po Date</th>
+                <th class="text-start">Po Completion Date</th>
+                <th class="text-start">Party</th>
+                <th class="text-start">Item</th>
+                <th class="text-center w-10">Action</th>
+              </tr>
+            </thead>
+            <tbody #voucherLists>
+              <tr *ngFor="let data of voucherList">
+                <td class="text-start">{{data.VCHNO}}</td>
+                <td class="text-start">{{data.VCHDATE}}</td>
+                <td class="text-start">{{data.PoCompDate}}</td>
+                <td class="text-start">{{data.PartyName}}</td>
+                <td class="text-start">{{data.ItemName}}</td>
+                <td class="text-center">
+                  <span class="me-3" style="cursor: pointer;" (click)="onViewReport(data)">
+                    <i class="fas fa-print"></i>
+                  </span>
+                  <span class="me-3" style="cursor: pointer;" (click)="edit(data.VCHNO)">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                  <span class="confirm-text" style="cursor: pointer;" (click)="delete(data.VCHNO)">
+                    <i class="fas fa-trash"></i>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content AddPage" *ngIf="!isShowPage">
+    <div class="page-header mb-4">
+      <div class="page-title">
+        <h4>Purchase Order</h4>
+      </div>
+      <div class="page-title ms-auto me-2">
+        <h5 class="text-danger mt-1 fw-bold">{{editDisabled == true ? 'Approved' : ''}}</h5>
+      </div>
+      <div class="page-btn" routerLink="/journal-voucher">
+        <a (click)="togglePages();getVouchersList();" class="btn btn-added btnList">
+          <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+            aria-label="fa fa-th-list"></i>
+          Home
+        </a>
+      </div>
+    </div>
+    <div class="card" [ngClass]="{ disabled: editDisabled }">
+      <div class="card-body">
+        <div class="row mb-2" [formGroup]="PurchaseContractForm">
+          <div class="col-lg-8 col-md-8 col-sm-12">
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-12 lts">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Voucher Type</label>
+                  <ng-select class="bold-placeholder" placeholder="--- Select Voucher Type ---" bindLabel="name"
+                    bindValue="id" formControlName="vchType" [clearable]="none" [dropdownPosition]="'bottom'"
+                    [readonly]="isDisabled">
+                    <ng-option value="PO-Pur">PO-Pur</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-1 col-md-3 col-sm-12 lts pe-0">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">PO#</label>
+                  <input type="text" formControlName="vchNo" readonly class="form-control">
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-3 col-sm-12 lts">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Location</label>
+                  <ng-select class="bold-placeholder" [items]="locationList" placeholder="--- Select ---"
+                    [readonly]="readonly" [clearable]="none" [searchable]="none" bindLabel="LocID" bindValue="LocID"
+                    formControlName="location" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 lts">
+                <div class="position-relative w-100 form-group mb-0">
+                  <label class="fw-bold" style="margin-bottom: 0px !important;">PO Date</label>
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepicker" (click)="datepicker.open()" formControlName="vchDate"
+                      [readonly]="isDisabled" />
+                    <mat-datepicker #datepicker></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 lts">
+                <div class="position-relative w-100 form-group mb-0">
+                  <label class="fw-bold" style="margin-bottom: 0px !important;">PO Completion Date</label>
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepickercomplition" (click)="datepickercomplition.open()"
+                      formControlName="poCompletionDate" [readonly]="isDisabled" />
+                    <mat-datepicker #datepickercomplition></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 lts">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Party</label>
+                  <ng-select class="bold-placeholder" placeholder="--- Select ---" bindLabel="L5NAMES"
+                    bindValue="L5CODE" [readonly]="isDisabled" formControlName="party" [items]="partyList"
+                    (change)="onPartyChange($event)" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 lts">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Broker</label>
+                  <ng-select class="bold-placeholder" placeholder="--- Select ---" bindLabel="L5NAMES"
+                    bindValue="L5CODE" [items]="brokerList" formControlName="broker" [readonly]="isDisabled"
+                    [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 lts">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">W.H Tax</label>
+                  <!-- <ng-select class="bold-placeholder" placeholder="--- Select ---" formControlName="incomeTax"
+                    [readonly]="isDisabled" bindLabel="tax" bindValue="tax" [items]="incomeTaxList" (change)="total()"
+                    [dropdownPosition]="'bottom'">
+                  </ng-select> -->
+                  <input type="number" formControlName="incomeTax" [readonly]="isDisabled" class="form-control">
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 lts">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Broker's Commission</label>
+                  <div class="d-flex">
+                    <div class="col-4 px-0">
+                      <input formControlName="brokerCom" [readonly]="isDisabled" type="number" class="form-control">
+                    </div>
+                    <div class="col-8 ps-1">
+                      <ng-select class="bold-placeholder" placeholder="--- Select ---" 
+                        bindLabel="UOM" formControlName="brokerUom" [readonly]="isDisabled"
+                        [dropdownPosition]="'bottom'">
+
+                        <ng-option value="Amount %">Amount %</ng-option>
+                        <ng-option value="Bags">Bags</ng-option>
+                        <ng-option value="40Kgs">40Kgs</ng-option>
+                        <ng-option value="Kgs">Kgs</ng-option>
+
+
+
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 lts">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Bags Type</label>
+                  <div class="d-flex">
+                    <div class="col-12 px-0">
+                      <ng-select class="bold-placeholder" placeholder="--- Select ---" [readonly]="isDisabled"
+                        [searchable]="false" formControlName="bType" [dropdownPosition]="'bottom'">
+                        <ng-option value="O">O</ng-option>
+                        <ng-option value="W">W</ng-option>
+                        <ng-option value="S">S</ng-option>
+                        <ng-option value="P">P</ng-option>
+                      </ng-select>
+                    </div>
+                    <div class="col-0 ps-1 d-none">
+                      <input type="number" formControlName="bQty" [readonly]="isDisabled" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 lts">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Freight Type</label>
+                  <ng-select  class="bold-placeholder" placeholder="--- Select ---" bindLabel="name" bindValue="id"
+                    [searchable]="false" formControlName="freightType" [readonly]="isDisabled"
+                    [dropdownPosition]="'bottom'">
+                    <ng-option value="O">O</ng-option>
+                    <ng-option value="S">S</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              
+              <div class="col-lg-3 col-md-3 col-sm-12 lts">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Payment After Days</label>
+                  <div class="d-flex">
+                    <div class="col-10 px-0">
+                      <ng-select placeholder="---Select---" formControlName="paymentDays" [clearable]="false"
+                        [readonly]="isDisabled" [dropdownPosition]="'bottom'">
+                        <ng-option *ngFor="let item of termsList" [value]="item.name">
+                          {{ item.name }} Days
+                        </ng-option>
+                        <ng-option value="100">Same Day</ng-option>
+                      </ng-select>
+                    </div>
+                    <div class="col-2 ps-1">
+                      <div class="text-end">
+                        <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#TermsModal"
+                          (click)="refreshTerms()"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 lts">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Invoice Type</label>
+                  <ng-select class="bold-placeholder" placeholder="--- Select ---" bindLabel="name" bindValue="id"
+                    [searchable]="false" formControlName="invType" [readonly]="isDisabled"
+                    [dropdownPosition]="'bottom'">
+                    <ng-option value="Sale Tax">Sale Tax</ng-option>
+                    <ng-option value="W/O Sale Tax">W/O Sale Tax</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <!-- <div class="col-lg-3 col-md-3 col-sm-12 lts">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Crop Year</label>
+                  <ng-select placeholder="---Select---" [items]="cropYearList" bindLabel="CROPYEAR" bindValue="CROPYEAR"
+                    [readonly]="isDisabled" [clearable]="none" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div> -->
+              <div class="col-lg-12 col-md-12 col-sm-12 lts">
+                <label class="fw-bold">Terms and Conditions</label>
+                <textarea type="text" formControlName="remarks" class="form-control" [readonly]="isDisabled"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12">
+            <fieldset style="border: 1px solid #cccccc; border-radius: 3px; padding: 5px; height: 100%;">
+              <legend class="fw-bold my_legend">Performa Detail</legend>
+              <div class="col-12 d-flex justify-content-between align-items-center mb-1">
+                <label class="fw-bold">Performa No</label>
+                <input type="text" formControlName="performaNo" [readonly]="isDisabled" class="form-control w-50">
+              </div>
+              <div class="col-12 d-flex justify-content-between align-items-center mb-1">
+                <label class="fw-bold">Performa Date</label>
+                <div class="form-group mb-0 w-50">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepickerpd" formControlName="performaDate" (click)="datepickerpd.open()" />
+                    <mat-datepicker #datepickerpd></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 d-flex justify-content-between align-items-center mb-1">
+                <label class="fw-bold">Delivery Date</label>
+                <div class="form-group mb-0 w-50">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepickerdd" formControlName="deliveryDate" (click)="datepickerdd.open()" />
+                    <mat-datepicker #datepickerdd></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 d-flex justify-content-between align-items-center mb-1">
+                <label class="fw-bold">Insurance</label>
+                <input type="text" formControlName="insurance" [readonly]="isDisabled" class="form-control w-50">
+              </div>
+              <div class="col-12 d-flex justify-content-between align-items-center mb-1">
+                <label class="fw-bold">Cover Date</label>
+                <div class="form-group mb-0 w-50">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepickercd" formControlName="coverDate" (click)="datepickercd.open()" />
+                    <mat-datepicker #datepickercd></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 d-flex justify-content-between align-items-center mb-1">
+                <label class="fw-bold">Hs Code</label>
+                <input type="text" formControlName="hsCode" [readonly]="isDisabled" class="form-control w-50">
+              </div>
+              <div class="col-12 d-flex justify-content-between align-items-center mb-1">
+                <label class="fw-bold">Core Note Date</label>
+                <div class="form-group mb-0 w-50">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepickercnd" formControlName="coreNoteDate" (click)="datepickercnd.open()" />
+                    <mat-datepicker #datepickercnd></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead style="z-index: 1;">
+              <tr>
+                <th class="w-20">Item</th>
+                <th class="w-7">Category</th>
+             
+                <th class="text-center w-7">No of Vehicles</th>
+                <th class="text-center w-7">Qty</th>
+                <th class="text-end w-7">Rate</th>
+                <th class="w-7">UOM</th>
+                <th class="text-end w-10">Amount</th>
+                <th class="text-end w-7">S.Tax%</th>
+                <th class="text-end w-10">Tax Amount</th>
+                <th class="text-end w-15">Net Amount</th>
+                <th class="text-center w-0">Action</th>
+              </tr>
+            </thead>
+            <tbody #detailsGrid>
+              <tr *ngFor="let data of detailsList; let i = index">
+                <td>
+                  <ng-select placeholder="---Select Item---" [(ngModel)]="data.items" [items]="itemsList"
+                    (change)="onItemChange(data)" bindLabel="L5NAMES" bindValue="L5CODE" [clearable]="none"
+                    [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </td>
+                <td><input type="text" [(ngModel)]="data.category" class="form-control"></td>
+             
+                <td><input type="number" [(ngModel)]="data.vehicles" class="form-control text-center"></td>
+                <td>
+                  <input (input)="calculation(data)" [(ngModel)]="data.qty" type="number"
+                    class="form-control text-center qty">
+                </td>
+                <td>
+                  <input (input)="calculation(data)" [(ngModel)]="data.rate" type="number"
+                    class="form-control text-end rate">
+                </td>
+                <td >
+                  <ng-select placeholder="Uom" [(ngModel)]="data.uom" [items]="UomList" bindLabel="UOM" bindValue="UOM"
+                    [clearable]="none" [dropdownPosition]="'bottom'" (change)="calculation(data)">
+                  </ng-select>
+                </td>
+                <td>
+                  <input (input)="calculation(data)" [(ngModel)]="data.amount" type="number"
+                    class="form-control text-end amount" readonly>
+                </td>
+                <td>
+                  <input (input)="calculation(data)" [(ngModel)]="data.sTax" type="number"
+                    class="form-control text-end sTax">
+                </td>
+                <td>
+                  <input (input)="calculation(data)" [(ngModel)]="data.sTaxAmount" type="number"
+                    class="form-control text-end sTaxAmount" readonly>
+                </td>
+                <td>
+                  <input (input)="calculation(data)" [(ngModel)]="data.netAmount" type="number"
+                    class="form-control text-end netAmount" readonly>
+                </td>
+                <td class="text-center">
+                  <span class="confirm-text me-2" style="cursor: pointer;" (click)="deleteItem(i)">
+                    <i class="fas fa-trash"></i>
+                  </span>
+                  <span (click)="onAdd()" style="cursor: pointer">
+                    <i class="fas fa-plus-circle"></i>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4"></td>
+                <td class="text-center">{{qtySum}}</td>
+                <td class="text-end"></td>
+                <td class="text-end">{{amountSum}}</td>
+                <td class="text-end"></td>
+                <td class="text-end">{{taxAmountSum}}</td>
+                <td class="text-end pe-2">{{netAmountSum}}</td>
+                <td class="text-end"></td>
+              </tr>
+              <tr>
+                <td class="bg-white py-0 text-dark text-end" colspan="9">W.H.T</td>
+                <td class="bg-white py-0 text-end">
+                  <input type="number" [(ngModel)]="wht" class="form-control text-end me-2 ht-25" readonly>
+                </td>
+                <td class="bg-white py-0 " colspan="5"></td>
+              </tr>
+              <tr>
+                <td class="bg-white py-0 text-dark text-end" colspan="9">Net Amt</td>
+                <td class="bg-white py-0 text-end">
+                  <input type="number" [(ngModel)]="whtNetAmt" class="form-control text-end me-2 ht-25" readonly>
+                </td>
+                <td class="bg-white py-0" colspan="5"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="row mt-1">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew(); onAdd();">New</button>
+            <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+              (click)="onClickSave()">Save</button>
+            <button class="btn btn-info btn-sm me-1" *ngIf="isPrint" (click)="onClickPrint()">Print</button>
+            <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="TermsModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Terms</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">
+          x
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Terms Days</label>
+              <input type="number" class="form-control" [(ngModel)]="termsDays" [disabled]="isDisabledTerms" />
+            </div>
+            <div class="py-2">
+              <button class="btn btn-primary btn-sm me-1" (click)="newTerms()" [hidden]="isShowTerms">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateTerms()"
+                [hidden]="!isShowTerms">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshTerms()">
+                Refresh
+              </button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 205px">
+                <table class="table mb-0">
+                  <thead class="limited-text">
+                    <tr>
+                      <th class="text-center">Id</th>
+                      <th class="text-start w-75">Days</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of termsList">
+                      <td class="text-center id">{{ item.id }}</td>
+                      <td class="text-start names">{{ item.name }} Days</td>
+                      <td class="text-center">
+                        <span (click)="editTerms(item.id, item.name)" class="me-3">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span (click)="deleteTerms(item.id)" class="confirm-text">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

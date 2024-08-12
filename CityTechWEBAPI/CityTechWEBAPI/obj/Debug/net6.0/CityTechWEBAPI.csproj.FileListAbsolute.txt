@@ -1,0 +1,551 @@
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.Development.json
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.json
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.exe
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.deps.json
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.runtimeconfig.json
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.pdb
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Core.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Identity.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Humanizer.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Mono.TextTemplating.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.CodeDom.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Memory.Data.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Json.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.AssemblyReference.cache
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.GeneratedMSBuildEditorConfig.editorconfig
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfoInputs.cache
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfo.cs
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CoreCompileInputs.cache
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.CityTechWEBAPI.Microsoft.AspNetCore.StaticWebAssets.props
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.build.CityTechWEBAPI.props
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.CityTechWEBAPI.props
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.CityTechWEBAPI.props
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.pack.json
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.build.json
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.development.json
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\scopedcss\bundle\CityTechWEBAPI.styles.css
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CopyComplete
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\refint\CityTechWEBAPI.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.pdb
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.genruntimeconfig.cache
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\ref\CityTechWEBAPI.dll
+D:\WEB API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.Development.json
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.json
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.exe
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.deps.json
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.runtimeconfig.json
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.pdb
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Core.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Identity.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Humanizer.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.OpenApi.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Mono.TextTemplating.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.CodeDom.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Drawing.Common.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Memory.Data.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Runtime.Caching.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Permissions.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Json.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Windows.Extensions.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.AssemblyReference.cache
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.GeneratedMSBuildEditorConfig.editorconfig
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfoInputs.cache
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfo.cs
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CoreCompileInputs.cache
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cs
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cache
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.CityTechWEBAPI.Microsoft.AspNetCore.StaticWebAssets.props
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.build.CityTechWEBAPI.props
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.CityTechWEBAPI.props
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.CityTechWEBAPI.props
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.pack.json
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.build.json
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.development.json
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\scopedcss\bundle\CityTechWEBAPI.styles.css
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CopyComplete
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\refint\CityTechWEBAPI.dll
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.pdb
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.genruntimeconfig.cache
+E:\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\ref\CityTechWEBAPI.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.Development.json
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.json
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.exe
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.deps.json
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.runtimeconfig.json
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.pdb
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Core.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Identity.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Humanizer.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.OpenApi.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Mono.TextTemplating.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.CodeDom.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Drawing.Common.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Memory.Data.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Runtime.Caching.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Permissions.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Json.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Windows.Extensions.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.AssemblyReference.cache
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.GeneratedMSBuildEditorConfig.editorconfig
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfoInputs.cache
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfo.cs
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CoreCompileInputs.cache
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cs
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cache
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.CityTechWEBAPI.Microsoft.AspNetCore.StaticWebAssets.props
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.build.CityTechWEBAPI.props
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.CityTechWEBAPI.props
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.CityTechWEBAPI.props
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.pack.json
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.build.json
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.development.json
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\scopedcss\bundle\CityTechWEBAPI.styles.css
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CopyComplete
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\refint\CityTechWEBAPI.dll
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.pdb
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.genruntimeconfig.cache
+E:\CT_Dashboard\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\ref\CityTechWEBAPI.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.Development.json
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.json
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.exe
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.deps.json
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.runtimeconfig.json
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.pdb
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Core.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Identity.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Humanizer.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.OpenApi.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Mono.TextTemplating.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.CodeDom.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Drawing.Common.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Memory.Data.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Runtime.Caching.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Permissions.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Json.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Windows.Extensions.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.AssemblyReference.cache
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.GeneratedMSBuildEditorConfig.editorconfig
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfoInputs.cache
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfo.cs
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CoreCompileInputs.cache
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cs
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cache
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.CityTechWEBAPI.Microsoft.AspNetCore.StaticWebAssets.props
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.build.CityTechWEBAPI.props
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.CityTechWEBAPI.props
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.CityTechWEBAPI.props
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.pack.json
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.build.json
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.development.json
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\scopedcss\bundle\CityTechWEBAPI.styles.css
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CopyComplete
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\refint\CityTechWEBAPI.dll
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.pdb
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.genruntimeconfig.cache
+E:\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\ref\CityTechWEBAPI.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.Development.json
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.json
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.exe
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.deps.json
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.runtimeconfig.json
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.pdb
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Core.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Identity.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Humanizer.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Mono.TextTemplating.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.CodeDom.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Memory.Data.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Json.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.AssemblyReference.cache
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.GeneratedMSBuildEditorConfig.editorconfig
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfoInputs.cache
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfo.cs
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CoreCompileInputs.cache
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.CityTechWEBAPI.Microsoft.AspNetCore.StaticWebAssets.props
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.build.CityTechWEBAPI.props
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.CityTechWEBAPI.props
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.CityTechWEBAPI.props
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.pack.json
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.build.json
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.development.json
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\scopedcss\bundle\CityTechWEBAPI.styles.css
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CopyComplete
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\refint\CityTechWEBAPI.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.pdb
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.genruntimeconfig.cache
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\ref\CityTechWEBAPI.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.staticwebassets.runtime.json
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\MailKit.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\MimeKit.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Formats.Asn1.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Encoding.CodePages.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+D:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.Development.json
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\appsettings.json
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.staticwebassets.runtime.json
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.exe
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.deps.json
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.runtimeconfig.json
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\CityTechWEBAPI.pdb
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Core.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Azure.Identity.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Humanizer.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Infobip.Api.Client.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\MailKit.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.OpenApi.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\MimeKit.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Mono.TextTemplating.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Polly.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.CodeDom.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Drawing.Common.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Formats.Asn1.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Memory.Data.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Runtime.Caching.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Security.Permissions.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Encoding.CodePages.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Text.Json.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\System.Windows.Extensions.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.AssemblyReference.cache
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.GeneratedMSBuildEditorConfig.editorconfig
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfoInputs.cache
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.AssemblyInfo.cs
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CoreCompileInputs.cache
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cs
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.MvcApplicationPartsAssemblyInfo.cache
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.CityTechWEBAPI.Microsoft.AspNetCore.StaticWebAssets.props
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.build.CityTechWEBAPI.props
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.CityTechWEBAPI.props
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.CityTechWEBAPI.props
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.pack.json
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.build.json
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\staticwebassets.development.json
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\scopedcss\bundle\CityTechWEBAPI.styles.css
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.csproj.CopyComplete
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\refint\CityTechWEBAPI.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.pdb
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\CityTechWEBAPI.genruntimeconfig.cache
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\obj\Debug\net6.0\ref\CityTechWEBAPI.dll
+E:\REPO\CT_Dashboard_API\CityTechWEBAPI\CityTechWEBAPI\bin\Debug\net6.0\RestSharp.dll

@@ -1,0 +1,15 @@
+.table thead th {
+    font-weight: 600;
+    background: #198754;
+    color: white;
+    padding: 5px 2px;
+    white-space: nowrap;
+}
+
+.app-table tbody td {
+    white-space: normal!important;
+}
+
+element.style {
+    padding-left: 16px;
+}

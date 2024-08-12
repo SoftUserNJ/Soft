@@ -1,0 +1,79 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Purchase Rate Comparison</h4>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="pdfPrint" data-bs-original-title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img" />
+            </a>
+          </li>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="convertExel"
+              data-bs-original-title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Search Product</label>
+            <input type="text" class="form-control" placeholder="Search Product"
+              (input)="onInputSearchProduct($event)" />
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Search Data</label>
+            <input type="text" class="form-control" placeholder="Search Data" (input)="onInputSearchData($event)" />
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height: 400px; font-size: 12px">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>Party Name</th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Brand</th>
+              <th class="text-center">Invoice No</th>
+              <th class="text-center">Invoice Date</th>
+              <th class="text-center">Qty</th>
+              <th class="text-end">Rate</th>
+              <th class="text-end">Amount</th>
+            </tr>
+          </thead>
+          <tbody #productListsSearch>
+            <tr *ngFor="let item of productLists">
+              <td class="limited-text partyName" title="{{ item.PARTYNAME }}">{{ item.PARTYNAME }}</td>
+              <td class="limited-text productName" title="{{ item.PRODUCTNAME }}">{{ item.PRODUCTNAME }}</td>
+              <td class="limited-text category" title="{{ item.CATEGORY }}">{{ item.CATEGORY }}</td>
+              <td class="limited-text brand" title="{{ item.BRAND }}">{{ item.BRAND }}</td>
+              <td class="limited-text text-center vchNo" title="{{ item.VCHNO }}">{{ item.VCHNO }}</td>
+              <td class="limited-text text-center vchDate" title="{{ item.VCHDATE }}">{{ item.VCHDATE }}</td>
+              <td class="limited-text text-center qty" title="{{ item.QTY }}">{{ item.QTY }}</td>
+              <td class="limited-text text-end rate" title="{{ item.RATE }}">{{ item.RATE }}</td>
+              <td class="limited-text text-end amount" title="{{ item.AMOUNT }}">{{ item.AMOUNT | number : "1.2-2"}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="8" class="text-end">Total</td>
+              <td class="text-end">{{ amount | number : "1.2-2"}}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

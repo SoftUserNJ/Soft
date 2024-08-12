@@ -1,0 +1,1118 @@
+﻿
+@{
+    ViewData["Title"] = "Upload Your Design";
+}
+
+<style>
+    #editable-image {
+        max-width: 100%;
+        height: auto;
+        position: absolute;
+    }
+
+    #editable-image2 {
+        max-width: 100%;
+        height: auto;
+        position: absolute;
+    }
+
+    #editable-image3 {
+        max-width: 100%;
+        height: auto;
+        position: absolute;
+    }
+
+    .text-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 24px;
+        white-space: nowrap;
+        cursor: grab;
+    }   
+
+    .text-overlay2 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 24px;
+        white-space: nowrap;
+        cursor: grab;
+    }
+
+    .remove-button {
+        display: none;
+    }
+
+    .text-overlay3 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 24px;
+        cursor: grab;
+        white-space: nowrap;
+    }
+
+    .slideshow-container {
+        max-width: 1000px;
+        position: relative;
+        margin: auto;
+    }
+
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -22px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+    /* Caption text */
+    .text {
+        color: #f2f2f2;
+        font-size: 15px;
+        padding: 8px 12px;
+        position: absolute;
+        bottom: 8px;
+        width: 100%;
+        text-align: center;
+    }
+
+
+    /* The dots/bullets/indicators */
+    .dot {
+        cursor: pointer;
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+    }
+
+
+    /* Fading animation */
+    .fade {
+        animation-name: fade;
+        animation-duration: 1.5s;
+    }
+</style>
+
+
+<hr class="my-4">
+
+<div class="col-lg-12">
+    <div class="section-title">
+        <span>Screen</span>
+        <div id="screenTitle"></div>
+    </div>
+</div>
+
+<section class="imgUploadContainer">
+    <div class="container-fluid">
+        <div class="slideshow-container">
+            <div  id="SingleScreen">
+            </div>
+            <div  id="DoubleScreen">
+            </div>
+
+            <input type="hidden" id="selected-slide" value="1">
+            <div  id="TripleScreen">
+            </div>
+           
+   
+            
+
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+        </div>
+
+    </div>
+   
+</section>
+
+
+
+
+<div class="col-lg-12" id="upload-image-Section">
+    <div style=" margin-top: 20px; " class="section-title">
+
+        <input type="file" id="image-upload" accept="image/*" style="display:none">
+        <button class="btn btn-warning" id="upload-image-button">Upload Photo</button>
+    </div>
+</div>
+
+
+<div id="slide1" class="container mt-3">
+    
+
+</div>
+
+<div class="section-title" id="bookingTitle" style="display:none;">
+    <span style="margin-top:15px;">Pick Your Booking Slots</span>
+
+</div>
+
+<div id="booking" style="display:none;">
+
+    <div id="SlotContainer">
+        <div class="d-flex justify-content-center mb-3 Allslots" id="row-1">
+            <div class="p-2">
+                <select style=" height: 46px; " id="timeSelect1" class="form-control">
+                    <option value="1">6:00 - 6:59</option>
+                    <option value="2">7:00 - 7:59</option>
+                    <option value="3">8:00 - 8:59</option>
+                    <option value="4">9:00 - 9:59</option>
+                    <option value="5">10:00 - 10:59</option>
+                    <option value="6">11:00 - 11:59</option>
+                    <option value="7">12:00 - 12:59</option>
+                    <option value="8">13:00 - 13:59</option>
+                    <option value="9">14:00 - 14:59</option>
+                    <option value="10">15:00 - 15:59</option>
+                    <option value="11">16:00 - 16:59</option>
+                    <option value="12">17:00 - 17:59</option>
+                    <option value="13">18:00 - 18:59</option>
+                    <option value="14">19:00 - 19:59</option>
+                    <option value="15">20:00 - 20:59</option>
+                    <option value="16">21:00 - 21:59</option>
+                    <option value="17">22:00 - 22:59</option>
+                    <option value="18">23:00 - 23:59</option>
+                </select>
+            </div>
+            <div class="p-2"><input id="datepicker1" type="date" class="form-control form-control-lg" style=" font-size: 18px; "></div>
+           
+            <div class="p-2">
+                <button type="button" class="btn btn-warning" onclick="addRow()">+</button>
+                <button type="button" id="removeRowBtn" class="btn btn-danger remove-button" onclick="removeRow(this)">x</button>
+
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+<!-- SideBar -->
+<div id="mySidebar" class="sidebar">
+    <button class="closebtn" onclick="closeNav()" style=" background-color: transparent; border: none; color: white; ">×</button>
+    <center>
+        <h4>Order Overview</h4>
+        <h4 style="padding: 0px 0px 0px 0px;margin-bottom: 20px;">___________________</h4>
+    </center>
+    <div id="sideBarBody" style="height:250px; overflow-y:scroll;">
+
+    </div>
+
+    <div id="sideBarSlots" style="padding-left:15px;padding-right:15px;overflow-y: scroll;height: 200px;">
+
+    </div>
+    <div id="sidebarFooter">
+    </div>
+
+
+</div>
+
+<div style="margin-top: 20px;padding: 38px;" class="section-title">
+
+    <button class="btn btn-success" id="Bookingbtn" style="float: right;">Next Step →</button>
+    <button class="btn btn-success" id="slotBtn" onclick="SaveDesign();" style="float: right;display:none;">Next Step →</button>
+    <button class="btn btn-success" id="Uploadbtn" style="float: left;display:none"> ← Previous Step</button>
+</div>
+
+<!--Cart Button-->
+<a onclick="openNav()" class="float" title="Click to Open Your Cart" style=" position: fixed; width: 60px; height:60px; bottom: 40px; right: 40px; cursor:pointer; background-color: #152a25; color:#FFF; border-radius:50px; text-align:center; box-shadow: 0px 2px 3px #999; ">
+    <img src="/img/icon/cart1.png" alt="" style=" margin-top: 18px; height: 25px; width: 28px;">
+</a>
+
+<!--Cart Button-->
+
+
+@section scripts{
+    <script>
+        let rowCount = 1;
+
+
+        function addRow() {
+            rowCount++;
+
+            const container = document.getElementById('SlotContainer');
+            const clone = container.firstElementChild.cloneNode(true);
+
+            const dateInput = clone.querySelector('input[type="date"]');
+            dateInput.id = `datepicker${rowCount}`;
+            dateInput.value = '';
+
+            const timeSelect = clone.querySelector('select');
+            timeSelect.id = `timeSelect${rowCount}`;
+
+            // Set the width for the new timeSelect and datepicker
+            timeSelect.style.width = '136px';
+            dateInput.style.width = '180px';
+
+            // Toggle the visibility of the "Remove" button
+            const removeButton = clone.querySelector('.remove-button');
+            if (removeButton) {
+                removeButton.style.display = 'inline'; // Show the button for new rows
+            }
+
+            // Append the clone to the container
+            container.appendChild(clone);
+
+            // Add event listeners to the new datepicker and select elements
+            dateInput.addEventListener('change', updateSidebar);
+            timeSelect.addEventListener('change', updateSidebar);
+
+            const aTags = document.querySelectorAll('#mySidebar a');
+            if (aTags.length > 0) {
+                const firstATag = aTags[0]; // Get the first <a> tag in the collection
+                const rateValue = firstATag.getAttribute('rate');
+
+                if (rateValue !== null) {
+                    console.log(rateValue);
+                }
+
+                const rate = (1 * aTags.length) * rateValue;
+
+                // Get the current total value
+                const currentTotalValue = parseFloat(document.getElementById('totalCart').textContent.replace('Total: €', ''));
+
+                // Calculate the new total value
+                const newTotalValue = currentTotalValue + rate;
+
+                // Update the #totalCart h4 value in sidebarFooter with the new total
+                const totalCartValue = document.getElementById('totalCart');
+                if (totalCartValue) {
+                    totalCartValue.textContent = `Total: €${newTotalValue.toFixed(2)}`;
+                }
+            }
+        }
+
+
+
+        function updateSidebar() {
+            
+            const sidebarSlots = document.getElementById('sideBarSlots');
+            sidebarSlots.innerHTML = ''; // Clear existing content
+
+            
+
+            for (let i = 1; i <= rowCount; i++) {
+                const dateInput = document.getElementById(`datepicker${i}`);
+                const timeSelect = document.getElementById(`timeSelect${i}`);
+                const selectedDate = dateInput.value;
+                const selectedTime = timeSelect.options[timeSelect.selectedIndex].text;
+
+                const newP = document.createElement('p');
+                const h4 = document.createElement('h4');
+                h4.style.fontFamily = 'Montserrat';
+                h4.style.fontSize = '16px';
+                h4.textContent = `Selected Slot ${i}`;
+
+                newP.style.fontSize = '11px';
+                newP.textContent = `Time: ${selectedTime} and Date: ${selectedDate}`;
+
+                newP.prepend(h4); // Add the <h4> to the beginning of the <p>
+
+                sidebarSlots.appendChild(newP);
+            }
+
+        }
+
+
+      
+
+        const initialDateInput = document.getElementById('datepicker1');
+        const initialTimeSelect = document.getElementById('timeSelect1');
+        initialDateInput.addEventListener('change', updateSidebar);
+        initialTimeSelect.addEventListener('input', updateSidebar);
+
+        function removeRow(button) {
+            // Get the parent div of the button and remove it
+            const row = button.closest('.d-flex');
+            row.remove();
+
+            // Find the corresponding <p> in the sidebar and remove it
+            const sidebarSlots = document.getElementById('sideBarSlots');
+            const pTags = sidebarSlots.getElementsByTagName('p');
+
+            // Extract the slot number from the button's parent row
+            const slotNumber = row.id.replace('row-', '');
+
+            for (let i = 0; i < pTags.length; i++) {
+                const p = pTags[i];
+                const h4 = p.querySelector('h4');
+                if (h4.textContent.includes(`Selected Slot ${slotNumber}`)) {
+                    p.remove();
+                }
+            }
+
+            const aTags = document.querySelectorAll('#mySidebar a');
+            let rateValue = 0; // Initialize rateValue to a default value
+
+            if (aTags.length > 0) {
+                const firstATag = aTags[0]; // Get the first <a> tag in the collection
+                rateValue = firstATag.getAttribute('rate');
+
+                if (rateValue !== null) {
+                    console.log(rateValue);
+                }
+            }
+            const rate = (1 * aTags.length) * rateValue;
+
+            // Get the current total value
+            const currentTotalValue = parseFloat(document.getElementById('totalCart').textContent.replace('Total: €', ''));
+
+            // Calculate the new total value
+            const newTotalValue = currentTotalValue - rate;
+
+            // Update the #totalCart h4 value in sidebarFooter with the new total
+            const totalCartValue = document.getElementById('totalCart');
+            if (totalCartValue) {
+                totalCartValue.textContent = `Total: €${newTotalValue.toFixed(2)}`;
+            }
+
+        }
+
+
+
+        document.getElementById("Bookingbtn").addEventListener("click", function () {
+          
+            document.getElementById("slide1").style.display = "none";
+            
+            document.getElementById("booking").style.display = "block";
+
+           document.getElementById("bookingTitle").style.display = "block";
+
+            document.getElementById("Uploadbtn").style.display = "block";
+
+            document.getElementById("upload-image-Section").style.display = "none";
+
+            document.getElementById("Bookingbtn").style.display = "none";
+
+            document.getElementById("slotBtn").style.display = "block";
+
+            updateSidebar();
+
+        });
+
+
+
+         document.getElementById("Uploadbtn").addEventListener("click", function () {
+          
+            document.getElementById("slide1").style.display = "block";
+            
+            document.getElementById("booking").style.display = "none";
+
+            document.getElementById("Bookingbtn").style.display = "block";
+
+            document.getElementById("upload-image-Section").style.display = "block";
+
+            document.getElementById("slotBtn").style.display = "none";
+
+            document.getElementById("bookingTitle").style.display = "none";
+
+            document.getElementById("Uploadbtn").style.display = "none";
+
+
+        });
+
+        var visitorId = getCookie("visitorId");
+
+        function GetSelectedScreens(visitorId) { debugger
+
+            $.ajax({
+                type: "GET",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                url: '/Cart/GetCartbyVisitor',
+                data: { VisitorId: visitorId },
+                dataType: "json",
+                success: function (data) {
+                    $('#SingleScreen').empty();
+                    $('#DoubleScreen').empty();
+                    $('#TripleScreen').empty();
+
+                    var cookieValue = getCookie("imageSources");
+                    var cookieImageSources = JSON.parse(cookieValue);
+                    console.log(cookieImageSources)
+
+                    data.forEach(item => {
+                        if (item.ScreenSize == "Single") {
+                            $('#SingleScreen').show();
+                            const singleImgSrc = cookieImageSources.singleImg || '/img/banner/whiteBg.jpg';
+                            $(`#editable-image${item.ScreenId}`).attr('src', singleImgSrc);
+
+                            const singleScreenDiv = `
+                                                                    <div  class="mySlides fade" ScreenId="${item.ScreenId}">
+                                                <div class="image-container" data-setbg="/img/banner/SingleUpload.jpg" style="background-image: url(&quot;/img/banner/SingleUpload.jpg&quot;);height: 400px;width: 100%;background-position: center; border-radius:28px;background-size: cover;background-repeat: no-repeat;"></div>
+                                                                <img id="editable-image${item.ScreenId}"  src="/img/banner/whiteBg.jpg"style=" position:absolute; top: 31px;left: 401px;height: 339px;width: 199px;">
+                                                <div id="text-overlay${item.ScreenId}1" class="text-overlay"></div>
+                                                        <div id="text-overlay${item.ScreenId}2" class="text-overlay2"></div>
+                                                        <div id="text-overlay${item.ScreenId}3" class="text-overlay3"></div>
+                                            </div>`;
+                            $('#SingleScreen').append(singleScreenDiv);
+
+                            const imgElement = $(`#editable-image${item.ScreenId}`);
+                            imgElement.on('load', function () {
+                                imgElement.attr('src', singleImgSrc);
+                            });
+
+                          
+                        }
+                        else if (item.ScreenSize == "Double") {
+                            $('#DoubleScreen').show();
+                            const doubleImgSrc = cookieImageSources.doubleImg || '/img/banner/whiteBg.jpg';
+                            $(`#editable-image${item.ScreenId}`).attr('src', doubleImgSrc);
+                            const DoubleScreenDiv = `        <div  class="mySlides fade" ScreenId="${item.ScreenId}">
+                                    <div class="image-container" data-setbg="/img/banner/DoubleUpload.jpg" style="background-image: url(&quot;/img/banner/DoubleUpload.jpg&quot;);height: 400px;width: 100%;background-position: center; border-radius:28px;background-size: cover;background-repeat: no-repeat;"></div>
+                                                <img id="editable-image${item.ScreenId}"  src="/img/banner/whiteBg.jpg" style=" position:absolute; top: 46px;left: 312px;height: 310px;width: 387px;">
+                                                <div id="text-overlay${item.ScreenId}1" class="text-overlay"></div>
+                                                <div id="text-overlay${item.ScreenId}2" class="text-overlay2"></div>
+                                                        <div id="text-overlay${item.ScreenId}3" class="text-overlay3"></div> </div>`;
+
+                            $('#DoubleScreen').append(DoubleScreenDiv);
+
+                            const imgElement = $(`#editable-image${item.ScreenId}`);
+                            imgElement.on('load', function () {
+                                imgElement.attr('src', doubleImgSrc);
+                            });
+                            
+                        }
+                        else if (item.ScreenSize == "Triple") {
+                            $('#TripleScreen').show();
+                            const trippleImgSrc = cookieImageSources.trippleImg || '/img/banner/whiteBg.jpg';   
+                            $(`#editable-image${item.ScreenId}`).attr('src', trippleImgSrc);
+                            const tripleScreenDiv = `
+                                                                    <div  class="mySlides fade" ScreenId="${item.ScreenId}">
+                                                         <div class="image-container" data-setbg="/img/banner/UploadBanner.jpg" style="background-image: url(&quot;/img/banner/UploadBanner.jpg&quot;);height: 400px;width: 100%;background-position:  center; border-radius:28px;background-size: cover;background-repeat: no-repeat;"></div>
+                                                                        <img id="editable-image${item.ScreenId}" src="/img/banner/whiteBg.jpg" style="position:absolute;top: 43px;left: 205px;height: 313px;width: 594px;">
+                                                        <div id="text-overlay${item.ScreenId}1" class="text-overlay"></div>
+                                                        <div id="text-overlay${item.ScreenId}2" class="text-overlay2"></div>
+                                                        <div id="text-overlay${item.ScreenId}3" class="text-overlay3"></div>
+                                            </div>`;
+                            $('#TripleScreen').append(tripleScreenDiv);
+
+                            const imgElement = $(`#editable-image${item.ScreenId}`);
+                            imgElement.on('load', function () {
+                                imgElement.attr('src', trippleImgSrc);
+                            });
+                            
+                        }
+                        const head = `<div id="ScreenTitle${item.ScreenId}" style="display:none;" class="screenTitle"><h3 >${item.StationName} - ${item.ScreenName}</h3><div><h4 style=" margin-top: 10px; "> Screen Size: ${item.ScreenSize}</h4><div></div>`;
+                        $('#screenTitle').append(head);
+
+
+                        const slide1 = `<div id="ScreenConfigure${item.ScreenId}" style="display:none;" class="ScreenConfigure"><div class="d-flex justify-content-center mb-3">
+
+                              
+                        <div class="p-2"><input id="text-input${item.ScreenId}1" placeholder="Type your text" class="form-control form-control-lg"></div>
+                        <div class="p-2">
+
+        <select id="font-select${item.ScreenId}1" style=" height: 46px; " class="form-control" >
+              <option value="Arial">Arial</option>
+                                        <option value="Times New Roman">Times New Roman</option>
+                                        <option value="Courier New">Courier New</option>
+            </select>
+                        </div>
+
+                                  <div class="p-2">
+                                                                                         <select id="font-input${item.ScreenId}1" class="form-control" style=" width: 80px; " >
+                                              <option value="16">Size</option>
+                                              <option value="18">18</option>
+                                              <option value="24">24</option>
+                                              <option value="28">28</option>
+                                              <option value="32">32</option>
+                                              <option value="42">42</option>
+                                              </select>
+
+                                                                         </div>
+                                                
+                        <div class="p-2">
+                                    <input class="form-control form-control-lg" type="color" id="color-picker${item.ScreenId}1" style=" width: 70px; font-size: 16px; " value="#000000">
+                            </div>
+
+
+
+
+                        <div class="p-2">
+                                                            <button class="form-control form-control-lg" screenSize="${item.ScreenSize}" onclick="applyText(${item.ScreenId}, 1, '${item.ScreenSize}')" id="apply-text${item.ScreenId}1" style="font-size:16px;">Apply</button>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mb-3">
+                                <div class="p-2"><input id="text-input${item.ScreenId}2" placeholder="Type your text" class="form-control form-control-lg"></div>
+                        <div class="p-2">
+                                                         <select id="font-select${item.ScreenId}2" style=" height: 46px; " class="form-control">
+              <option value="Arial">Arial</option>
+                                        <option value="Times New Roman">Times New Roman</option>
+                                        <option value="Courier New">Courier New</option>
+            </select>
+                        </div>
+
+                                  <div class="p-2">
+                                                                                         <select id="font-input${item.ScreenId}2" class="form-control" style=" width: 80px; " >
+                                                      <option value="16">Size</option>
+                                                      <option value="18">18</option>
+                                                      <option value="24">24</option>
+                                                      <option value="28">28</option>
+                                                      <option value="32">32</option>
+                                                      <option value="42">42</option>
+                                              </select>
+
+                                                                         </div>
+                                        
+                        <div class="p-2">
+                                    <input class="form-control form-control-lg" type="color" id="color-picker${item.ScreenId}2" style=" width: 70px; font-size: 16px; " value="#000000">
+                        </div>
+                        <div class="p-2">
+
+                                                    <button class="form-control form-control-lg" screenSize="${item.ScreenSize}" onclick="applyText(${item.ScreenId}, 2, '${item.ScreenSize}')" id="apply-text${item.ScreenId}2" style="font-size:16px;">Apply</button>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mb-3">
+                                                <div class="p-2"><input id="text-input${item.ScreenId}3" placeholder="Type your text" class="form-control form-control-lg"></div>
+                        <div class="p-2">
+                                                                <select id="font-select${item.ScreenId}3" style=" height: 46px; " class="form-control">
+              <option value="Arial">Arial</option>
+                                        <option value="Times New Roman">Times New Roman</option>
+                                        <option value="Courier New">Courier New</option>
+            </select>
+                        </div>
+
+                                  <div class="p-2">
+                                                                                         <select id="font-input${item.ScreenId}3" class="form-control" style=" width: 80px; " >
+                                                      <option value="16">Size</option>
+                                                      <option value="18">18</option>
+                                                      <option value="24">24</option>
+                                                      <option value="28">28</option>
+                                                      <option value="32">32</option>
+                                                      <option value="42">42</option>
+                                              </select>
+
+                                                                         </div>
+                                                
+                        <div class="p-2">
+                                    <input class="form-control form-control-lg" type="color" id="color-picker${item.ScreenId}3" style=" width: 70px; font-size: 16px; " value="#000000">
+                        </div>
+
+                                 
+
+
+                        <div class="p-2">
+                             <button class="form-control form-control-lg" screenSize="${item.ScreenSize}" onclick="applyText(${item.ScreenId}, 3, '${item.ScreenSize}')" id="apply-text${item.ScreenId}3" style="font-size:16px;">Apply</button>
+                        </div>
+                            </div> </div>`;
+
+                        $('#slide1').append(slide1);
+
+                        plusSlides(slideIndex);
+
+
+                    });
+
+
+                    
+                    EnableActiveScreen();
+                },
+                error: function () {
+                    console.log("Error fetching data from the server.");
+                }
+            });
+
+
+            
+        }
+
+        function applyText(screenId, suffix, screenSize) {
+            var isDragging = false;
+            var offsetX, offsetY;
+
+            var applybtn = "#apply-text" + screenId + suffix;
+            var text = $("#text-input" + screenId + suffix).val();
+            var font = $("#font-select" + screenId + suffix).val();
+            var fontSize = $("#font-input" + screenId + suffix).val();
+            var color = $("#color-picker" + screenId + suffix).val();
+            
+
+
+            $("#text-overlay" + screenId + suffix).text(text);
+            $("#text-overlay" + screenId + suffix).css("font-family", font);
+            $("#text-overlay" + screenId + suffix).css("color", color);
+
+            if (suffix == 1) {
+
+                $("#text-overlay" + screenId + suffix).css("font-size", fontSize+"px");
+                $("#text-overlay" + screenId + suffix).mousedown(function (e) {
+                    isDragging = true;
+                    offsetX = e.clientX - $(this).position().left;
+                    offsetY = e.clientY - $(this).position().top;
+                });
+
+                $(document).mousemove(function (e) {
+                    if (isDragging) {
+                        var x = e.clientX - offsetX;
+                        var y = e.clientY - offsetY;
+
+                        // Define the boundaries based on screen size
+                        var maxWidth, maxHeight;
+
+                        if (screenSize == "Single") {
+                            maxWidth = 800;
+                            maxHeight = 300;
+                        } else if (screenSize == "Double") {
+                            maxWidth = 800;
+                            maxHeight = 300;
+                        } else if (screenSize == "Triple") {
+                            maxWidth = 800;
+                            maxHeight = 300;
+                        }
+
+                        // Ensure the text stays within the boundaries
+                        x = Math.min(Math.max(x, 0), maxWidth);
+                        y = Math.min(Math.max(y, 0), maxHeight);
+
+                        $("#text-overlay" + screenId + suffix).css({ left: x + "px", top: y + "px" });
+                    }
+                });
+
+                $(document).mouseup(function () {
+                    isDragging = false;
+                });
+
+                var initialX = 490; // Change to the desired initial X position
+                var initialY = 102; // Change to the desired initial Y position
+                $("#text-overlay" + screenId + suffix).css({ left: initialX + "px", top: initialY + "px" });
+
+
+                //$("#text-overlay" + screenId + suffix).css("left", "490px");
+                //$("#text-overlay" + screenId + suffix).css("top", "102px");
+                
+            }
+            else if (suffix == 2) {
+
+                $("#text-overlay" + screenId + suffix).css("font-size", fontSize + "px");
+                $("#text-overlay" + screenId + suffix).mousedown(function (e) {
+                    isDragging = true;
+                    offsetX = e.clientX - $(this).position().left;
+                    offsetY = e.clientY - $(this).position().top;
+                });
+
+                $(document).mousemove(function (e) {
+                    if (isDragging) {
+                        var x = e.clientX - offsetX;
+                        var y = e.clientY - offsetY;
+
+                        // Define the boundaries based on screen size
+                        var maxWidth, maxHeight;
+
+                        if (screenSize == "Single") {
+                            maxWidth = 800;
+                            maxHeight = 300;
+                        } else if (screenSize == "Double") {
+                            maxWidth = 800;
+                            maxHeight = 300;
+                        } else if (screenSize == "Triple") {
+                            maxWidth = 800;
+                            maxHeight = 300;
+                        }
+
+                        // Ensure the text stays within the boundaries
+                        x = Math.min(Math.max(x, 0), maxWidth);
+                        y = Math.min(Math.max(y, 0), maxHeight);
+
+                        $("#text-overlay" + screenId + suffix).css({ left: x + "px", top: y + "px" });
+                    }
+                });
+
+                $(document).mouseup(function () {
+                    isDragging = false;
+                });
+
+                var initialX = 490; // Change to the desired initial X position
+                var initialY = 225; // Change to the desired initial Y position
+                $("#text-overlay" + screenId + suffix).css({ left: initialX + "px", top: initialY + "px" });
+
+                //$("#text-overlay" + screenId + suffix).css("left", "490px");
+                //$("#text-overlay" + screenId + suffix).css("top", "225px");
+            }
+            else if (suffix == 3) 
+            {
+                $("#text-overlay" + screenId + suffix).css("font-size", fontSize+"px");
+                $("#text-overlay" + screenId + suffix).mousedown(function (e) {
+                    isDragging = true;
+                    offsetX = e.clientX - $(this).position().left;
+                    offsetY = e.clientY - $(this).position().top;
+                });
+
+                $(document).mousemove(function (e) {
+                    if (isDragging) {
+                        var x = e.clientX - offsetX;
+                        var y = e.clientY - offsetY;
+
+                        // Define the boundaries based on screen size
+                        var maxWidth, maxHeight;
+
+                        if (screenSize == "Single") {
+                            maxWidth = 800;
+                            maxHeight = 300;
+                        } else if (screenSize == "Double") {
+                            maxWidth = 800;
+                            maxHeight = 300;
+                        } else if (screenSize == "Triple") {
+                            maxWidth = 800;
+                            maxHeight = 300;
+                        }
+
+                        // Ensure the text stays within the boundaries
+                        x = Math.min(Math.max(x, 0), maxWidth);
+                        y = Math.min(Math.max(y, 0), maxHeight);
+
+                        $("#text-overlay" + screenId + suffix).css({ left: x + "px", top: y + "px" });
+                    }
+                });
+
+                $(document).mouseup(function () {
+                    isDragging = false;
+                });
+
+                var initialX = 490; // Change to the desired initial X position
+                var initialY = 290; // Change to the desired initial Y position
+                $("#text-overlay" + screenId + suffix).css({ left: initialX + "px", top: initialY + "px" });
+
+                //$("#text-overlay" + screenId + suffix).css("left", "490px");
+                //$("#text-overlay" + screenId + suffix).css("top", "290px");
+            }
+
+
+        }
+
+        var ScreenDataArray = [];
+        var SlotDataArray = [];
+
+
+        function convertToISOTime(timeString) {
+            // Split the time string (e.g., "9:00")
+            const parts = timeString.split(':');
+
+            const isoTime = new Date(0);
+
+            // Set the hours and minutes
+            isoTime.setUTCHours(parseInt(parts[0], 10));
+            isoTime.setUTCMinutes(parseInt(parts[1], 10));
+
+            // Format the time as "HH:mm:ss"
+            const formattedTime = isoTime.toISOString().substr(11, 8);
+
+            return formattedTime;
+        }
+
+
+
+        function isBase64(str) { debugger
+        if (str.startsWith("data:image/")) {
+        return true;
+        }
+        return false;
+}
+
+
+
+        function SaveDesign() {
+
+              var divElements = document.querySelectorAll('.mySlides');
+           
+                
+            // Loop through the div elements
+             for (var i = 0; i < divElements.length; i++) {
+            // Check if the "screenid" attribute exists for the current div
+            var screenid = divElements[i].getAttribute('screenid');
+            if (screenid !== null) {
+                    var imgSrc = $("#editable-image" + screenid).attr("src");
+                      if (imgSrc && imgSrc.startsWith('http://')) {
+                        convertImageUrlToBase64(imgSrc, function (base64Data) {
+                            var screenData = {
+
+                                ScreenId: screenid,
+                                text1: $("#text-input" + screenid + "1").val(),
+                                text2: $("#text-input" + screenid + "2").val(),
+                                text3: $("#text-input" + screenid + "3").val(),
+                                color1: $("#color-picker" + screenid + "1").val(),
+                                color2: $("#color-picker" + screenid + "2").val(),
+                                color3: $("#color-picker" + screenid + "3").val(),
+                                font1: $("#font-select" + screenid + "1").val(),
+                                font2: $("#font-select" + screenid + "2").val(),
+                                font3: $("#font-select" + screenid + "3").val(),
+                                TopValue1: $("#text-overlay" + screenid + "1").css("top"),
+                                LeftValue1: $("#text-overlay" + screenid + "1").css("left"),
+                                TopValue2: $("#text-overlay" + screenid + "2").css("top"),
+                                LeftValue2: $("#text-overlay" + screenid + "2").css("left"),
+                                TopValue3: $("#text-overlay" + screenid + "3").css("top"),
+                                LeftValue3: $("#text-overlay" + screenid + "3").css("left"),
+                                FontSize1: $("#font-input" + screenid + "1").val(),
+                                FontSize2: $("#font-input" + screenid + "2").val(),
+                                FontSize3: $("#font-input" + screenid + "3").val(),
+                                imageDataURI: base64Data
+                            };
+                            ScreenDataArray.push(screenData);
+
+                        });
+            } 
+                      else {
+                        var screenData = {
+
+                            ScreenId: screenid,
+                            text1: $("#text-input" + screenid + "1").val(),
+                            text2: $("#text-input" + screenid + "2").val(),
+                            text3: $("#text-input" + screenid + "3").val(),
+                            color1: $("#color-picker" + screenid + "1").val(),
+                            color2: $("#color-picker" + screenid + "2").val(),
+                            color3: $("#color-picker" + screenid + "3").val(),
+                            font1: $("#font-select" + screenid + "1").val(),
+                            font2: $("#font-select" + screenid + "2").val(),
+                            font3: $("#font-select" + screenid + "3").val(),
+                            TopValue1: $("#text-overlay" + screenid + "1").css("top"),
+                            LeftValue1: $("#text-overlay" + screenid + "1").css("left"),
+                            TopValue2: $("#text-overlay" + screenid + "2").css("top"),
+                            LeftValue2: $("#text-overlay" + screenid + "2").css("left"),
+                            TopValue3: $("#text-overlay" + screenid + "3").css("top"),
+                            LeftValue3: $("#text-overlay" + screenid + "3").css("left"),
+                            FontSize1: $("#font-input" + screenid + "1").val(),
+                            FontSize2: $("#font-input" + screenid + "2").val(),
+                            FontSize3: $("#font-input" + screenid + "3").val(),
+                            imageDataURI: $("#editable-image" + screenid).attr("src")
+                      }
+                            }
+
+                    
+
+                  
+            }
+          }
+
+
+
+            var divElements = document.querySelectorAll('.Allslots');
+
+            var numberOfSlots = divElements.length;
+
+
+            for (var i = 0; i < divElements.length; i++) {
+                var selectedOptionText = $(divElements[i]).find(`#timeSelect${i + 1} option:selected`).text();
+                var slotFrom = selectedOptionText.split(' - ')[0];
+                var slotTo = selectedOptionText.split(' - ')[1];
+
+                // Convert time strings to ISO 8601 format
+                var SlotData = {
+                    selectedDate: $(divElements[i]).find(`#datepicker${i + 1}`).val(),
+                    slotFrom: convertToISOTime(slotFrom),
+                    slotTo: convertToISOTime(slotTo),
+                    NoOfSlots: numberOfSlots
+                };
+
+                SlotDataArray.push(SlotData);
+            }
+
+
+
+            var visitorId = getCookie("visitorId");
+
+          
+
+            var requestData = {
+                screenDataArray: ScreenDataArray,
+                SlotDataArray: SlotDataArray
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Design/SaveDesign?visitorId=" + visitorId,
+                data: JSON.stringify(requestData),
+                contentType: "application/json",
+                success: function (response) {
+                    toastr.success("Your Design has been Saved Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                     ScreenDataArray = [];
+                     SlotDataArray = [];
+
+                    window.location.href = "http://mediaoutdoor.softaxe.com/MOD/Register";
+                },
+                error: function () {
+                    toastr.error("Please Try Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                     ScreenDataArray = [];
+                     SlotDataArray = [];
+
+                }
+            });
+        }
+
+        function convertImageUrlToBase64(url, callback) { debugger
+      var img = new Image();
+        img.crossOrigin = 'Anonymous';
+
+       img.onload = function () {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        // Get the base64 data URI
+        var base64Data = canvas.toDataURL('image/jpeg');
+
+        callback(base64Data);
+    };
+
+    img.src = url;
+}
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+          
+        }
+
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            
+            showSlides(slideIndex += n);
+            EnableActiveScreen();
+        }
+
+
+        function showSlides(n) {
+            
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            if (slides.length === 0) return; // No slides to display
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+
+
+
+        function EnableActiveScreen()
+        {
+            let currentSlide = document.querySelector('.mySlides[style*="block"]');
+            var screenId = currentSlide.getAttribute("ScreenId");
+            $(".ScreenConfigure").css("display", "none");
+            $(".screenTitle").css("display", "none");
+
+            if (screenId) {
+                $(`#ScreenConfigure${screenId}`).css("display", "block");
+                $(`#ScreenTitle${screenId}`).css("display", "block");
+            }
+        }
+
+
+        function setTodayDate() {
+            const dateInput = document.getElementById('datepicker1');
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            const day = String(currentDate.getDate()).padStart(2, '0');
+            const formattedDate = `${year}-${month}-${day}`;
+            dateInput.value = formattedDate;
+        }
+
+        $(document).ready(function () {
+            GetSelectedScreens(visitorId);
+            setTodayDate();
+
+
+  
+            $("#upload-image-button").click(function () {
+                console.log("Upload image button clicked");
+                $("#image-upload").click();
+            });
+
+
+
+
+
+
+
+     
+
+            
+            // Add an event listener for the image upload input
+
+            $("#image-upload").change(function () {
+                
+                // Find the currently displayed slide by checking its style attribute
+                var currentlyDisplayedSlide = $(".mySlides[style*='block']");
+
+                if (currentlyDisplayedSlide.length > 0) {
+                    // Get the id of the currently displayed slide
+                    var screenId = currentlyDisplayedSlide.attr("ScreenId");
+
+                    // Construct the id of the editable image for the current slide
+                    var editableImageId = "#editable-image" + screenId;
+
+                    // Update the src attribute of the editable image
+                    var file = $("#image-upload")[0].files[0];
+                    if (file) {
+                        var reader = new FileReader();
+
+                        reader.onload = function (e) {
+
+                            // Change the src of the editable image for the currently displayed slide
+                            $(editableImageId).attr("src", e.target.result);
+                            $("#image-upload").val("");
+                        };
+
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
+    
+
+        });
+
+
+       
+
+        // Nav Bar
+        function navigateToCart() {
+            window.location.href = '/Cart/Cart';
+        }
+
+        function navigateToDesign() {
+            window.location.href = '/Design/UploadYourDesign';
+        }
+
+
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+
+        //$(window).on('beforeunload', function () {
+        //    return 'Are you sure you want to leave this page? Your changes may not be saved.';
+        //});
+
+    </script>
+
+}

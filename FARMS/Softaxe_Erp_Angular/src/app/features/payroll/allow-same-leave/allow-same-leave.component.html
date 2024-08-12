@@ -1,0 +1,65 @@
+<div class="content ListPage">
+    <div class="page-header">
+        <div class="page-title">
+            <h4 class="newcolor">Set Allow Leaves To Employee</h4>
+            <h6 class="newcolor">Allow Same Leaves</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+
+                    <div class="card">
+                        <div class="card-body" [formGroup]="SameLeaveForm">
+        
+                            <div class="row pt-4">
+
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="mb-2">
+                                      <label class="fw-bolder">Search By Employee Name</label>
+                                      <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-12">
+                                          <ng-select class="bold-placeholder" placeholder="--- Select Employee ---" (change)="SelectEmployee($event)"
+                                          [items]="EmployeeList" 
+                                          bindLabel="name"
+                                          bindValue="empy_id"
+                                            formControlName="empName"
+                                            [dropdownPosition]="'bottom'" [readonly]="Disabled">
+                                          </ng-select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                        <label class="fw-bold">Search By Employee Id</label>
+                                        <input type="number" formControlName="empy_id" class="form-control me-2" (input)="InputEmployee($event)" [readonly]="Disabled">
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="row content-justify-center pt-4">
+                                <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                    <button  class="btn btn-primary me-1 w-25" [hidden]="isShow" (click)="onClickNew()">New</button>
+                                    <button type="submit" class="btn btn-success me-3" style="width: 45%;" [hidden]="!isShow"
+                                    (click)="onClickLeaves()">Allow Leaves</button>
+                                    <button type="submit" class="btn btn-success me-1" style="width: 45%;" [hidden]="!isShow"
+                                    (click)="onClickEOBI()">Allow EOBI</button>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  

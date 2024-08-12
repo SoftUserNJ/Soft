@@ -1,0 +1,216 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4 class="newcolor">Vouchers Verifications</h4>
+      <h6 class="newcolor">Manage your Vouchers Verifications</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body pt-2">
+      <div class="row">
+        <div class="col-lg-2 col-md-4 col-sm-6 ps-0">
+          <div class="">
+            <label class="fw-bolder mb-1">Vch Type</label>
+            <div class="position-relative w-100">
+              <ng-select bindLabel="VCHTYPE" bindValue="id" [items]="vchTypeList" placeholder="---Select Vch Type---"
+                (change)="onChangeVchType($event)" (clear)="onClearVchType()" [clearable]="true"
+                [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 ps-0">
+          <div class="form-group">
+            <label>Vch No</label>
+            <input type="number" id="txtVchNo" class="form-control" (input)="onSearchInput($event)"
+              [(ngModel)]="vchNoSearch" placeholder="Vch No Search..." />
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-4 col-sm-6">
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6 ps-0">
+              <div class="form-group">
+                <label>From Date</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                    [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                  <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 ps-0">
+              <div class="form-group">
+                <label>To Date</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                    [matDatepicker]="datepicker1" [(ngModel)]="toDate" (click)="datepicker1.open()" />
+                  <mat-datepicker #datepicker1 [startAt]="toDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 ps-0">
+              <label class="fw-bolder mb-1">Location</label>
+              <div class="position-relative w-100">
+                <ng-select placeholder="---Select Location---" [dropdownPosition]="'bottom'" [disabled]="isDisableLoc"
+                  [(ngModel)]="locId">
+                  <ng-option *ngFor="let item of locationList" [value]="item.ID">
+                    {{ item.ID + " - " + item.NAME}}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 ps-0">
+          <div class="">
+            <label class="fw-bolder mb-1">User</label>
+            <div class="position-relative w-100">
+              <ng-select [items]="usersList" bindValue="UserId" bindLabel="UserName" [(ngModel)]="userId"
+                placeholder="---Select User---" [clearable]="true" [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 ps-0">
+          <div class="form-group mt-4">
+            <button class="btn btn-primary btn-sm" (click)="getVchApproval()">Search</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 d-flex col align-self-center p-0">
+          <div class="form-group d-flex align-items-end">
+            <div class="d-flex align-items-center me-3">
+              <input type="radio" id="unapprove" class="me-1" name="vchType" value="unapprove"
+                (click)="onClickFilter($event)" [checked]="true" />
+              <label for="unapprove" class="mb-0" style="padding-top: 3px">UnVerified</label>
+            </div>
+            <div class="d-flex align-items-center me-3">
+              <input type="radio" id="approve" class="me-1" name="vchType" value="approve"
+                (click)="onClickFilter($event)" />
+              <label for="approve" class="mb-0" style="padding-top: 3px">Verified</label>
+            </div>
+            <div class="d-flex align-items-center">
+              <input type="checkbox" id="vchSelectDate" class="me-1" [(ngModel)]="isDateWise"
+                (change)="getVchApproval()" />
+              <label for="vchSelectDate" class="mb-0" style="padding-top: 3px">Select Date</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-6 ps-0">
+          <div class="form-group">
+            <input type="search" class="form-control" id="txtSearch" (input)="onInput($event)" [(ngModel)]="searchTable"
+              placeholder="Search..." />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-6 ps-1">
+          <div class="table-responsive" style="height: 300px; font-size: 11px; border: 1px solid #e9ecef">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="text-start">VchType</th>
+                  <th class="text-center">VchNo</th>
+                  <th class="text-center">Loc</th>
+                  <th class="text-center">VchDate</th>
+                  <th class="text-start">User Name</th>
+                  <th class="text-center prmVch" style="width: 25%">Verify</th>
+                  <th class="text-center"></th>
+                </tr>
+              </thead>
+              <tbody id="VchApprovalList" #approvalVchLists>
+                <tr *ngFor="let item of approvalVchList">
+                  <td class="">
+                    <span class="me-3 vchPrint" (click)="openReport(item)"><i class="fas fa-print"></i></span>
+                  </td>
+                  <td class="text-start vchType">{{ item.VCHTYPE }}</td>
+                  <td class="text-center vchNo">{{ item.VCHNO }}</td>
+                  <td class="text-center">{{ item.LOCID }}</td>
+                  <td class="text-center">{{ item.VCHDATE }}</td>
+                  <td class="text-start">{{ item.USERNAME }}</td>
+                  <td class="text-center">
+                    <input type="checkbox" class="parmaVoucher" [(ngModel)]="item.VOUCHER"
+                      [checked]="item.VOUCHER == 1 ? true : false" />
+                  </td>
+                  <td class="text-center" style="width: 9%">
+                    <span (click)="getVchDetail(item)" class="btnEye">
+                      <i class="fas fa-eye"></i>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex align-items-center mt-4 justify-content-end">
+            <div class="d-flex align-items-center me-4" *ngIf="!isVerify">
+              <input id="chkVchAll" type="checkbox" class="mx-auto mb-0" (change)="toggleSelectAll($event)" />
+              <label for="chkVchAll" class="mb-0 ms-1 fw-bolder">Verify All</label>
+            </div>
+            <button class="btn btn-success btn-sm" (click)="onClickSave()" id="btnSaveVouchersApproval">
+              Save
+            </button>
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-6 ps-0">
+          <div class="table-responsive" style="height: 300px; font-size: 11px; border: 1px solid #e9ecef">
+            <table class="table mb-0 app-table">
+              <thead>
+                <tr>
+                  <th class="text-center w-0">VchNo</th>
+                  <th class="text-center w-0">VchType</th>
+                  <th class="text-center w-0">Code</th>
+                  <th class="text-start">Name</th>
+                  <th class="text-end">Debit</th>
+                  <th class="text-end">Credit</th>
+                  <th class="text-end">Qty</th>
+                  <th class="text-end">Rate</th>
+                  <t *ngIf="costCenter == 'true'" class="text-start">Job No</t>
+                  <th class="text-start">Description</th>
+                </tr>
+              </thead>
+              <tbody id="VchCodesList" #vchDetailLists>
+                <tr *ngFor="let item of vchDetailList">
+                  <td class="text-center">{{ item.VCHNO }}</td>
+                  <td class="text-center">{{ item.VCHTYPE }}</td>
+                  <td class="text-start">{{ item.CODE }}</td>
+                  <td class="text-start limited-text" title="{{ item.NAME }}">{{ item.NAME }}</td>
+                  <td class="text-end debit">{{ item.DEBIT | number : "1.2-2" }}</td>
+                  <td class="text-end credit">{{ item.CREDIT | number : "1.2-2" }}</td>
+                  <td class="text-end">{{ item.QTY | number : "1.0-0" }}</td>
+                  <td class="text-end">{{ item.RATE | number : "1.2-2" }}</td>
+                  <td *ngIf="costCenter == 'true'" class="text-start limited-text" title="{{ item.JOBNAME }}">{{ item.JOBNAME }}</td>
+                  <td class="text-start limited-text" title="{{ item.DESCRP }}">{{ item.DESCRP }}</td>
+                </tr>
+                <tr>
+                  <td class="text-end" colspan="4"></td>
+                  <td class="text-end fw-bold text-danger" id="vTotalDebit">
+                    {{ totalDebit | number : "1.2-2" }}
+                  </td>
+                  <td class="text-end fw-bold text-danger" id="vTotalCredit">
+                    {{ totalCredit | number : "1.2-2" }}
+                  </td>
+                  <td *ngIf="costCenter == 'true'" colspan="4"></td>
+                  <td *ngIf="costCenter == 'false'" colspan="3"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

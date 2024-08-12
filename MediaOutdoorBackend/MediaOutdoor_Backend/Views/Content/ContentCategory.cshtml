@@ -1,0 +1,472 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Content Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["CategoryManagement"]</h4>
+            <h6>@Localizer["Add/UpdateCategory"]</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="PDF" id="pdfPrint">
+                            <i class="far fa-file-pdf" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" id="convertExcel">
+                            <i class="far fa-file-excel" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="CSV" id="convertCsv">
+                            <i class="fa fa-file-csv" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #000000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch">
+                    </div>
+                </div>
+                <div class="wordset">
+                    <p href="javascript:void(0);" class="btn btn-addednew btnAdd ct-btns">
+                        <img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">@Localizer["AddNew"]
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />Id</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Category"]</th>
+                            <th class="text-center pe-3 last-th-sticky"><input type="checkbox" class="printCheckBox notPrintCol" hidden>@Localizer["Action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categoryList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content AddPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["CategoryAdd"]</h4>
+        </div>
+        <div class="page-btn">
+            <a href="javascript:void(0);" class="btn btn-added btnList ct-btns">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="" aria-label="fa fa-th-list"></i> @Localizer["Categories"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="row ">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 activeForm disabled">
+                            <div class="form-group">
+                                <label>@Localizer["CategoryName"]</label>
+                                <input type="text" class="" id="txtCategoryName" skinid="">
+                                <input type="hidden" id="txtId">
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <button class="btn btn-primary btn-sm ct-btns" id="btnNew">@Localizer["New"]</button>
+                            <button class="btn btn-success btn-sm ct-btns" id="btnSave">@Localizer["Save"]</button>
+                            <button class="btn btn-secondary btn-sm ct-btns" id="btnRefresh">@Localizer["Refresh"]</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12 activeForm disabled">
+                    <div class="commom-img mb-2 mt-1">
+                        <img src="" id="ImageUser" />
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="file" id="userImg" accept="image/jpg, image/jpeg, image/png" />
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(function(){
+            $(".AddPage").hide();
+            GetCategoryList();
+            $("#btnRefresh").click();
+        })
+
+        $(".btnAdd").click(function () {
+            $(".ListPage").hide();
+            $(".AddPage").show();
+            $("#txtId").val("");
+            $("#btnRefresh").click();
+        });
+
+        $(".btnList").click(function () {
+            $(".ListPage").show();
+            $(".AddPage").hide();
+        });
+
+        //====================== Get Category List ========================\\
+
+        function GetCategoryList(){
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Content/GetContentCategory/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#categoryList").empty();
+                        $.each(data, function (i, item) {
+
+                            $("#categoryList").append(`
+                             <tr>
+                                 <td class="id ps-2">${item.catId}</td>
+                                 <td class="name">${item.category}</td>
+                                 <td class="d-none image">${item.icon}</td>
+                                 
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-2 btnEdit cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDel cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                                 
+                             </tr>
+                            `)
+                        });
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSave").click(function () {
+
+            if (CheckValidation("AddPage") == false) {
+
+                    return false;
+            }
+
+            var formData = new FormData();
+
+            var totalFiles = document.getElementById("userImg").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("userImg").files[i];
+                formData.append("icon", file);
+            }
+
+            formData.append("id", $("#txtId").val());
+            formData.append("category", $("#txtCategoryName").val());
+           
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtCategoryName").val().trim(), "#categoryList", ".name", $("#txtId").val(), ".id") == false) {
+                toastr.info("Category Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtCategoryName").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Content/SaveContentCategory/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetCategoryList();
+                            $("#txtId").val("");
+                            $("#btnRefresh").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDel", function(){
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".id").text();
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Content/DelContentCategory/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            if (data != true) {
+                                toastr.warning(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            }
+                            else {
+
+                                toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                                GetCategoryList();
+                                $("#txtId").val("");
+                                $("#btnRefresh").click();
+                            }
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEdit', function () {
+
+            $(".activeForm").removeClass('disabled');
+
+            var id = $(this).closest('tr').find('.id').text();
+            var name = $(this).closest('tr').find('.name').text();
+            
+
+            $("#txtId").val(id);
+            $("#txtCategoryName").val(name);
+
+            var userImg = $(this).closest('tr').find('.image').text();
+            //var path = window.location.origin;
+            //$("#ImageUser").attr('src', path + "/" + userImg);
+            $("#ImageUser").attr('src', userImg);
+
+            $("#btnSave").show();
+            $("#btnNew").hide();
+            $("#btnSave").text('Update');
+
+            $(".ListPage").hide();
+            $(".AddPage").show();
+
+        });
+
+
+        //====================== Buttons ========================\\
+
+        $("#btnNew").click(function () {
+            $(".activeForm").removeClass('disabled');
+            
+            $(this).hide();
+            $("#btnSave").text('Save');
+            $("#btnSave").show();
+            $("#txtCategoryName").focus();
+        });
+
+        $("#btnRefresh").click(function () {
+
+            var uId = $("#txtId").val();
+
+            if (uId != 0) {
+                $(".id").each(function () {
+                    const userIdValue = $(this).text().trim();
+                    if (userIdValue === uId) {
+                        $(this).closest('tr').find('.btnEdit').click();
+                        return false;
+                    }
+                });
+            }
+            else {
+
+                $(".activeForm").addClass('disabled');
+
+                $("#btnSave").hide();
+                $("#btnNew").show();
+
+                $("#txtId").val('');
+                $("#txtCategoryName").val('');
+
+              $("#ImageUser").attr('src', '');
+                $("#userImg").val('');
+            }
+        });
+
+
+        //====================== User Image ========================\\
+        $("body #userImg").change(function (event) {
+            $("#ImageUser").attr('src', URL.createObjectURL(event.target.files[0]));
+        });
+
+
+        //====================== Search ========================\\
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#categoryList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]"+".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+
+    </script>
+}

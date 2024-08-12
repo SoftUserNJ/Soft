@@ -1,0 +1,1537 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\obj\\Release\\net7.0\\scopedcss\\projectbundle\\MediaOutdoor_Backend.bundle.scp.css",
+      "PackagePath": "staticwebassets\\MediaOutdoor_Backend.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Content\\1-IconTopical-.jpg",
+      "PackagePath": "staticwebassets\\Images\\Content\\1-IconTopical-.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Content\\1-IconTopical-.png",
+      "PackagePath": "staticwebassets\\Images\\Content\\1-IconTopical-.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Content\\15-Icon-Hello World.WebP",
+      "PackagePath": "staticwebassets\\Images\\Content\\15-Icon-Hello World.WebP"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Content\\3-Double-6.WebP",
+      "PackagePath": "staticwebassets\\Images\\Content\\3-Double-6.WebP"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Content\\3-Double-6.jpg",
+      "PackagePath": "staticwebassets\\Images\\Content\\3-Double-6.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Content\\3-Single-6.WebP",
+      "PackagePath": "staticwebassets\\Images\\Content\\3-Single-6.WebP"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Content\\3-Single-6.jpg",
+      "PackagePath": "staticwebassets\\Images\\Content\\3-Single-6.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Content\\3-Triple-6.WebP",
+      "PackagePath": "staticwebassets\\Images\\Content\\3-Triple-6.WebP"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Content\\3-Triple-6.png",
+      "PackagePath": "staticwebassets\\Images\\Content\\3-Triple-6.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Customer\\1-6565-651.jpg",
+      "PackagePath": "staticwebassets\\Images\\Customer\\1-6565-651.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Customer\\1-6565-651.png",
+      "PackagePath": "staticwebassets\\Images\\Customer\\1-6565-651.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Orders\\1697483047847-554478-MDOT-174.png",
+      "PackagePath": "staticwebassets\\Images\\Orders\\1697483047847-554478-MDOT-174.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Sliders\\1-hero.jpg",
+      "PackagePath": "staticwebassets\\Images\\Sliders\\1-hero.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Sliders\\2-hero.jpg",
+      "PackagePath": "staticwebassets\\Images\\Sliders\\2-hero.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Sliders\\3-hero.jpg",
+      "PackagePath": "staticwebassets\\Images\\Sliders\\3-hero.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Sliders\\5-hero.jpg",
+      "PackagePath": "staticwebassets\\Images\\Sliders\\5-hero.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\Station\\10-27-76-87.WebP",
+      "PackagePath": "staticwebassets\\Images\\Station\\10-27-76-87.WebP"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\User\\1-Admin-Admin.jpg",
+      "PackagePath": "staticwebassets\\Images\\User\\1-Admin-Admin.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\User\\1-Admin-Admin.png",
+      "PackagePath": "staticwebassets\\Images\\User\\1-Admin-Admin.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\User\\1-Amaar-Sab.png",
+      "PackagePath": "staticwebassets\\Images\\User\\1-Amaar-Sab.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\Images\\User\\1-Mr-Abdullah.jpg",
+      "PackagePath": "staticwebassets\\Images\\User\\1-Mr-Abdullah.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\animate.css",
+      "PackagePath": "staticwebassets\\assets\\css\\animate.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\bootstrap-datetimepicker.min.css",
+      "PackagePath": "staticwebassets\\assets\\css\\bootstrap-datetimepicker.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\assets\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\assets\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\assets\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\cross-icon.svg",
+      "PackagePath": "staticwebassets\\assets\\css\\cross-icon.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\dataTables.bootstrap4.min.css",
+      "PackagePath": "staticwebassets\\assets\\css\\dataTables.bootstrap4.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\down-arrow-icon-blue-white.png",
+      "PackagePath": "staticwebassets\\assets\\css\\down-arrow-icon-blue-white.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\down-arrow-icon-white.png",
+      "PackagePath": "staticwebassets\\assets\\css\\down-arrow-icon-white.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\down-arrow-icon.png",
+      "PackagePath": "staticwebassets\\assets\\css\\down-arrow-icon.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\plus-con.svg",
+      "PackagePath": "staticwebassets\\assets\\css\\plus-con.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\style.css",
+      "PackagePath": "staticwebassets\\assets\\css\\style.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\css\\style.css.map",
+      "PackagePath": "staticwebassets\\assets\\css\\style.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\barcode1.png",
+      "PackagePath": "staticwebassets\\assets\\img\\barcode1.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\brand\\adidas.png",
+      "PackagePath": "staticwebassets\\assets\\img\\brand\\adidas.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\brand\\colgate.png",
+      "PackagePath": "staticwebassets\\assets\\img\\brand\\colgate.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\brand\\samsung.png",
+      "PackagePath": "staticwebassets\\assets\\img\\brand\\samsung.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\city-tech-icon.png",
+      "PackagePath": "staticwebassets\\assets\\img\\city-tech-icon.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\city-tech-logo.png",
+      "PackagePath": "staticwebassets\\assets\\img\\city-tech-logo.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\customer\\customer1.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\customer\\customer1.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\customer\\customer2.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\customer\\customer2.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\customer\\customer3.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\customer\\customer3.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\customer\\customer4.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\customer\\customer4.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\customer\\customer5.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\customer\\customer5.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\customer\\customer6.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\customer\\customer6.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\customer\\customer7.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\customer\\customer7.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\customer\\customer8.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\customer\\customer8.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\customer\\profile2.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\customer\\profile2.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\favicon.png",
+      "PackagePath": "staticwebassets\\assets\\img\\favicon.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\flags\\de.png",
+      "PackagePath": "staticwebassets\\assets\\img\\flags\\de.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\flags\\es.png",
+      "PackagePath": "staticwebassets\\assets\\img\\flags\\es.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\flags\\fr.png",
+      "PackagePath": "staticwebassets\\assets\\img\\flags\\fr.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\flags\\us.png",
+      "PackagePath": "staticwebassets\\assets\\img\\flags\\us.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\flags\\us1.png",
+      "PackagePath": "staticwebassets\\assets\\img\\flags\\us1.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\calendars.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\calendars.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\cash.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\cash.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\close-circle.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\close-circle.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\close-circle1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\close-circle1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\close-icon.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\close-icon.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\closes.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\closes.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\dash1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\dash1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\dash2.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\dash2.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\dash3.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\dash3.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\dash4.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\dash4.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\dashboard.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\dashboard.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\datepicker.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\datepicker.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\debitcard.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\debitcard.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\delete-2.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\delete-2.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\delete-3.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\delete-3.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\delete-5.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\delete-5.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\delete.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\delete.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\delete1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\delete1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\dollar-square.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\dollar-square.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\dollar.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\dollar.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\download.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\download.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\dropdown.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\dropdown.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\edit-5.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\edit-5.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\edit-6.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\edit-6.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\edit-set.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\edit-set.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\edit.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\edit.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\ellipise1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\ellipise1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\excel.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\excel.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\expense1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\expense1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\eye.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\eye.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\eye1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\eye1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\facebook.png",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\facebook.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\filter.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\filter.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\google.png",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\google.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\log-out.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\log-out.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\mail.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\mail.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\minus.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\minus.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\notification-bing.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\notification-bing.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\pause1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\pause1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\pdf.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\pdf.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\places.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\places.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\plus-circle.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\plus-circle.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\plus.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\plus.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\plus1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\plus1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\printer.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\printer.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\product.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\product.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\purchase1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\purchase1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\quotation1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\quotation1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\return1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\return1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\reverse.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\reverse.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\sales1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\sales1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\scan.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\scan.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\scanner1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\scanner1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\scanners.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\scanners.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\search-white.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\search-white.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\search-whites.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\search-whites.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\search.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\search.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\settings.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\settings.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\sidebar-icon-01.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\sidebar-icon-01.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\sidebar-icon-02.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\sidebar-icon-02.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\sidebar-icon-03.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\sidebar-icon-03.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\sun-icon.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\sun-icon.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\time.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\time.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\transcation.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\transcation.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\transfer1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\transfer1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\trash12.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\trash12.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\upload.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\upload.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\users1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\users1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\icons\\wallet1.svg",
+      "PackagePath": "staticwebassets\\assets\\img\\icons\\wallet1.svg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\img-01.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\img-01.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\img-02.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\img-02.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\img-03.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\img-03.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\img-04.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\img-04.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\img-05.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\img-05.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\layout-01.png",
+      "PackagePath": "staticwebassets\\assets\\img\\layout-01.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\layout-03.png",
+      "PackagePath": "staticwebassets\\assets\\img\\layout-03.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\layout-04.png",
+      "PackagePath": "staticwebassets\\assets\\img\\layout-04.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\layout-ltr.png",
+      "PackagePath": "staticwebassets\\assets\\img\\layout-ltr.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\layout-rtl.png",
+      "PackagePath": "staticwebassets\\assets\\img\\layout-rtl.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\login.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\login.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\logo-small.png",
+      "PackagePath": "staticwebassets\\assets\\img\\logo-small.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\logo-white.png",
+      "PackagePath": "staticwebassets\\assets\\img\\logo-white.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\logo.png",
+      "PackagePath": "staticwebassets\\assets\\img\\logo.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\noimage.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\noimage.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product1.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product1.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product10.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product10.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product11.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product11.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product12.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product12.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product13.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product13.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product15.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product15.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product17.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product17.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product2.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product2.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product22.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product22.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product23.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product23.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product24.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product24.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product29.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product29.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product3.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product3.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product30.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product30.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product31.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product31.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product32.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product32.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product34.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product34.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product35.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product35.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product36.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product36.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product37.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product37.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product4.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product4.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product44.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product44.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product45.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product45.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product46.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product46.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product47.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product47.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product48.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product48.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product49.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product49.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product5.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product5.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product51.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product51.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product52.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product52.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product53.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product53.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product54.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product54.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product55.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product55.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product56.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product56.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product57.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product57.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product58.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product58.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product6.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product6.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product60.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product60.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product61.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product61.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product62.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product62.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product63.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product63.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product64.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product64.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product65.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product65.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product66.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product66.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product67.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product67.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product68.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product68.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product7.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product7.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product8.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product8.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\product\\product9.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product9.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\profiles\\avatar-02.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\profiles\\avatar-02.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\profiles\\avatar-03.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\profiles\\avatar-03.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\profiles\\avatar-04.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\profiles\\avatar-04.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\profiles\\avatar-06.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\profiles\\avatar-06.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\profiles\\avatar-13.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\profiles\\avatar-13.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\profiles\\avatar-17.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\profiles\\avatar-17.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\profiles\\avator1 (1).jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\profiles\\avator1 (1).jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\img\\profiles\\avator1.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\profiles\\avator1.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\bootstrap-datetimepicker.min.js",
+      "PackagePath": "staticwebassets\\assets\\js\\bootstrap-datetimepicker.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\assets\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\assets\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\dataTables.bootstrap4.min.js",
+      "PackagePath": "staticwebassets\\assets\\js\\dataTables.bootstrap4.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\feather.min.js",
+      "PackagePath": "staticwebassets\\assets\\js\\feather.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\feather.min.js.map",
+      "PackagePath": "staticwebassets\\assets\\js\\feather.min.js.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\jquery-3.6.0.min.js",
+      "PackagePath": "staticwebassets\\assets\\js\\jquery-3.6.0.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\jquery-ui.min.js",
+      "PackagePath": "staticwebassets\\assets\\js\\jquery-ui.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\jquery.dataTables.min.js",
+      "PackagePath": "staticwebassets\\assets\\js\\jquery.dataTables.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\jquery.slimscroll.min.js",
+      "PackagePath": "staticwebassets\\assets\\js\\jquery.slimscroll.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\moment.min.js",
+      "PackagePath": "staticwebassets\\assets\\js\\moment.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\js\\script.js",
+      "PackagePath": "staticwebassets\\assets\\js\\script.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\alertify\\alertify.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\alertify\\alertify.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\alertify\\alertify.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\alertify\\alertify.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\alertify\\custom-alertify.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\alertify\\custom-alertify.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\apexchart\\apexcharts.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\apexchart\\apexcharts.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\apexchart\\chart-data.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\apexchart\\chart-data.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\chartjs\\chart-data.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\chartjs\\chart-data.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\chartjs\\chart.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\chartjs\\chart.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\countup\\jquery.counterup.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\countup\\jquery.counterup.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\countup\\jquery.missofis-countdown.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\countup\\jquery.missofis-countdown.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\countup\\jquery.waypoints.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\countup\\jquery.waypoints.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\dragula\\css\\dragula.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\dragula\\css\\dragula.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\dragula\\js\\drag-drop.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\dragula\\js\\drag-drop.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\dragula\\js\\dragula.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\dragula\\js\\dragula.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\fileupload\\fileupload.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\fileupload\\fileupload.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\flot\\chart-data.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\flot\\chart-data.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\flot\\jquery.flot.fillbetween.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\flot\\jquery.flot.fillbetween.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\flot\\jquery.flot.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\flot\\jquery.flot.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\flot\\jquery.flot.pie.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\flot\\jquery.flot.pie.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\fontawesome\\css\\all.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\fontawesome\\css\\all.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\fontawesome\\css\\fontawesome.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\fontawesome\\css\\fontawesome.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\fontawesome\\webfonts\\fa-brands-400.ttf",
+      "PackagePath": "staticwebassets\\assets\\plugins\\fontawesome\\webfonts\\fa-brands-400.ttf"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\fontawesome\\webfonts\\fa-brands-400.woff",
+      "PackagePath": "staticwebassets\\assets\\plugins\\fontawesome\\webfonts\\fa-brands-400.woff"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\fontawesome\\webfonts\\fa-brands-400.woff2",
+      "PackagePath": "staticwebassets\\assets\\plugins\\fontawesome\\webfonts\\fa-brands-400.woff2"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\fontawesome\\webfonts\\fa-regular-400.woff2",
+      "PackagePath": "staticwebassets\\assets\\plugins\\fontawesome\\webfonts\\fa-regular-400.woff2"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\fontawesome\\webfonts\\fa-solid-900.woff2",
+      "PackagePath": "staticwebassets\\assets\\plugins\\fontawesome\\webfonts\\fa-solid-900.woff2"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\fullcalendar\\fullcalendar.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\fullcalendar\\fullcalendar.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\fullcalendar\\fullcalendar.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\fullcalendar\\fullcalendar.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\fullcalendar\\jquery.fullcalendar.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\fullcalendar\\jquery.fullcalendar.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\feather\\feather.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\feather\\feather.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\feather\\fonts\\feather-webfont.woff",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\feather\\fonts\\feather-webfont.woff"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\flags\\flags.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\flags\\flags.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\ionic\\fonts\\ionicons.ttf",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\ionic\\fonts\\ionicons.ttf"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\ionic\\ionicons.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\ionic\\ionicons.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\pe7\\fonts\\Pe-icon-7-stroke.woff",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\pe7\\fonts\\Pe-icon-7-stroke.woff"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\pe7\\pe-icon-7.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\pe7\\pe-icon-7.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\themify\\fonts\\themify.woff",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\themify\\fonts\\themify.woff"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\themify\\themify.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\themify\\themify.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\typicons\\fonts\\typicons.woff",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\typicons\\fonts\\typicons.woff"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\typicons\\typicons.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\typicons\\typicons.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\weather\\fonts\\weathericons-regular-webfont.woff2",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\weather\\fonts\\weathericons-regular-webfont.woff2"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\icons\\weather\\weathericons.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\icons\\weather\\weathericons.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\ion-rangeslider\\css\\ion.rangeSlider.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\ion-rangeslider\\css\\ion.rangeSlider.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\ion-rangeslider\\js\\custom-rangeslider.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\ion-rangeslider\\js\\custom-rangeslider.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\ion-rangeslider\\js\\ion.rangeSlider.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\ion-rangeslider\\js\\ion.rangeSlider.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\lightbox\\glightbox.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\lightbox\\glightbox.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\lightbox\\glightbox.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\lightbox\\glightbox.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\lightbox\\lightbox.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\lightbox\\lightbox.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\material\\fonts\\materialdesignicons-webfont.woff2",
+      "PackagePath": "staticwebassets\\assets\\plugins\\material\\fonts\\materialdesignicons-webfont.woff2"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\material\\materialdesignicons.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\material\\materialdesignicons.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\moment\\moment.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\moment\\moment.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\morris\\chart-data.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\morris\\chart-data.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\morris\\morris.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\morris\\morris.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\morris\\raphael-min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\morris\\raphael-min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\owlcarousel\\owl.carousel.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\owlcarousel\\owl.carousel.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\owlcarousel\\owl.carousel.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\owlcarousel\\owl.carousel.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\owlcarousel\\owl.theme.default.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\owlcarousel\\owl.theme.default.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\peity\\chart-data.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\peity\\chart-data.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\peity\\jquery.peity.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\peity\\jquery.peity.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\raty\\custom.raty.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\raty\\custom.raty.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\raty\\images\\like-off.png",
+      "PackagePath": "staticwebassets\\assets\\plugins\\raty\\images\\like-off.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\raty\\images\\like-on.png",
+      "PackagePath": "staticwebassets\\assets\\plugins\\raty\\images\\like-on.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\raty\\images\\star-half.png",
+      "PackagePath": "staticwebassets\\assets\\plugins\\raty\\images\\star-half.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\raty\\images\\star-off.png",
+      "PackagePath": "staticwebassets\\assets\\plugins\\raty\\images\\star-off.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\raty\\images\\star-on.png",
+      "PackagePath": "staticwebassets\\assets\\plugins\\raty\\images\\star-on.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\raty\\jquery.raty.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\raty\\jquery.raty.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\scrollbar\\custom-scroll.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\scrollbar\\custom-scroll.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\scrollbar\\scroll.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\scrollbar\\scroll.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\scrollbar\\scrollbar.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\scrollbar\\scrollbar.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\select2\\css\\select2.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\select2\\css\\select2.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\select2\\js\\custom-select.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\select2\\js\\custom-select.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\select2\\js\\select2.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\select2\\js\\select2.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\simpleline\\fonts\\Simple-Line-Icons.woff2",
+      "PackagePath": "staticwebassets\\assets\\plugins\\simpleline\\fonts\\Simple-Line-Icons.woff2"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\simpleline\\simple-line-icons.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\simpleline\\simple-line-icons.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\stickynote\\sticky.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\stickynote\\sticky.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\stickynote\\sticky.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\stickynote\\sticky.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\summernote\\font\\summernote.ttf",
+      "PackagePath": "staticwebassets\\assets\\plugins\\summernote\\font\\summernote.ttf"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\summernote\\font\\summernote.woff",
+      "PackagePath": "staticwebassets\\assets\\plugins\\summernote\\font\\summernote.woff"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\summernote\\font\\summernote.woff2",
+      "PackagePath": "staticwebassets\\assets\\plugins\\summernote\\font\\summernote.woff2"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\summernote\\summernote-bs4.min.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\summernote\\summernote-bs4.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\summernote\\summernote-bs4.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\summernote\\summernote-bs4.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\sweetalert\\sweetalert2.all.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\sweetalert\\sweetalert2.all.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\sweetalert\\sweetalerts.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\sweetalert\\sweetalerts.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\toastr\\toastr.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\toastr\\toastr.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\toastr\\toastr.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\toastr\\toastr.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\toastr\\toatr.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\toastr\\toatr.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\twitter-bootstrap-wizard\\form-wizard.css",
+      "PackagePath": "staticwebassets\\assets\\plugins\\twitter-bootstrap-wizard\\form-wizard.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\twitter-bootstrap-wizard\\form-wizard.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\twitter-bootstrap-wizard\\form-wizard.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\twitter-bootstrap-wizard\\jquery.bootstrap.wizard.min.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\twitter-bootstrap-wizard\\jquery.bootstrap.wizard.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\assets\\plugins\\twitter-bootstrap-wizard\\prettify.js",
+      "PackagePath": "staticwebassets\\assets\\plugins\\twitter-bootstrap-wizard\\prettify.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\css\\Dscss\\demo.css",
+      "PackagePath": "staticwebassets\\css\\Dscss\\demo.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\css\\Dscss\\gridstack-extra.min.css",
+      "PackagePath": "staticwebassets\\css\\Dscss\\gridstack-extra.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\css\\Dscss\\gridstack.min.css",
+      "PackagePath": "staticwebassets\\css\\Dscss\\gridstack.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\css\\style.css",
+      "PackagePath": "staticwebassets\\css\\style.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\CityTech-logo.png",
+      "PackagePath": "staticwebassets\\img\\CityTech-logo.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\Stations\\2-Gein.png",
+      "PackagePath": "staticwebassets\\img\\Stations\\2-Gein.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\Stations\\6-NOORDERPARK.png",
+      "PackagePath": "staticwebassets\\img\\Stations\\6-NOORDERPARK.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\banner\\DoubleUpload.jpg",
+      "PackagePath": "staticwebassets\\img\\banner\\DoubleUpload.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\banner\\SingleUpload.jpg",
+      "PackagePath": "staticwebassets\\img\\banner\\SingleUpload.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\banner\\UploadBanner.jpg",
+      "PackagePath": "staticwebassets\\img\\banner\\UploadBanner.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\banner\\whiteBg.jpg",
+      "PackagePath": "staticwebassets\\img\\banner\\whiteBg.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\dutch-flag.png",
+      "PackagePath": "staticwebassets\\img\\dutch-flag.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\eng-flag.png",
+      "PackagePath": "staticwebassets\\img\\eng-flag.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\favicon.png",
+      "PackagePath": "staticwebassets\\img\\favicon.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\login-logo.jpg",
+      "PackagePath": "staticwebassets\\img\\login-logo.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\logo.png",
+      "PackagePath": "staticwebassets\\img\\logo.png"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\img\\profile-image.jpg",
+      "PackagePath": "staticwebassets\\img\\profile-image.jpg"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\js\\Dsjs\\events.js",
+      "PackagePath": "staticwebassets\\js\\Dsjs\\events.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\js\\Dsjs\\gridstack-all.js",
+      "PackagePath": "staticwebassets\\js\\Dsjs\\gridstack-all.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\js\\printThis.js",
+      "PackagePath": "staticwebassets\\js\\printThis.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\js\\script.js",
+      "PackagePath": "staticwebassets\\js\\script.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\js\\table2excel.js",
+      "PackagePath": "staticwebassets\\js\\table2excel.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "D:\\REPO\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\MediaOutdoor_Backend\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.MediaOutdoor_Backend.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.build.MediaOutdoor_Backend.props",
+      "PackagePath": "build\\MediaOutdoor_Backend.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.MediaOutdoor_Backend.props",
+      "PackagePath": "buildMultiTargeting\\MediaOutdoor_Backend.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.buildTransitive.MediaOutdoor_Backend.props",
+      "PackagePath": "buildTransitive\\MediaOutdoor_Backend.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

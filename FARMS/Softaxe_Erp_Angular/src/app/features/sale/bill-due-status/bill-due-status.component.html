@@ -1,0 +1,307 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Bills Due Status</h4>
+    </div>
+    <div class="page-title">
+      <h3 class="text-danger fw-bolder">Customer</h3>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Sale-Bill-due-Status', 'pdf')" title="pdf">
+              <img src="assets/img/icons/pdf.svg" alt="img" />
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Sale-Bill-due-Status', 'xlxs')" title="excel"
+             >
+              <img src="assets/img/icons/excel.svg" alt="img" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder">Main Group</label>
+            <ng-select [items]="groupList" [disabled]="true" placeholder="---Select Main Group---" bindLabel="name"
+              bindValue="id" [(ngModel)]="groupId" [dropdownPosition]="'bottom'">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="form-group">
+            <label>From Date:</label>
+            <div class="input-groupicon">
+              <input class="form-control" matInput [matDatepicker]="datepicker" placeholder="DD-MM-YYYY"
+                [(ngModel)]="fromDate" (click)="datepicker.open()" (dateChange)="getInvoice()" />
+              <mat-datepicker #datepicker></mat-datepicker>
+              <div class="addonset">
+                <img src="assets/img/icons/calendars.svg" alt="img" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="form-group">
+            <div class="form-group">
+              <label style="font-weight: bold">To Date:</label>
+              <div class="input-groupicon">
+                <input class="form-control" matInput [matDatepicker]="datepicker1" placeholder="DD-MM-YYYY"
+                  [(ngModel)]="toDate" (click)="datepicker1.open()" (dateChange)="getInvoice()" />
+                <mat-datepicker #datepicker1></mat-datepicker>
+                <div class="addonset">
+                  <img src="assets/img/icons/calendars.svg" alt="img" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder">Select Location</label>
+            <div class="position-relative w-100">
+              <ng-select 
+                placeholder="---Select Location---" 
+                [dropdownPosition]="'bottom'"
+                [disabled]="isDisableLoc" 
+                [(ngModel)]="locId" (change)="getInvoice()" >
+                <ng-option *ngFor="let item of locationList" [value]="item.ID">
+                  {{ item.ID + " - " + item.NAME}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder">Order Taker</label>
+            <ng-select placeholder="---Select Order Taker---" [items]="orderTakerList" bindLabel="userName"
+              bindValue="id" [(ngModel)]="orderTakerId" (change)="onChangeOrderTaker($event)"
+              [dropdownPosition]="'bottom'">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder">Select Company</label>
+            <ng-select placeholder="---Select Company---" [items]="companyList" [disabled]="cmpDisable" bindLabel="name"
+              bindValue="id" [(ngModel)]="companyId" [dropdownPosition]="'bottom'" (change)="getInvoice()">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="form-group">
+            <label style="font-weight: bold">Search</label>
+            <input type="text" class="form-control" placeholder="Search" (input)="onInput($event)" />
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 d-flex">
+          <div class="form-group d-flex align-items-end">
+            <div class="d-flex align-items-center me-4">
+              <input type="radio" (click)="onClickFilter($event)" value="all" [checked]="all" id="All" class="me-1"
+                name="Vch" />
+              <label for="All" class="mb-0">All</label>
+            </div>
+            <div class="d-flex align-items-center me-4">
+              <input type="radio" (click)="onClickFilter($event)" value="pending" [checked]="pending" id="Pending"
+                class="me-1" name="Vch" />
+              <label for="Pending" class="mb-0">Pending</label>
+            </div>
+            <div class="d-flex align-items-center">
+              <input type="radio" (click)="onClickFilter($event)" value="overdue" [checked]="overdue" id="OverDue"
+                class="me-1" name="Vch" />
+              <label for="OverDue" class="mb-0">Over Due</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-6">
+          <div class="form-group">
+            <label style="font-weight: bold">Comission</label>
+            <input type="text" class="form-control" [(ngModel)]="orderTakerCommission" [disabled]="true" />
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height: 350px">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th class="text-center">Sno</th>
+              <th>Party</th>
+              <th>Order Taker</th>
+              <th class="text-center">InvNo</th>
+              <th class="text-center">InvDate</th>
+              <th class="text-center">DueDate</th>
+              <th class="text-end">Dis%</th>
+              <th class="text-end">DisAmt</th>
+              <th class="text-end">OtherCredit</th>
+              <th style="width: 7.5%" class="text-end">NetDue</th>
+              <th style="width: 7.5%" class="text-end">RecAmt</th>
+              <th style="width: 0%" class="text-center noPrint"></th>
+              <th class="text-end">Balance</th>
+              <th class="text-center noPrint">Print</th>
+              <th class="text-center noPrint">Image</th>
+            </tr>
+          </thead>
+          <tbody #invoice>
+            <tr class="activeRow" *ngFor="let item of invoiceList; let i = index">
+              <td class="srno text-center">{{ i + 1 }}</td>
+              <td class="code d-none">{{ item.CODE }}</td>
+              <td class="names limited-text" title="{{ item.NAMES }}">{{ item.NAMES }}</td>
+              <td class="orderTaker limited-text" title="{{ item.ORDERTAKER }}">{{ item.ORDERTAKER }}</td>
+              <td class="invNo text-center">{{ item.INVOICENO }}</td>
+              <td class="invDate text-center">{{ item.INVDATE }}</td>
+              <td class="dueDate text-center">{{ item.DUEDATE }}</td>
+              <td class="discount text-end">{{ item.DISCOUNT }}</td>
+              <td class="discountAmt text-end">
+                {{ item.DISAMOUNT | number : "1.2-2" }}
+              </td>
+              <td class="otherCredit text-end">
+                {{ item.OTHERCREDIT | number : "1.2-2" }}
+              </td>
+              <td class="netDue text-end">
+                {{ item.NETDUE | number : "1.2-2" }}
+              </td>
+              <td class="recAmt text-end">
+                {{ item.RECAMOUNT | number : "1.2-2" }}
+              </td>
+              <td class="text-center noPrint">
+                <span class="me-3" data-bs-toggle="modal" data-bs-target="#RecModal" (click)="onClickRecModal(item)">
+                  <i class="fas fa-eye"></i>
+                </span>
+              </td>
+              <td class="balance text-end text-danger">
+                {{ item.BALANCE | number : "1.2-2" }}
+              </td>
+              <td class="text-center w-0 noPrint">
+                <span (click)="onViewReport(item)">
+                  <i class="fas fa-print"></i>
+                </span>
+              </td>
+              <td class="text-center w-0 noPrint">
+                <span data-bs-toggle="modal" data-bs-target="#Modal" (click)="onClickModel(item)">
+                  <i class="fas fa-images"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td class="text-end" colspan="7">Total =</td>
+              <td class="text-end">{{ totalDisAmt | number : "1.2-2" }}</td>
+              <td class="text-end">{{ totalOtherCredit | number : "1.2-2" }}</td>
+              <td class="text-end">{{ totalNetDue | number : "1.2-2" }}</td>
+              <td class="text-end">{{ totalRecAmount | number : "1.2-2" }}</td>
+              <td class="text-end noPrint"></td>
+              <td class="text-end">{{ totalBalance | number : "1.2-2" }}</td>
+              <td colspan="2">{{ commission | number : "1.2-2" }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="Modal">
+  <div class="modal-dialog" style="max-width: 60%;">
+    <div class="modal-content" style="height:365px; font-weight: 600;" aria-hidden="true">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Upload Invoice Receiving</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="row">
+          <div class="col-lg-6 col-sm-12 col-md-6">
+            <div class="card mb-0" style="height:300px;">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Sno</th>
+                      <th class="w-75">File</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of fileList; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td class="limited-text">{{item.name}}</td>
+                      <td class="text-center">
+                        <span class="me-3"><i class="fas fa-trash" (click)="onRemoveFile(item)"></i></span>
+                        <span><i class="fas fa-eye" (click)="onViewFile(item)"></i></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-12 col-md-6">
+            <div class="imgBox" style="height: 255px;">
+              <iframe *ngIf="isPdf" [src]="srcPdfImg | safeUrl" style="width: 100%;height: 100%;">
+              </iframe>
+              <img *ngIf="!isPdf" [src]="srcPdfImg" style="width: 100%; height: 100%;">
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <input type="file" accept="image/png, image/jpeg, application/pdf, image/jpg"
+                (change)="onFileSelected($event)" [(ngModel)]="file" class="form-control p-1 me-2">
+              <button class="btn btn-sm btn-success" (click)="onClickUpload()">Upload</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="RecModal">
+  <div class="modal-dialog" style="max-width:50%;">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Payment History</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="table-responsive" style="height:270px;">
+              <table class="table" id="tbl-print">
+                <thead>
+                  <tr>
+                    <th class="text-center">VchNo</th>
+                    <th>VchType</th>
+                    <th class="text-center">VchDate</th>
+                    <th class="text-end">RecAmount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of recAmountList" (click)="onClickAmountRow(item)">
+                    <td class="text-center">{{item.VCHNO}}</td>
+                    <td>{{item.VCHTYPE}}</td>
+                    <td class="text-center">{{item.VCHDATE}}</td>
+                    <td class="text-end">{{item.RECAMOUNT | number : "1.2-2" }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <input type="text" class="form-control-sm form-control text-end" [value]="totalRecAmt | number : '1.2-2'"
+              disabled />
+          </div>
+          <div class="col-sm-6">
+            <iframe *ngIf="isPdf" [src]="srcPdfImg | safeUrl" style="width: 100%;height: 100%;">
+            </iframe>
+            <img *ngIf="!isPdf" [src]="srcPdfImg" style="width: 100%; height: 100%;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Line Chart Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</head>
+<body>
+    <div style="width: 80%; margin: 0 auto;">
+        <canvas id="lineChart"></canvas>
+    </div>
+
+    <script>
+        var data = {
+            labels: ['8-8', '9-8', '11-8', '12-8', '13-8', '14-8'],
+            datasets: [{
+                label: 'Dataset 1',
+                data: [-15, -75,30, 75, 22, 37, 52, 60,45],
+                borderColor: 'Maroon', // Line color
+                backgroundColor: 'transparent', // Area below the line
+            }]
+        };
+
+        var options = {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Line Chart Example'
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Month'
+                    },
+                    gridLines: {
+                        display: false,
+                        color: 'white' // Change the color of x-axis scale lines
+                    }
+                }],
+                yAxes: [{
+                    
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'Value'
+                    },
+                    gridLines: {
+                        color: '#85888c' // Change the color of y-axis scale lines
+                    }
+                }]
+
+
+                  xAxes: [{
+                    gridLines: {
+                        display: false
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: true
+                                 color: 'white'
+                    }
+                }]
+
+
+
+            }
+        };
+
+       
+
+        // Create the Line Chart
+        var ctx = document.getElementById('lineChart').getContext('2d');
+        var lineChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: options
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+<div style="float: left; width: 100%;">
+    <h5 style="float: left;">Fault History</h5>
+</div>
+<hr style="clear: both; background:DIMGREY;">
+<div style="float: left; width: 100%;">
+    <table style="width: 100%;">
+        <tbody id="tblfaulhistory">
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    function FaultHistoryWidgetFunPartial(fromDate, toDate, location, objects) {
+        try {
+            $.ajax({
+                type: "Get",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                url: "/Home/FaultHistory/",
+                dataType: "json",
+                async: false,
+                data: { fromDate: fromDate, toDate: toDate, location: location, objects: objects },
+                success: function (data) {
+                    $("#tblfaulhistory").empty();
+                    $.each(data, function (i, item) {
+
+                        $("#tblfaulhistory").append(`<tr style = "border-bottom: 1px solid DIMGREY ;">
+                                                <td style="float: left;">${item.DETAIL}</td >
+                                                <td style="float: right;">${item.DATEDETAIL}</td >
+                                                </tr>`)
+                    });
+
+
+                },
+                error: function (data) {
+                }
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+
+    FaultHistoryWidgetFunPartial('@ViewBag.FromDate', '@ViewBag.ToDate', '@ViewBag.Location', '@ViewBag.Objects');
+
+
+                                       // setInterval(FaultHistoryWidgetFunPartial, 5000);
+</script>
+

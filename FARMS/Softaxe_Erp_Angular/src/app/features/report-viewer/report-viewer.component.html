@@ -1,0 +1,8 @@
+<!-- <dx-report-viewer *ngIf="showReport" [reportUrl]="reportUrl"  height="800px">
+  <dxrv-request-options [invokeAction]="invokeAction" [host]="hostUrl"></dxrv-request-options>
+</dx-report-viewer> -->
+
+<dx-report-viewer *ngIf="showReport" [reportUrl]="reportUrl" height="800px">
+  <dxrv-request-options [invokeAction]="invokeAction" [host]="hostUrl"></dxrv-request-options>
+      <dxrv-export-settings [useSameTab]="useSameTab" [showPrintNotificationDialog]="showPrintNotificationDialog"></dxrv-export-settings>
+</dx-report-viewer>

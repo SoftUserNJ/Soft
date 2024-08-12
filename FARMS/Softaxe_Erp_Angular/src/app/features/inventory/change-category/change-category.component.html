@@ -1,0 +1,80 @@
+<div class="content ListPage">
+    <div class="page-header mb-1">
+        <div class="page-title">
+            <h4>Change Category</h4>
+            <h6>Manage your Category</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <!-- <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="warehouseDetailList" data-bs-original-title="Warehouse">
+                            <i class="fas fa-warehouse w-house"></i>
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-4 col-sm-4 col-12">
+                    <div class=" ">
+                        <label class="fw-bolder">From Category</label>
+                        <div class="position-relative w-100">
+                            <ng-select
+                            placeholder="--- Select From Category ---"
+                            id="drpCompanyGroup"
+                            [items]="fromCategory"
+                            bindLabel="name"
+                            bindValue="id"
+                            [(ngModel)]="fCategoryId"
+                            (change)="onChangeCategory($event)"
+                            (clear)="onClearCategory()"
+                            [dropdownPosition]="'bottom'">
+                        </ng-select> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-12">
+                    <div class=" ">
+                        <label class="fw-bolder">From Brand</label>
+                        <div class="position-relative w-100">
+                            <ng-select
+                            id="drpCompanyGroup"
+                            [items]="brand"
+                            bindLabel="name"
+                            bindValue="id"
+                            [(ngModel)]="fBrandId"
+                            placeholder="--- Select Brand ---"
+                            [dropdownPosition]="'bottom'"
+                        ></ng-select> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-12">
+                    <div class=" ">
+                        <label class="fw-bolder">To Category</label>
+                        <div class="position-relative w-100">
+                            <ng-select
+                            id="drpCompanyGroup"
+                            [items]="toCategory"
+                            bindLabel="name"
+                            bindValue="id"
+                            [(ngModel)]="tCategoryId"
+                            placeholder="--- Select To Category ---"
+                            [dropdownPosition]="'bottom'"
+                        ></ng-select> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 text-end mt-2">
+                     <button class="btn btn-success btn-sm" (click)="onClickSave()" >Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,226 @@
+.filter-img {
+  background: #ff9f43;
+  padding: 2px;
+  border-radius: 4px;
+  width: 35px;
+  height: 23px;
+  cursor: pointer;
+}
+
+.add-new {
+  background: #ff9f43;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  padding: 2px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.plusSvg {
+    filter: invert(0) sepia(0) saturate(0) hue-rotate(53deg) brightness(13%) contrast(36%);
+  }
+  
+  .add-icon a {
+    width: 35px;
+    height: 35px;
+    background: #ff9f43;
+    border-radius: 5px;
+  }
+  
+  .table tbody tr td .product-img img {
+    min-width: 30px;
+    width: 30px;
+    height: 30px;
+    border: 0;
+  }
+  
+  .productimgname img {
+    margin-right: 10px;
+  }
+  
+  .table tbody tr td {
+    padding: 2px 5px;
+    font-weight: 500;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  
+  .txtTbl {
+    display: block;
+    padding: 2px 1px;
+    font-weight: 400;
+    color: #687a81;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    width: 50px;
+  }
+  
+  .bar-code-view {
+    width: 300px;
+    border: 1px solid #d8d8d8;
+    padding: 15px;
+    margin-bottom: 20px;
+    max-width: 100%;
+  }
+  
+  .image-container img {
+    display: block;
+    position: relative;
+    width: 100%;
+    transition: transform .5s ease;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .setvaluecash ul li a {
+    border: 1px solid #e9ecef;
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 70px;
+    border-radius: 5px;
+    padding: 0px 20px;
+  }
+   
+  .disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  .newbody {
+    padding: 0px 5px;
+  }
+  
+  .fs-24 {
+    font-size: 24px;
+  }
+  
+  .table-product thead th {
+    font-size: 12px;
+    background: #1b2950 !important;
+  }
+  
+  .product-table>thead>tr>th {
+    padding: 0px 5px !important;
+    font-size: 12px;
+    ;
+  }
+  
+  th {
+    border-style: none !important;
+  }
+  
+  .sp-Bg {
+    border: 1px solid #dce0e4;
+    border-radius: 2px;
+    background: white;
+  }
+  
+  .table thead th {
+    font-weight: 600;
+    background: #198754;
+    color: white;
+    padding: 5px 2px;
+    white-space: nowrap;
+  }
+  
+  .txtTerms {
+    font-size: 13px;
+    border-radius: 5px;
+    height: 25px;
+    border: 1px solid #bfbfbf;
+    width: 100%;
+  }
+  
+  .txtDis {
+    width: 45px;
+    font-size: 14px;
+    text-align: right;
+    border-radius: 5px;
+    border: 1px solid #bfbfbf;
+  }
+  
+  .txtBills {
+    width: 100%;
+    font-size: 14px;
+    text-align: right;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid #bfbfbf;
+  }
+  
+  .table-product tr td, .product-list tr td select
+  {
+    font-size: 12px!important;
+  }
+  
+  .btnAddProduct button, .btnRemoveQty button {
+    background: #ff9f43 !important;
+    color: white !important;
+    padding: 0px 5px !important;
+  }
+  
+  .onQty{
+    height: 75px !important;
+    color: black !important;
+    font-weight: 900 !important;
+    font-size: 31px !important;
+  }
+  
+  .my-table thead th{
+    font-size: 12px!important;
+    padding: 0px 5px!important;
+  }
+  
+  .my-table tbody td{
+    font-size: 10px!important;
+  }
+  
+  .fs-13 {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .terms-add-icon {
+    width: 100%;
+    height: 25px;
+    background: #ff9f43;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .my-table i {
+    font-size: 16px !important;
+  }
+  
+  .my-table .fa-plus {
+    color: #ff9f43;
+  }
+  
+  .image-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .activePaymnet{
+    border: 2px solid #ff9f43!important; 
+    color: #ff9f43!important;
+  }
+
+
+  .totalDis{
+    background: aliceblue;
+    border-radius: 6px;
+  }
+  

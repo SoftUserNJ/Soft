@@ -1,0 +1,331 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Warehouse Updation</h4>
+      <h6>Manage your Warehouse</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('WareHouse', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('WareHouse', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-4 col-sm-4 col-12">
+          <div class="mb-2">
+            <label class="fw-bolder mb-1">WareHouse</label>
+            <div class="row">
+              <div class="col-lg-11 col-sm-11 col-11">
+                <ng-select placeholder="---Select Wearhouse---" [items]="warehouse" bindLabel="name" bindValue="id"
+                [(ngModel)]="selectedWarehouse" (change)="onWarehouseChange($event)" (clear)="onClearWarehouse()"
+                [dropdownPosition]="'bottom'">
+              </ng-select>
+              </div>
+              <div class="col-1 ps-1">
+                <div class="text-end">
+                  <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#WarehouseModal"
+                    (click)="refreshWarehouse()"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-12">
+          <div class="mb-2">
+            <label class="fw-bolder mb-1">Rack</label>
+            <div class="row">
+              <div class="col-lg-11 col-sm-11 col-11">
+                <ng-select placeholder="---Select Rack---" [items]="rack" bindLabel="name" bindValue="id"
+                [(ngModel)]="selectedRack" (change)="onRackChange($event)" (clear)="onClearRack()"
+                [dropdownPosition]="'bottom'">
+              </ng-select>
+              </div>
+              <div class="col-1 ps-1">
+                <div class="text-end">
+                  <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#RackModal"
+                    (click)="refreshRack()"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-12">
+          <div class="mb-2">
+            <label class="fw-bolder mb-1">Shelf</label>
+            <div class="row">
+              <div class="col-lg-11 col-sm-11 col-11">
+                <ng-select placeholder="---Select Shelf---" [items]="shelf" bindLabel="name" bindValue="id"
+                [(ngModel)]="selectedShelf" (change)="onChangeShelf($event)" (clear)="onClearShelf()"
+                [dropdownPosition]="'bottom'">
+              </ng-select>
+              </div>
+              <div class="col-1 ps-1">
+                <div class="text-end">
+                  <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#ShelfsModal"
+                    (click)="refreshShelf()"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height:380px;">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th>Warehouse</th>
+              <th class="text-center">Warehouse-Alias</th>
+              <th>Rack</th>
+              <th class="text-center">Rack-Alias</th>
+              <th>Shelfs</th>
+              <th class="text-center">Shelfs-Alias</th>
+              <th class="text-center">Shelfs-SKU</th>
+              <th class="text-center w-0 noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody #warehouseLists>
+            <tr *ngFor="let item of warehouseList">
+              <td class="limited-text Wname">{{ item.WNAME }}</td>
+              <td class="limited-text text-center alias">{{ item.WALIAS }}</td>
+              <td class="limited-text Rname">{{ item.RNAME }}</td>
+              <td class="limited-text text-center alias">{{ item.RALIAS }}</td>
+              <td class="limited-text Sname">{{ item.SNAME }}</td>
+              <td class="limited-text text-center alias">{{ item.SALIAS }}</td>
+              <td class="limited-text text-center sku">{{ item.SKU }}</td>
+              <td class="text-center noPrint">
+                <span *ngIf="item.SID != ''" style="cursor: pointer;" data-bs-toggle="modal"
+                  data-bs-target="#ShelfsModal" (click)="editRow(item)">
+                  <i class="fas fa-edit"></i>
+                </span>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 1 -->
+<div class="modal fade" id="WarehouseModal" aria-labelledby="WareHouseModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2  align-items-center">
+        <h5 class="modal-title ">WareHouse
+        </h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group mb-1">
+                    <label class="form-label mb-0">Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="warahouseName"
+                      [disabled]="isDisabledWarehouse ">
+                    <input type="hidden" [(ngModel)]="warehouseId">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group mb-1">
+                    <label class="form-label mb-0">Alias</label>
+                    <input type="text" class="form-control" [(ngModel)]="warehouseAlias"
+                      [disabled]="isDisabledWarehouse">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <button class="btn btn-primary btn-sm me-1" (click)="newWarehouse()"
+                [hidden]="isShowWarehouse">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateWareHouse()"
+                [hidden]="!isShowWarehouse">Save</button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshWarehouse()">Refresh</button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height:205px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center w-0">ID</th>
+                      <th class="w-50">Name</th>
+                      <th>Alias</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of warehouse">
+                      <td class="id text-center">{{ item.id }}</td>
+                      <td class="names">{{ item.name }}</td>
+                      <td class="alias">{{ item.alias }}</td>
+                      <td class="text-center">
+                        <span (click)=" editWarehouse(item.id, item.name, item.alias)" class="me-3">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span (click)="deleteWarehouse(item.id)" class="confirm-text">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2 -->
+<div class="modal fade" id="RackModal" aria-labelledby="RackModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2  align-items-center">
+        <h5 class="modal-title ">Rack
+        </h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-8 mb-1">
+                    <label class="form-label mb-1">Rack</label>
+                    <input type="text" class="form-control" [(ngModel)]="rackName" [disabled]="isDisabledRack">
+                    <input type="hidden" [(ngModel)]="rackId">
+                  </div>
+                  <div class="col-md-4 mb-1">
+                    <label class="form-label mb-1">Alias</label>
+                    <input type="text" class="form-control" [(ngModel)]="rackAlias" [disabled]="isDisabledRack">
+                  </div>
+                </div>
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newRack()" [hidden]="isShowRack">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateRack()"
+                  [hidden]="!isShowRack">Save</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshRack()">Refresh</button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center w-0">ID</th>
+                        <th class="w-50">Name</th>
+                        <th>Alias</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="rackDetail">
+                      <tr *ngFor="let item of rack;">
+                        <td class="id text-center">{{ item.id }}</td>
+                        <td class="name">{{ item.name }}</td>
+                        <td class="alias">{{ item.alias }}</td>
+                        <td class="text-center">
+                          <span (click)="editRack(item.id, item.name, item.alias)" class="me-3">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                          <span (click)="deleteRack(item.id)" class="confirm-text">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 3 -->
+<div class="modal fade" id="ShelfsModal" aria-labelledby="shelfModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2  align-items-center">
+        <h5 class="modal-title ">Shelf
+        </h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-8 mb-1">
+                  <label class="form-label mb-1">Shelf</label>
+                  <input type="text" class="form-control" [(ngModel)]="shelfName" [disabled]="isDisabledShelf">
+                  <input type="hidden" [(ngModel)]="shelfId">
+                </div>
+                <div class="col-md-4 mb-1">
+                  <label class="form-label mb-1">Alias</label>
+                  <input type="text" class="form-control" [(ngModel)]="shelfAlias" [disabled]="isDisabledShelf">
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <button class="btn btn-primary btn-sm me-1" (click)="newShelf()" [hidden]="isShowShelf">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateShelf()"
+                [hidden]="!isShowShelf">Save</button>
+              <button class="btn btn-secondary btn-sm" id="btnRefreshshelf" (click)="refreshShelf()">Refresh</button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height:205px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center w-0">ID</th>
+                      <th class="w-50">Name</th>
+                      <th>Alias</th>
+                      <th>SKU</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="shelfDetail">
+                    <tr *ngFor="let item of shelf">
+                      <td class="code text-center">{{item.id}}</td>
+                      <td class="names">{{ item.name }}</td>
+                      <td class="alias">{{item.alias}}</td>
+                      <td class="sku">{{item.sku}}</td>
+                      <td class="text-center">
+                        <span (click)=" editShelf(item.id, item.name, item.alias)" class="me-3">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span (click)="deleteShelf(item.id)" class="confirm-text">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

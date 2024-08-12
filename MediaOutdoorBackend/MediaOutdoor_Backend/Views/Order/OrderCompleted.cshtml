@@ -1,0 +1,672 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Completed Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["CompletedOrdersManagement"]</h4>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="PDF" id="pdfPrint">
+                            <i class="far fa-file-pdf" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" id="convertExcel">
+                            <i class="far fa-file-excel" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="CSV" id="convertCsv">
+                            <i class="fa fa-file-csv" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #000000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm" style="padding-top: 25px;">
+                            <img src="/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+
+                    <div class="form-group mb-1 me-2">
+                        <label>Search</label>
+                        <input type="search" id="txtSearch">
+                    </div>
+
+                    <div class="form-group mb-1 me-2">
+                        <label>By Order Date</label>
+                        <div class="input-groupicon">
+                            <input type="text" placeholder="DD-MM-YYYY" class="datetimepicker" id="byOrderDate">
+                            <div class="addonset">
+                                <img src="/assets/img/icons/calendars.svg" alt="img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-1 me-2">
+                        <label>By Slot Date</label>
+                        <div class="input-groupicon">
+                            <input type="text" placeholder="DD-MM-YYYY" class="datetimepicker" id="bySlotDate">
+                            <div class="addonset">
+                                <img src="/assets/img/icons/calendars.svg" alt="img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="search-path d-flex" style="padding-top: 25px;">
+                        <input type="checkbox" checked id="allDatesOrder">
+                        <p class="ms-1">With Date Filter</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["OrderNo"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["OrderDate"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["PlayDate"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Slot"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Status"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Order Type"]</th>
+                            <th class="text-center pe-3 last-th-sticky"><input type="checkbox" class="printCheckBox notPrintCol" hidden>@Localizer["View"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content AddPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["OrderDetail"]</h4>
+        </div>
+        <div class="page-btn">
+            <a href="javascript:void(0);" class="btn btn-added btnList ct-btns">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="" aria-label="fa fa-th-list"></i> @Localizer["CompletedOrders"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <input type="hidden" id="txtOrderId" />
+                    <div class="productdetails" style="margin-bottom:30px;">
+                        <ul class="product-bar">
+
+                            <li>
+                                <h4>@Localizer["VisitorId"]</h4>
+                                <h6 id="txtVisitorId"></h6>
+                            </li>
+
+                            <li>
+                                <h4>@Localizer["OrderNo"]</h4>
+                                <h6 id="txtOrderNo"></h6>
+                            </li>
+                            
+                            <li>
+                                <h4>@Localizer["Order Type"]</h4>
+                                <h6 id="txtOrderType"></h6>
+                            </li>
+                            
+                            <li>
+                                <h4>@Localizer["OrderDate"]</h4>
+                                <h6 id="txtOrderDate"></h6>
+                            </li>
+
+                            <li>
+                                <h4>@Localizer["Customer"]</h4>
+                                <h6 id="txtCustomer"></h6>
+                            </li>
+
+                            <li>
+                                <h4>@Localizer["Email"]</h4>
+                                <h6 id="txtCustomerEmail"></h6>
+                            </li>
+
+                            <li>
+                                <h4>@Localizer["PaymentMethod"]</h4>
+                                <h6 id="txtPaymentMethod"></h6>
+                            </li>
+
+                            <li>
+                                <h4>@Localizer["Status"]</h4>
+                                <h6 id="txtStatus"></h6>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="table-responsive" style="max-height:150px;">
+                        <table class="table text-white table-hover" id="tbl-print">
+                            <thead>
+                                <tr>
+                                    <th class="ps-2">Station</th>
+                                    <th class="ps-2">@Localizer["Screen"]</th>
+                                    <th class="ps-2">@Localizer["Size"]</th>
+                                    <th class="pe-2 text-end">@Localizer["Rate"]</th>
+                                </tr>
+                            </thead>
+                            <tbody id="viewOrdersList">
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="commom-img mb-2">
+                        <img src="" id="ImageUser" data-bs-toggle="modal" data-bs-target="#ImgDownloadModal" />
+                    </div>
+                    <div class="table-responsive" style="max-height:150px;">
+                        <table class="table text-white table-hover" id="tbl-print">
+                            <thead>
+                                <tr>
+                                    <th class="ps-2">@Localizer["PlayDate"]</th>
+                                    <th class="ps-2">@Localizer["Slot"]</th>
+                                </tr>
+                            </thead>
+                            <tbody id="viewOrdersSlotList">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex mt-2 align-items-center">
+
+                <div class="me-2">
+                    <a asp-controller="Invoices" asp-action="OrderInvoice" class="btn btn-success btn-sm ct-btns" id="btnViewInvoice">@Localizer["ViewInvoice"]</a>
+                </div>
+
+                @*<div class="form-group mb-0 me-2">
+                    <input type="text" id="txtRemarks" placeholder="@Localizer["ProcessingReason"]" skinid="@Localizer["ProcessingReason"]">
+                </div>
+
+                <div class="me-2">
+                    <button class="btn btn-success btn-sm ct-btns" id="btnSave">@Localizer["MarkProcessing"]</button>
+                </div>
+                
+                <div class="me-2 d-flex">
+                    <label class="me-1">@Localizer["Email"]</label>
+                    <input type="checkbox" class="" id="chkEmailSent" style="height:19px; width:19px;" skinid="">
+                </div>*@
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="tempOrderDate" />
+<input type="hidden" id="tempSlotDate" />
+
+<div class="modal fade" id="ImgDownloadModal">
+    @Html.Partial("~/Views/PartialView/Order/ImgDownload.cshtml")
+</div>
+
+@section scripts{
+    <script>
+
+
+        $(function () {
+            $("#byOrderDate").val(moment().format("DD-MM-YYYY"));
+            $("#bySlotDate").val(moment().format("DD-MM-YYYY"));
+
+            $(".AddPage").hide();
+            $("#tempOrderDate").val($("#byOrderDate").val());
+            GetOrdersList();
+            Refresh();
+        })
+
+
+        $("#byOrderDate, #bySlotDate").on('dp.change', function () {
+
+            if ($(this).prop('id') == "byOrderDate") {
+
+                $("#tempOrderDate").val($(this).val());
+
+                $("#tempSlotDate").val('');
+                GetOrdersList();
+            }
+
+            if ($(this).prop('id') == "bySlotDate") {
+                $("#tempSlotDate").val($(this).val());
+                $("#tempOrderDate").val('');
+                GetOrdersList();
+            }
+
+        })
+
+        $("#allDatesOrder").click(function () {
+
+            if (!$(this).prop('checked')) {
+                $("#tempSlotDate").val('');
+                $("#tempOrderDate").val('');
+                GetOrdersList();
+            }
+        })
+
+        $(".btnAdd").click(function () {
+            $(".ListPage").hide();
+            $(".AddPage").show();
+        });
+
+        $(".btnList").click(function () {
+            Refresh();
+            $(".ListPage").show();
+            $(".AddPage").hide();
+        });
+
+
+        $("body").on('click', "#btnViewInvoice", function () {
+            const orderNo = $("#txtOrderNo").text();
+            var originalHref = $(this).attr('href');
+            var updatedHref = originalHref + (originalHref.includes('?') ? '&' : '?') + "orderNo=" + orderNo;
+            $(this).attr('href', updatedHref);
+        });
+
+        //====================== Get Orders List ========================\\
+
+        function GetOrdersList() {
+
+            var bySlotDate = "";
+            var byOrderDate = "";
+
+            if($("#allDatesOrder").is(":checked")){
+
+                var myDate = $("#tempOrderDate").val();
+                var datePart = myDate.split("-");
+                var dateObject = new Date(+datePart[2], datePart[1] - 1, +datePart[0]);
+                byOrderDate = moment(dateObject).format("YYYY/MM/DD");
+
+                var myDate1 = $("#tempSlotDate").val();
+                var datePart1 = myDate1.split("-");
+                var dateObject1 = new Date(+datePart1[2], datePart1[1] - 1, +datePart1[0]);
+                bySlotDate = moment(dateObject1).format("YYYY/MM/DD");
+            }
+
+            if (bySlotDate == "Invalid date") {
+                bySlotDate = ""
+            }
+
+            if (byOrderDate == "Invalid date") {
+                byOrderDate = ""
+            }
+            
+            var obj = {};
+            obj.OrderDate = byOrderDate;
+            obj.SlotDate = bySlotDate;
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Order/GetOrdersCompleted/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#ordersList").empty();
+                        $.each(data, function (i, item) {
+
+                            var date = moment(item.date).format("DD-MM-YYYY");
+                            var slotFrom = moment(item.slotFrom, "HH:mm:ss").format("HH:mm");
+                            var slotTo = moment(item.slotTo, "HH:mm:ss").format("HH:mm");
+                            var playDate = moment(item.playDate).format("DD-MM-YYYY");
+                            var slot = slotFrom + " - " + slotTo;
+
+                            $("#ordersList").append(`
+                                <tr>
+                                    <td class="orderNo ps-2">${item.orderNo}</td>
+                                    <td class="date">${date}</td>
+                                    <td class="playDate">${playDate}</td>
+                                    <td class="slot">${slot}</td>
+                                    <td class="status">${item.status}</td>
+                                    <td class="ordertype">${item.ordertype}</td>
+                                    <td class="text-center last-td-sticky">
+                                        <span class="me-2 btnView cursor-pointer" >
+                                          <i class="fas fa-eye fs-22" style="color: #000000;"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            `)
+                        });
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSave").click(function () {
+
+            if (CheckValidation("AddPage") == false) {
+                return false;
+            }
+
+            var emailSent = "";
+            if ($("#chkEmailSent").prop("checked")) {
+                emailSent = $("#txtCustomerEmail").text().trim();
+            }
+
+            var formData = new FormData();
+            formData.append("id", $("#txtOrderId").val());
+            formData.append("remarks", $("#txtRemarks").val());
+            formData.append("emailSent", emailSent);
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Order/SaveOrderCompleted/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Marked Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetOrdersList();
+                            $(".btnList").click();
+                        }
+                        else {
+                            toastr.error("Please Mark Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnView', function () {
+
+            var orderNo = $(this).closest('tr').find('.orderNo').text();
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Order/ViewOrdersCompleted/",
+                    data: { id: orderNo },
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#viewOrdersList").empty();
+                        $("#viewOrdersSlotList").empty();
+
+                        $.each(data.slots, function (i, item) {
+
+                            var playDate = moment(item.playDate).format("DD-MM-YYYY");
+
+                            var slotFrom = moment(item.slotFrom, "HH:mm:ss").format("HH:mm");
+                            var slotTo = moment(item.slotTo, "HH:mm:ss").format("HH:mm");
+                            var slot = slotFrom + " - " + slotTo;
+
+                            $("#viewOrdersSlotList").append(`
+                                <tr>
+                                    <td class="playDate ps-2">${playDate}</td>
+                                    <td class="playSlot ps-2">${slot}</td>
+                                </tr>
+                            `);
+                        });
+
+                        $.each(data.detail, function (i, item) {
+
+                            var date = moment(item.date).format("DD-MM-YYYY");
+                            var playDate = moment(item.playDate).format("DD-MM-YYYY");
+
+                            var slotFrom = moment(item.slotFrom, "HH:mm:ss").format("HH:mm");
+                            var slotTo = moment(item.slotTo, "HH:mm:ss").format("HH:mm");
+                            var slot = slotFrom + " - " + slotTo;
+
+                            $("#txtVisitorId").text(item.visitorid);
+                            $("#txtOrderNo").text(item.orderNo);
+                            $("#txtOrderDate").text(date);
+                            $("#txtCustomer").text(item.customerName);
+                            $("#txtCustomerEmail").text(item.customerEmail);
+                            $("#txtPaymentMethod").text(item.paymentMethod);
+                            $("#txtStatus").text(item.status);
+                            $("#txtOrderType").text(item.ordertype);
+
+                            $("#viewOrdersList").append(`
+                                <tr>
+                                    <td class="station ps-2">${item.stationName}</td>
+                                    <td class="screen ps-2">${item.screenName}</td>
+                                    <td class="size ps-2">${item.size}</td>
+                                    <td class="rate pe-2 text-end">${parseFloat(item.rate).toFixed(2)}&nbsp;<span>€</span></td>
+                                    <td class="stationId d-none ps-2">${item.stationId}</td>
+                                    <td class="screenId d-none ps-2">${item.screenId}</td>
+                                    <td class="orderId d-none ps-2">${item.id}</td>
+                                    <td class="orderImage d-none ps-2">${item.image}</td>
+                                </tr>
+                            `);
+                        });
+
+                        var totalSum = 0;
+                        $("#viewOrdersList .rate").each(function () {
+                            totalSum += parseFloat($(this).text());
+                        });
+
+                        $("#viewOrdersList").append(`
+                            <tr>
+                                <td colspan="3">@Localizer["Total"]</td>
+                                <td class="rateSum pe-2 text-end">${parseFloat(totalSum).toFixed(2)}&nbsp;<span>€</span></td>
+                            </tr>
+                        `);
+
+                        $("#viewOrdersList tr:first-child").click();
+                        
+                        $(".ListPage").hide();
+                        $(".AddPage").show();
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', "#viewOrdersList tr:not(:last-child)", function () {
+
+            var userImg = $(this).closest('tr').find('.orderImage').text();
+            var path = window.location.origin;
+            $("#ImageUser").attr('src', path + "/" + userImg);
+
+        });
+
+        function Refresh() {
+
+            $("#viewOrdersList").empty();
+
+            $("#txtOrderId").val('');
+            $("#txtVisitorId").text('');
+            $("#txtOrderNo").text('');
+            $("#txtOrderDate").text('');
+            $("#txtCustomer").text('');
+            $("#txtPaymentMethod").text('');
+            $("#txtStatus").text('');
+            $("#txtOrderType").text('');
+            $("#chkEmailSent").prop('checked', false);
+
+            $("#ImageUser").attr('src', '');
+            $("#userImg").val('');
+        }
+
+        //====================== Img Download ========================\\
+
+        $("#btnDownloadOrderImgSingle, #btnDownloadOrderImgDouble, #btnDownloadOrderImgTriple").click(function () {
+            //var userImg = $("#modalImgDownload").attr("src");
+            var userImg = $(this).prev().attr('src');
+
+            var downloadLink = document.createElement("a");
+            downloadLink.href = userImg;
+
+            downloadLink.download = downloadLink.pathname; // Optional, specify the desired filename
+
+            // Trigger a click event on the <a> element to start the download
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+
+        });
+
+        $("#ImageUser").click(function () {
+            $("#modalImgDownloadSingle").attr('src', $("#ImageUser").attr("src"));
+            $("#modalImgDownloadDouble").attr('src', $("#ImageUser").attr("src"));
+            $("#modalImgDownloadTriple").attr('src', $("#ImageUser").attr("src"));
+
+        });
+
+        //====================== Search ========================\\
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#ordersList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        //====================== User Image ========================\\
+        $("body #userImg").change(function (event) {
+            $("#ImageUser").attr('src', URL.createObjectURL(event.target.files[0]));
+        });
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]" + ".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+
+    </script>
+}

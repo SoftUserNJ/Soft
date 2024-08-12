@@ -1,0 +1,510 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+@{
+    ViewData["Title"] = "Promotions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["PromotionsManagement"]</h4>
+            <h6>@Localizer["Add/UpdatePromotions"]</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="PDF" id="pdfPrint">
+                            <i class="far fa-file-pdf" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" id="convertExcel">
+                            <i class="far fa-file-excel" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="CSV" id="convertCsv">
+                            <i class="fa fa-file-csv" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #000000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch">
+                    </div>
+                </div>
+                <div class="wordset">
+                    <p href="javascript:void(0);" class="btn btn-addednew btnAdd ct-btns">
+                        <img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">@Localizer["AddNew"]
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />Id</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Date"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Message"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Status"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["LastSentDate"]</th>
+                            <th class="text-center pe-3 last-th-sticky"><input type="checkbox" class="printCheckBox notPrintCol" hidden>@Localizer["Action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="promotionsList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content AddPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["PromotionAdd"]</h4>
+        </div>
+        <div class="page-btn">
+            <a href="javascript:void(0);" class="btn btn-added btnList ct-btns">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="" aria-label="fa fa-th-list"></i> @Localizer["Promotions"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row activeForm disabled">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["Message"]</label>
+                        <input type="text" class="" id="txtMessage" skinid="Enter Message....!">
+                        <input type="hidden" id="txtPromotionId">
+                        <input type="hidden" id="txtPromotionStatus">
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["ScheduleTime"]</label>
+                        <input type="datetime-local" class="form-control w-30imp" id="txtScheduleTime" skinid="">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="mb-2">
+                    <button class="btn btn-primary btn-sm ct-btns" id="btnNew">@Localizer["New"]</button>
+                    <button class="btn btn-success btn-sm ct-btns" id="btnSave">@Localizer["Save"]</button>
+                    <button class="btn btn-secondary btn-sm ct-btns" id="btnRefresh">@Localizer["Refresh"]</button>
+                    <button class="btn btn-secondary btn-sm ct-btns" id="btnSend">@Localizer["Send"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="messageHiddenInput" />
+
+
+@section scripts{
+    <script>
+
+        $(function(){
+            $(".AddPage").hide();
+            GetPromotionsList();
+            $("#btnRefresh").click();
+        })
+
+        $(".btnAdd").click(function () {
+            $(".ListPage").hide();
+            $(".AddPage").show();
+            $("#txtPromotionId").val("");
+            $("#btnRefresh").click();
+        });
+
+        $(".btnList").click(function () {
+            $(".ListPage").show();
+            $(".AddPage").hide();
+        });
+
+        //====================== Get ========================\\
+
+        function GetPromotionsList(){
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/GetPromotion/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#promotionsList").empty();
+                        $.each(data, function (i, item) {
+
+                            var date = moment(item.date).format("DD-MM-YYYY");
+                            var lastSentDate = moment(item.lastSentDate).format("DD-MM-YYYY");
+
+                            var scheduleTime = moment(item.scheduleTime).format("DD-MMM-YYYY HH:mm");
+                            if(scheduleTime == "Invalid date"){ scheduleTime = ""; }
+
+                            if(date == "Invalid date"){date = ""}
+                            if (lastSentDate == "Invalid date") { lastSentDate = "" }
+
+                            $("#promotionsList").append(`
+                             <tr>
+                                 <td class="id ps-2">${item.id}</td>
+                                 <td class="date">${date}</td>
+                                 <td class="message">${item.message}</td>
+                                 <td class="status">${item.status}</td>
+                                 <td class="scheduleTime d-none">${scheduleTime}</td>
+                                 <td class="lastSentDate">${lastSentDate}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-2 btnEdit cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDel cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                             </tr>
+                            `)
+                        });
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSave, #btnSend").click(function () {
+
+            if (CheckValidation("AddPage") == false) {
+
+                    return false;
+            }
+
+            var id = $("#txtPromotionId").val();
+
+            var scheduleTime = $("#txtScheduleTime").val();
+
+
+            var formData = new FormData();
+
+            if ($(this).prop('id') == "btnSend") {
+
+                if (id != "") {
+
+                    formData.append("id", id);
+                    formData.append("date", null);
+                    formData.append("message", $("#txtMessage").val());
+                    formData.append("status", "Sent");
+                    formData.append("lastSentDate", moment().format('YYYY-MM-DD HH:mm:ss'));
+                    formData.append("app", false);
+                    formData.append("email", false);
+                    formData.append("scheduleTime", null);
+                }
+            }
+
+            if ($(this).prop('id') == "btnSave") {
+
+                formData.append("id", id);
+                formData.append("date", moment().format('YYYY-MM-DD HH:mm:ss'));
+                formData.append("message", $("#txtMessage").val());
+                formData.append("status", "Draft");
+                formData.append("lastSentDate", null);
+                formData.append("app", false);
+                formData.append("email", false);
+                formData.append("scheduleTime", scheduleTime);
+            }
+
+
+
+            ////CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            //if (CheckDuplicateEntry($("#txtUserName").val().trim(), "#allUsersList", ".userName", $("#txtUserId").val(), ".userId") == false) {
+            //    toastr.info("User Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+            //    $("#txtUserName").focus();
+            //    return false;
+            //}
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/SavePromotion/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetPromotionsList();
+                            $("#txtPromotionId").val("");
+                            $("#btnRefresh").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDel", function(){
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".id").text();
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/DelPromotion/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetPromotionsList();
+                            $("#txtPromotionId").val("");
+                            $("#btnRefresh").click();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEdit', function () {
+
+            $(".activeForm").removeClass('disabled');
+
+            var id = $(this).closest('tr').find('.id').text();
+            var message = $(this).closest('tr').find('.message').text();
+            var status = $(this).closest('tr').find('.status').text();
+
+            var scheduleTime = $(this).closest('tr').find('.scheduleTime').text();
+            $("#txtScheduleTime").val(moment(scheduleTime).format("YYYY-MM-DDTHH:mm"));
+
+
+            $("#txtPromotionId").val(id);
+            $("#txtMessage").val(message);
+            $("#messageHiddenInput").val(message);
+            $("#txtPromotionStatus").val(status);
+
+            if (status.toLowerCase() == "draft" || status.toLowerCase() == "schedule") { $("#btnSend").removeClass('d-none'); }
+            
+            $("#btnSave").show();
+            $("#btnNew").hide();
+            $("#btnSave").text('Update');
+
+            $(".ListPage").hide();
+            $(".AddPage").show();
+
+        });
+
+
+        //====================== Buttons ========================\\
+
+        $("#btnNew").click(function () {
+            $(".activeForm").removeClass('disabled');
+            
+            $(this).hide();
+            $("#btnSave").text('Save');
+            $("#btnSave").show();
+            $("#txtMessage").focus();
+        });
+
+        $("#btnRefresh").click(function () {
+
+            var uId = $("#txtPromotionId").val();
+
+            if (uId != 0) {
+                $(".id").each(function () {
+                    const userIdValue = $(this).text().trim();
+                    if (userIdValue === uId) {
+                        $(this).closest('tr').find('.btnEdit').click();
+                        return false;
+                    }
+                });
+            }
+            else {
+
+                $(".activeForm").addClass('disabled');
+
+                $("#btnSave").hide();
+                $("#btnNew").show();
+
+                $("#txtPromotionId").val('');
+                $("#txtMessage").val('');
+                $("#messageHiddenInput").val('');
+                $("#txtScheduleTime").val('');
+
+                $("#btnSend").addClass('d-none');
+
+            }
+        });
+
+
+        $('body').on('input', "#txtMessage", function(){
+            var m = $(this).val();
+            var h = $("#messageHiddenInput").val();
+
+            if (m.toLowerCase() == h.toLowerCase()){ $("#btnSend").removeClass('d-none'); }
+            else{ $("#btnSend").addClass('d-none'); }
+        });
+
+
+        //====================== Search ========================\\
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#promotionsList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]"+".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+
+    </script>
+}

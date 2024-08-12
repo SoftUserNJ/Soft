@@ -1,0 +1,224 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<style>
+
+  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px;   }
+  .toggle.ios .toggle-handle { border-radius: 20px;}
+
+
+
+    .widget-menu {
+        position: fixed;
+        background-color: #533152;
+        font-weight: 400;
+        padding: 0px;
+        list-style: none;
+        cursor: pointer;
+    }
+
+        .widget-menu li {
+            color: white;
+            padding: 0px 5px;
+            border: 1px solid #11153a;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .widget-menu li:hover {
+                background-color: #684a68;
+            }
+</style>
+
+<div class="content pt-2 ListPage">
+    <div class="right-content mt-0">
+        @*<div class="row text-end"><span>v3.8</span></div>*@
+        <div class="row mb-3 pe-5 ps-5">
+            <div class="col-2 col-lg-2 col-md-2 p-0" style="width:230px !important;">
+                <h2 style="margin-top:-5px;">STATISTIEKEN</h2>
+            </div>
+            <div class="col-5 col-lg-5 col-md-5 d-flex pe-0 ps-0">
+                <div class="pe-1">
+                    <select class="form-select  padding-right: 2px; padding-left: 2px;" id="drpLocations"></select>
+                </div>
+
+                <div class="p-0 ms-auto" style="width:200px;  padding-left: 1px;">
+                    <select class="form-select" id="drpObjects"></select>
+                </div> 
+            </div>
+            <div class="col-4 col-lg-4 col-md-4 pe-0" >
+                <div class="d-flex d-flex align-items-center justify-content-end" >
+                    <div id="reportrange" style="">
+                        <span style="font-size:12px; font-weight:bold;"></span>
+               
+                    </div>
+                    <button class="button-1 ms-1 me-1 ct-btns " id="btndate" style="float: right;">Datum</button>
+                    <input type="checkbox"  data-toggle="toggle" data-style="ios" class="ms-3 ct-btns" data-on="Auto" data-off="Off" data-onstyle="success" data-offstyle="danger">
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+       
+        <div class="row m-0 p-4 pt-0 sortable-list">  
+            <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-1" draggable="false">
+                <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                    <div class="text-center" id="div1">
+                        <p class="add-btn-msg">Voeg hier een nieuwe blok toe 1</p>
+                        <img src="~/assets/css/plus-con.svg" alt="" class="w-14">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-2" draggable="false">
+                <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                    <div class="text-center" id="div2">
+                        <p class="add-btn-msg">Voeg hier een nieuwe blok toe 2</p>
+                        <img src="~/assets/css/plus-con.svg" alt="" class="w-14">
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-3" draggable="false">
+                <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                    <div class="text-center" id="div3">
+                        <p class="add-btn-msg">Voeg hier een nieuwe blok toe 3</p>
+                        <img src="~/assets/css/plus-con.svg" alt="" class="w-14">
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-4" draggable="false">
+                <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                    <div class="text-center">
+                        <p class="add-btn-msg">Voeg hier een nieuwe blok toe 4</p>
+                        <img src="~/assets/css/plus-con.svg" alt="" class="w-14">
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-5" draggable="false">
+                <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                    <div class="text-center">
+                        <p class="add-btn-msg">Voeg hier een nieuwe blok toe 5</p>
+                        <img src="~/assets/css/plus-con.svg" alt="" class="w-14">
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-6" draggable="false">
+                <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                    <div class="text-center">
+                        <p class="add-btn-msg">Voeg hier een nieuwe blok toe 6</p>
+                        <img src="~/assets/css/plus-con.svg" alt="" class="w-14">
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-7" draggable="false">
+                <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                    <div class="text-center">
+                        <p class="add-btn-msg">Voeg hier een nieuwe blok toe 7</p>
+                        <img src="~/assets/css/plus-con.svg" alt="" class="w-14">
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-8" draggable="false">
+                <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                    <div class="text-center">
+                        <p class="add-btn-msg">Voeg hier een nieuwe blok toe 8</p>
+                        <img src="~/assets/css/plus-con.svg" alt="" class="w-14">
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-9" draggable="false">
+                <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                    <div class="text-center">
+                        <p class="add-btn-msg">Voeg hier een nieuwe blok toe 9</p>
+                        <img src="~/assets/css/plus-con.svg" alt="" class="w-14">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade AddTypePage" id="WidgetsModal">
+    @Html.Partial("~/Views/PartialViews/Dashboard/Dashboard.cshtml")
+</div>
+
+@section scripts{
+    <script>
+        
+
+        $(function(){
+            GetLocations()
+            $("#drpLocations").trigger('change');
+        })
+        
+
+        function GetLocations(){
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/Locations/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpLocations").empty();
+                        if(data.length == 0){
+                            $("#drpLocations").append(`<option>Location Not Found</option>`);
+                            return false;
+                        }
+                        $.each(data, function (i, item) {
+                            $("#drpLocations").append(`<option value="${item.locId}" >${item.locName}</option>`);
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#drpLocations").change(function(){
+            try {
+                var obj = {};
+                obj.locId = $(this).val();
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/Objects/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpObjects").empty();
+                        if (data.length == 0) {
+                            $("#drpObjects").append(`<option> Object Not Found</option>`);
+                            return false
+                        }
+                        $.each(data, function (i, item) {
+                            $("#drpObjects").append(`<option value="${item.objectId}" >${item.objectName}</option>`);
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+    </script>
+}

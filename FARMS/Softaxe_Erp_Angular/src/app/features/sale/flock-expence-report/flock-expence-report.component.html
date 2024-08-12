@@ -1,0 +1,148 @@
+<div class="content container-fluid">
+  <div class="page-header mb-1 mt-3">
+    <div class="page-title">
+      <h4>Flock Expense Report</h4>
+      <h6 id="rateComp"></h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul></ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <!-- <div class="col-lg-2 col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>From Date</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                [(ngModel)]="fromDate" (click)="datepicker.open()" />
+              <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-6">
+          <div class="form-group">
+            <label>To Date</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker1"
+                [(ngModel)]="toDate" (click)="datepicker1.open()" />
+              <mat-datepicker #datepicker1 [startAt]="toDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img" />
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="col-lg-3">
+          <div class="mb-2">
+            <label class="fw-bolder mb-1">Select Cost Centre</label>
+            <div class="position-relative w-100">
+              <ng-select 
+                [items]="costCentreList" 
+                bindLabel="name" 
+                bindValue="id" 
+                placeholder="---Select Cost Centre---"
+                [(ngModel)]="costCentreId" 
+                [dropdownPosition]="'bottom'"
+                (change)="filterList()" >
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 d-flex">
+          <div class="d-flex align-items-center mt-4 me-4">
+            <input type="radio" id="start" name="rpt" class="me-1" checked (click)="finished(false)">
+            <label for="start" class="fw-bolder">Start</label>
+          </div>
+          <div class="d-flex align-items-center mt-4">
+            <input type="radio" id="finished" name="rpt" class="me-1" (click)="finished(true)">
+            <label for="finished" class="fw-bolder">Finished</label>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered my-tbl mb-0">
+          <thead>
+            <tr>
+              <th rowspan="2"></th>
+              <th rowspan="2">Flock#</th>
+              <th class="text-center" colspan="3">{{ row.SALEHEAD }}</th>
+              <th rowspan="2" class="text-center">{{row.BAGHEAD}}</th>
+              <th rowspan="2" class="text-center">{{ row.OTHERSALE }}</th>
+              <th rowspan="2" class="text-center">{{ row.CHICKSHEAD }}</th>
+              <th rowspan="2" class="text-center">{{ row.FEEDHEAD }}</th>
+              <th rowspan="2" class="text-center">{{ row.MEDIHEAD }}</th>
+              <th rowspan="2" class="text-center">{{ row.DIESELHEAD }}</th>
+              <th rowspan="2" class="text-center">{{ row.RENTHEAD }}</th>
+              <th rowspan="2" class="text-center">{{ row.SALARIESHEAD }}</th>
+              <th rowspan="2" class="text-center">{{ row.ELECTRICITYHEAD }}</th>
+              <th rowspan="2" class="text-center">{{ row.WOODHEAD }}</th>
+              <th rowspan="2" class="text-center">{{ row.MESSHEAD }}</th>
+              <th rowspan="2" class="text-center">{{ row.SHEDEQUIPMENTHEAD }}</th>
+              <th rowspan="2" class="text-center">{{ row.OTHEREXPENSE }}</th>
+              <th rowspan="2" class="text-center">Net Profit/Loss</th>
+              <th rowspan="2" class="text-center">FCR</th>
+              <th rowspan="2" class="text-center">EBI</th>
+              <th rowspan="2" class="text-center">Liveability</th>
+            </tr>
+            <tr>
+              <th class="text-center">Qty</th>
+              <th class="text-center">Rate</th>
+              <th class="text-center">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of farmFilterList;">
+              <td class="text-center">
+                <span class="me-2" (click)="onViewReport(i)">
+                  <i class="fas fa-print"></i>
+                </span>
+                <a routerLink="/flock-performance" [queryParams]="{jobNo: i.JOBID}">
+                  <i class="fas fa-chart-simple"></i>
+                </a>
+              </td>
+              <td class="limited-text" title="{{i.JOBNO + '-' + i.COSTCENTRENAME}}">{{i.JOBNO + '-' + i.COSTCENTRENAME}}</td>
+              <td class="text-end">{{i.SALEQTY | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.SALEAMT / i. SALEQTY| number : "1.2-2"}}</td>
+              <td class="text-end">{{i.SALEAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.BAGAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.OTHERINCOMEAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.CHICKSAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.FEEDAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.MEDIAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.DIESELAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.RENTAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.SALARIESAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.ELECTRICITYAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.WOODAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.MESSAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.SHEDEQUIPMENTAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{i.OTHEREXPENSEAMT | number : "1.2-2"}}</td>
+              <td class="text-end">{{(i.CHICKSAMT + i.FEEDAMT + i.MEDIAMT + i.DIESELAMT + i.RENTAMT + i.SALARIESAMT + i.ELECTRICITYAMT + i.WOODAMT + i.MESSAMT + i.SHEDEQUIPMENTAMT + i.OTHEREXPENSEAMT) - (i.SALEAMT + i.BAGAMT + i.OTHERINCOMEAMT)  | number : "1.2-2"}}</td>
+              <td class="text-end">{{0 | number : "1.2-2"}}</td>
+              <td class="text-end">{{0 | number : "1.2-2"}}</td>
+              <td class="text-end">{{0 | number : "1.2-2"}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2"></td>
+              <td class="text-end">{{totalQty | number : "1.2-2"}}</td>
+              <td class="text-end">{{avgRate | number : "1.2-2"}}</td>
+              <td class="text-end">{{totalAmount | number : "1.2-2"}}</td>
+              <td colspan="13"></td>
+              <td class="text-end">{{totalNetProfit | number : "1.2-2"}}</td>
+              <td colspan="3"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

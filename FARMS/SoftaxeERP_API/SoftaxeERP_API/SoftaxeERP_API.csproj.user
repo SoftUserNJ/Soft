@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ActiveDebugProfile>https</ActiveDebugProfile>
+    <NameOfLastUsedPublishProfile>D:\REPO\Softaxe_Erp_Angular\FARMS\SoftaxeERP_API\SoftaxeERP_API\Properties\PublishProfiles\FolderProfile14.pubxml</NameOfLastUsedPublishProfile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Reports\Aging.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\BalanceSheet.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\BalanceSheet1.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\CashFlow.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\CashFlowSubRpt.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\ChartOfAccount.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\CostCategory.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\CostParty.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\CostProduct.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\CostSaleTeam.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\DailyArrivalRpt.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\DailySaleProduct.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\DailySaleProductPartyAreaWise.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\DayBook.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\DayBook1.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\DeliveryChallan.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\Detailledger.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\DoSummary.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\empAdvanceSalary.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\EmpLoanLedger.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\EmployeeDetailForm.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\EmployeeSalaryDetail.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\EmpMonthlyDeduction.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\EmpSalarySheet.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\FarmLedger.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\FirstWeightSlip.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\FlockDetail.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\FlockDetail1.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\FlockExpenses.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\GatePassOutwardSale.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\InsuranceLoanReport.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\InventoryList.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\InventoryList1.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\InventoryListSale.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\ItemWiseSale.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\LabTestSlip.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\Ledger.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\LedgerDetail.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\OtCommission.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PartiesTaxDeduction.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PartiesTaxDeductionSummary.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PartyPosition.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PartyPosition1.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PartyProdPur.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PEFCal.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PrintPurContract.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PrintVoucherRangeWise.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\ProductLedger.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\ProductLedger1.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\ProductPartyWPur.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\ProductSaleIssue.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\ProductWPur.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\ProfitLoss.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\ProvidentLoanReport.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PurchaseContractCanceledReport.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PurchaseContractPendingReport.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PurchaseContractReport.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PurchaseContractStatusReport.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PurchaseDetailReport.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PurchaseInvoice.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PurchaseInvoice1.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PurchaseReturn.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PurchaseReturn1.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\PurchaseUnloading.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\ReceivingOfGoods.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\RptDepartmentListing.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\RptDesignationListing.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\RptFlockPerformance.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\RptIncomeEOBIProvDed.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\RptInsurnceLoanBlnce.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\RptMaterialReceived.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\RptProvLoanBalance.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\RptSaleContract.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\RptStfLoanBlnce.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\RptVehLoanBalance.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\SaleInvoice.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\SaleInvoice1.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\SaleLoading.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\SaleLoadingSlip.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\SaleReturn.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\SaleReturn1.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\SalesManCommission.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\SecondWeightSlip.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\SecWeightSlipSale.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\SultaniaPurchaseInvoice.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\TrailBalance.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\TrailBalance1.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\TransferLoad.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+    <Compile Update="Reports\VehLoanReport.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Reports\ChartOfAccount.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Reports\DoSummary.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

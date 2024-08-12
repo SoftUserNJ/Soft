@@ -1,0 +1,88 @@
+<section>
+    <div class="content ListPage">
+        <div class="page-header">
+            <div class="page-title">
+                <h4 class="newcolor">Department Entry</h4>
+                <h6 class="newcolor">Manage Department Entry</h6>
+            </div>
+            <div class="page-btn">
+                <div class="wordset newwordset">
+                    <ul>
+                        <li>
+                            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf"
+                                id="pdfPrint">
+                                <img src="/assets/img/icons/pdf.svg" alt="img">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Home/Index" role="button">
+                                <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row align-items-center mb-2">
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Search</label>
+                        <input (input)="searchGrid($event)" type="text" class="form-control me-2">
+                      </div>
+                    </div>
+          
+          
+                    <div class="col-lg-7 col-md-7 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Department Entry</label>
+                        <input [readOnly]="readonly" [(ngModel)]="mainDepartMentName" type="text" class="form-control me-2">
+                      </div>
+                    </div>
+                    
+
+                    <div class="col-lg-2 col-md-2 col-sm-12 pt-3">
+                          <button class="btn btn-primary btn-sm me-1" (click)="newMainDepartment()" [hidden]="isShowBtn">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateMainDepartment()"
+                  [hidden]="!isShowBtn">{{btnSave}}</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshMainDepartment()">Refresh</button>
+
+                      </div>
+          
+                  </div>
+
+                
+                <div class="table-responsive mb-1">
+                    <table class="table table-hover" id="tbl-print">
+                        <thead>
+                            <tr>
+                                <th class="text-start">ID</th>
+                                <th class="text-start">Main Department</th>
+                                <th class="text-center w-12">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody #voucherLists>
+                            <tr *ngFor="let data of mainDepartmentList">
+                                <td class="text-start">{{data.id}}</td>
+                                <td class="text-start">{{data.name}}</td>
+                                <td class="text-center">
+                                  
+                                    <span (click)="editMainDepartment(data)" class="me-3 btnEditCategory">
+                                        <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                                    </span>
+                                    <span (click)="deleteMainDepartment(data.id)" class="confirm-text btnDelCategory">
+                                        <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete">
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

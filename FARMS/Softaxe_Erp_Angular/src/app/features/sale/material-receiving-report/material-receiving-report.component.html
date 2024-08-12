@@ -1,0 +1,247 @@
+<div class="content ListPage">
+    <div class="page-header mb-1">
+      <div class="page-title">
+        <h4>Material Receiving Report</h4>
+      </div>
+      <!-- <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+            <li>
+              <a title="pdf">
+                <img src="/assets/img/icons/pdf.svg" alt="img">
+              </a>
+            </li>
+            <li>
+              <a  title="excel">
+                <img src="/assets/img/icons/excel.svg" alt="img">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div> -->
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+            <div class="row align-items-center mb-2">
+                <div class="col-4 mt-2">
+                    <input class="form-control w-100" placeholder="Search..." type="search" (input)="search($event)"
+                      id="txtSearch" />
+                  </div>
+                  <!-- <div class="col-3 mt-2">
+                  <ng-select class="bold-placeholder" [items]="locationList" placeholder="--- Select ---"
+                    [readonly]="readonly" [clearable]="none" [searchable]="none" bindLabel="LocID" bindValue="LocID"
+                    formControlName="location" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                  </div> -->
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="row align-items-center">
+                    <div class="col-lg-2 col-md-2 text-end p-0">
+                      <span class="fw-bolder">From Date</span>
+                    </div>
+                    <div class="col-lg-3 col-md-4 ps-1">
+                      <div class="form-group mb-0">
+                        <div class="input-groupicon">
+                          <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                            [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                          <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                          <div class="addonset">
+                            <img src="/assets/img/icons/calendars.svg" alt="img">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 text-end p-0">
+                      <span class="fw-bolder">To Date</span>
+                    </div>
+                    <div class="col-lg-3 col-md-4 ps-1">
+                      <div class="form-group mb-0">
+                        <div class="input-groupicon">
+                          <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                            [matDatepicker]="datepicker2" [(ngModel)]="toDate" (click)="datepicker2.open()">
+                          <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                          <div class="addonset">
+                            <img src="/assets/img/icons/calendars.svg" alt="img">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                      <img style="cursor:pointer;" src="/assets/img/icons/search.svg" (click)="getVoucherList();" alt="img" class="filter-img">
+                    </div>
+
+                   
+                  </div>
+                  
+                </div>
+
+                <div class="col-lg-2 col-md-2 text-end">
+                  <button class="btn btn-primary btn-sm ml-6" (click)="PrintMRR()">
+                    <span style="cursor: pointer;" class="btnRowPrint me-3">
+                      <i class="fas fa-print me-2"></i> Print
+                    </span>
+                  </button>
+                </div>  
+              </div>
+        </div>
+        <div class="table-responsive" style="height:320px;">
+          <table class="table productTable fs-13 mb-0" id="export">
+            <thead>
+              <tr rowspan="2">
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+          
+                <th colspan="2" style="width:13%;" class="text-center text-decoration-underline">BARDANA</th>
+                <th colspan="3" style="width:13%;" class="text-center text-decoration-underline">Deduction (kg)</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <!-- <th rowspan="2" class="text-center w-0 noPrint">Print</th>
+                <th rowspan="2" class="text-center w-0 noPrint">Image</th> -->
+              </tr>
+              <tr>
+                <th class="text-center w-0">GRN#</th>
+                <th class="w-0">DateOut</th>
+                <th class="text-center">Vehicle#</th>
+                <th style="width:15%;">Material Name</th>
+                <th style="width:10%;">Supplier's Name</th>
+                <th style="width:10%;">Bags</th>
+                <th style="width:10%;">Gross</th>
+                <th style="width:10%;">Tare</th>
+                <th style="width:10%;">Our Net</th>
+                <th style="width:10%;">Bilty Weight</th>
+                <th class="text-end">Type</th>
+                <th class="text-end">P/O</th>
+                <th class="text-end">Bardana</th>
+                <th class="text-end">Moist</th>
+                <th class="text-end">Other</th>
+                <th style="width:10%;">Payable Weight</th>
+                <th style="width:10%;">Stock Weight</th>
+                <th style="width:10%;">Freight</th>
+                <th style="width:10%;">Lab Test Detail</th>
+                <th style="width:10%;">Time In</th>
+                <th style="width:10%;">Time Out</th>
+                <th style="width:10%;">Remarks</th>
+                <th style="width:10%;">Rpt GRN</th>
+                <th style="width:10%;">Rpt Receiving</th>
+
+              </tr>
+            </thead>
+            <tbody #PRStatus>
+              <tr *ngFor="let item of voucherList;">
+                <td class="d-none">{{ item.Vchno }}</td>
+                <td class="d-none">{{ item.VchDate }}</td>
+                <td class="vchno">{{ item.Gpno }}</td>
+                <td class="vchType">{{ item.DateOut }}</td>
+                <td class="vchTypeNo  text-center">{{ item.VehicleNo }}</td>
+                <td class="vchDate text-center">{{ item.SITEM }}</td>
+                <td class="partyCode limited-text" title="{{ item.SPARTY }}">{{ item.SPARTY }}</td>
+                <td class="partyName  text-end" >{{ item.Bags }}</td>
+                <td class="bcCode  text-end">{{ item.FirstWeight }}</td>
+                <td class="bcName  text-end">{{ item.SecWeight }}</td>
+                <td class="tax text-end">{{item.FirstWeight-item.SecWeight}}</td>
+                <td class="tax  text-end">{{item.BiltWt}}</td>
+                <td class="tax text-center">{{item.BardanaType}}</td>
+                <td class="tax text-center">{{item.BagsType}}</td>
+                <td class="tax text-end">{{item.BagsDED}}</td>
+                <td class="tax text-center"></td>
+                <td class="tax text-center"></td>
+                <td class="tax text-end">{{item.PayableWT}}</td>
+                <td class="tax text-end">{{item.PayableWT1}}</td>
+                <td class="tax text-end">{{item.Freight}}</td>
+                <td class="tax text-center">{{item.LabDed}}</td>
+                <td class="tax text-center">{{item.TimeIn}}</td>
+                <td class="tax text-center">{{item.TimeOut}}</td>
+                <td class="tax text-center limited-text " title="{{ item.Descrp }}">{{item.Descrp}}</td>
+                <td class="text-center width:10%;">
+                    <span style="cursor: pointer;" (click)="SecondWeightSlip(item.Vchno, item.VchDate, item.VehicleNo, item.Gpno)"  class="btnRowPrint me-3">
+                      <i class="fas fa-print"></i>
+                      </span>
+                </td>
+                <td class="text-center width:10%;">
+                  <span style="cursor: pointer;" (click)="ReceiveingReportSlip(item.Vchno, item.VchDate, item.VehicleNo, item.Gpno)"  class="btnRowPrint me-3">
+                    <i class="fas fa-print"></i>
+                    </span>
+                </td>
+                
+              </tr>
+            </tbody>
+            <tfoot id="grdEnd">
+              <tr>
+                <td class="text-end" colspan="5"></td>
+                <td class="text-end">{{ totalBags  }}</td>
+                <td class="text-end">{{ totalGross }}</td>
+                <td class="text-end">{{ totalTare }}</td>
+                <td class="text-end">{{ totalNet}}</td>
+                <td class="text-end">{{ totalBiltyWt }}</td>
+                <td class="text-end" colspan="2"></td>
+                <td class="text-end">{{ TotalBardana }}</td>
+                <td class="text-end">{{ Totalmoist }}</td>
+                <td class="text-end">{{ TotalOther}}</td>
+                <td class="text-end">{{ TotalPayableWeight }}</td>
+                <td class="text-end">{{ TotalStockWeight}}</td>
+                <td class="text-end">{{ TotalFreight}}</td>
+                <td colspan="14" class="noPrint"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="Modal">
+    <div class="modal-dialog" style="max-width: 60%;">
+      <div class="modal-content" style="height:353px; font-weight: 600;" aria-hidden="true">
+        <div class="modal-header p-2 align-items-center">
+          <h5 class="modal-title">Upload Invoice Receiving</h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="row">
+            <div class="col-lg-6 col-sm-12 col-md-6">
+              <div class="card mb-0" style="height:288px;">
+                <div class="table-responsive">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Sno</th>
+                        <th class="w-75">File</th>
+                        <th class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of fileList; let i = index">
+                        <td class="text-center">{{ i + 1 }}</td>
+                        <td class="limited-text">{{item.name}}</td>
+                        <td class="text-center">
+                          <span class="me-3"><i class="fas fa-trash" (click)="onRemoveFile(item)"></i></span>
+                          <span><i class="fas fa-eye" (click)="onViewFile(item)"></i></span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

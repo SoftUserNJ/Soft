@@ -1,0 +1,151 @@
+﻿@{
+    ViewData["Title"] = "About Us";
+}
+
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer
+
+
+
+<style>
+    .masthead {
+        height: 100vh;
+        min-height: 200px;
+        max-height: 350px;
+        background-image: url('/img/about-us.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+        .masthead::before {
+            content: "";
+            background: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 129px;
+            left: 0;
+            width: 100%;
+            height: 350px;
+        }
+</style>
+
+<header class="masthead mb-4">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="fw-light">@Localizer["ABOUTUS"]</h1>
+                @*<p class="lead">A great starter layout for a landing page</p>*@
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="testimonial">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__text">
+                    <p>
+                        @Localizer["YoungDynamicMedia"]
+                        @*Media Outdoor is a young dynamic media company with experienced professionals in marketing, outdoor media and communication. Our head office is located in Amsterdam. We advise and support in the field of screen advertising in all Amsterdam metro stations. We build tailor-made advertising campaigns with unlimited possibilities with our creative content team. Goal-oriented and successful.*@
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6 pr-4">
+                <div class="testimonial__pic set-bg" data-setbg="/img/banner/SttionBilboard-.png" style="background-image: url(&quot;/img/banner/SttionBilboard-.png&quot;);"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="container" style="margin-top: 100px;margin-bottom:100px;">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 text-center">
+            <div class="about__item">
+                <h4>@Localizer["WhoWeAre"]</h4>
+                <p>
+                    @Localizer["WhoWeAreContent"]
+                    @*Media Outdoor is a media company with experienced professionals in marketing, outdoor media and
+                    communication.*@
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 text-center">
+            <div class="about__item">
+                <h4>@Localizer["WhatWeDo"]</h4>
+                <p>
+                    @Localizer["WhatWeDoContent"]
+                    @*The head office is located in Amsterdam. They advise and support in the field of screen advertising
+                    in all Amsterdam metro stations.*@
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 text-center">
+            <div class="about__item">
+                <h4>@Localizer["WhyChooseUs"]</h4>
+                <p>
+                    @Localizer["WhyChooseUsContent"]
+                    @*
+                    Choose one close by or go for more stations if you want to reach a larger part of Amsterdam. Need
+                    help? We are happy to assist you with advice.*@
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="testimonial">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__text">
+                    <span class="icon_quotations"></span>
+                    <p>
+                        @Localizer["TargetedOutOfHome"]
+
+                        @*Targeted Out Of Home (OOH) advertising is an effective way to contribute maximally to achieving business objectives. We show your advertising to your target group on high-quality digital screens at the right time and in the right place. At locations where thousands of visitors pass by every week, you are visible and you ensure that people remember your company or personal message (the private individual).*@
+                    </p>
+                    <div class="testimonial__author">
+                        <div class="testimonial__author__pic">
+                            <img src="/img/favicon.png" alt="">
+                        </div>
+                        <div class="testimonial__author__text">
+                            <h5>Media Outdoor</h5>
+                            <p>@Localizer["DynamicMediaCompany"]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__pic set-bg" data-setbg="/img/banner/TestimonialMetro.png" style="background-image: url(&quot;/img/banner/TestimonialMetro.png&quot;);"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="testimonial">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__text">
+                    <p>
+                        @Localizer["ServesTwoTargetGroups"]
+                        @*Media Outdoor serves two target groups. The business market for which this medium is therefore extremely suitable. Think of Amsterdam's retail sector, which can present itself in this price-wise attractive way to the target group in the part of the city where the store is located or at multiple stations. But our digital screens are also an excellent opportunity for SMEs in and around Amsterdam to communicate their services or products.*@
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__text">
+                    <p>
+                        @Localizer["EquallyImportantTarget"]
+                        @*An equally important target group for us is the consumer who would like to convey his or her personal message. Think of a marriage proposal or a congratulations when an important milestone has been achieved. Then, apart from the originality, this is also a very original promotion or gift from a price point of view. We convey your personal message on an illuminated bus shelter format or three times as large on a triple, which is seen by thousands of travelers.*@
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

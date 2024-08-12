@@ -1,0 +1,125 @@
+.btn-addednew {
+    background: #ff9f43;
+    padding: 7px 15px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+  }
+
+.txtBills {
+    width: 100%;
+    font-size: 14px;
+    text-align: right;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid #bfbfbf;
+}
+
+.txtTbl {
+    display: block;
+    padding: 2px 1px;
+    font-weight: 400;
+    color: #687a81;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    width: 50px;
+}
+
+.card .card-body {
+    padding: 20px;
+}
+.card-body {
+    flex: 1 1 auto;
+    padding: 1rem 1rem;
+}
+
+.txtDis {
+    width: 45px;
+    font-size: 14px;
+    text-align: right;
+    border-radius: 5px;
+    border: 1px solid #bfbfbf;
+}
+.terms-add-icon a {
+    display: flex;
+    justify-content: center;
+}
+
+.txtTerms {
+    font-size: 13px;
+    border-radius: 5px;
+    height: 25px;
+    border: 1px solid #bfbfbf;
+    width: 100%;
+}
+
+.table tbody tr td {
+    padding: 2px 5px;
+    /* color: #637381; */
+    font-weight: 500;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.btnAddProduct button {
+    background: #ff9f43!important;
+    color: white!important;
+    padding: 0px 5px!important;
+}
+
+select {
+    word-wrap: normal;
+}
+
+.setvaluecash ul li a:hover {
+    border: 2px solid #ff9f43;
+    color: #ff9f43;
+}
+
+.setvaluecash ul li a {
+    border: 1px solid #e9ecef;
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 70px;
+    border-radius: 5px;
+    padding: 0px 20px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.customTable thead th {
+    background: #1b2950 !important;
+}
+
+.table thead th {
+    font-weight: 600;
+    background: #198754;
+    color: white;
+    padding: 5px 2px;
+    white-space: nowrap;
+}
+
+.text-end {
+    text-align: right!important;
+}
+tfoot tr td {
+    font-weight: 600;
+    padding: 5px !important;
+    background: #198754;
+    color: white;
+    white-space: nowrap;
+}

@@ -1,0 +1,103 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="modal-dialog" style="max-width:800px;">
+    <div class="modal-content">
+        @*<div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">User Types</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+        </div>*@
+        <div class="modal-body p-0">
+            <div class="card mb-0">
+                <div class="card-body p-3">
+                    <div class="d-flex">
+                        <h3>Incident Types</h3>
+                        <button type="button" class="btn-close1 ms-auto" data-bs-dismiss="modal"></button>
+                    </div>
+                    <hr style="margin-top: 0;margin-bottom: 10px;">
+                    <div class="row">
+
+                        <div class="form-group col-md-4 col-lg-4 col-sm-12 mb-2">
+                            <label class="form-label">Incident Name</label>
+                            <input type="text" class="form-control rounded-pill" id="txtIncidentType" skinid="Enter Incident Type....!">
+                            <input type="hidden" id="txtIncidentTypeId">
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+                                <label>Prepration</label>
+                                <select class="js-example-basic-single select2" id="drpIncidentPrepration" skinid="Select Prepration....!"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+                                <label>Requirement</label>
+                                <select class="js-example-basic-single select2" id="drpIncidentRequirement" skinid="Select Requirement....!"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4 col-lg-4 col-sm-12 mb-2">
+                            <label class="form-label">Response Hours</label>
+                            <input type="number" class="form-control rounded-pill" id="txtIncidentResponse" skinid="Enter Response Hours....!">
+                        </div>
+
+                        <div class="form-group col-md-4 col-lg-4 col-sm-12 mb-2">
+                            <label class="form-label">Secure Hours</label>
+                            <input type="number" class="form-control rounded-pill" id="txtIncidentSecure" skinid="Enter Secure Hours....!">
+                        </div>
+
+                        <div class="form-group col-md-4 col-lg-4 col-sm-12 mb-2">
+                            <label class="form-label">Fixed Hours</label>
+                            <input type="number" class="form-control rounded-pill" id="txtIncidentFixed" skinid="Enter Fixed Hours....!">
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+                                <label>Prio Type</label>
+                                <select class="js-example-basic-single select2" id="drpIncidentPrio" skinid="Select Prio....!"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+                                <label>Skill</label>
+                                <select class="js-example-basic-single select2" id="drpSkills" skinid="Select Skill....!"></select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="mb-2">
+                        <button class="ct-btns btn btn-primary btn-sm" id="btnNewIncidentType">New</button>
+                        <button class="ct-btns btn btn-success btn-sm" id="btnSaveIncidentType">Save</button>
+                        <button class="ct-btns btn btn-secondary btn-sm" id="btnRefreshIncidentType">Refresh</button>
+                    </div>
+                    <div class="card mb-0 pt-2 pb-1 scroll">
+                        <div class="table-responsive p-2 pt-0 pb-0">
+                            <table class="table text-white table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="ps-1 partial-head-leftr">Id</th>
+                                        <th class="pe-2">Incident Name</th>
+                                        <th class="pe-2">Prepration</th>
+                                        <th class="pe-2">Requirements</th>
+                                        <th class="pe-2">PrioType</th>
+                                        <th class="pe-2">Response-H	</th>
+                                        <th class="pe-2">Secure-H</th>
+                                        <th class="pe-2">Fixed-H</th>
+                                        <th class="pe-2">Skill</th>
+                                        <th class="text-center partial-head-rightr last-th-sticky">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="incidentTypeList">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

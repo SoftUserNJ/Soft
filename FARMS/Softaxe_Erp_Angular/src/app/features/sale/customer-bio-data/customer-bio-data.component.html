@@ -1,0 +1,400 @@
+<div class="content ListPage" *ngIf="isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Customer List</h4>
+      <h6>Manage your Customer</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Customer bio data', 'pdf')" title="pdf">
+              <img src="assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Customer bio data', 'xlxs')" title="excel">
+              <img src="assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row align-items-center mb-2">
+        <div class="col-lg-3">
+          <div class="search-set w-100">
+            <div class="search-path">
+              <a class="btn btn-filter" id="filter_search">
+                <img src="assets/img/icons/filter.svg" alt="img">
+                <span><img src="assets/img/icons/closes.svg" alt="img"></span>
+              </a>
+            </div>
+            <div class="search-input w-100">
+              <input type="search" class="w-100" (input)="onSearchCustomer($event)" />
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 px-0">
+          <div class="position-relative w-100 me-2">
+            <ng-select placeholder="---Select Main Account ---" 
+              [items]="level4" 
+              bindLabel="name" 
+              bindValue="code"
+              [(ngModel)]="L4Code"
+              (change)="searchGrid()"
+              [dropdownPosition]="'bottom'">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="d-flex float-end">
+            <div class="form-group d-flex" style="margin-bottom:0px!important;">
+              <div class="d-flex align-items-center me-3">
+                <input type="radio" id="chkbillwise" class="me-1" name="Vch" value="active" [checked]="active" (click)="onClickFilter($event)">
+                <label for="chkbillwise" style="margin-bottom:0px!important;">Bill Wise Dues Control</label>
+              </div>
+              <div class="d-flex align-items-center me-3">
+                <input type="radio" id="chknobillwise" class="me-1" name="Vch" value="inActive" [checked]="inActive" (click)="onClickFilter($event)">
+                <label for="chknobillwise" style="margin-bottom:0px!important;">Non Bill Dues Wise Control</label>
+              </div>
+              <div class="d-flex align-items-center me-3">
+                <input type="radio" id="chkAll" class="me-1" name="Vch" value="all" [checked]="all" (click)="onClickFilter($event)">
+                <label for="chkAll" style="margin-bottom:0px!important;">Both</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-2 ps-0">
+          <div class="wordset">
+            <a class="btn btn-addednew btnAdd" (click)=" togglePages()">
+              <i data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"></i> Add New
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive mt-1" style="height:360px;">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th>Customer Name</th>
+              <th>Address</th>
+              <th>City</th>
+              <th>Postal Code</th>
+              <th>Contact</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Main Area</th>
+              <th>Sub Area</th>
+              <th class="text-center noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody #customerLists>
+            <tr *ngFor="let data of customerList">
+              <td class="code d-none">{{data.code}}</td>
+              <td class="limited-text" title="{{data.name}}">{{data.name}}</td>
+              <td class="limited-text" title="{{data.address}}">{{data.address}}</td>
+              <td class="limited-text" title="{{data.city}}">{{data.city}}</td>
+              <td class="limited-text" title="{{data.postalCode}}">{{data.postalCode}}</td>
+              <td class="limited-text" title="{{data.contact}}">{{data.contact}}</td>
+              <td class="limited-text" title="{{data.phone}}">{{data.phone}}</td>
+              <td class="limited-text" title="{{data.email}}">{{data.email}}</td>
+              <td class="limited-text" title="{{data.mainArea}}">{{data.mainArea}}</td>
+              <td class="limited-text" title="{{data.subArea}}">{{data.subArea}}</td>
+              <td class="active d-none">{{data.inActive}}</td>
+              <td class="text-center noPrint">
+                <span class="me-3" (click)="editCustomer(data)">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span class="confirm-text" (click)="deleteCustomer(data.code)">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content AddPage" *ngIf="!isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Customer </h4>
+      <h6>Add/Update Customer</h6>
+    </div>
+    <div class="page-btn">
+      <a class="btn btn-added btnList" (click)="togglePages()">
+        <i class="fa me-2 fa-th-list"></i> Home
+      </a>
+    </div>
+  </div>
+  <form action="" [formGroup]="customerForm">
+    <div class="card">
+      <div class="card-body">
+        <div class="row" [ngClass]="{ 'disabled': isDisabled }">
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+              <label>Party Name</label>
+              <input type="text" formControlName="name">
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div style="margin-bottom: 10px">
+              <label class="fw-bolder mb-1">Main Area</label>
+              <div class="row">
+                <div class="col-lg-10 col-sm-10 col-10">
+                  <ng-select placeholder="---Select Main Area ---" [items]="mainAreaList" bindLabel="name"
+                    bindValue="id" [dropdownPosition]="'bottom'" formControlName="mainAreaId"
+                    (clear)="onClearMainArea()" (change)="onChangeMainAera($event)">
+                  </ng-select>
+                </div>
+                <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                  <div class="add-icon text-end">
+                    <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus " data-bs-toggle="modal"
+                      data-bs-target="#MainAreaModal" (click)="refreshMainArea()"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div style="margin-bottom: 10px">
+              <label class="fw-bolder mb-1">Sub Area</label>
+              <div class="row">
+                <div class="col-lg-10 col-sm-10 col-10">
+                  <ng-select placeholder="---Select Sub Area ---" [items]="subAreaList" bindLabel="name" bindValue="id"
+                    [dropdownPosition]="'bottom'" formControlName="subAreaId">
+                  </ng-select>
+                </div>
+                <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                  <div class="add-icon text-end">
+                    <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus " data-bs-toggle="modal"
+                      data-bs-target="#SubAreaModal" (click)="refreshSubArea()"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+              <label>Address</label>
+              <input type="text" formControlName="address">
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" formControlName="city">
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+              <label>Postal Code</label>
+              <input type="text" formControlName="postalCode">
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+              <label>CNIC</label>
+              <input type="text" formControlName="cnic">
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+              <label>NTN</label>
+              <input type="text" formControlName="ntn">
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+              <label>Contact</label>
+              <input type="text" formControlName="contact">
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="text" formControlName="phone">
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="text" formControlName="email">
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+              <label>Commission</label>
+              <input type="text" formControlName="commission">
+            </div>
+          </div>
+
+
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+              <label>Rate Diff</label>
+              <input type="text" formControlName="ratediff">
+            </div>
+          </div>
+
+
+
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="mb-1">
+              <label class="fw-bolder">Sale Tax</label>
+              <ng-select [dropdownPosition]="'bottom'" formControlName="saleTax" [clearable]="false" >
+                <ng-option value="nonfiler">Non-Filer</ng-option>
+                <ng-option value="filer">Filer</ng-option>
+                <ng-option value="taxfree">Exempted</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="mb-1">
+              <label class="fw-bolder">W.H.Tax</label>
+              <ng-select [dropdownPosition]="'bottom'" formControlName="whTax" [clearable]="false">
+                <ng-option value="nonfiler">Non-Filer</ng-option>
+                <ng-option value="filer">Filer</ng-option>
+                <ng-option value="taxfree">Exempted</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group d-flex mt-4">
+              <input type="checkbox" formControlName="inActive" class="me-1">
+              <label style="margin-bottom: 0px!important;" >Both</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">New</button>
+          <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+            (click)="onClickSave()">Save</button>
+          <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+<!-- Modal 1 -->
+<div class="modal fade" id="MainAreaModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Main Area</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Main Area</label>
+              <input type="name" class="form-control" [(ngModel)]="mainAreaName" [disabled]="isDisabledMainArea">
+              <input type="hidden" [(ngModel)]="mainAreaId" [disabled]="isDisabledMainArea">
+            </div>
+            <div class="mb-1">
+              <button class="btn btn-primary btn-sm me-1" (click)="newMainArea()" [hidden]="isShowMainArea">New</button>
+              <button class="btn btn-success btn-sm me-1" (click)="createUpdateMainArea()"
+                [hidden]="!isShowMainArea">Save</button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshMainArea()">Refresh</button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height:205px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Code</th>
+                      <th class="w-75">Name</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of mainAreaList">
+                      <td>{{data.id}}</td>
+                      <td>{{data.name}}</td>
+                      <td class="text-center">
+                        <span class="me-3" (click)="editMainArea(data.id, data.name)">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span class="confirm-text" (click)="deleteMainArea(data.id)">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- Add more table rows as needed -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal 2 -->
+<div class="modal fade" id="SubAreaModal" aria-labelledby="level1ModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Sub Area</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Sub Area</label>
+              <input type="text" class="form-control" [(ngModel)]="subAreaName" [disabled]="isDisabledSubArea">
+              <input type="hidden" [(ngModel)]="subAreaId" [disabled]="isDisabledSubArea">
+            </div>
+            <div class="mb-1">
+              <button class="btn btn-primary btn-sm me-1" (click)="newSubArea()" [hidden]="isShowSubArea">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateSubArea()"
+                [hidden]="!isShowSubArea">Save</button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshSubArea()">Refresh</button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height:205px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Code</th>
+                      <th class="w-75">Name</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of subAreaList">
+                      <td>{{data.id}}</td>
+                      <td>{{data.name}}</td>
+                      <td class="text-center">
+                        <span class="me-3" (click)="editSubArea(data.id, data.name)">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span class="confirm-text" (click)="deleteSubArea(data.id)">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

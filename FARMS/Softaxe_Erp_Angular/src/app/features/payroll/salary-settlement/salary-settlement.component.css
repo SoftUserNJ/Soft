@@ -1,0 +1,74 @@
+.pl-10 {
+    padding-left: 10px;
+}
+
+.bold-placeholder ::ng-deep .ng-placeholder {
+    color: black !important;
+  }
+  
+
+  .HighLightRow{
+    background-color: #dee2e6 !important;
+    background: #dee2e6 !important;
+  }
+
+
+
+  /* Upload Document */
+
+
+  
+.upload-container {
+ float: right;
+}
+
+.upload-input {
+  display: none;
+}
+
+.upload-label {
+  background-color: #198754;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+ 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-label:hover {
+  background-color: #198754;
+}
+
+.file-name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+}   
+
+
+.doc-section {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.doc-link {
+  padding: 8px;
+ font-size: 16px;;
+  text-decoration: none;
+  color: black;
+  border-radius: 8px;
+}
+
+
+.btn-addednew {
+  background: #ff9f43;
+  padding: 7px 15px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  margin-left: 16px;
+  display: flex;
+  align-items: center;
+}

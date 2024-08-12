@@ -1,0 +1,51 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Day Book</h4>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-2 col-md-4 col-sm-12">
+          <div class="mb-2">
+            <label class="fw-bolder mb-1">Location</label>
+            <div class="position-relative w-100">
+              <ng-select placeholder="---Select Location---" [dropdownPosition]="'bottom'" [disabled]="isDisableLoc"
+                [(ngModel)]="locId" (change)="getDaybookDate()">
+                <ng-option *ngFor="let item of locationList" [value]="item.ID">
+                  {{ item.ID + " - " + item.NAME}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12">
+          <div class="form-group">
+            <label>Day Close</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                [(ngModel)]="date" [disabled]="isDisableDate" (click)="datepicker.open()" />
+              <mat-datepicker #datepicker [startAt]="date"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-info btn-sm me-1" (click)="openReportModal('cash')">Print Cash</button>
+            <button class="btn btn-info btn-sm me-1" (click)="openReportModal('bank')">Print Bank</button>
+            <button class="btn btn-info btn-sm" (click)="openReportModal('close')"
+              *ngIf="isDayClose == 'true'">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

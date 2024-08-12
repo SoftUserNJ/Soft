@@ -1,0 +1,214 @@
+<div class="content ListPage" *ngIf="isShowPage">
+  <div class="page-header mb-2">
+    <div class="page-title">
+      <h4>Sale Man Jobs Today List</h4>
+      <h6>Manage your Sales Man Jobs</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" id="pdfPrint">
+              <img src="assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel" id="convertExel">
+              <img src="assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="print">
+              <img src="assets/img/icons/printer.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-top table-topm mb-2">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="assets/img/icons/filter.svg" alt="img">
+              <span><img src="assets/img/icons/closes.svg" alt="img"></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <input type="search" (input)="onSearchJobs($event)" />
+          </div>
+        </div>
+        <div class="wordset">
+          <a class="btn btn-addednew btnAdd" (click)=" togglePages()">
+            <i data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"></i> Add New
+          </a>
+        </div>
+
+      </div>
+
+      <div class="table-responsive mt-1" style="height:360px;">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>JobNo</th>
+              <th>Time</th>
+              <th>Shift</th>
+              <th>Till</th>
+              <th>Sale Mens</th>
+              <th>Cash-Rec From</th>
+              <th>Cash</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody #jobsList>
+            <tr *ngFor="let data of jobList">
+              <td>{{data.JOBNO}}</td>
+              <td>{{data.DATETIME}}</td>
+              <td>{{data.SHIFTNAME}}</td>
+              <!-- <td class="d-none">{{data.SHIFTID}}</td> -->
+              <td>{{data.TILL}}</td>
+              <!-- <td class="d-none">{{data.TILLID}}</td> -->
+              <td>{{data.SALEMAN}}</td>
+              <!-- <td class="d-none">{{data.SALEMANID}}</td> -->
+              <td>{{data.L5NAMES}}</td>
+              <!-- <td class="d-none">{{data.L5CODE}}</td> -->
+              <td>{{data.CASH}}</td>
+              <!-- <td class="active d-none">{{data.DAYWISE}}</td> -->
+              <td class="text-center">
+                <span class="me-3">
+                  <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit"
+                    (click)="editSalesMenJobs(data)">
+                </span>
+                <span class="confirm-text">
+                  <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete"
+                  (click)="deleteSalesMenJobs(data.JOBNO)">
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content AddPage" *ngIf="!isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Sale Man Jobs Management</h4>
+      <h6>Add/Update Sale Man Jobs</h6>
+    </div>
+    <div class="page-btn">
+      <a class="btn btn-added btnList" (click)="togglePages()">
+        <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+          aria-label="fa fa-th-list"></i> Home
+      </a>
+    </div>
+  </div>
+  <form action="" [formGroup]="saleMenJobForm">
+    <div class="card">
+      <div class="card-body">
+        <div class="row" [ngClass]="{ 'disabled': isDisabled }">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-12 mx-auto">
+
+            <input type="hidden" formControlName="id">
+
+            <div class="form-group">
+              <label>Date</label>
+              <div class="input-groupicon">
+                <input type="text"
+                class="form-control"
+                placeholder="DD/MM/YYYY"
+                matInput
+                [matDatepicker]="datepicker"
+                formControlName="date"
+                (click)="datepicker.open()"/>
+                <mat-datepicker #datepicker></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="fw-bolder">Shift</label>
+              <div class="position-relative w-100">
+                <ng-select
+                [items]="shiftList"
+                bindLabel="shiftName"
+                bindValue="shiftId"
+                placeholder="---Select Shift---"
+                formControlName="shiftId"
+                [dropdownPosition]="'bottom'"></ng-select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="fw-bolder">Till</label>
+              <div class="position-relative w-100">
+                <ng-select
+                [items]="tillList"
+                bindLabel="pointName"
+                bindValue="pointId"
+                placeholder="---Select Till---"
+                formControlName="tillId"
+                [dropdownPosition]="'bottom'"></ng-select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="fw-bolder">Sale Man</label>
+              <div class="position-relative w-100">
+                <ng-select
+                [items]="saleManList"
+                bindLabel="userName"
+                bindValue="id"
+                placeholder="---Select Sale Man---"
+                formControlName="salesManId"
+                [dropdownPosition]="'bottom'"></ng-select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="fw-bolder">Cash Received From</label>
+              <div class="position-relative w-100">
+                <ng-select
+                [items]="cashRecList"
+                bindLabel="name"
+                bindValue="code"
+                placeholder="---Select Cash Received From---"
+                formControlName="cashReceivedFrom"
+                [dropdownPosition]="'bottom'"></ng-select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Cash</label>
+              <input type="number" formControlName="cash">
+            </div>
+
+            <div class="form-group">
+              <label>Day Wise</label>
+              <input type="checkbox" formControlName="dayWise">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-12 mx-auto">
+
+            <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">New</button>
+            <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+              (click)="onClickSave()">Save</button>
+            <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

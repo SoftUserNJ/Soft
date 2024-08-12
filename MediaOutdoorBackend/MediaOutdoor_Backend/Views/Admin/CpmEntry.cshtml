@@ -1,0 +1,559 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+@{
+    ViewData["Title"] = "CPM";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var budgetFromChecked = "";
+    var budgetToChecked = "";
+    var discountChecked = "";
+    var cpmChecked = "";
+    var reachChecked = "";
+
+    var budgetFrom = ViewBag.ShowColumns.budgetFrom;
+    var budgetTo = ViewBag.ShowColumns.budgetTo;
+    var discount = ViewBag.ShowColumns.discount;
+    var cpm = ViewBag.ShowColumns.cpm;
+    var reach = ViewBag.ShowColumns.reach;
+
+    if (budgetFrom == true) { budgetFromChecked = "checked"; }
+    if (budgetTo == true) { budgetToChecked = "checked"; }
+    if (discount == true) { discountChecked = "checked"; }
+    if (cpm == true) { cpmChecked = "checked"; }
+    if (reach == true) { reachChecked = "checked"; }
+
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["CpmManagement"]</h4>
+            <h6>@Localizer["Add/UpdateCpm"]</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="PDF" id="pdfPrint">
+                            <i class="far fa-file-pdf" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" id="convertExcel">
+                            <i class="far fa-file-excel" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="CSV" id="convertCsv">
+                            <i class="fa fa-file-csv" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #000000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch">
+                    </div>
+                </div>
+
+                 <div class="ms-auto">
+                    <p href="javascript:void(0);" id="saveColumns" class="btn btn-addednew ct-btns">
+                        @Localizer["Save Columns"]
+                    </p>
+                </div>
+
+                <div class="wordset">
+                    <p href="javascript:void(0);" class="btn btn-addednew btnAdd ct-btns">
+                        <img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">@Localizer["AddNew"]
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="pe-3"><input id="BudgetFrom" type="checkbox" @budgetFromChecked class="printCheckBox notPrintCol" />@Localizer["BudgetFrom"]</th>
+                            <th class="pe-3"><input id="BudgetTo" type="checkbox" @budgetToChecked class="printCheckBox notPrintCol" />@Localizer["BudgetTo"]</th>
+                            <th class="pe-3"><input id="Discount" type="checkbox" @discountChecked class="printCheckBox notPrintCol" />@Localizer["Discount"]</th>
+                            <th class="pe-3"><input id="CPM" type="checkbox" @cpmChecked class="printCheckBox notPrintCol" />@Localizer["CPM"]</th>
+                            <th class="pe-3"><input id="Reach" type="checkbox" @reachChecked class="printCheckBox notPrintCol" />@Localizer["Reach"]</th>
+                            <th class="text-center pe-3 last-th-sticky"><input type="checkbox" class="printCheckBox notPrintCol" hidden>@Localizer["Action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cpmList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content AddPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["CpmAdd"]</h4>
+        </div>
+        <div class="page-btn">
+            <a href="javascript:void(0);" class="btn btn-added btnList ct-btns">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="" aria-label="fa fa-th-list"></i> @Localizer["CpmList"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row activeForm disabled">
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["BudgetFrom"]</label>
+                        <input type="text" class="" id="txtBudgetFrom" skinid="Enter Budget From....!">
+                        <input type="hidden" id="txtCpmId">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["BudgetTo"]</label>
+                        <input type="text" class="" id="txtBudgetTo" skinid="Enter Budget From....!">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["Discount"]</label>
+                        <input type="text" class="" id="txtDiscount" skinid="">
+                    </div>
+                </div>
+
+               @* <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["Reach"]</label>
+                        <input type="text" class="" id="txtReach" skinid="Enter Reach....!">
+                    </div>
+                </div>*@
+
+            </div>
+
+            <div class="row">
+                <div class="mb-2">
+                    <button class="btn btn-primary btn-sm ct-btns" id="btnNew">@Localizer["New"]</button>
+                    <button class="btn btn-success btn-sm ct-btns" id="btnSave">@Localizer["Save"]</button>
+                    <button class="btn btn-secondary btn-sm ct-btns" id="btnRefresh">@Localizer["Refresh"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" value="@ViewBag.b2bRate" id="b2bRate" />
+
+@section scripts{
+    <script>
+
+        $(function () {
+            $(".AddPage").hide();
+            GetCpm();
+            $("#btnRefresh").click();
+        })
+
+        $(".btnAdd").click(function () {
+            $(".ListPage").hide();
+            $(".AddPage").show();
+            $("#txtCpmId").val("");
+            $("#btnRefresh").click();
+        });
+
+        $(".btnList").click(function () {
+            $(".ListPage").show();
+            $(".AddPage").hide();
+        });
+
+        //====================== Cpm Get ========================\\
+
+        function GetCpm() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/GetCpmEntry/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#cpmList").empty();
+                        $.each(data, function (i, item) {
+
+                            var b2bRate = parseFloat($("#b2bRate").val());
+                            var discount = parseFloat(item.discount);
+
+                            var cpm =  (b2bRate * discount);
+
+                                cpm = cpm /100;
+                                cpm = b2bRate - cpm;
+
+
+                            var budgetTo = parseFloat(item.budgetTo).toFixed(2);
+                            if(budgetTo == "NaN"){
+
+                                budgetTo = item.budgetTo;
+                            }
+
+                            var budgetFrom = parseFloat(item.budgetFrom).toFixed(2);
+
+
+                            var reach = budgetFrom / cpm;
+                            reach = reach * 1000;
+                            reach = Math.round(reach);
+
+                        $("#cpmList").append(`
+                            <tr>
+                                <td class="budgetFrom ps-2">${budgetFrom}</td>
+                                <td class="budgetTo">${budgetTo}</td>
+                                <td class="discount">${parseFloat(discount).toFixed(2)}</td>
+                                <td class="cpm">${parseFloat(cpm).toFixed(2)}</td>
+                                <td class="reach">${reach}</td>
+                                <td class="text-center last-td-sticky">
+                                    <span class="me-2 btnEdit cursor-pointer" >
+                                        <img src="/assets/img/icons/edit.svg" alt="img">
+                                    </span>
+                                    <span class="confirm-text btnDel cursor-pointer" >
+                                        <img src="/assets/img/icons/delete.svg" alt="img">
+                                    </span>
+                                </td>
+                                <td class="id d-none">${item.id}</td>
+                            </tr>
+                          `)
+                        });
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSave").click(function () {
+
+            if (CheckValidation("AddPage") == false) {
+
+                return false;
+            }
+
+            var txtDiscount = $("#txtDiscount").val();
+            txtDiscount = txtDiscount == "" ? 0 : txtDiscount;
+
+            var formData = new FormData();
+
+            formData.append("id", $("#txtCpmId").val());
+            formData.append("budgetFrom", $("#txtBudgetFrom").val());
+            formData.append("budgetTo", $("#txtBudgetTo").val());
+            formData.append("discount", txtDiscount);
+            formData.append("reach", $("#txtReach").val());
+            
+
+            ////CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            //if (CheckDuplicateEntry($("#txtUserName").val().trim(), "#allUsersList", ".userName", $("#txtUserId").val(), ".userId") == false) {
+            //    toastr.info("User Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+            //    $("#txtUserName").focus();
+            //    return false;
+            //}
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/SaveCpmEntry/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetCpm();
+                            $("#txtCpmId").val("");
+                            $("#btnRefresh").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDel", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".id").text();
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/DelCpmEntry/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetCpm();
+                            $("#txtCpmId").val("");
+                            $("#btnRefresh").click();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEdit', function () {
+
+            $(".activeForm").removeClass('disabled');
+
+            var id = $(this).closest('tr').find('.id').text();
+            var budgetFrom = $(this).closest('tr').find('.budgetFrom').text();
+            var budgetTo = $(this).closest('tr').find('.budgetTo').text();
+            var discount = $(this).closest('tr').find('.discount').text();
+            var reach = $(this).closest('tr').find('.reach').text();
+
+            $("#txtCpmId").val(id);
+            $("#txtBudgetFrom").val(budgetFrom);
+            $("#txtBudgetTo").val(budgetTo);
+            $("#txtDiscount").val(discount);
+            $("#txtReach").val(reach);
+
+            $("#btnSave").show();
+            $("#btnNew").hide();
+            $("#btnSave").text('Update');
+
+            $(".ListPage").hide();
+            $(".AddPage").show();
+
+        });
+
+
+        //====================== Buttons ========================\\
+
+        $("#btnNew").click(function () {
+            $(".activeForm").removeClass('disabled');
+
+            $(this).hide();
+            $("#btnSave").text('Save');
+            $("#btnSave").show();
+            $("#txtBudgetFrom").focus();
+        });
+
+        $("#btnRefresh").click(function () {
+
+            var uId = $("#txtCpmId").val();
+
+            if (uId != 0) {
+                $(".id").each(function () {
+                    const userIdValue = $(this).text().trim();
+                    if (userIdValue === uId) {
+                        $(this).closest('tr').find('.btnEdit').click();
+                        return false;
+                    }
+                });
+            }
+            else {
+
+                $(".activeForm").addClass('disabled');
+
+                $("#btnSave").hide();
+                $("#btnNew").show();
+
+                $("#txtCpmId").val('');
+                $("#txtBudgetFrom").val('');
+               
+                $("#txtBudgetTo").val('');
+                $("#txtDiscount").val('');
+                $("#txtReach").val('');
+               
+            }
+        });
+
+
+        //====================== Save Columns =================\\
+
+
+        $("#saveColumns").click(function () {
+
+            var obj = {};
+            obj.BudgetFrom = $("#BudgetFrom")[0].checked;
+            obj.BudgetTo = $("#BudgetTo")[0].checked;
+            obj.Discount = $("#Discount")[0].checked;
+            obj.CPM = $("#CPM")[0].checked;
+            obj.Reach = $("#Reach")[0].checked;
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/SaveCPMColumns/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == true) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        //====================== Search ========================\\
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#cpmList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]" + ".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+
+    </script>
+}

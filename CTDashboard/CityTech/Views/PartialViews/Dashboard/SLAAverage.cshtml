@@ -1,0 +1,76 @@
+﻿@{
+    Layout = null;
+}
+<div style="float: left; width: 100%;">
+    <h3 style="float: left;">Avg. response time</h3>
+</div>
+<p style="clear: both;"></p>
+<div style="margin-top:30px;" >
+    <p style="font-size:22px; font-weight: bold;" id="txtavgslaresponsetime"> 19MIN</p>
+    <p style="font-size:18px;" id="txtavgslaresponsetimelastweek"> </p>
+    <p style="font-size:28px;  margin-top:40px;" id="txtslawin">96% Within SLA</p>
+</div>
+
+
+
+<script>
+
+    function SlaAverageWidgetFunPartial(fromDate, toDate, location, objects) {
+
+
+        try {
+            $.ajax({
+                type: "Get",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                url: "/Home/SLAAverage/",
+                dataType: "json",
+                async: false,
+                data: { fromDate: fromDate, toDate: toDate, location: location, objects: objects },
+                success: function (data) {
+
+                    $.each(data.SLA1, function (i, SLA1) {
+
+
+                        $("#txtavgslaresponsetime").text(SLA1.AVGTIME + "m");
+                        $("#txtslawin").text(SLA1.SLAWIN + "% Within SLA");
+
+
+                    });
+                    $.each(data.SLA2, function (i, SLA2) {
+                        $("#txtavgslaresponsetimelastweek").empty();
+                    
+
+                        if (parseFloat(SLA2.ThisWeek) < 0) {
+                            $("#txtavgslaresponsetimelastweek").append(`<i class="fa-solid fa-caret-up" style="color: green;"></i> ${SLA2.ThisWeek1} vs. last week`);
+                        } else if (SLA2.LastWeek == 0 || parseFloat(SLA2.ThisWeek) > 0) {
+                            $("#txtavgslaresponsetimelastweek").append(`<i class="fa-solid fa-caret-up" style="color: green;"></i> ${SLA2.ThisWeek} vs. last week`);
+                        } else {
+                            $("#txtavgslaresponsetimelastweek").append(`<i class="fa-solid fa-caret-down" style="color: red;"></i> ${SLA2.ThisWeek} vs. last week`);
+                        }
+
+                     
+
+
+                        
+
+                    });
+
+
+
+
+                  
+                },
+                error: function (data) {
+                }
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+
+  
+
+    SlaAverageWidgetFunPartial('@ViewBag.FromDate', '@ViewBag.ToDate', '@ViewBag.Location', '@ViewBag.Objects');
+                                       // setInterval(OpenVouchersWidgetFunPartial, 5000);
+</script>

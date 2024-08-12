@@ -1,0 +1,1348 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer;
+
+@{
+    ViewData["Title"] = "Incident Types";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["IncidentManagement"]</h4>
+            <h6>@Localizer["Add/UpdateIncident"]</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #1265c3; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="PDF" id="pdfPrint">
+                            <i class="far fa-file-pdf" style="color: #ea5455; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" id="convertExcel">
+                            <i class="far fa-file-excel" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="CSV" id="convertCsv">
+                            <i class="fa-solid fa-file-csv" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="Dashboard" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch" class="rounded-pill">
+                    </div>
+                </div>
+                <div class="wordset">
+                    <p href="javascript:void(0);" class="btn btn-addednew btnAdd ct-btns">
+                        <img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">@Localizer["AddNew"]
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />Id</th>
+                            <th class=""><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["IncidentName"]</th>
+                            <th class="w-25"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Prepration"]</th>
+                            <th class=""><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Requirements"]</th>
+                            <th class=""><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["PrioType"]</th>
+                            <th class=""><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Response-H"]</th>
+                            <th class=""><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Secure-H"]</th>
+                            <th class=""><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Fixed-H"]</th>
+                            <th class=""><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Skill"]</th>
+                            <th class="text-center pe-3 ps-2 last-th-sticky"><input type="checkbox" class="printCheckBox notPrintCol" hidden>@Localizer["Action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="incidentTypeList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content AddPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>Incident Add</h4>
+        </div>
+        <div class="page-btn">
+            <a href="javascript:void(0);" class="btn btn-added btnList ct-btns">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="" aria-label="fa fa-th-list"></i> @Localizer["IncidentTypes"]            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="activeForm disabled">
+
+                <div class="row">
+                    <div class="col-lg-4 col-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["IncidentName"]</label>
+                            <input type="text" id="txtIncidentType" class="rounded-pill" skinid="Enter Incident Name....!">
+                            <input type="hidden" id="txtIncidentTypeId">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["Prepration"]</label>
+                            <div class="row">
+                                <div class="col-lg-10 col-sm-10 col-10">
+                                    <select class="js-example-basic-single select2" id="drpIncidentPrepration" skinid="Select Prepration....!"></select>
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                    <div @*class="add-icon text-end"*@>
+                                        <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="Prepration" data-bs-toggle="modal" data-bs-target="#PreprationModal"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   @* <div class="col-lg-4 col-4 col-sm-6">
+                        <div class="form-group">
+                            <label>Prepration</label>
+                            <input type="text" id="txtIncidentPrepration" class="rounded-pill" skinid="Enter Prepration....!">
+                        </div>
+                    </div>*@
+
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["Requirement"]</label>
+                            <div class="row">
+                                <div class="col-lg-10 col-sm-10 col-10">
+                                    <select class="js-example-basic-single select2" id="drpIncidentRequirement" skinid="Select Requirement....!"></select>
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                    <div @*class="add-icon text-end"*@>
+                                        <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="Requirement" data-bs-toggle="modal" data-bs-target="#RequirementModal"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="col-lg-4 col-4 col-sm-6">
+                        <div class="form-group">
+                            <label>Requirement</label>
+                            <input type="text" id="txtIncidentRequirement" class="rounded-pill" skinid="Enter Requirement....!">
+                        </div>
+                    </div>*@
+                </div>
+                <div class="row" style="border: 1px solid; padding-top: 20px; border-radius: 40px; margin-bottom:20px;">
+                    <div class="text-center"><p style="width: 155px; margin: auto; margin-top: -30px; background: #2a2d58; font-weight: bold;">SLA @Localizer["INFORMATION"]</p></div>
+                    <div class="col-lg-4 col-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["ResponseHours"]</label>
+                            <input type="number" min="1" id="txtIncidentResponse" class="rounded-pill" skinid="">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["SecureHours"]</label>
+                            <input type="number" min="1" id="txtIncidentSecure" class="rounded-pill" skinid="Enter Secure Hours....!">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["FixedHours"]</label>
+                            <input type="number" min="1" id="txtIncidentFixed" class="rounded-pill" skinid="Enter Fixed Hours....!">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["PrioType"]</label>
+                            <div class="row">
+                                <div class="col-lg-10 col-sm-10 col-10">
+                                    <select class="js-example-basic-single select2" id="drpIncidentPrio" skinid=""></select>
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                    <div @*class="add-icon text-end"*@>
+                                        <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="Prio" data-bs-toggle="modal" data-bs-target="#PrioModal"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["Skill"]</label>
+                            <div class="row">
+                                <div class="col-lg-10 col-sm-10 col-10">
+                                    <select class="js-example-basic-single select2" id="drpSkills" skinid="Select Skill....!"></select>
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                    <div @*class="add-icon text-end"*@>
+                                        <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="Skill" data-bs-toggle="modal" data-bs-target="#SkillModal"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-2">
+                    <button class="btn btn-primary btn-sm ct-btns" id="btnNewIncidentType">@Localizer["New"]</button>
+                    <button class="btn btn-success btn-sm ct-btns" id="btnSaveIncidentType">@Localizer["Save"]</button>
+                    <button class="btn btn-secondary btn-sm ct-btns" id="btnRefreshIncidentType">@Localizer["Refresh"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade IncidentPrioModal" id="PrioModal">
+    @Html.Partial("~/Views/PartialViews/IncidentTypes/Prio.cshtml")
+</div>
+
+<div class="modal fade IncidentPreprationModal" id="PreprationModal">
+    @Html.Partial("~/Views/PartialViews/IncidentTypes/Prepration.cshtml")
+</div>
+
+<div class="modal fade IncidentRequirementModal" id="RequirementModal">
+    @Html.Partial("~/Views/PartialViews/IncidentTypes/Requirement.cshtml")
+</div>
+
+<div class="modal fade IncidentSkillModal" id="SkillModal">
+    @Html.Partial("~/Views/PartialViews/User/UserSkill.cshtml")
+</div>
+
+@section scripts{
+    <script>
+
+        $(function(){
+            $(".AddPage").hide();
+            $("#btnRefreshIncidentType").click();
+            GetIncidentTypes();
+
+            $("#btnRefreshIncPrio").click();
+            GetPrio();
+
+            $("#btnRefreshIncPrepration").click();
+            GetPrepration();
+            
+            $("#btnRefreshIncRequirement").click();
+            GetRequirement();
+
+            $("#btnRefreshUserSkill").click();
+            GetSkills();
+
+            UserPageRights();
+        });
+
+        $(".btnAdd").click(function () {
+            $(".ListPage").hide();
+            $(".AddPage").show();
+            $("#txtIncidentTypeId").val('');
+            $("#btnRefreshIncidentType").click();
+        });
+
+        $(".btnList").click(function () {
+            $(".ListPage").show();
+            $(".AddPage").hide();
+        });
+
+
+        //====================== Skills ========================\\
+
+        function GetSkills() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/GetSkills/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpSkills").empty();
+                        $("#userSkillsDetail").empty();
+
+                        $("#drpSkills").append(`<option value="0">--- Select Skill ---</option>`)
+                        $.each(data, function (i, item) {
+                            $("#drpSkills").append(`<option value="${item.skillId}">${item.skillName}</option>`);
+
+                            $("#userSkillsDetail").append(`
+                             <tr>
+                                 <td class="userSkillId ps-2">${item.skillId}</td>
+                                 <td class="userSkillnames">${item.skillName}</td>
+                                 <td class="userSkillActiveId d-none"></td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditUserSkill cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelUserSkill cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                             </tr>
+                            `)
+
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSaveUserSkill").click(function () {
+
+            if (CheckValidation("AddSkillPage") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtUserSkillId").val();
+            obj.name = $("#txtUserSkill").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            if (CheckDuplicateEntry($("#txtUserSkill").val(), "#userSkillsDetail", ".userSkillnames") == false) {
+                toastr.info("Skill Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/SaveSkill/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetSkills();
+                            $("#btnRefreshUserSkill").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelUserSkill", function(){
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".userSkillId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/DelSkill/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Already In Use") { 
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        } else  
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetSkills();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEditUserSkill', function () {
+
+            var id = $(this).closest('tr').find('.userSkillId').text();
+            var name = $(this).closest('tr').find('.userSkillnames').text();
+
+            $("#txtUserSkillId").val(id);
+            $("#txtUserSkill").val(name);
+            $("#txtUserSkill").removeClass('disabled');
+            $("#btnSaveUserSkill").show();
+            $("#btnNewUserSkill").hide();
+            $("#btnSaveUserSkill").text('Update');
+
+        });
+
+        $("#btnNewUserSkill").click(function () {
+            $(this).hide();
+            $("#txtUserSkill").removeClass('disabled');
+
+            $("#btnSaveUserSkill").text('Save');
+            $("#btnSaveUserSkill").show();
+            $("#txtUserSkill").focus();
+        });
+
+        $("#btnRefreshUserSkill").click(function () {
+            $("#btnSaveUserSkill").hide();
+            $("#btnNewUserSkill").show();
+
+            $("#txtUserSkill").addClass('disabled');
+
+            $("#txtUserSkillId").val('');
+            $("#txtUserSkill").val('');
+        });
+
+
+
+        //====================== Get Data ========================\\
+
+        function GetIncidentTypes() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/GetIncidentTypes/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#incidentTypeList").empty();
+
+                        $.each(data, function (i, item) {
+                            $("#incidentTypeList").append(`
+                             <tr>
+                                 <td class="incidentTypeId ps-2">${item.INCIDENTTYPEID}</td>
+                                 <td class="incidentTypeName">${item.INCIDENTNAME}</td>
+                                 <td class="incidentTypePrepration">${item.PREPRATION}</td>
+                                 <td class="incidentTypeRequirements">${item.REQUIREMENTS}</td>
+                                 <td class="incidentPrioType">${item.PRIOTYPE}</td>
+                                 <td class="incidentTypeSlaresponse">${item.SLARESPONSE}</td>
+                                 <td class="incidentTypeSlasecure">${item.SLASECURE}</td>
+                                 <td class="incidentTypeSlafixed">${item.SLAFIXED}</td>
+                                 <td class="incidentTypeSkill">${item.SKILLNAME}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditIncidentType cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelIncidentType cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                                 <td class="incidentTypeSkillsId d-none">${item.SKILLID}</td>
+                             </tr>
+                            `)
+                        })
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSaveIncidentType").click(function () {
+
+            if (CheckValidation("AddPage") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtIncidentTypeId").val();
+            obj.name = $("#txtIncidentType").val();
+            obj.skillId = $("#drpSkills option:selected").val();
+            obj.prepration = $("#drpIncidentPrepration").val();
+            obj.requirements = $("#drpIncidentRequirement").val();
+            obj.priotype = $("#drpIncidentPrio").val();
+            obj.slaresponse = $("#txtIncidentResponse").val();
+            obj.slasecure = $("#txtIncidentSecure").val();
+            obj.slafixed = $("#txtIncidentFixed").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtIncidentType").val(), "#incidentTypeList", ".incidentTypeName", $("#txtIncidentTypeId").val(), ".incidentTypeId") == false) {
+                toastr.info("Incident Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtIncidentType").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/SaveIncidentTypes/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetIncidentTypes();
+                            $("#txtIncidentTypeId").val("");
+                            $("#btnRefreshIncidentType").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelIncidentType", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".incidentTypeId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/DelIncidentTypes/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Already In Use") {
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        } else
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetIncidentTypes();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditIncidentType', function () {
+
+            var id = $(this).closest('tr').find('.incidentTypeId').text();
+            var name = $(this).closest('tr').find('.incidentTypeName').text();
+            var prepration = $(this).closest('tr').find('.incidentTypePrepration').text();
+            var requirement = $(this).closest('tr').find('.incidentTypeRequirements').text();
+            var priotype = $(this).closest('tr').find('.incidentPrioType').text();
+            var response = $(this).closest('tr').find('.incidentTypeSlaresponse').text();
+            var secure = $(this).closest('tr').find('.incidentTypeSlasecure').text();
+            var fixed = $(this).closest('tr').find('.incidentTypeSlafixed').text();
+            var skillId = $(this).closest('tr').find('.incidentTypeSkillsId').text();
+
+            $("#txtIncidentTypeId").val(id);
+            $("#txtIncidentType").val(name);
+            $("#drpIncidentPrepration").val(prepration);
+            $("#drpIncidentPrepration").next('span').find('.select2-selection__rendered').html($("#drpIncidentPrepration option:selected").text());
+
+            $("#drpIncidentRequirement").val(requirement);
+            $("#drpIncidentRequirement").next('span').find('.select2-selection__rendered').html($("#drpIncidentRequirement option:selected").text());
+
+            $("#drpIncidentPrio").val(priotype);
+            $("#drpIncidentPrio").next('span').find('.select2-selection__rendered').html($("#drpIncidentPrio option:selected").text());
+
+            $("#txtIncidentResponse").val(response);
+            $("#txtIncidentSecure").val(secure);
+            $("#txtIncidentFixed").val(fixed);
+            $("#drpSkills").val(skillId);
+            $("#drpSkills").next('span').find('.select2-selection__rendered').html($("#drpSkills option:selected").text());
+
+
+            $(".activeForm").removeClass('disabled');
+
+
+            $("#btnSaveIncidentType").show();
+            $("#btnNewIncidentType").hide();
+            $("#btnSaveIncidentType").text('Update');
+
+            $(".ListPage").hide();
+            $(".AddPage").show();
+        });
+
+        //====================== Buttons ========================\\
+        $("#btnNewIncidentType").click(function () {
+            $(this).hide();
+            $(".activeForm").removeClass('disabled');
+
+            $("#btnSaveIncidentType").text('Save');
+            $("#btnSaveIncidentType").show();
+            $("#txtIncidentType").focus();
+        });
+
+        $("#btnRefreshIncidentType").click(function () {
+
+            var uId = $("#txtIncidentTypeId").val();
+
+            if (uId != 0) {
+                $(".incidentTypeId").each(function () {
+                    const userIdValue = $(this).text().trim();
+                    if (userIdValue === uId) {
+                        $(this).closest('tr').find('.btnEditIncidentType').click();
+                        return false;
+                    }
+                });
+            }
+            else {
+                $("#btnSaveIncidentType").hide();
+                $("#btnNewIncidentType").show();
+                $(".activeForm").addClass('disabled');
+
+                $("#txtIncidentTypeId").val('');
+                $("#txtIncidentType").val('');
+                $("#drpIncidentPrepration").val('0');
+                $("#drpIncidentPrepration").next('span').find('.select2-selection__rendered').html($("#drpIncidentPrepration option:selected").text());
+
+                $("#drpIncidentRequirement").val('0');
+                $("#drpIncidentRequirement").next('span').find('.select2-selection__rendered').html($("#drpIncidentRequirement option:selected").text());
+
+                $("#drpIncidentPrio").val('0');
+                $("#drpIncidentPrio").next('span').find('.select2-selection__rendered').html($("#drpIncidentPrio option:selected").text());
+
+                $("#txtIncidentResponse").val('');
+                $("#txtIncidentSecure").val('');
+                $("#txtIncidentFixed").val('');
+                $("#drpSkills").val('0');
+                $("#drpSkills").next('span').find('.select2-selection__rendered').html($("#drpSkills option:selected").text());
+
+            }
+        });
+
+        //====================== Prio ========================\\
+
+        function GetPrio() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/GetPrio/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#incPrioList").empty();
+
+                        $("#drpIncidentPrio").empty();
+                        $("#drpIncidentPrio").append(`<option value="0">--- Select Prio ---</option>`)
+
+                        $.each(data, function (i, item) {
+                            $("#drpIncidentPrio").append(`<option value="${item.prioName}">${item.prioName}</option>`);
+                        });
+
+                        $.each(data, function (i, item) {
+                            $("#incPrioList").append(`
+                             <tr>
+                                 <td class="incPrioId d-none ps-2">${item.id}</td>
+                                 <td class="incPrioName">${item.prioName}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditIncPrio cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelIncPrio cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                             </tr>
+                            `)
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSaveIncPrio").click(function () {
+
+            if (CheckValidation("IncidentPrioModal") == false) {
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtIncPrioId").val();
+            obj.prio = $("#txtIncPrio").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtIncPrio").val(), "#incPrioList", ".incPrioName", $("#txtIncPrioId").val(), ".incPrioId") == false) {
+                toastr.info("Prio Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtIncPrio").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/SavePrio/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetPrio();
+                            $("#btnRefreshIncPrio").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+
+        $('body').on('click', ".btnDelIncPrio", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".incPrioId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/DelPrio/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetPrio();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditIncPrio', function () {
+
+            var id = $(this).closest('tr').find('.incPrioId').text();
+            var name = $(this).closest('tr').find('.incPrioName').text();
+
+            $("#txtIncPrioId").val(id);
+            $("#txtIncPrio").val(name);
+
+            $("#txtIncPrio").removeClass('disabled');
+
+            $("#btnSaveIncPrio").show();
+            $("#btnNewIncPrio").hide();
+            $("#btnSaveIncPrio").text('Update');
+        });
+
+
+        $("#btnNewIncPrio").click(function () {
+            $(this).hide();
+            $("#txtIncPrio").removeClass('disabled');
+
+            $("#btnSaveIncPrio").text('Save');
+            $("#btnSaveIncPrio").show();
+            $("#txtIncPrio").focus();
+        });
+
+        $("#btnRefreshIncPrio").click(function () {
+
+            $("#btnSaveIncPrio").hide();
+            $("#btnNewIncPrio").show();
+            $("#txtIncPrio").addClass('disabled');
+
+            $("#txtIncPrioId").val('');
+            $("#txtIncPrio").val('');
+        });
+
+
+        //====================== Prepration ========================\\
+
+        function GetPrepration() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/GetPrepration/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#incPreprationList").empty();
+
+                        $("#drpIncidentPrepration").empty();
+                        $("#drpIncidentPrepration").append(`<option value="0">--- Select Prepration ---</option>`)
+
+                        $.each(data, function (i, item) {
+                            $("#drpIncidentPrepration").append(`<option value="${item.prepration}">${item.prepration}</option>`);
+                        });
+
+                        $.each(data, function (i, item) {
+                            $("#incPreprationList").append(`
+                             <tr>
+                                 <td class="incPreprationId d-none ps-2">${item.id}</td>
+                                 <td class="incPreprationName">${item.prepration}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditIncPrepration cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelIncPrepration cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                             </tr>
+                            `)
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSaveIncPrepration").click(function () {
+
+            if (CheckValidation("IncidentPreprationModal") == false) {
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtIncPreprationId").val();
+            obj.prepration = $("#txtIncPrepration").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtIncPrepration").val(), "#incPreprationList", ".incPreprationName", $("#txtIncPreprationId").val(), ".incPreprationId") == false) {
+                toastr.info("Prepration Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtIncPrepration").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/SavePrepration/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetPrepration();
+                            $("#btnRefreshIncPrepration").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+
+        $('body').on('click', ".btnDelIncPrepration", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".incPreprationId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/DelPrepration/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetPrepration();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditIncPrepration', function () {
+
+            var id = $(this).closest('tr').find('.incPreprationId').text();
+            var name = $(this).closest('tr').find('.incPreprationName').text();
+
+            $("#txtIncPreprationId").val(id);
+            $("#txtIncPrepration").val(name);
+
+            $("#txtIncPrepration").removeClass('disabled');
+
+            $("#btnSaveIncPrepration").show();
+            $("#btnNewIncPrepration").hide();
+            $("#btnSaveIncPrepration").text('Update');
+        });
+
+
+        $("#btnNewIncPrepration").click(function () {
+            $(this).hide();
+            $("#txtIncPrepration").removeClass('disabled');
+
+            $("#btnSaveIncPrepration").text('Save');
+            $("#btnSaveIncPrepration").show();
+            $("#txtIncPrepration").focus();
+        });
+
+        $("#btnRefreshIncPrepration").click(function () {
+
+            $("#btnSaveIncPrepration").hide();
+            $("#btnNewIncPrepration").show();
+            $("#txtIncPrepration").addClass('disabled');
+
+            $("#txtIncPreprationId").val('');
+            $("#txtIncPrepration").val('');
+        });
+
+
+        //====================== Requirement ========================\\
+
+        function GetRequirement() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/GetRequirement/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#incRequirementList").empty();
+
+                        $("#drpIncidentRequirement").empty();
+                        $("#drpIncidentRequirement").append(`<option value="0">--- Select Requirement ---</option>`)
+
+                        $.each(data, function (i, item) {
+                            $("#drpIncidentRequirement").append(`<option value="${item.requirement}">${item.requirement}</option>`);
+                        });
+
+                        $.each(data, function (i, item) {
+                            $("#incRequirementList").append(`
+                             <tr>
+                                 <td class="incRequirementId d-none ps-2">${item.id}</td>
+                                 <td class="incRequirementName">${item.requirement}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditIncRequirement cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                             <span class="confirm-text btnDelIncRequirement cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                             </tr>
+                            `)
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSaveIncRequirement").click(function () {
+
+            if (CheckValidation("IncidentRequirementModal") == false) {
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtIncRequirementId").val();
+            obj.requirement = $("#txtIncRequirement").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtIncRequirement").val(), "#incRequirementList", ".incRequirementName", $("#txtIncRequirementId").val(), ".incRequirementId") == false) {
+                toastr.info("Requirement Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtIncRequirement").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/SaveRequirement/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetRequirement();
+                            $("#btnRefreshIncRequirement").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+
+        $('body').on('click', ".btnDelIncRequirement", function () {
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".incRequirementId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/DelRequirement/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetRequirement();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditIncRequirement', function () {
+
+            var id = $(this).closest('tr').find('.incRequirementId').text();
+            var name = $(this).closest('tr').find('.incRequirementName').text();
+
+            $("#txtIncRequirementId").val(id);
+            $("#txtIncRequirement").val(name);
+
+            $("#txtIncRequirement").removeClass('disabled');
+
+            $("#btnSaveIncRequirement").show();
+            $("#btnNewIncRequirement").hide();
+            $("#btnSaveIncRequirement").text('Update');
+        });
+
+
+        $("#btnNewIncRequirement").click(function () {
+            $(this).hide();
+            $("#txtIncRequirement").removeClass('disabled');
+
+            $("#btnSaveIncRequirement").text('Save');
+            $("#btnSaveIncRequirement").show();
+            $("#txtIncRequirement").focus();
+        });
+
+        $("#btnRefreshIncRequirement").click(function () {
+
+            $("#btnSaveIncRequirement").hide();
+            $("#btnNewIncRequirement").show();
+            $("#txtIncRequirement").addClass('disabled');
+
+            $("#txtIncRequirementId").val('');
+            $("#txtIncRequirement").val('');
+        });
+
+        //====================== Search ========================\\
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#incidentTypeList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $(document).on('input', '#txtSearchIncPrio', function () {
+            var value = $(this).val().toLowerCase();
+            $("#incPrioList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $(document).on('input', '#txtSearchIncPrepration', function () {
+            var value = $(this).val().toLowerCase();
+            $("#incPreprationList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $(document).on('input', '#txtSearchIncRequirement', function () {
+            var value = $(this).val().toLowerCase();
+            $("#incRequirementList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $(document).on('input', '#txtSearchSkills', function () {
+            var value = $(this).val().toLowerCase();
+            $("#userSkillsDetail tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]"+".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+        //================ User Page Rights ==================\\
+
+        function UserPageRights(){
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/UserPageRights/",
+                    data: { url: window.location.pathname },
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.word == false) { $("#convertWord").closest('li').remove(); }
+                        if(data.pdf == false){ $("#pdfPrint").closest('li').remove(); }
+                        if (data.excel == false) { $("#convertExcel").closest('li').remove(); }
+                        if (data.csv == false) { $("#convertCsv").closest('li').remove(); }
+                        if (data.delete == false) { $(".btnDelIncidentType").remove(); }
+                        if (data.edit == false) { $(".btnEditIncidentType").remove(); }
+
+                        if(data.save == false){
+                            $(".btnAdd").closest('div').remove();
+                            $("#btnRefreshIncidentType, #btnRefreshIncPrepration, #btnNewIncPrepration, #btnSaveIncPrepration, .btnEditIncPrepration, .btnDelIncPrepration, #btnNewIncRequirement, #btnRefreshIncRequirement, #btnSaveIncRequirement, .btnEditIncRequirement, .btnDelIncRequirement, #btnNewIncPrio, #btnRefreshIncPrio, #btnSaveIncPrio, .btnEditIncPrio, .btnDelIncPrio, #btnNewUserSkill, #btnSaveUserSkill, #btnRefreshUserSkill, .btnEditUserSkill, .btnDelUserSkill").remove();
+                            $("#drpIncidentPrepration, #drpIncidentRequirement, #drpIncidentPrio, #drpSkills").closest('.row').find('.custom-plus-icon').addClass('disabled');
+
+                        }
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+    </script>
+}

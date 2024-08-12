@@ -1,0 +1,41 @@
+
+.my-tbl{
+    border: 1px solid black;
+    font-size: 10px;
+}
+
+.my-tbl thead th{
+    color: #29A1D8;
+    background-color: #CBEBFA;
+    font-weight: bold;
+}
+
+.my-tbl tfoot td{
+    color: black!important;
+    background-color: #CBEBFA!important;
+    font-size: 11px;
+    border: 1px solid black;
+}
+
+.my-tbl tbody td{
+    /* font-weight: bold; */
+    border-bottom: 1px solid #000000!important;
+}
+
+.fa-chart-simple{
+    color: #637381;
+    font-size: 14px;
+}
+
+.fa-print{
+    color: #637381;
+    font-size: 14px;
+}
+
+.table-responsive{
+    height: 500px!important;
+}
+
+.table thead th {
+    padding: 2px 2px;
+}

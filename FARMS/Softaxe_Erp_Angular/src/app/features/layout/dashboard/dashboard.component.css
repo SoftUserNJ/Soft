@@ -1,0 +1,163 @@
+.table thead th {
+  font-weight: 600;
+  background: #198754;
+  color: white;
+  white-space: nowrap;
+  padding: 5px 2px;
+  border: none;
+}
+
+.my-table thead th{
+  font-size: 12px!important;
+  padding: 0px 5px!important;
+}
+
+.table tbody td {
+  font-size: 12px!important;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.add-icon a {
+  width: 34px;
+  height: 36px;
+  background: #ff9f43;
+  border-radius: 5px;
+}
+
+.uls li{
+  display: flex;
+  align-items: center;
+}
+
+.dash-widget {
+  background: #fff;
+  margin-bottom: 25px;
+  border-radius: 6px;
+  padding: 20px;
+  border: 1px solid #e8ebed;
+}
+
+.bgnone {
+  background: none !important;
+  width: 33%;
+  text-align: center;
+  font-size: 14px;
+  text-align: left;
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.bggradient {
+  background-image: linear-gradient(to bottom right, #a567e9, #28a2ff);
+  background: #ff9f43;
+}
+
+.bggradient2 {
+  background: #1b2850;
+}
+
+.bggradient3 {
+  background-image: linear-gradient(to bottom right, #40a1ea, #3ccbc7);
+  background: #28c76f;
+}
+
+.whborder {
+  border: 1px solid #ffffff6b;
+}
+
+.ordericn {
+  background: #ffffff26;
+  padding: 10px;
+}
+
+.MainOrder {
+  display: flex;
+  align-items: center;
+}
+
+.orderhdicon {
+  font-size: 16px;
+  padding-left: 7px;
+  border-left: 3px solid white;
+  padding-right: 7px;
+  margin-left: -5px;
+}
+
+.orderdata {
+  padding-left: 25px;
+  font-size: 12px;
+}
+
+.whborder {
+  border: 1px solid #ffffff6b;
+}
+
+.orderdata {
+  padding-left: 39px;
+  font-size: 14px;
+}
+
+.MainShadow {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 20%), 12px 12px 10px -6px rgb(0 0 0 / 20%);
+}
+
+.Amount {
+  margin-bottom: -25px;
+  font-size: 18px !important;
+}
+
+.table thead th {
+  font-weight: 600;
+  background: #198754;
+  color: white;
+  padding: 5px 2px;
+  white-space: nowrap;
+}
+
+label {
+  display: inline-block;
+}
+
+.searchSvg {
+  filter: invert(100) sepia(100) saturate(0) hue-rotate(357deg) brightness(100) contrast(100%);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+#lpHead a {
+  color: white !important;
+}
+
+.p-2 {
+  padding: 0.5rem !important;
+}
+
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: var(--bs-modal-padding);
+}
+
+a {
+  color: #ff9f43;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  transition: all .2s ease;
+}
+
+.h-39{
+  height: 39px;
+}

@@ -1,0 +1,15 @@
+tfoot {
+    position: sticky;
+    bottom: 0;
+    font-size: small;
+    font-weight: 900;
+  }
+  
+  tfoot tr td {
+    padding: 5px;
+  }
+  
+  tfoot tr td {
+    background: #198754;
+    color: white;
+  }

@@ -1,0 +1,42 @@
+.table thead {
+    vertical-align: bottom;
+    border-bottom: none !important;
+    box-shadow: 0 2px 2px -1px rgb(0 0 0 / 40%);
+    position: sticky;
+    top: 0;
+    font-weight: bolder;
+  }
+ 
+  .table thead tr {
+    border: 1px solid rgba(0, 0, 0, 0.726);
+  }
+ 
+  .table thead tr th {
+    border: 1px solid rgba(0, 0, 0, 0.726);
+  }
+ 
+  .fs-13 {
+    font-size: 12px;
+    font-weight: 400;
+  }
+ 
+  .imgBox {
+    border: 1px solid #e8ebed;
+    border-radius: 5px;
+  }
+ 
+  .productTable>thead>tr>th {
+    padding: 0px 5px !important;
+    border: 1px solid #212b36;
+  }
+
+  .filter-img {
+    background: #ff9f43;
+    padding: 2px;
+    border-radius: 4px;
+    width: 35px;
+    height: 23px;
+    cursor: pointer;
+  }
+ 
+ 

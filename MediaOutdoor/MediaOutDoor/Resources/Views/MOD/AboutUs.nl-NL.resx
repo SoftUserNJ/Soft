@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ABOUTUS" xml:space="preserve">
+    <value>OVER ONS</value>
+  </data>
+  <data name="DynamicMediaCompany" xml:space="preserve">
+    <value>Dynamisch mediabedrijf</value>
+  </data>
+  <data name="EquallyImportantTarget" xml:space="preserve">
+    <value>Een minstens zo belangrijke doelgroep voor ons is de consument die zijn of haar persoonlijke boodschap wil overbrengen. Denk aan een huwelijksaanzoek of een felicitatie als er een belangrijke mijlpaal is bereikt. Dan is dit naast de originaliteit ook prijstechnisch een zeer originele promotie of cadeau. Uw persoonlijke boodschap brengen wij over op verlicht bushokjeformaat of drie keer zo groot op triple, wat door duizenden reizigers wordt gezien.</value>
+  </data>
+  <data name="ServesTwoTargetGroups" xml:space="preserve">
+    <value>Media Outdoor bedient twee doelgroepen. De zakelijke markt waarvoor dit medium dan ook uitermate geschikt is. Denk aan de Amsterdamse detailhandel, die zich op deze prijstechnisch aantrekkelijke manier kan presenteren aan de doelgroep in het deel van de stad waar de winkel gevestigd is of op meerdere stations. Maar ook voor het MKB in en rond Amsterdam zijn onze digitale schermen een uitgelezen kans om hun diensten of producten te communiceren.</value>
+  </data>
+  <data name="TargetedOutOfHome" xml:space="preserve">
+    <value>Targeted Out Of Home (OOH) adverteren is een effectieve manier om maximaal bij te dragen aan het behalen van bedrijfsdoelstellingen. Wij tonen uw reclame op het juiste moment en op de juiste plaats op hoogwaardige digitale schermen aan uw doelgroep. Op locaties waar wekelijks duizenden bezoekers langskomen, ben jij zichtbaar en zorg je ervoor dat mensen jouw bedrijfs- of persoonlijke boodschap (de particulier) onthouden.</value>
+  </data>
+  <data name="WhatWeDo" xml:space="preserve">
+    <value>Wat we doen?</value>
+  </data>
+  <data name="WhatWeDoContent" xml:space="preserve">
+    <value>Het hoofdkantoor is gevestigd in Amsterdam. Zij adviseren en ondersteunen op het gebied van schermreclame in alle Amsterdamse metrostations.</value>
+  </data>
+  <data name="WhoWeAre" xml:space="preserve">
+    <value>Wie we zijn?</value>
+  </data>
+  <data name="WhoWeAreContent" xml:space="preserve">
+    <value>Media Outdoor is een mediabedrijf met ervaren professionals in marketing, outdoormedia en communicatie.</value>
+  </data>
+  <data name="WhyChooseUs" xml:space="preserve">
+    <value>Waarom voor ons kiezen?</value>
+  </data>
+  <data name="WhyChooseUsContent" xml:space="preserve">
+    <value>Kies er één dichtbij of ga voor meer stations als je een groter deel van Amsterdam wilt bereiken. Hulp nodig? Wij staan u graag bij met advies.</value>
+  </data>
+  <data name="YoungDynamicMedia" xml:space="preserve">
+    <value>Media Outdoor is een jong dynamisch mediabedrijf met ervaren professionals in marketing, outdoor media en communicatie. Ons hoofdkantoor is gevestigd in Amsterdam. Wij adviseren en ondersteunen op het gebied van schermreclame in alle Amsterdamse metrostations. Met ons creatieve contentteam bouwen wij advertentiecampagnes op maat met onbeperkte mogelijkheden. Doelgericht en succesvol.</value>
+  </data>
+</root>

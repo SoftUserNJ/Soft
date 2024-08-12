@@ -1,0 +1,232 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Security System</h4>
+      <h6>Manage Security System
+      </h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="">
+            <label class="fw-bolder">Location</label>
+            <ng-select 
+              [items]="locationList" 
+              bindValue="ID"
+              bindLabel="NAME" 
+              placeholder="--- Select Location ---"
+              [(ngModel)]="ngLocation"
+              [dropdownPosition]="'bottom'" (change)="getUsers(); getDayClose()">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-6 d-flex align-items-center">
+          <ul class="nav nav-pills mt-3 pb-1" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="pills-permission-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-permission" type="button" role="tab" aria-controls="pills-permission"
+                aria-selected="false">Permission</button>
+            </li>
+            <li class="nav-item" role="presentation" *ngIf="isApprovalSystem == 'true'">
+              <button class="nav-link" id="voucher-type-authenticates-tab" data-bs-toggle="pill"
+                data-bs-target="#voucher-type-authenticates" type="button" role="tab"
+                aria-controls="voucher-type-authenticates" aria-selected="false">Voucher Type Authenticates</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="MonthClose-tab" data-bs-toggle="pill" data-bs-target="#MonthClose"
+                type="button" role="tab" aria-controls="pills-month-close" aria-selected="false">Month Close</button>
+            </li>
+            <li class="nav-item" role="presentation" *ngIf="isDayClose == 'true'" >
+              <button class="nav-link" id="DayClose-tab" data-bs-toggle="pill" data-bs-target="#DayClose" type="button"
+                role="tab" aria-controls="pills-day-close" aria-selected="false">Day Close</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-permission" role="tabpanel"
+          aria-labelledby="pills-permission-tab">
+          <div class="row mt-2">
+            <div class="col-sm-3">
+              <div class="">
+                <label class="fw-bolder">Select user:</label>
+                <ng-select placeholder="--- Select User ---" 
+                  [items]="getUsersList" 
+                  bindLabel="UserName"
+                  bindValue="UserId" 
+                  [(ngModel)]="ngUser"
+                  (change)="onUserChange()"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <div class="">
+                <label class="fw-bolder">Dashboard</label>
+                <div class="form-check form-switch">
+                  <input class="form-check-input mt-1" type="checkbox" role="switch" [(ngModel)]="allowDashboard"
+                    (change)="onAllowDashboard($event)">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <div class="form-group text-end">
+                <label>.</label>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="SavePermissionsMenu()">Save
+                  Menu</button>
+              </div>
+            </div>
+          </div>
+          <div id="formPermissions" class="permissionbx pr-3 pl-3 pt-2">
+          </div>
+          <div id="securityList">
+            <ul id="myUL">
+            </ul>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="voucher-type-authenticates" role="tabpanel"
+          aria-labelledby="voucher-type-authenticates-tab">
+          <div class="row mb-1 align-items-center mt-2">
+            <div class="col-lg-3 col-md-3 col-4">
+              <div class="position-relative w-100">
+                <ng-select placeholder="--- Select User ---" 
+                  [items]="getUsersList" 
+                  bindLabel="UserName"
+                  bindValue="UserId" 
+                  [(ngModel)]="vtUsers"
+                  (change)="getVchTypes()"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-4 p-0">
+              <input type="search" class="form-control" (input)="onVchSearch($event)" placeholder="Search">
+            </div>
+            <div class="col-lg-5 col-md-5 col-5 text-end">
+              <button class="btn btn-success btn-sm" (click)="SaveVoucherType()">Save</button>
+            </div>
+          </div>
+          <table class="table mb-0 text-center table-row-bg">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="text-start">Vch Type</th>
+                <th>Can Entry</th>
+                <th>Can Verify</th>
+                <th>Can UnVerify</th>
+                <th>Can Approve</th>
+                <th>Can UnApprove</th>
+                <th>Can Audit</th>
+                <th>Can UnAudit</th>
+              </tr>
+              <tr>
+                <th class="w-0"><input type="checkbox" (change)="allChecked($event)" /></th>
+                <th></th>
+                <th class="text-center"><input type="checkbox" [checked]="allChk" (change)="columChecked($event, 'feed')"/></th>
+                <th class="text-center"><input type="checkbox" [checked]="allChk" (change)="columChecked($event, 'verify')" /></th>
+                <th class="text-center"><input type="checkbox" [checked]="allChk" (change)="columChecked($event, 'unverify')"/></th>
+                <th class="text-center"><input type="checkbox" [checked]="allChk" (change)="columChecked($event, 'appove')" /></th>
+                <th class="text-center"><input type="checkbox" [checked]="allChk" (change)="columChecked($event, 'unapprove')" /></th>
+                <th class="text-center"><input type="checkbox" [checked]="allChk" (change)="columChecked($event, 'audit')"/></th>
+                <th class="text-center"><input type="checkbox" [checked]="allChk" (change)="columChecked($event, 'unaudit')"/></th>
+              </tr>
+            </thead>
+            <tbody #tblDetailvt>
+              <tr *ngFor="let data of voucherTypes; let i = index">
+                <td class="text-center">
+                  <input type="checkbox" class="chkcVchtype" (change)="rowChecked($event, data)" [checked]="allChk" >
+                </td>
+                <td class="text-start vchType">{{data.VCHTYPE}}</td>
+                <td><input type="checkbox" [(ngModel)]="data.CANFEED" class="form-check mx-auto"></td>
+                <td><input type="checkbox" [(ngModel)]="data.CANVERIFY" class="form-check mx-auto"></td>
+                <td><input type="checkbox" [(ngModel)]="data.CANUNVERIFY" class="form-check mx-auto"></td>
+                <td><input type="checkbox" [(ngModel)]="data.CANAPPROVE" class="form-check mx-auto"></td>
+                <td><input type="checkbox" [(ngModel)]="data.CANUNAPPROVE" class="form-check mx-auto"></td>
+                <td><input type="checkbox" [(ngModel)]="data.CANAUDIT" class="form-check mx-auto"></td>
+                <td><input type="checkbox" [(ngModel)]="data.CANUNAUDIT" class="form-check mx-auto"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane fade" id="MonthClose" role="tabpanel" aria-labelledby="MonthClose-tab">
+          <div class="row mt-2">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Month Closing Date</label>
+                <input type="text" class="form-control" [(ngModel)]="monthClose" />
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="">
+                <label class="fw-bolder mb-1">Month Opening</label>
+                <ng-select [(ngModel)]="monthOpen" placeholder="--- Select Month ---">
+                  <ng-option value="01">January</ng-option>
+                  <ng-option value="02">February</ng-option>
+                  <ng-option value="03">March</ng-option>
+                  <ng-option value="04">April</ng-option>
+                  <ng-option value="05">May</ng-option>
+                  <ng-option value="06">June</ng-option>
+                  <ng-option value="07">July</ng-option>
+                  <ng-option value="08">August</ng-option>
+                  <ng-option value="09">September</ng-option>
+                  <ng-option value="10">October</ng-option>
+                  <ng-option value="11">November</ng-option>
+                  <ng-option value="12">December</ng-option>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label>Auto Closing Date</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                    [(ngModel)]="autoDayClosing" (click)="datepicker.open()" />
+                  <mat-datepicker #datepicker [startAt]="autoDayClosing"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-1 d-flex align-items-center mt-4">
+              <div class="form-group">
+                <button class="btn btn-success btn-sm" (click)="saveMonthClose()">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="DayClose" role="tabpanel" aria-labelledby="DayClose-tab">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group mt-2">
+                <label>Day Close</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" 
+                    placeholder="DD/MM/YYYY" 
+                    matInput 
+                    [matDatepicker]="datepicker1"
+                    [(ngModel)]="dayClose" 
+                    (click)="datepicker1.open()"/>
+                  <mat-datepicker #datepicker1 [startAt]="dayClose"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-1 d-flex align-items-center mt-3">
+              <button class="btn btn-success btn-sm mt-1" (click)="saveDayClose()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

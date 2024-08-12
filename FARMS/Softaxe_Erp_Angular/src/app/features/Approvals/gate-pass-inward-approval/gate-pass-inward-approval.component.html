@@ -1,0 +1,192 @@
+<section>
+  <div class="content AddPage">
+    <div class="page-header mb-4">
+      <div class="page-title">
+        <h4>Stock Inward</h4>
+      </div>
+    </div>
+    <div class="card" [formGroup]="GPIApprovalForm">
+      <div class="card-body">
+        <div class="row align-items-center mb-2">
+          <div class="col-lg-3 col-md-3 col-sm-12 pt-3">
+            <div class="position-relative w-100 me-2">
+              <label class="fw-bold d-none">Voucher Type</label>
+              <ng-select class="bold-placeholder" placeholder="--- Select Voucher Type ---" formControlName="vchType"
+                [dropdownPosition]="'bottom'" readonly>
+                <ng-option value="RP-Raw">RP-Raw</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="position-relative w-100 me-2">
+              <label class="fw-bold">Vehicle No#</label>
+              <input type="text" formControlName="vehNo" class="form-control me-2" (input)="SearchVch($event)">
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="position-relative w-100 me-2">
+              <label class="fw-bold">Search Vch No</label>
+              <input type="text" class="form-control me-2" (input)="SearchVch($event)">
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="position-relative w-100 me-2 form-group mb-0">
+              <label class="fw-bold" style="margin-bottom: 0px !important;">From:</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" formControlName="fromDate" placeholder="DD/MM/YYYY" matInput
+                  [matDatepicker]="datepicker" (click)="datepicker.open()" />
+                <mat-datepicker #datepicker></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="position-relative w-100 me-2 form-group mb-0">
+              <label class="fw-bold" style="margin-bottom: 0px !important;">To:</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" formControlName="toDate" matInput placeholder="DD/MM/YYYY"
+                  [matDatepicker]="datepicker2" (click)="datepicker2.open()">
+                <mat-datepicker #datepicker2></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-1 col-md-1 pt-2">
+            <div class="add-icon pt-1" (click)="SelectVoucher()">
+              <a class="w-100" style="height: 30px;"><img src="/assets/img/icons/search.svg" alt="img"
+                  class="searchSvg"></a>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 pt-2 d-flex">
+            <div class="form-group d-flex align-items-end" style="margin-bottom:0px!important;">
+              <div class="d-flex align-items-center me-4">
+                <input type="radio" id="unapproved" value="unapproved" [checked]="unapproved" class="me-1"
+                  name="approvalStatus" (click)="onClickFilter($event)">
+                <label for="unapproved" class=" pt-2 mb-0">Unapproved</label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input type="radio" id="approved" value="approved" [checked]="approved" class="me-1"
+                  name="approvalStatus" (click)="onClickFilter($event)">
+                <label for="approved" class=" pt-2 mb-0">Approved</label>
+              </div>
+              <div class="d-flex align-items-center pl-15">
+                <input type="radio" id="Rejected" value="Rejected" [checked]="Rejected" class="me-1"
+                  name="approvalStatus" (click)="onClickFilter($event)">
+                <label for="Rejected" class=" pt-2 mb-0">Rejected</label>
+              </div>
+              <div class="d-flex align-items-center pl-15">
+                <input type="radio" id="All" value="All" [checked]="All" class="me-1" name="approvalStatus"
+                  (click)="onClickFilter($event)">
+                <label for="All" class=" pt-2 mb-0">All</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-10 col-sm-10 col-10" style="padding-right: 4px;">
+            <div class="table-responsive vouchers" style="height: 200px">
+              <table class="table table-hover" id="tbl-print">
+                <thead>
+                  <tr>
+                    <th class="">Vch No</th>
+                    <th class="text-center">Vch Date</th>
+                    <th class="">Vehicle</th>
+                    <th class="">Party</th>
+                    <th class="text-center">Freight</th>
+                    <th class="text-end">Gross</th>
+                    <th class="text-center">Time In</th>
+                    <th class="text-end">Tare</th>
+                    <th class="text-center">Time Out</th>
+                    <th class="text-end">Net</th>
+                    <th class="text-center">Approve</th>
+                    <th class="text-center">Reject</th>
+                    <th class="text-center">Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of VoucherAppListFiltered"
+                    (click)="getVchDetail(data.VCHNO);rowHighLight($event)">
+                    <td class="">
+                      <span (click)="PrintSlip(data.ResultDate, data.ArrivalNo)" class="btnRowPrint me-3">
+                        <img src="/assets/img/icons/printer.svg" style="cursor: pointer;" alt="img">
+                      </span>
+                      {{ data.VCHNO }}</td>
+                    <td class="d-none">{{ data.ArrivalNo }}</td>
+                    <td class="d-none">{{ data.ResultDate }}</td>
+                    <td class="text-center">{{ data.VchDate }}</td>
+                    <td class="">{{ data.VehicleNo }}</td>
+                    <td class="">{{ data.Party }}</td>
+                    <td class="text-center">{{ data.Freight }}</td>
+                    <td class="text-end">{{ data.Gross }}</td>
+                    <td class="text-center">{{ data.TimeIn }}</td>
+                    <td class="text-end">{{ data.Tare }}</td>
+                    <td class="text-center">{{ data.TimeOut }}</td>
+                    <td class="text-end">{{ data.Net }}</td>
+                    <td class="text-center">
+                      <input type="checkbox" [checked]="data.Aprove" (change)="updateApproveStatus($event, data)">
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" [checked]="data.Reject" (change)="updateRejectedStatus($event, data)">
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" [checked]="data.Rcvd" (change)="updateTypeStatus($event, data)">
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot [ngClass]="(approved == true ) ? '' : 'd-none'">
+                  <tr>
+                    <td colspan="1"></td>
+                    <td class="text-center" colspan="2">Total Rate: {{TotalRate}}</td>
+                    <td class="text-center" colspan="2">Total Gross: {{TotalGross}}</td>
+                    <td class="text-end"></td>
+                    <td class="text-end" colspan="2">Total Tare: {{TotalTare}}</td>
+                    <td class="text-end"></td>
+                    <td class="text-end" colspan="2">Total Net: {{TotalNet}}</td>
+                    <td colspan="2"></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-2 col-2" style="padding-left: 0px;">
+            <div class="table-responsive vouchers" style="height: 200px">
+              <table class="table table-hover" id="tbl-print">
+                <thead>
+                  <tr>
+                    <th class="">Item</th>
+                    <th class="text-end">Qty</th>
+                    <th class="text-end">Bag</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of VoucherAppDetail" (click)="rowHighLight($event)">
+                    <td class="">{{ data.ITEMNAME }}</td>
+                    <td class="text-end">{{ data.QTY }}</td>
+                    <td class="text-end">{{ data.BAGS }}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td></td>
+                    <td class="text-end">{{TotalQty}}</td>
+                    <td class="text-end">{{TotalBags}}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <button type="submit" class="btn btn-success btn-sm me-1" (click)="onClickSave()">Save</button>
+            <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">Refresh</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

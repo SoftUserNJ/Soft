@@ -1,0 +1,109 @@
+<section>
+
+    <div class="content ListPage" *ngIf="isShowPage">
+      <div class="page-header">
+        <div class="page-title">
+          <h4 class="newcolor">Holiday Setup</h4>
+          <h6 class="newcolor">New Holiday Setup</h6>
+        </div>
+        <div class="page-btn">
+          <div class="wordset newwordset">
+            <ul>
+              <li>
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf" id="pdfPrint">
+                  <img src="/assets/img/icons/pdf.svg" alt="img">
+                </a>
+              </li>
+              <li>
+                <a href="/Home/Index" role="button">
+                  <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+  
+          <div class="row align-items-center mb-2"  [formGroup]="HolidaySetupForm">
+      
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="position-relative w-100 me-2 form-group mb-0">
+                      <label class="fw-bold" style="margin-bottom: 0px !important;">From Date</label>
+                      <div class="input-groupicon">
+                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                          (click)="datepicker.open()" formControlName="fromDate" [readOnly]="Disabled"/>
+                        <mat-datepicker #datepicker></mat-datepicker>
+                        <div class="addonset">
+                          <img src="/assets/img/icons/calendars.svg" alt="img">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="position-relative w-100 me-2 form-group mb-0">
+                      <label class="fw-bold" style="margin-bottom: 0px !important;">From Date</label>
+                      <div class="input-groupicon">
+                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker1"
+                          (click)="datepicker1.open()" formControlName="toDate" [readOnly]="Disabled"/>
+                        <mat-datepicker #datepicker1 ></mat-datepicker>
+                        <div class="addonset">
+                          <img src="/assets/img/icons/calendars.svg" alt="img">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-10 col-md-4 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Description</label>
+                      <input type="text" formControlName="description" [readOnly]="Disabled" class="form-control me-2">
+                      <input type="text" formControlName="Id" readonly class="form-control me-2 d-none">
+      
+                    </div>
+                  </div>
+  
+              <div class="col-lg-2 col-md-2 pt-4 text-end">
+  
+                <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()"> New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1 " [hidden]="!isShow"
+                  (click)="onClickSave()">Save</button>
+                  <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">Refresh</button>
+              </div>
+          </div>
+          <div class="table-responsive mb-1" style="height: 380px;">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th class="text-start">Id</th>
+                  <th class="text-start">Holiday</th>
+                  <th class="text-start">From Date</th>
+                  <th class="text-start">To Date</th>
+                  <th class="text-center w-12">Action</th>
+                </tr>
+              </thead>
+              <tbody #voucherLists>
+                <tr *ngFor="let data of voucherList">
+                    <td class="text-start">{{data.Id}}</td>
+                  <td class="text-start">{{data.Holiday}}</td>
+                  <td class="text-start">{{data.From_Date | date:'yyyy-dd-MM'}}</td>
+                  <td class="text-start">{{data.To_Date | date:'yyyy-dd-MM'}}</td>
+                  <td class="text-center">
+                    <span (click)="editHoliday(data)" class="me-3 btnEditCategory">
+                      <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                    </span>
+                    <span (click)="deleteHoliday(data.Id)" class="confirm-text btnDelCategory">
+                      <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete">
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

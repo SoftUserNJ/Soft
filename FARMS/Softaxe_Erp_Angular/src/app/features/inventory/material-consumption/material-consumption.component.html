@@ -1,0 +1,292 @@
+<section>
+    <div class="content ListPage" *ngIf="isShowPage">
+        <div class="page-header">
+            <div class="page-title">
+                <h4 class="newcolor">Material Consumption</h4>
+            </div>
+            <div class="page-btn">
+                <div class="wordset newwordset">
+                    <ul>
+                        <li>
+                            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf"
+                                id="pdfPrint">
+                                <img src="/assets/img/icons/pdf.svg" alt="img">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center mb-2">
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="d-flex align-items-center">
+                            <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+                            <input type="search" class="form-control" placeholder="Search"
+                                (input)="searchGrid($event)" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 col-md-8 col-sm-12">
+                        <div class="row align-items-center">
+                            <div class="col-lg-2 col-md-2 text-end p-0">
+                                <span class="fw-bolder">From Date</span>
+                            </div>
+                            <div class="col-lg-3 col-md-4 ps-1">
+                                <div class="form-group mb-0">
+                                    <div class="input-groupicon">
+                                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                                            [matDatepicker]="datepicker" [(ngModel)]="fromDate"
+                                            (click)="datepicker.open()" />
+                                        <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                                        <div class="addonset">
+                                            <img src="/assets/img/icons/calendars.svg" alt="img">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 text-end p-0">
+                                <span class="fw-bolder">To Date</span>
+                            </div>
+                            <div class="col-lg-3 col-md-4 ps-1">
+                                <div class="form-group mb-0">
+                                    <div class="input-groupicon">
+                                        <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                                            [matDatepicker]="datepicker2" [(ngModel)]="toDate"
+                                            (click)="datepicker2.open()">
+                                        <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                                        <div class="addonset">
+                                            <img src="/assets/img/icons/calendars.svg" alt="img">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 d-flex ps-0">
+
+                                <div class="" (click)="getVouchersList();">
+                                    <img src="/assets/img/icons/search.svg" alt="img" class="filter-img">
+                                </div>
+
+                                <div class=" ms-auto">
+                                    <p (click)="togglePages(); onClickRefresh()" class="add-new w-100 pe-2">
+                                        <img src="/assets/img/icons/plus.svg" alt="img" class="filter-img">Add New
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive mb-1">
+                    <table class="table table-hover" id="tbl-print">
+                        <thead>
+                            <tr>
+                                <th class="wd-5">Vch No</th>
+                                <th class="">Vch Date</th>
+                                <th class="">Vch Type</th>
+                                <th class="text-center w-12">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody #voucherLists>
+                            <tr *ngFor="let data of voucherList">
+                                <td class="">{{data.VCHNO}}</td>
+                                <td class="">{{data.VCHDATE}}</td>
+                                <td class="">{{data.VCHTYPE}}</td>
+                                <td class="text-center">
+                                    <span class="me-3" style="cursor: pointer;">
+                                        <i class="fas fa-print"></i>
+                                    </span>
+                                    <span class="me-3" style="cursor: pointer;" (click)="editVouchers(data.VCHNO)">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                    <span class="confirm-text" style="cursor: pointer;"
+                                        (click)="deleteVouchers(data.VCHNO)">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content AddPage pt-1" *ngIf="!isShowPage">
+        <div class="page-header mb-1">
+            <div class="page-title">
+                <h4>Material Consumption</h4>
+            </div>
+            <div class="page-btn" routerLink="/journal-voucher">
+                <a (click)="togglePages()" class="btn btn-added btnList">
+                    <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title=""
+                        data-bs-original-title="fa fa-th-list" aria-label="fa fa-th-list"></i>
+                    Home
+                </a>
+            </div>
+        </div>
+        <div class="card" [ngClass]="{ disabled: editDisabled }">
+            <div class="card-body pt-1">
+
+                <div class="row mb-2" [formGroup]="MaterialConsumptionForm">
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="position-relative w-100">
+                            <label class="fw-bold">Main</label>
+                            <ng-select class="bold-placeholder" [items]="itemMain" placeholder="--- Select ---"
+                                [readonly]="readonly" [clearable]="none" bindLabel="NAME" bindValue="CODE"
+                                formControlName="itemMain" [dropdownPosition]="'bottom'" (change)="getProducts($event)">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-12">
+                        <label class="fw-bold">Date</label>
+                        <div class="form-group mb-0">
+                            <div class="input-groupicon">
+                                <input type="text" class="form-control" placeholder="DD/MM/YYYY" formControlName="date"
+                                    [readonly]="readonly" matInput [matDatepicker]="datepicker5"
+                                    (click)="datepicker5.open()" />
+                                <mat-datepicker #datepicker5 [startAt]="fromDate"></mat-datepicker>
+                                <div class="addonset">
+                                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 col-md-1 col-sm-12">
+                        <div class="position-relative w-100">
+                            <label class="fw-bold">Unit</label>
+                            <ng-select class="bold-placeholder" [items]="locationList" placeholder="--- Select ---"
+                                [readonly]="readonly" [clearable]="none" [searchable]="none" bindLabel="LocID"
+                                bindValue="LocID" formControlName="locationUnit" [dropdownPosition]="'bottom'">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-5"></div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="position-relative w-100">
+                            <label class="fw-bold">Product</label>
+                            <ng-select class="bold-placeholder" [items]="itemsList" placeholder="--- Select ---"
+                                [readonly]="readonly" [clearable]="none" bindLabel="NAME" bindValue="CODE"
+                                formControlName="product" [dropdownPosition]="'bottom'"
+                                (change)="onProductChange($event)">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-12">
+                        <div class="position-relative w-100">
+                            <label class="fw-bold">UOM</label>
+                            <ng-select class="bold-placeholder" [items]="uomList" placeholder="--- Select ---"
+                                [readonly]="readonly" bindLabel="UOM" bindValue="ID" formControlName="uom"
+                                [dropdownPosition]="'bottom'">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-12">
+                        <div class="position-relative w-100">
+                            <label class="fw-bold">Location</label>
+                            <ng-select class="bold-placeholder" [items]="prodLocationList" placeholder="--- Select ---"
+                                [readonly]="readonly" bindLabel="SKU" bindValue="SHELFNO" formControlName="prodLocation"
+                                [dropdownPosition]="'bottom'">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 col-md-1 col-sm-12">
+                        <div class="position-relative w-100">
+                            <label class="fw-bold">Balance</label>
+                            <input type="text" [readonly]="true" formControlName="balance" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 col-md-1 col-sm-12">
+                        <div class="position-relative w-100">
+                            <label class="fw-bold">StockInHand</label>
+                            <input type="text" [readonly]="readonly" (input)="onStockInput($event);"
+                                formControlName="stock" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 col-md-1 col-sm-12">
+                        <div class="position-relative w-100">
+                            <label class="fw-bold">Cons-Qty</label>
+                            <input type="text" [readonly]="true" formControlName="consQty" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 col-md-1 col-sm-12 d-flex">
+                        <button type="submit" (click)="onAdd()" class="btn btn-success btn-sm ms-auto"
+                            style="margin-top: 20px;">{{btnAdd}}</button>
+                    </div>
+
+                </div>
+
+                <div class="table-responsive" style="height: 200px">
+                    <table class="table table-hover" id="tbl-print">
+                        <thead>
+                            <tr>
+                                <th class="">Item Code</th>
+                                <th class="">Main</th>
+                                <th class="">Item</th>
+                                <th class="">UOM</th>
+                                <th class="">Location</th>
+                                <th class="text-end">Stock</th>
+                                <th class="text-end">Bal</th>
+                                <th class="text-end">ConsQty</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of detailsList; let i = index" (click)="rowHighLight($event)">
+                                <td class="">{{ data.dmcode }}{{ data.code }}</td>
+                                <td class="">{{ data.itemMainName }}</td>
+                                <td class="">{{ data.itemName }}</td>
+                                <td class="">{{ data.uomName }}</td>
+                                <td class="">{{ data.prodLocationName }}</td>
+                                <td class="text-end">{{ data.stock }}</td>
+                                <td class="text-end">{{ data.balance }}</td>
+                                <td class="text-end">{{ data.consQty }}</td>
+                                <td class="text-center">
+                                    <!-- Edit Button -->
+                                    <span (click)="editItem(data)" class="me-3" style="cursor: pointer">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                    <!-- Delete Button  -->
+                                    <span (click)="deleteItem(i)" class="confirm-text" style="cursor: pointer">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-end">Total = </td>
+                                <td class="text-end pe-0">{{totalStock}}</td>
+                                <td class="text-end pe-0">{{totalBal}}</td>
+                                <td class="text-end pe-0">{{totalConsQty}}</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <button class="btn btn-primary btn-sm me-1" [hidden]="isShow"
+                            (click)="onClickNew()">New</button>
+                        <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+                            (click)="onClickSave()">Save</button>
+                        <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

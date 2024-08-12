@@ -1,0 +1,179 @@
+<section *ngIf="showPage1">
+<div class="content ListPage">
+    <div class="page-header mb-1">
+        <div class="page-title">
+            <h4>Services List</h4>
+            <h6>Manage your Services</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" id="pdfPrint">
+                            <img src="/assets/img/icons/pdf.svg" alt="img">
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel">
+                            <img src="/assets/img/icons/excel.svg" alt="img">
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="print">
+                            <i class="fas fa-print"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search">
+                            <img src="/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch" />
+                    </div>
+                </div>
+                <div class="wordset">
+                    <p (click)="togglePages()" class="btn btn-addednew btnAdd">
+                        <img src="/assets/img/icons/plus.svg" alt="img" class="me-1">Add New
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Service Name</th>
+                            <th>Period</th>
+                            <th class="text-end pe-5">Rate</th>
+                            <th class="text-end pe-5">Tax</th>
+                            <th class="text-center w-0 pe-4">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="servicesList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<section *ngIf="!showPage1">
+<div class="content AddPage">
+    <div class="page-header mb-1">
+        <div class="page-title">
+            <h4>Services Management</h4>
+            <h6>Add/Update Services</h6>
+        </div>
+        <div class="page-btn">
+            <a (click)="togglePages()" class="btn btn-added btnList">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="Home" aria-label="fa fa-th-list"></i> Home
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="row activeForm disabled">
+                    <div class="col-lg-6 col-sm-6 col-12 mx-auto activeForm disabled">
+                        <div class="form-group">
+                            <label>Service Name</label>
+                            <input type="text" id="txtServiceName" skinid="Enter Service Name....!">
+                            <input type="hidden" id="txtServiceId">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Time Period</label>
+                            <div class="row">
+                                <div class="col-lg-10 col-sm-10 col-10 pe-1">
+<!-- 
+                                    <ng-select class="js-example-basic-single select2" id="drpServiceTimePeriod" [items]="groupOptions"
+                  bindLabel="name" placeholder="---Select Group ---" [searchable]="true" [(ngModel)]="selectedGroup">
+                </ng-select> -->
+
+
+                                    <!-- <select class="js-example-basic-single select2" id="drpServiceTimePeriod" skinid="Select Time Period ....!">
+                                    </select> -->
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                                    <div class="add-icon text-end">
+                                        <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal" data-bs-target="#TimePeriodModal"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Rate</label>
+                            <input type="number" id="txtServiceRate" skinid="Enter Service Rate ....!">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tax</label>
+                            <input type="number" id="txtServiceTax" skinid="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mx-auto">
+                    <button class="btn btn-success btn-sm" id="btnSave">Save</button>
+                    <button class="btn btn-primary btn-sm" id="btnNew">New</button>
+                    <button class="btn btn-secondary btn-sm" id="btnRefresh">Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<div class="modal fade TimePeriodModalClass" id="TimePeriodModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Time Period</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group">
+              <label class="form-label">Time Period</label>
+              <input type="text" class="form-control" id="txtTimePeriod" skinid="Enter Time Period....!">
+              <input type="hidden" id="txtTimePeriodId">
+            </div>
+            <div class="mb-2">
+              <button class="btn btn-primary btn-sm" id="btnNewTimePeriod">New</button>
+              <button class="btn btn-success btn-sm" id="btnSaveTimePeriod">Save</button>
+              <button class="btn btn-secondary btn-sm" id="btnRefreshTimePeriod">Refresh</button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="w-75">Time Period</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="timePeriodList">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

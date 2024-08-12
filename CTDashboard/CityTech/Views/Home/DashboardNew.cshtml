@@ -1,0 +1,361 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer;
+
+@{
+    ViewData["Title"] = "Dashboard New";
+    
+}
+@section styles {
+
+    <link rel="stylesheet" href="~/css/Dscss/demo.css">
+    <link rel="stylesheet" href="~/css/Dscss/gridstack-extra.min.css">
+<style>
+    .toggle.ios, .toggle-on.ios, .toggle-off.ios {
+        border-radius: 20px;}
+
+    .toggle.ios .toggle-handle {
+         border-radius: 20px;} 
+
+         .EditDesign {
+            border: 1px dashed #857e7e !important;
+         }
+
+</style>
+}
+
+<div class="content pt-2 ListPage">
+ 
+    <div class="right-content mt-0">
+
+
+        <div class="row mb-3 pe-5 ps-5">
+            <div class="col-2 col-lg-2 col-md-2 p-0" style="width:230px !important;">
+                <h2 style="margin-top:-5px;">@Localizer["STATISTICS"]</h2>
+            </div>
+            <div class="col-5 col-lg-5 col-md-5 d-flex pe-0 ps-0">
+                <div class="pe-1">
+                    <select class="form-select  padding-right: 2px; padding-left: 2px;" id="drpLocations"></select>
+                </div>
+
+                <div class="p-0 ms-auto" style="width:200px;  padding-left: 1px;">
+                    <select class="form-select" id="drpObjects"></select>
+                </div>
+            </div>
+            <div class="col-4 col-lg-4 col-md-4 pe-0">
+                <div class="d-flex d-flex align-items-center justify-content-end">
+                    <div id="reportrange" style="">
+                        <span style="font-size:12px; font-weight:bold;"></span>
+
+                    </div>
+                    <button class="button-1 ms-1 me-1 ct-btns " id="btndate" style="float: right;">@Localizer["Date"]</button>
+                    <input type="checkbox" data-toggle="toggle" data-style="ios" class="ms-3 ct-btns" data-on="Auto" data-off="Off" data-onstyle="success" data-offstyle="danger">
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+
+ 
+
+
+        
+
+        <div class="row mb-3 pe-5 ps-5">
+            <div class="col-5 col-lg-5 col-md-5 d-flex pe-0 ps-0">
+            <div class="addnewwidget btn btn-primary" >
+                <div class="grid-stack-item" gs-w="2" gs-h="1" gs-max-w="3">
+                    <div class="grid-stack-item-content">Widget</div>
+                </div>
+             </div>
+          </div>
+        </div>
+                   
+      
+
+                <a onClick="saveGrid()" class="btn btn-primary" href="#">Save</a>
+                <a onClick="loadGrid()" class="btn btn-primary" href="#">Load</a>
+                <a onClick="saveFullGrid()" class="btn btn-primary" href="#">Save Full</a>
+                <a onClick="loadFullGrid()" class="btn btn-primary" href="#">Load Full</a>
+                <a onClick="clearGrid()" class="btn btn-primary" href="#">Clear</a>
+        <a onClick="addWidget()" class="btn btn-primary" href="#">@Localizer["AddWidget"]</a>
+                <br /><br />
+                <div>
+                    <label>Choose re-layout:</label>
+                    <select onchange="setLayout(this.value)">
+                        <option value="list">list</option>
+                        <option value="compact">compact</option>
+                        <option value="moveScale">move + scale</option>
+                        <option value="move">move</option>
+                        <option value="scale">scale</option>
+                        <option value="none">none</option>
+                        <option value="custom">custom</option>
+                    </select>
+                </div>
+                <div>
+                    load:
+                    <a onClick="grid.removeAll().load(list)" class="btn btn-primary" href="#">list</a>
+                    <a onClick="grid.removeAll().load(test1)" class="btn btn-primary" href="#">case 1</a>
+                    <a onClick="random()" class="btn btn-primary" href="#">random</a>
+                    <a onClick="addWidget()" class="btn btn-primary" href="#">Add Widget</a>
+                    column:
+                    <a onClick="setOneColumn(false)" class="btn btn-primary" href="#">1</a>
+                    <a onClick="setOneColumn(true)" class="btn btn-primary" href="#">1 DOM</a>
+                    <a onClick="column(2)" class="btn btn-primary" href="#">2</a>
+                    <a onClick="column(3)" class="btn btn-primary" href="#">3</a>
+                    <a onClick="column(4)" class="btn btn-primary" href="#">4</a>
+                    <a onClick="column(6)" class="btn btn-primary" href="#">6</a>
+                    <a onClick="column(8)" class="btn btn-primary" href="#">8</a>
+                    <a onClick="column(10)" class="btn btn-primary" href="#">10</a>
+                    <a onClick="column(12)" class="btn btn-primary" href="#">12</a>
+                </div>
+            </div>
+            <br />
+    <a class="btn btn-primary" onClick="EditDesign(true) " href="#">Disabled</a>
+            <a class="btn btn-primary" onclick="EditDesign(false)" id="float" href="#">Editable</a>
+            <br />
+        <div style="border-style:dotted !important;" >sss</div>
+    <div id="gridCont" ><div class="grid-stack"></div></div>
+            <hr />
+            <textarea id="saved-data" cols="100" rows="20" readonly="readonly"></textarea>
+        </div>
+
+
+
+
+
+    
+     
+      
+       
+
+
+
+
+@section scripts{
+    <script src="~/js/Dsjs/gridstack-all.js"></script>
+    <script src="~/js/Dsjs/events.js"></script>
+
+
+
+
+
+      <script type="text/javascript">
+    let grid = GridStack.init({
+      minRow: 1, // don't let it collapse when empty
+      cellHeight: '7rem',
+      staticGrid: true,
+      acceptWidgets: true,
+      removable: true,
+      draggable: { cancel: '.no-drag'} // example of additional custom elements to skip drag on
+    });
+      addEvents(grid);
+    grid.on('added removed change', function(e, items) {
+      if (!items) return;
+      let str = '';
+      items.forEach(function(item) { str += ' (x,y)=' + item.x + ',' + item.y; });
+      console.log(e.type + ' ' + items.length + ' items:' + str );
+    });
+
+    //let serializedData = [
+    //  {x: 0, y: 0, w: 2, h: 2, id: '0'},
+    //  {x: 3, y: 1, h: 3, id: '1', 
+    //  content: "<button onclick=\"alert('clicked!')\">Press me</button><div>text area</div><div><textarea></textarea></div><div>Input Field</div><input type='text'><div contentEditable=\"true\">Editable Div</div><div class=\"no-drag\">no drag</div>"},
+    //  {x: 4, y: 1, id: '2'},
+    //  {x: 2, y: 3, w: 3, id: '3'},
+    //  {x: 1, y: 3, id: '4'}
+    //];
+
+        var serializedData = [
+            { "w": 3, "h": 3, "id": "div0", "content": "<button onclick=\"grid.removeWidget(this.parentNode.parentNode)\">X</button><br>0", "x": 0, "y": 0 },
+            { "w": 3, "h": 3, "id": "div1", "content": "<button onclick=\"grid.removeWidget(this.parentNode.parentNode)\">X</button><br>1", "x": 3, "y": 0 },
+            { "w": 3, "h": 3, "id": "div2", "content": "<button onclick=\"grid.removeWidget(this.parentNode.parentNode)\">X</button><br>2", "x": 6, "y": 0 },
+            { "w": 3, "h": 3, "id": "div3", "content": "<button onclick=\"grid.removeWidget(this.parentNode.parentNode)\">X</button><br>3", "x": 9, "y": 0 },
+            { "w": 3, "h": 3, "id": "div4", "content": "<button onclick=\"grid.removeWidget(this.parentNode.parentNode)\">X</button><br>4", "x": 0, "y": 3 },
+            { "w": 3, "h": 3, "id": "div5", "content": "<button onclick=\"grid.removeWidget(this.parentNode.parentNode)\">X</button><br>5", "x": 3, "y": 3 },
+            { "w": 3, "h": 3, "id": "div6", "content": "<button onclick=\"grid.removeWidget(this.parentNode.parentNode)\">X</button><br>6", "x": 6, "y": 3 },
+            { "w": 3, "h": 3, "id": "div7", "content": "<button onclick=\"grid.removeWidget(this.parentNode.parentNode)\">X</button><br>7", "x": 9, "y": 3 }
+        ];
+
+    //serializedData.forEach((n, i) =>
+    //  n.content = `<button onClick="removeWidget(this.parentElement.parentElement)">X</button><br> ${i}<br> ${n.content ? n.content : ''}`);
+    let serializedFull;
+
+    // 2.x method - just saving list of widgets with content (default)
+    function loadGrid() {
+      grid.load(serializedData, true); // update things
+    }
+
+    // 2.x method
+    function saveGrid() {
+      delete serializedFull;
+      serializedData = grid.save();
+      document.querySelector('#saved-data').value = JSON.stringify(serializedData, null, '  ');
+    }
+
+    // 3.1 full method saving the grid options + children (which is recursive for nested grids)
+    function saveFullGrid() {
+      serializedFull = grid.save(true, true);
+      serializedData = serializedFull.children;
+      document.querySelector('#saved-data').value = JSON.stringify(serializedFull, null, '  ');
+    }
+
+    // 3.1 full method to reload from scratch - delete the grid and add it back from JSON
+    function loadFullGrid() {
+      if (!serializedFull) return;
+      grid.destroy(true); // nuke everything
+      grid = GridStack.addGrid(document.querySelector('#gridCont'), serializedFull)
+    }
+
+    function clearGrid() {
+      grid.removeAll();
+    }
+
+    function removeWidget(el) {
+      // TEST removing from DOM first like Angular/React/Vue would do
+      el.remove();
+      grid.removeWidget(el, false);
+    }
+
+//add
+    let count = 0;
+   let layout = 'list';
+function addWidget() {
+      let n = {
+        w: Math.round(3 ),
+        h: Math.round(3 ),
+        id:'div'+count,
+        content: '<button onClick="grid.removeWidget(this.parentNode.parentNode)">X</button><br>' + count++,
+      };
+      grid.addWidget(n);
+    };
+
+
+
+ function column(n) {
+      grid.column(n, layout);
+      text.innerHTML = n;
+    }
+
+
+
+//SETTING
+
+    function random() {
+      grid.removeAll();
+      count = 0;
+      for (i=0; i<8; i++) addWidget(true);
+    }
+
+ function setOneColumn(dom) {
+      if (grid.opts.column === 1 && grid.opts.oneColumnModeDomSort !== dom) {
+        column(12); // go ack to 12 before going to new column1 version
+      }
+      grid.opts.oneColumnModeDomSort = dom;
+      grid.column(1, layout);
+      text.innerHTML = dom ? '1 DOM' : '1';
+    }
+    // dummy test method that moves items to the right each new layout... grid engine will validate those values (can't be neg or out of bounds) anyway...
+    function columnLayout(column, oldColumn, nodes, oldNodes) {
+      oldNodes.forEach(n => {
+        n.x = n.x + 1;
+        nodes.push(n);
+      });
+      oldNodes.length = 0;
+    }
+    function setLayout(name) {
+      layout = name === 'custom' ? this.columnLayout : name;
+    }
+
+     function EditDesign(Value)
+     {
+            grid.setStatic(Value);
+            if (Value==false)
+            {
+                $("#gridCont").addClass("EditDesign");
+            }
+            else
+            {
+                $("#gridCont").removeClass("EditDesign");
+            }
+            return false;
+     }
+
+        GridStack.setupDragIn('.addnewwidget .grid-stack-item', { appendTo: 'body', helper: 'clone' });
+    loadGrid();
+  </script>
+
+
+
+    <script>
+
+
+        $(function () {
+            GetLocations()
+            $("#drpLocations").trigger('change');
+        })
+        function GetLocations() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/Locations/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpLocations").empty();
+                        if (data.length == 0) {
+                            $("#drpLocations").append(`<option>Location Not Found</option>`);
+                            return false;
+                        }
+                        $.each(data, function (i, item) {
+                            $("#drpLocations").append(`<option value="${item.locId}" >${item.locName}</option>`);
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+        $("#drpLocations").change(function () {
+            try {
+                var obj = {};
+                obj.locId = $(this).val();
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/Objects/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpObjects").empty();
+                        if (data.length == 0) {
+                            $("#drpObjects").append(`<option> Object Not Found</option>`);
+                            return false
+                        }
+                        $.each(data, function (i, item) {
+                            $("#drpObjects").append(`<option value="${item.objectId}" >${item.objectName}</option>`);
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+    </script>
+}

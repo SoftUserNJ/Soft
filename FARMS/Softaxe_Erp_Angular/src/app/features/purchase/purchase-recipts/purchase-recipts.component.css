@@ -1,0 +1,62 @@
+.searchSvg {
+    filter: invert(100) sepia(100) saturate(0) hue-rotate(357deg) brightness(100) contrast(100%);
+  }
+  
+  .green-bg {
+    background: #cbeb8e;
+    border-radius: 5px 5px 0px 0px;
+  }
+  
+  table {
+    font-size: small;
+  }
+  
+  .border-bill {
+    border: 1px solid #bfbfbf;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  
+  .scroll5 {
+    height: 183px;
+  }
+  
+  .txtBills {
+    width: 100%;
+    font-size: 14px;
+    text-align: right;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid #bfbfbf;
+  }
+  
+  .card-home{
+    padding-top: 0;
+    padding-right: 12px;
+    padding-left: 12px;
+    padding-bottom: 5px;
+  }
+  
+  .add-icon a {
+    width: 34px;
+    height: 36px;
+    background: #ff9f43;
+    border-radius: 5px;
+  }
+  
+  .icon-img{
+      color: #637381; 
+      font-size:21px;
+  }
+  
+  .w-12{
+      width: 12%!important;
+  }
+
+  .terms-add-icon {
+    width: 80%;
+      height: 24px;
+      background: #ff9f43;
+      border-radius: 5px;
+      float: right;
+  }

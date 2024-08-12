@@ -1,0 +1,394 @@
+<div class="content">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Sale Area Updation</h4>
+      <h6>Manage your Sale Area</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a  (click)="export('sale area updation', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('sale area updation', 'xlxs')" title="excel">
+              <img src="assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-5 AddPage">
+          <div class="">
+            <label class="fw-bolder">Sale Manager</label>
+            <div class="row">
+              <div class="col-lg-11 col-sm-10 col-10">
+                <div class="position-relative w-100">
+                  <ng-select class="js-example-basic-single select2" [items]="saleManagerList" bindLabel="name"
+                    bindValue="id" placeholder="---Select Sale Manager---" [(ngModel)]="saleManager"
+                    [dropdownPosition]="'bottom'"></ng-select>
+                </div>
+              </div>
+              <div class="col-lg-1 col-sm-2 col-2 ps-0">
+                <div class="add-icon text-end">
+                  <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                    data-bs-target="#Salesmanager"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class=" mb-4">
+            <label class="fw-bolder">Order Taker</label>
+            <div class="row">
+              <div class="col-lg-11 col-sm-11 col-11">
+                <div class="position-relative w-100">
+                  <ng-select class="js-example-basic-single select2" id="drpCompanyGroup" [items]="orderTakerList"
+                    bindLabel="userName" bindValue="id" placeholder="---Select Order Taker---" [(ngModel)]="ordertaker"
+                    [dropdownPosition]="'bottom'" (change)="onChangeOT()" ></ng-select>
+                </div>
+              </div>
+              <div class="col-lg-1 col-sm-1 col-1 ps-0">
+                <div class="add-icon text-end">
+                  <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus"
+                    (click)="onClickPopup()"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <section style="margin-top:75px;">
+            <h6 class="fw-bolder">Manage Areas</h6>
+            <div class=" ">
+              <label class="fw-bolder">Main Area</label>
+              <div class="row">
+                <div class="col-lg-11 col-sm-11 col-11">
+                  <div class="position-relative w-100">
+                    <ng-select placeholder="---Select Main Area ---" [items]="mainAreaList" bindLabel="name"
+                      bindValue="id" [dropdownPosition]="'bottom'" (change)="onChangeMainAera($event)">
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-lg-1 col-sm-1 col-1 ps-0">
+                  <div class="add-icon text-end">
+                    <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                      data-bs-target="#MainAreaModal"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <label class="fw-bolder">Sub Area</label>
+              <div class="row">
+                <div class="col-lg-11 col-sm-11 col-11">
+                  <div class="position-relative w-100">
+                    <ng-select class="js-example-basic-single select2" id="drpCompanyGroup" [items]="subAreaList"
+                      bindLabel="name" bindValue="id" placeholder="---Select Sub Area---" [searchable]="true"
+                      [dropdownPosition]="'bottom'"></ng-select>
+                  </div>
+                </div>
+                <div class="col-lg-1 col-sm-1 col-1 ps-0">
+                  <div class="add-icon text-end">
+                    <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                      data-bs-target="#SubAreaModal"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="col-sm-7">
+          <div class="row">
+            <div class="col-sm-6 mb-1">
+              <div class="search-set">
+                <div class="search-path">
+                  <a class="btn btn-filter" id="filter_search">
+                    <img src="/assets/img/icons/filter.svg" alt="img">
+                    <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+                  </a>
+                </div>
+                <div class="search-input w-100">
+                  <input type="search" [(ngModel)]="searchQuery" (input)="searchGrid()" class="w-100" placeholder="Search...." id="txtSearch">
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-sm-4 d-flex" style="margin-bottom:0px!important;">
+              <div class="d-flex align-items-center me-3">
+                <input type="radio" id="chkAll" class="me-1" name="Vch" (change)="onFilterChange('all')" [checked]="true" >
+                <label for="chkAll" class="mb-0">All</label>
+              </div>
+              <div class="d-flex align-items-center me-3">
+                <input type="radio" id="chkSelected" class="me-1" name="Vch" (change)="onFilterChange('selected')">
+                <label for="chkSelected" class="mb-0">Selected</label>
+              </div>
+              <div class="d-flex align-items-center me-3">
+                <input type="radio" id="chkUnSelected" class="me-1" name="Vch" (change)="onFilterChange('unselected')">
+                <label for="chkUnSelected" class="mb-0">UnSelected</label>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 text-end">
+              <button class="btn btn-success ms-3" (click)="onSaveAreaList() " id="btnSave">Save</button>
+            </div>
+            <div class="col-lg-12 col-sm-12 col-12">
+              <div class="table-responsive" style="height:350px;">
+                <table class="table mb-0"  id="export">
+                  <thead>
+                    <tr>
+                      <th>Main Area</th>
+                      <th>Sub Area</th>
+                      <th class="text-center noPrint">
+                        <input type="checkbox" id="allCheck" (click)="selectAll($event)">
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody #areaLists>
+                    <tr *ngFor="let item of areaList">
+                      <td class="limited-text mainArea" title="{{item.mainArea}}">{{item.mainArea}}</td>
+                      <td class="limited-text subArea" title="{{item.subArea}}">{{item.subArea}}</td>
+                      <td class="text-center noPrint">
+                        <input type="checkbox" [(ngModel)]="item.isSelected">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Sale Manager -->
+<div class="modal fade" id="Salesmanager">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2  align-items-center">
+        <h5 class="modal-title ">Sale Manager
+        </h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group mb-1">
+                    <label class="form-label mb-0">Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="saleManagerName"
+                      [disabled]="isDisabledsaleManager">
+                    <input type="hidden" [(ngModel)]="saleManagerId">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <button class="btn btn-primary btn-sm me-1" (click)="newsaleManager()"
+                [hidden]="isShowsaleManager">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdatesaleManager()"
+                [hidden]="!isShowsaleManager">Save</button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshsaleManager()">Refresh</button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height:205px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center w-0">Id</th>
+                      <th class="w-50">Name</th>
+                      <th class="text-center w-0">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of saleManagerList; let i = index">
+                      <td class="id text-center">{{ item.id }}</td>
+                      <td class="names">{{ item.name }}</td>
+                      <td class="text-center">
+                        <span (click)=" editsaleManager(item.id, item.name)" class="me-3">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span (click)="deletesaleManager(item.id)" class="confirm-text">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Order Taker Commission -->
+<div class="modal fade" id="OrderTakerComissionModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Order Taker Comission</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Recovery</label>
+                  <input type="number" class="form-control" [(ngModel)]="recovery">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Commission %</label>
+                  <input type="number" class="form-control" [(ngModel)]="commission">
+                </div>
+              </div>
+              <div class="col-lg-6 ">
+                <div class="form-group">
+                  <label class="form-label">Above Commission %</label>
+                  <input type="number" class="form-control" [(ngModel)]="aboveCommission">
+                </div>
+              </div>
+              <div class="col-lg-6 ">
+                <div class="form-group">
+                  <label class="form-label">Recovery Target</label>
+                  <input type="number" class="form-control" [(ngModel)]="recoveryTarget">
+                </div>
+              </div>
+            </div>
+            <div class="mb-2 text-center">
+              <button class="btn btn-success btn-sm" (click)="onClickSaveCom()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Main area -->
+<div class="modal fade" id="MainAreaModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Main Area</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Main Area</label>
+              <input type="name" class="form-control" [(ngModel)]="mainAreaName" [disabled]="isDisabledMainArea">
+              <input type="hidden" [(ngModel)]="mainAreaId" [disabled]="isDisabledMainArea">
+            </div>
+            <div class="mb-1">
+              <button class="btn btn-primary btn-sm me-1" (click)="newMainArea()" [hidden]="isShowMainArea">New</button>
+              <button class="btn btn-success btn-sm me-1" (click)="createUpdateMainArea()"
+                [hidden]="!isShowMainArea">Save</button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshMainArea()">Refresh</button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height:205px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Code</th>
+                      <th class="w-75">Name</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of mainAreaList">
+                      <td>{{data.id}}</td>
+                      <td>{{data.name}}</td>
+                      <td class="text-center">
+                        <span class="me-3" (click)="editMainArea(data.id, data.name)">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span class="confirm-text" (click)="deleteMainArea(data.id)">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                    <!-- Add more table rows as needed -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Sub Area -->
+<div class="modal fade" id="SubAreaModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Sub Area</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Sub Area</label>
+              <input type="text" class="form-control" [(ngModel)]="subAreaName" [disabled]="isDisabledSubArea">
+              <input type="hidden" [(ngModel)]="subAreaId" [disabled]="isDisabledSubArea">
+            </div>
+            <div class="mb-1">
+              <button class="btn btn-primary btn-sm me-1" (click)="newSubArea()" [hidden]="isShowSubArea">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateSubArea()"
+                [hidden]="!isShowSubArea">Save</button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshSubArea()">Refresh</button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height:205px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Code</th>
+                      <th class="w-75">Name</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of subAreaList">
+                      <td>{{data.id}}</td>
+                      <td>{{data.name}}</td>
+                      <td class="text-center">
+                        <span class="me-3" (click)="editSubArea(data.id, data.name)">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span class="confirm-text" (click)="deleteSubArea(data.id)">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

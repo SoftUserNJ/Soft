@@ -1,0 +1,769 @@
+<div class="content ListPage" *ngIf="!isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Company List</h4>
+      <h6>Manage your Company</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Company', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Company', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="table-top table-topm">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="/assets/img/icons/filter.svg" alt="img" />
+              <span><img src="/assets/img/icons/closes.svg" alt="img" /></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <input type="search" id="txtSearch" />
+          </div>
+        </div>
+        <div class="wordset" (click)="togglePages()">
+          <p class="btn btn-addednew btnAdd">
+            <img src="/assets/img/icons/plus.svg" alt="img" class="me-1" />Add New
+          </p>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table" id="export">
+          <thead>
+            <tr>
+              <th>Group Name</th>
+              <th>Company Name</th>
+              <th>Short Name</th>
+              <th>Owner Name</th>
+              <th>Contact</th>
+              <th>Country</th>
+              <th>City</th>
+              <th>Adress</th>
+              <th class="text-center noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of companyList">
+              <td class="limited-text" title="{{ item.GroupName }}">{{ item.GroupName }}</td>
+              <td class="limited-text" title="{{ item.CompanyName }}">{{ item.CompanyName }}</td>
+              <td class="limited-text" title="{{ item.ShortName }}">{{ item.ShortName }}</td>
+              <td class="limited-text" title="{{ item.OwnerName }}">{{ item.OwnerName }}</td>
+              <td class="limited-text" title="{{ item.Contact }}">{{ item.Contact }}</td>
+              <td class="limited-text" title="{{ item.Country }}">{{ item.Country }}</td>
+              <td class="limited-text" title="{{ item.City }}">{{ item.City }}</td>
+              <td class="limited-text" title="{{ item.Adress }}">{{ item.Adress }}</td>
+              <td class="text-center noPrint">
+                <span class="me-3 btnEdit" href="javascript:void(0);" (click)="getCompanyDetail(item)">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span class="confirm-text btnDelete" href="javascript:void(0);" (click)="deleteCompany(item)">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New page -->
+<div class="content AddPage" *ngIf="isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Company Management</h4>
+      <h6>Add/Update Company</h6>
+    </div>
+    <div class="page-btn" (click)="onClikHome()">
+      <a href="javascript:void(0);" class="btn btn-added btnList">
+        <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+          aria-label="fa fa-th-list"></i>
+        Home
+      </a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row" [ngClass]="{ disabled: isDisabled }">
+        <div class="col-sm-8 activeForm" [formGroup]="companyForm">
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="mb-2">
+                <label class="fw-bolder">Select Group</label>
+                <ng-select placeholder="--- Select Main Group ---" [items]="groupList" bindLabel="CompName"
+                  bindValue="GrpId" formControlName="GroupId" [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Date </label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                    formControlName="Date" (click)="datepicker.open()" />
+                  <mat-datepicker #datepicker></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" formControlName="CompanyName" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Short Name</label>
+                <input type="text" formControlName="ShortName" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Country</label>
+                <input type="text" formControlName="Country" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>City</label>
+                <input type="text" formControlName="City" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Address</label>
+                <input type="text" formControlName="Address" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Owner Name</label>
+                <input type="text" formControlName="OwnerName" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Email</label>
+                <input type="text" formControlName="Email" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Contact</label>
+                <input type="text" formControlName="Contact" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>NTN</label>
+                <input type="text" formControlName="Ntn" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Financial Year</label>
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 col-12 pe-1">
+                    <div class="input-groupicon">
+                      <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                        [matDatepicker]="datepicker1" formControlName="FinFromDate" (click)="datepicker1.open()" />
+                      <mat-datepicker #datepicker1></mat-datepicker>
+                      <div class="addonset">
+                        <img src="/assets/img/icons/calendars.svg" alt="img" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 col-12 ps-1">
+                    <div class="input-groupicon">
+                      <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                        [matDatepicker]="datepicker2" formControlName="FinToDate" (click)="datepicker2.open()" />
+                      <mat-datepicker #datepicker2></mat-datepicker>
+                      <div class="addonset">
+                        <img src="/assets/img/icons/calendars.svg" alt="img" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Enter Currency</label>
+                <input type="text" formControlName="Currency" />
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Currency Symbol</label>
+                <input type="text" formControlName="Symbol" />
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12 pe-1">
+              <div class="mb-2">
+                <label class="fw-bolder">Mobile App</label>
+                <div class="position-relative w-100">
+                  <ng-select [items]="mbileAppItem" bindLabel="name" bindValue="id" [clearable]="false"
+                    placeholder="---Select Mobile-App---" [dropdownPosition]="'bottom'" formControlName="MobApp">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12 pe-1">
+              <div class="mb-2">
+                <label class="fw-bolder">Location Wise</label>
+                <div class="position-relative w-100">
+                  <ng-select [items]="locationWiseItem" bindLabel="name" bindValue="id" [clearable]="false"
+                    placeholder="---Select Mobile-App---" [dropdownPosition]="'bottom'" formControlName="LocationWise">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Shipment Sale Code</label>
+                <input type="number" formControlName="ShipmentSale" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Shipment Purchase Code</label>
+                <input type="number" formControlName="ShipmentPurchase" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Other Credit Code Sale</label>
+                <input type="number" formControlName="OtherCreditSale" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Other Credit Code Purchase</label>
+                <input type="number" formControlName="OtherCreditPurchase" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Discount Code Sale</label>
+                <input type="number" formControlName="DiscountSale" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Discount Code Purchase</label>
+                <input type="number" formControlName="DiscountPurchase" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Tax 1 Code</label>
+                <input type="number" formControlName="Tax1" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Tax 2 Code</label>
+                <input type="number" formControlName="Tax2" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Account Opening Code</label>
+                <input type="number" formControlName="AccountOpening" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Cost of Sale</label>
+                <input type="number" formControlName="CostofSale" />
+              </div>
+            </div>
+
+
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>F.Tax Code</label>
+                <input type="number" formControlName="FTax" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>W.H Tax Code</label>
+                <input type="number" formControlName="WhTax" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Input Sale Tax Code</label>
+                <input type="number" formControlName="InputSaleTax" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Other Sale Tax Code</label>
+                <input type="number" formControlName="OtherSaleTax" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Stock Adjustment Code</label>
+                <input type="number" formControlName="StkAdj" />
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-12">
+              <div class="mb-2">
+                <label class="fw-bolder">Points</label>
+                <div class="row">
+                  <div class="col-lg-10 col-sm-10 col-10 pe-1">
+                    <div class="position-relative w-100">
+                      <ng-select placeholder="---Select Points---" [items]="pointsList" bindLabel="Name" bindValue="Id"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                    <div class="add-icon text-end">
+                      <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                        data-bs-target="#PointsModal"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-12">
+              <div class="mb-2">
+                <label class="fw-bolder">Shift</label>
+                <div class="row">
+                  <div class="col-lg-10 col-sm-10 col-10 pe-1">
+                    <div class="position-relative w-100">
+                      <ng-select placeholder="---Select Points---" [items]="shiftList" bindLabel="Name" bindValue="Id"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                    <div class="add-icon text-end">
+                      <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                        data-bs-target="#ShiftModal"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12 pe-1">
+              <div class="mb-2">
+                <label class="fw-bolder">Commission</label>
+                <div class="position-relative w-100">
+                  <ng-select [items]="commissonItems" bindLabel="name" bindValue="id"
+                    placeholder="--Select Commission--" formControlName="Commission" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Further Tax</label>
+                <input type="text" formControlName="FurtherTax" />
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group">
+                <label>WH.Filer</label>
+                <input type="number" formControlName="WhFiler" />
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group">
+                <label>WH Non Filer</label>
+                <input type="number" formControlName="WhNonFiler" />
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12 pe-1">
+              <div class="mb-2">
+                <label class="fw-bolder">Report Format</label>
+                <div class="position-relative w-100">
+                  <ng-select [items]="reportItem" bindLabel="name" bindValue="id" [clearable]="false"
+                    placeholder="---Select Mobile-App---" [dropdownPosition]="'bottom'" formControlName="ReportFormat">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12 ps-1">
+              <div class="mb-2">
+                <label class="fw-bolder">ERP/Distribution</label>
+                <div class="position-relative w-100">
+                  <ng-select [items]="erpItems" bindLabel="name" bindValue="id" placeholder="---Select ERP---"
+                    [dropdownPosition]="'bottom'" formControlName="PosDistribution" (change)="onChangeErp()" >
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex mt-2r">
+                <input type="checkbox" id="chkTax" class="me-1" formControlName="Tax" />
+                <label for="chkTax">Tax</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex mt-2r">
+                <input type="checkbox" id="chkAprovalSys" class="me-1" formControlName="SystemApproval" />
+                <label for="chkAprovalSys">Approval System</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkDClose" class="me-1" formControlName="DayClose" />
+                <label for="chkDClose">Day Close</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12" *ngIf="isFarm">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="broiler" class="me-1" formControlName="IsBroiler" />
+                <label for="broiler">Broiler</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12" *ngIf="isFarm">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="layers" class="me-1" formControlName="Islayers" />
+                <label for="layers">Layers</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12" *ngIf="isFarm">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="hatch" class="me-1" formControlName="IsHatchery" />
+                <label for="hatch">Hatchery</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkMClose" class="me-1" formControlName="MonthClose" />
+                <label for="chkMClose">Month Close</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkLedgerDetail" class="me-1" formControlName="LedgerDetail" />
+                <label for="chkLedgerDetail">Ledger Detail</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkRound" class="me-1" formControlName="RoundVal" />
+                <label for="chkRound">Round Value</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkCommCustomer" class="me-1" formControlName="CommCustomer" />
+                <label for="chkCommCustomer">Commission Customer</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkCommSupplier" class="me-1" formControlName="CommSupplier" />
+                <label for="chkCommSupplier">Commission Supplier</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkProDisSale" class="me-1" formControlName="ProDisSale" />
+                <label for="chkProDisSale">Product Dis Sale</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkProDisPurchase" class="me-1" formControlName="ProDisPurchase" />
+                <label for="chkProDisPurchase">Product Dis Purchase</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkCustomerAging" class="me-1" formControlName="BillWiseControl" />
+                <label for="chkCustomerAging">Bill Wise Control</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkCrLimit" class="me-1" formControlName="CreditLimit" />
+                <label for="chkCrLimit">Credit Limit</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkPartyDisAlw" class="me-1" formControlName="PartyDisAlw" />
+                <label for="chkPartyDisAlw">Party Discount Allow</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkTaxonProduct" class="me-1" formControlName="TaxOnProduct" />
+                <label for="chkTaxonProduct">Tax On Product</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkSaleRapComm" class="me-1" formControlName="SaleRapComm" />
+                <label for="chkSaleRapComm">Sale Rap Commission</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkLoadParty" class="me-1" formControlName="LoadParty" />
+                <label for="chkLoadParty">Load Party</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkServices" class="me-1" formControlName="Services" />
+                <label for="chkServices">Services</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkProByCategory" class="me-1" formControlName="ProByCategory" />
+                <label for="chkProByCategory">Product by Category</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkStock" class="me-1" formControlName="Stock" />
+                <label for="chkStock">Stock</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12 display">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkStockExpiry" class="me-1" formControlName="StockExpiry" />
+                <label for="chkStockExpiry">Stock Expiry</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkCost" class="me-1" formControlName="CostCenter" />
+                <label for="chkCost">Cost Center Control</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkJob" class="me-1" formControlName="JobWise" />
+                <label for="chkJob">Job Wise Control</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkGL" class="me-1" formControlName="GL" />
+                <label for="chkGL">GL</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkAging" class="me-1" formControlName="Aging" />
+                <label for="chkAging">Aging</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="exportDetails" class="me-1" formControlName="ExportDetails" />
+                <label for="exportDetails">Export Details</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group d-flex">
+                <input type="checkbox" id="chkPoMust" class="me-1" formControlName="PoMust" />
+                <label for="chkPoMust">Po Must</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="commom-img">
+            <img src="{{ selectedImage }}" alt="Logo">
+          </div>
+          <div class="form-group">
+            <label> Company Image</label>
+            <input class="form-control" type="file" [(ngModel)]="file" (change)="onFileSelected($event)"
+              accept="image/jpg, image/jpeg, image/png, image/webp" />
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <button class="btn btn-success btn-sm me-1" type="submit" *ngIf="!isDisabled" (click)=" onClickSave()">
+          Save
+        </button>
+        <button class="btn btn-primary btn-sm me-1" *ngIf="isDisabled" (click)="onClickNew()">
+          New
+        </button>
+        <button class="btn btn-secondary btn-sm" id="btnRefresh" (click)="onClickRefresh()">
+          Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Points Modal -->
+<div class="modal fade" id="PointsModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Points</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">
+          x
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Name</label>
+              <input type="text" class="form-control" [(ngModel)]="pointsName" [disabled]="isDisabledPoints" />
+              <input type="hidden" />
+            </div>
+            <div class="py-2">
+              <button class="btn btn-primary btn-sm me-1" (click)="newPoints()" [hidden]="isShowPoints">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShowPoints"
+                (click)="createUpdatePoints()">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshPoints()">
+                Refresh
+              </button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 205px">
+                <table class="table">
+                  <thead class="limited-text">
+                    <tr>
+                      <th class="text-center">ID</th>
+                      <th class="text-start w-75">Points</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of pointsList">
+                      <td class="text-center id">{{ item.Id }}</td>
+                      <td class="text-start names">{{ item.Name }} Days</td>
+                      <td class="notChange d-none">{{ item.notChange }}</td>
+                      <td class="text-center">
+                        <span (click)="editPoints(item.Id, item.Name)" class="me-3">
+                          <img src="assets/img/icons/edit.svg" alt="Edit" />
+                        </span>
+                        <span (click)="deletePoints(item.Id)" class="confirm-text">
+                          <img src="assets/img/icons/delete.svg" alt="Delete" />
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Shift Modal -->
+<div class="modal fade" id="ShiftModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2  align-items-center text-center">
+        <h5 class="modal-title">Shift
+        </h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="row">
+              <div class="form-group col-md-4 col-lg-4 col-sm-4">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" id="txtShift" [(ngModel)]="shiftName"
+                  [disabled]="isDisabledShift">
+                <input type="hidden" id="txtShiftId">
+              </div>
+              <div class="form-group col-md-4 col-lg-4 col-sm-4">
+                <label class="form-label">From Time</label>
+                <input type="text" class="form-control" id="txtFromTime" [(ngModel)]="fTime"
+                  [disabled]="isDisabledShift">
+              </div>
+              <div class="form-group col-md-4 col-lg-4 col-sm-4">
+                <label class="form-label">To Time</label>
+                <input type="text" class="form-control" id="txtToTime" [(ngModel)]="toTime"
+                  [disabled]="isDisabledShift">
+              </div>
+            </div>
+            <div class="mb-2">
+              <button class="btn btn-primary btn-sm me-1" (click)="newShift()" [hidden]="isShowShift">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShowShift"
+                (click)="createUpdateShift()">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshShift()">
+                Refresh
+              </button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 220px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th class="w-25">Shift</th>
+                      <th class="w-25">From Time</th>
+                      <th class="w-25">To Time</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="shiftDetail">
+                    <tr *ngFor="let item of shiftList">
+                      <td class="text-start">{{item.Id}}</td>
+                      <td class="text-start">{{item.Name}}</td>
+                      <td class="text-center">{{item.fTime}}</td>
+                      <td class="text-center">{{item.tTime}}</td>
+                      <td>
+                        <span (click)="editShift(item.Id, item.Name , item.fTime, item.tTime)" class="me-3">
+                          <img src="assets/img/icons/edit.svg" alt="Edit" />
+                        </span>
+                        <span (click)="deleteShift(item.Id)" class="confirm-text">
+                          <img src="assets/img/icons/delete.svg" alt="Delete" />
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

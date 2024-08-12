@@ -1,0 +1,139 @@
+<section>
+
+    <div class="content ListPage" *ngIf="isShowPage">
+      <div class="page-header">
+        <div class="page-title">
+          <h4 class="newcolor">Salary Settlement Labels</h4>
+          <h6 class="newcolor">Salary Settlement Labels Setup</h6>
+        </div>
+        <div class="page-btn">
+          <div class="wordset newwordset">
+            <ul>
+              <li>S
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf" id="pdfPrint">
+                  <img src="/assets/img/icons/pdf.svg" alt="img">
+                </a>
+              </li>
+              <li>
+                <a href="/Home/Index" role="button">
+                  <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+  
+          <div class="row align-items-center mb-2"  [formGroup]="SettlementLablesForm">
+      
+
+                  <div class="col-lg-4 col-md-4 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Allowance 1</label>
+                      <input type="text" formControlName="allwnce1" [readOnly]="Disabled" class="form-control me-2">
+                      <input type="number" formControlName="labelCode" class="form-control me-2 d-none">
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">%</label>
+                      <input type="number" formControlName="allwnce1Perc" [readOnly]="Disabled"  class="form-control me-2">      
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Allowance 2</label>
+                      <input type="text" formControlName="allwnce2" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">%</label>
+                      <input type="number" formControlName="allwnce2Perc" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+  
+                  <div class="col-lg-4 col-md-4 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Allowance 3</label>
+                      <input type="text" formControlName="allwnce3" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">%</label>
+                      <input type="number" formControlName="allwnce3Perc" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Allowance 4</label>
+                      <input type="text" formControlName="allwnce4" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">%</label>
+                      <input type="number" formControlName="allwnce4Perc" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Allowance 5</label>
+                      <input type="text" formControlName="allwnce5" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">%</label>
+                      <input type="number" formControlName="allwnce5Perc" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Allowance 6</label>
+                      <input type="text" formControlName="allwnce6" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">%</label>
+                      <input type="number" formControlName="allwnce6Perc" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+
+
+                  <div class="col-lg-4 col-md-4 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Allowance 7</label>
+                      <input type="text" formControlName="allwnce7" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12 pt-2">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">%</label>
+                      <input type="number" formControlName="allwnce7Perc" [readOnly]="Disabled" class="form-control me-2">      
+                    </div>
+                  </div>
+
+              <div class="col-lg-6 col-md-6 pt-4">
+  
+                <button style="float: right;" class="btn btn-primary me-1 w-25" [hidden]="isShow" (click)="onClickNew()">Edit</button>
+                <button style="float: right;" type="submit" class="btn btn-success me-1 w-25" [hidden]="!isShow"
+                  (click)="onClickSave()">Update</button>
+    
+              </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </section>
+  

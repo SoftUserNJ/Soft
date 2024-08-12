@@ -1,0 +1,210 @@
+body{
+    font-family: 'Montserrat', sans-serif;
+font-family: 'Roboto', sans-serif;
+}
+.modal-content {
+    background-color: #14133b;
+    color: white;
+    border: 2px solid #d4242a;
+    border-radius: 24px;
+}
+
+.modal-body {
+    position: relative;
+    padding: 30px 50px;
+}
+
+.main-head1 {
+    background-color: #d2232b;
+    display: inline-block;
+    height: 38px;
+    padding: 0px 4px 0px 4px;
+    font-weight: 700;
+    border-radius: 4px;
+}
+
+.main-head2 {
+    margin-top: 6px;
+    font-size: 19px;
+    color: #cf2730;
+    margin-left: 18px;
+    font-weight: 800;
+}
+
+.container1 {
+    display: flex;
+}
+
+.container2 {
+    display: flex;
+    margin-top: 10px ;
+}
+.main-head3 {
+        color: #f53d6a;
+        font-size: 60px;
+        margin-left: 18px;
+    
+}
+
+.box-1 {
+    border: 2px solid #d3222b;
+    border-radius: 20px;
+    width: 220px;
+    margin-right: 10px;
+    background-color: #5b203e;
+    padding: 10px 20px 0px 20px;
+}
+.box-1 p {
+    line-height: 28px;
+}
+.box-1 p {
+    line-height: 26px;
+}
+
+.box-2 {
+    border: 2px solid #ebe52e;
+    border-radius: 18px;
+    width: 300px;
+    background-color: #5d544b;
+    padding-left: 20px;
+}
+
+.box-2 h3 {
+    margin-top: 5px;
+    margin-bottom: 0px;
+    font-weight: 700;
+}
+
+.SchBox1 {
+    background-color: #2c2f5a;
+    padding: 0px 20px 4px 20px;
+    border-radius: 32px;
+}
+
+.container3 {
+    margin-top: 25px;
+    background-color: #2c2f5a;
+    display: flex;
+    border-radius: 32px;
+}
+
+.sch-head {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.login-input {
+    background: #534f72;
+    border: none;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 170px;
+    border-radius: 14px;
+    height: 32px;
+}
+
+.SchBox1 h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.SchBox2 {
+    margin-left: 70px;
+}
+
+.SchBox2 h3 {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.schedule-btn {
+    background: #533152;
+    border: none;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 132px;
+    border-radius: 14px;
+    height: 32px;
+    margin-top: 20px;
+    margin-left: 36px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+
+/* Customize datepicker appearance */
+.ui-datepicker {
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+  }
+  
+  .ui-datepicker-header {
+    background-color: #f53d6a;
+    color: #fff;
+    border: none;
+  }
+  
+  .ui-datepicker-title {
+    font-weight: 600;
+  }
+  
+  .ui-datepicker-calendar {
+    background-color: #fff;
+  }
+  
+  .ui-datepicker-calendar td {
+    padding: 5px;
+  }
+  
+  .ui-datepicker-calendar .ui-state-default {
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    color: #000;
+  }
+  
+  .ui-datepicker-calendar .ui-state-active {
+    background-color: #f53d6a;
+    color: #fff;
+  }
+  
+  .ui-datepicker-calendar .ui-datepicker-unselectable {
+    color: #999;
+  }
+  
+
+  /* Customize datepicker previous and next buttons */
+.ui-datepicker-prev,
+.ui-datepicker-next {
+  background-color: #f53d6a;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: 5px 10px;
+}
+
+.ui-datepicker-prev:hover,
+.ui-datepicker-next:hover {
+  background-color: #d33a5e;
+  cursor: pointer;
+}
+
+.ui-datepicker-prev span,
+.ui-datepicker-next span {
+  font-size: 1.2em;
+}
+
+/* Position the datepicker */
+.ui-datepicker {
+    position: absolute;
+    z-index: 9999;
+  }
+  
+  /* Adjust the offset to align with the input field */
+  .ui-datepicker.ui-widget {
+    top: 100%;
+    margin-top: -2px;
+  }
+  

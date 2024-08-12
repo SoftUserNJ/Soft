@@ -1,0 +1,70 @@
+
+.bg-white{
+    background-color: white;
+}
+
+.img-sec{
+    width: 10%;
+}
+
+.cmp-name{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cmp-number, .cmp-email{
+    font-size: 15px;
+}
+
+.farm-name{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.farm-title{
+    text-decoration: underline;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.my-tbl{
+    border: 1px solid black;
+    font-size: 12px;
+}
+
+.my-tbl thead th{
+    color: #29A1D8;
+    background-color: #CBEBFA;
+    font-weight: bold;
+}
+
+.my-tbl tfoot td{
+    color: black!important;
+    background-color: #CBEBFA!important;
+}
+
+.my-tbl tbody td{
+    font-weight: bold;
+    border-bottom: 1px solid #000000!important;
+}
+
+h4{
+    color: maroon;
+    font-weight: bold;
+}
+
+.w-8{
+    width: 8%;
+}
+
+.w-12{
+    width: 12%;
+}
+
+.w-6{
+    width: 6%;
+}
+
+.w-66{
+    width: 66%;
+}

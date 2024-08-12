@@ -1,0 +1,28 @@
+.form-control {
+  height: 22px !important;
+}
+
+.form-group input[type=text] {
+  height: 22px !important;
+}
+
+.search-set .search-input input[type=search] {
+  height: 22px !important;
+}
+
+label {
+  font-size: 11px !important;
+}
+
+.filter-img {
+  background: #ff9f43;
+  padding: 2px;
+  border-radius: 4px;
+  width: 35px;
+  height: 23px;
+  cursor: pointer;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}

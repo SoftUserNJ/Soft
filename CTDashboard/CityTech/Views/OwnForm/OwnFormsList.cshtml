@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewData["Title"] = "OwnFormsList";
+}
+
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>Used Ownform</h4>
+            <h6>Add/Update Ownform</h6>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch" class="rounded-pill">
+                    </div>
+                </div>
+                <div class="wordset">
+                    <a asp-controller="ownform" asp-action="Builder" class="btn btn-addednew btnAdd ct-btns">
+                        <img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">Add New
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />Id</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />Form Name</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />Remarks</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />Mandatory</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />Auto Attach</th>
+                            <th class="text-center pe-3 last-th-sticky"><input type="checkbox" class="printCheckBox notPrintCol" hidden>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allUserOwnform">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        $(function () {
+            GetUsedOwnform()
+            $("#btnRefreshUser").click();
+            $("#btnRefreshUserType").click();
+            $("#btnRefreshUserSkill").click();
+        })
+
+        $(".btnAdd").click(function () {    
+            $("#txtUserId").val('');
+            $("#btnRefreshUser").click();
+        });
+
+        $(".btnList").click(function () {
+            $(".ListPage").show();
+        });
+        //---------------- Get Used Aritcles List -----------------------
+
+        function GetUsedOwnform() {
+            debugger
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/OwnForm/GetOwnFormsList/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#allUserOwnform").empty();
+                        $.each(data, function (i, item) {
+                            // Create checkboxes based on the 'Mandatory' and 'AutoAttach' properties
+                            var mandatoryCheckbox = item.Mandatory ? '<input type="checkbox" checked>' : '<input type="checkbox">';
+                            var autoAttachCheckbox = item.AutoAttach ? '<input type="checkbox" checked>' : '<input type="checkbox">';
+
+                            $("#allUserOwnform").append(`
+                        <tr>
+                            <td class="formId ps-2">${item.FORMID}</td>
+                            <td class="userName">${item.FORMNAME}</td>
+                            <td class="userFirstName">${item.Remarks}</td>
+                            <td class="userSecondName">${mandatoryCheckbox}</td>
+                            <td class="userSecondName">${autoAttachCheckbox}</td>
+
+                            <td class="text-center last-td-sticky">
+                                <span class="me-3 btnEditUserSkill cursor-pointer" >
+                                    <img src="/assets/img/icons/edit.svg" alt="img">
+                                </span>
+                                <span class="confirm-text btnDelUserSkill cursor-pointer" >
+                                    <img src="/assets/img/icons/delete.svg" alt="img">
+                                </span>
+                            </td>
+                        </tr>
+                    `)
+                        });
+                    },
+                    error: function (data) {
+
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+
+
+        $(document).on("click", ".btnEditUserSkill", function () {
+            debugger;
+
+            var formId = $(this).closest('tr').find(".formId").text();
+
+            // Redirect to the Builder action with the formId as a query parameter
+            window.location.href = `/OwnForm/Builder?formId=${formId}`;
+        });
+
+
+
+        $(document).on("click", ".btnDelUserSkill", function () {
+            debugger
+
+            var formIdToDelete = $(this).closest('tr').find(".formId").text();
+
+
+            $.ajax({
+                type: "POST",
+                url: "/OwnForm/DeleteUsedArticle/",
+                data: { formId: formIdToDelete },
+                success: function (response) {
+                    if (response.success) {
+                        $(this).closest("tr").remove();
+                        toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        GetUsedOwnform();
+                    } else {
+                        toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    }
+                },
+                error: function () {
+                    toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                }
+            });
+        });
+
+
+
+    </script>
+}
+

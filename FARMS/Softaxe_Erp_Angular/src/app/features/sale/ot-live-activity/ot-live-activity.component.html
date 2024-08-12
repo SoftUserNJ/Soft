@@ -1,0 +1,154 @@
+
+<div class="content ListPage">
+    <div class="page-header mb-1">
+        <div class="page-title" style="font-weight: 600;">
+            <h4>Order Taker's Live Activity</h4>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a (click)="export('Order Taker Live Activity', 'pdf')" title="pdf">
+                          <img src="assets/img/icons/pdf.svg" alt="img">
+                        </a>
+                      </li>
+                      <li>
+                        <a (click)="export('Order Taker Live Activity', 'xlxs')" title="excel">
+                          <img src="assets/img/icons/excel.svg" alt="img">
+                        </a>
+                      </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="mb-2">
+                        <label class="fw-bolder">Select Order Taker</label>
+                        <div class="position-relative w-100">
+                        <ng-select
+                            placeholder="---Select Order Taker---"
+                            [items]="orderTakerList"
+                            bindLabel="userName"
+                            bindValue="id"
+                            [(ngModel)]="orderTakerId"
+                            (change)="fetchData()"
+                            [dropdownPosition]="'bottom'">
+                        </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                    <div class="mb-2">
+                        <label class="fw-bolder">Select Status</label>
+                        <div class="position-relative w-100">
+                            <ng-select
+                            placeholder="---Select Status---"
+                            [items]="statusOptions"
+                            bindLabel="status"
+                            bindValue="status"
+                            [(ngModel)]="status"
+                            (change)="fetchData()"
+                            [dropdownPosition]="'bottom'">
+                        </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-6">
+                    <div class="form-group">
+                        <label>From Date:</label>
+                        <div class="input-groupicon">
+                            <input
+                                placeholder="DD/MM/YYYY"
+                                matInput
+                                class="form-control" 
+                                [matDatepicker]="datepicker"
+                                [(ngModel)]="fromDate"
+                                (click)="datepicker.open()">
+                            <mat-datepicker #datepicker></mat-datepicker> 
+                            <div class="addonset">
+                                <img src="/assets/img/icons/calendars.svg" alt="img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-6">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label>To Date:</label>
+                            <div class="input-groupicon">
+                                <input
+                                    class="form-control" 
+                                    placeholder="DD/MM/YYYY"
+                                    matInput
+                                    [matDatepicker]="datepicker1"
+                                    [(ngModel)]="toDate"
+                                    (click)="datepicker1.open()">
+                                <mat-datepicker #datepicker1></mat-datepicker> 
+                                <div class="addonset">
+                                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-6 p-0">
+                    <div class="form-group mt-3 pt-2">
+                        <button class="btn btn-secondary btn-sm" id="btnRefresh" (click)="fetchData()">Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:380px;">
+                <table class="table" id="export">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Sno</th>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Time</th>
+                            <th class="w-75">Status</th>
+                            <th class="text-center noPrint">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detailList">
+                        <tr *ngFor = "let item of tableData let i = index">
+                            <td class="text-center"> {{i+1}} </td>
+                            <td class="text-center">{{item.DATE}}</td>
+                            <td class="text-center">{{item.TIME}}</td>
+                            <td>{{item.STATUS}}</td>
+                            <td class="lat d-none">{{item.LAT}}</td>
+                            <td class="lon d-none">{{item.LAN}}</td> 
+                            <td class="btnLoc noPrint">
+                                <button (click)="getLocation(item.LAT, item.LAN)" class="btn btn-info btn-sm w-100 px-2 p-0" data-bs-toggle="modal" data-bs-target="#LocationModal">
+                                    <i class="fas fa-map-marker-alt" style="color: #f32828;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- popup -->
+
+<div class="modal fade" id="LocationModal">
+    <div class="modal-dialog" style="max-width:65%;">
+        <div class="modal-content">
+            <div class="modal-header p-2 align-items-center">
+                <h5 class="modal-title">DO Location</h5>
+                <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body p-2">
+                <div class="card mb-0">
+                    <div class="card-body p-0">
+                        <div class="float-end" id="map" style="height: 250px; width: 100%; margin: auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

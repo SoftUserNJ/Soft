@@ -1,0 +1,119 @@
+<section>
+  
+    <div class="content AddPage">
+  
+      <div class="page-header mb-4">
+        <div class="page-title">
+          <h4>Employee Family Information</h4>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <div class="row align-items-center mb-2" [formGroup]="EmpFamilyForm">
+  
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="mb-2">
+                  <label class="fw-bolder">Employee Name</label>
+                  <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-12">
+                      <ng-select class="bold-placeholder" placeholder="--- Select Employee ---" (change)="editEmpFamily($event)"
+                      [items]="EmployeeList" 
+                      bindLabel="name"
+                      bindValue="empy_id"
+                        formControlName="empName"
+                        [dropdownPosition]="'bottom'" [readonly]="Disabled">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <label class="fw-bold">Children Name</label>
+                <input type="text" formControlName="childName"  [readonly]="Disabled" class="form-control me-2">
+                <input type="number" formControlName="Id" class="form-control me-2 d-none">
+              </div>
+
+
+
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="position-relative w-100 me-2">
+                  <label class="fw-bold">Gender</label>
+                  <ng-select class="bold-placeholder" placeholder="--- Select Gender ---" bindLabel="name" bindValue="id"
+                    formControlName="gender" [dropdownPosition]="'bottom'" [readonly]="Disabled">
+                    <ng-option value="Male">Male</ng-option>
+                    <ng-option value="Female">Female</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+
+
+
+              <div class="col-lg-5 col-md-5 col-sm-12">
+                <label class="fw-bold">CNIC No#</label>
+                <input type="text" formControlName="cnicNo" [readonly]="Disabled" class="form-control me-2">
+              </div>
+  
+            <div class="col-lg-1 col-md-1 col-sm-12">
+              <button type="submit" (click)="onAdd()" class="btn btn-success btn-sm me-1"
+                style="margin-top: 20px;">{{btnAdd}}</button>
+            </div>
+          </div>
+  
+          <div class="table-responsive" style="height: 200px">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th>Sr No</th>
+                  <th>Employee Name</th>
+                  <th>Children Name</th>
+                  <th>CNIC No#</th>
+                  <th>Gender</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of EmpFamilyList" (click)="rowHighLight($event)">
+  
+                  <td class="">{{ data.sno }}</td>
+                  <td class="d-none">{{ data.EmpId }}</td>
+                  <td class="">{{ data.EmpName }}</td>
+                  <td class="">{{ data.childName }}</td>
+                  <td class="">{{ data.cnicNo }}</td>
+                  <td class="">{{ data.gender }}</td>
+                  <td class="text-center">
+                    <!-- Edit Button -->
+                    <span (click)="editItem(data)" class="me-3 btnEditItem" style="cursor: pointer">
+                      <i class="fas fa-edit"></i>
+                    </span>
+                    <!-- Delete Button  -->
+                    <span (click)="deleteItem(data)" class="confirm-text btnDelItem" style="cursor: pointer">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+  
+              <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+                (click)="onClickSave()">Save</button>
+              <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">Refresh</button>
+              <button type="submit" class="btn btn-danger btn-sm me-1" [hidden]="!isShow"
+                (click)="deleteEmpFamily()">Delete</button>
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+  

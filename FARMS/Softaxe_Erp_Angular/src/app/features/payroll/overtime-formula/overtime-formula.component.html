@@ -1,0 +1,56 @@
+<div class="content ListPage">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>OverTime Formula Calculation</h4>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-12 pt-4">
+                                    <input class="form-check-input mr-1" type="checkbox" (change)="updateFormula('GSALARY',$event.target)" [disabled]="Checkadisable" [checked]="gSalary">
+                                    <label class="form-check-label pl-10">Gross Salary = GSALARY</label>
+                                </div>
+                            </div>
+        
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-12 pt-4">
+                                    <input class="form-check-input mr-1" type="checkbox" (change)="updateFormula('SD',$event.target)" [disabled]="Checkadisable" [checked]="sd">
+                                    <label class="form-check-label pl-10">Salary Days = SD</label>
+                                </div>
+                            </div>
+        
+                            <div class="row pt-4">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label class="fw-bold">Formula</label>
+                                    <input type="text" class="form-control me-2" id="formulaInput"  [(ngModel)]="formula" [readOnly]="formuladisable">
+                                    <input type="number" class="form-control me-2 d-none" id="id" [(ngModel)]="Id">
+                                  </div>
+                            </div>
+                            <div class="row content-justify-center pt-4">
+                                <div class="col-lg-12 col-md-12 col-sm-12 text-end">
+                                    <button  class="btn btn-primary me-1 w-25" [hidden]="isShow" (click)="onClickNew()">Edit</button>
+                                    <button type="submit" class="btn btn-success me-1 w-25" [hidden]="!isShow"
+                                    (click)="onClickSave()">Update</button>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  

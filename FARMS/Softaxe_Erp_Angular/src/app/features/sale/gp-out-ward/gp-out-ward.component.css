@@ -1,0 +1,27 @@
+.filter-img {
+  background: #ff9f43;
+  padding: 2px;
+  border-radius: 4px;
+  width: 35px;
+  height: 23px;
+  cursor: pointer;
+}
+
+.add-new {
+  background: #ff9f43;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  padding: 2px;
+  width: 10%;
+  cursor: pointer;
+}
+
+.fa-arrow-right, .fa-arrow-left {
+  font-size: 18px;
+  color: #000000;
+}
+
+.w-10{
+  width: 10%;
+}

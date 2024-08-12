@@ -1,0 +1,17 @@
+tfoot tr td {
+    font-weight: 600;
+    padding: 5px !important;
+    background: #198754;
+    color: white;
+    white-space: nowrap;
+}
+
+    #print-tbl {
+        position: relative;
+    }
+
+    #print-tbl tfoot {
+        position: sticky;
+        bottom: 0;
+        background-color: white; /* Adjust the background color as needed */
+    }

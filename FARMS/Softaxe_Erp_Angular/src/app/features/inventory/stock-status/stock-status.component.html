@@ -1,0 +1,219 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Stock Status</h4>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Stock-Status', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Stock-Status', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="form-group">
+            <label>Search</label>
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchQuery"
+              (input)="filterData()">
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height:350px; font-size: 12px;">
+        <table class="table productTable mb-0" id="export">
+          <thead>
+            <tr>
+              <th class="noPrint"></th>
+              <th class="text-center">Sno</th>
+              <th>Code</th>
+              <th>Product</th>
+              <th>Des</th>
+              <th>Category</th>
+              <th>Brand</th>
+              <th>Country</th>
+              <th>Location</th>
+              <th class="text-end">Stock</th>
+              <th class="text-end">MinLvl</th>
+              <th class="text-end">Rem</th>
+              <th class="text-end">StkAmt</th>
+              <th class="text-end">AvgCost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of filteredStockStatusList let i = index">
+              <td class="text-center noPrint">
+                <span class="btnEye" (click)="openDetailModal(item)">
+                  <i class="fas fa-eye"></i>
+                </span>
+              </td>
+              <td class="srno text-center">{{i+1}}</td>
+              <td class="code">{{item.CODE}}</td>
+              <td class="product limited-text" title="{{item.PRODUCT}}">{{item.PRODUCT}}</td>
+              <td class="des">{{item.DES}}</td>
+              <td class="category" title="{{item.CATEGORY}}">{{item.CATEGORY}}</td>
+              <td class="brand" title="{{item.BRAND}}">{{item.BRAND}}</td>
+              <td class="country">{{ item.COUNTRY }}</td>
+              <td class="location">{{item.LOCATION}}</td>
+              <td class="text-end stock">{{item.STOCK}}</td>
+              <td class="text-end minlvl">{{item.MINLVL}}</td>
+              <td class="text-end rem">{{item.REM}}</td>
+              <td class="text-end stockAmt"> {{item.STOCKAMT | number : "1.2-2"}} </td>
+              <td class="text-end avgCost"> {{item.AVGRATE | number : "1.2-2"}} </td>
+            </tr>
+          </tbody>
+          <tfoot id="grdEnd">
+            <tr>
+              <td class="noPrint"></td>
+              <td class="text-end" colspan="11">Total = </td>
+              <td class="text-end">{{ totalStockAmount | number : "1.2-2" }}</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- popup -->
+
+
+<div class="modal fade" id="StockDetail">
+  <div class="modal-dialog" style="max-width:70%;">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Product Detail</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="card mb-0">
+              <div class="card-body pb-0">
+                <div class="bar-code-view">
+                  <div id="barcodeTarget" class="barcodeTarget"></div>
+                  <canvas id="canvasTarget" width="200" height="200" style="display: none;"></canvas>
+                </div>
+                <div class="productdetails">
+                  <ul class="product-bar ps-0">
+                    <li>
+                      <h4>Product</h4>
+                      <h6 id="txtProduct">{{ modalData.PRODUCT }}</h6>
+                    </li>
+                    <li>
+                      <h4>Short Name</h4>
+                      <h6 id="txtDescription">{{ modalData.DES }}</h6>
+                    </li>
+                    <li>
+                      <h4>Category</h4>
+                      <h6 id="txtCategory">{{ modalData.Category }}</h6>
+                    </li>
+                    <li>
+                      <h4>Brand</h4>
+                      <h6 id="txtBrand">{{ modalData.Brand }}</h6>
+                    </li>
+                    <li>
+                      <h4>Made In</h4>
+                      <h6 id="txtMadeIn">{{ modalData.MadeIn }}</h6>
+                    </li>
+                    <li>
+                      <h4>Last Purchase</h4>
+                      <h6 id="txtPurchase">{{ modalData.LASTPURCHASE }}</h6>
+                    </li>
+                    <li>
+                      <h4>Last Sale</h4>
+                      <h6 id="txtLastSale">{{ modalData.LASTSALE }}</h6>
+                    </li>
+                    <li>
+                      <h4>Sale Rate</h4>
+                      <h6 id="txtMaxRate">{{ modalData.MAXRATE  | number : "1.2-2"}}</h6>
+                    </li>
+                    <li>
+                      <h4>Min Sale Rate</h4>
+                      <h6 id="txtMinrate">{{ modalData.MINRATE | number : "1.2-2" }}</h6>
+                    </li>
+                    <li>
+                      <h4>Purchase Rate</h4>
+                      <h6 id="txtPurchaseRate">{{ modalData.RATE | number : "1.2-2"}}</h6>
+                    </li>
+                    <li>
+                      <h4>Tax</h4>
+                      <h6 id="txtTax">{{ modalData.TAX }}</h6>
+                    </li>
+                    <li>
+                      <h4>Discount</h4>
+                      <h6 id="txtDiscount">{{ modalData.DISCOUNT }}</h6>
+                    </li>
+                    <li>
+                      <h4>Unit of Measurement</h4>
+                      <h6 id="txtUom">{{ modalData.UOM }}</h6>
+                    </li>
+                    <li>
+                      <h4>SKU</h4>
+                      <h6 id="txtSku">{{ modalData.LOCATION }}</h6>
+                    </li>
+                    <li>
+                      <h4>Min Level</h4>
+                      <h6 id="txtlevel">{{ modalData.MINLVL }}</h6>
+                    </li>
+                    <li>
+                      <h4>Status</h4>
+                      <h6 id="txtStatus">{{ modalData.INACTIVE ? 'Inactive' : 'Active' }}</h6>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-12">
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <div class="productImage image-container">
+                  <img src="{{ basePath + modalData.IMAGE}}" id="productImage" alt="Product Image">
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="table-responsive" style="height:150px;">
+                  <table class="table productTable mb-0" id="tbl-print">
+                    <thead>
+                      <tr>
+                        <th>Location</th>
+                        <th class="text-center">Expiry</th>
+                        <th class="text-center">Stock</th>
+                      </tr>
+                    </thead>
+                    <tbody id="stockDetailList">
+                      <tr *ngFor="let item of stockDetail;">
+                        <td>{{ item.LOCATION }}</td>
+                        <td class="text-center">{{ item.EXPIRY }}</td>
+                        <td class="text-center">{{ item.STOCK }}</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="2" class="text-center fw-bold">Total:</td>
+                        <td class="fw-bold text-center">{{totalStock}}</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

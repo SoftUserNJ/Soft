@@ -1,0 +1,418 @@
+<section>
+
+  <div class="content ListPage" *ngIf="isShowPage">
+    <div class="page-header">
+      <div class="page-title">
+        <h4 class="newcolor">Party Terms & Conditions</h4>
+        <h6 class="newcolor">Add / Update Terms & Conditions</h6>
+      </div>
+      <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf" id="pdfPrint">
+                <img src="/assets/img/icons/pdf.svg" alt="img">
+              </a>
+            </li>
+            <li>
+              <a href="/Home/Index" role="button">
+                <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+
+        <div class="d-flex justify-content-between mb-1">
+          <div class="d-flex align-items-center">
+            <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+            <input type="search" class="form-control" placeholder="Search" (input)="searchGrid($event)" />
+          </div>
+          <div class="add-new" (click)="togglePages()">
+              <img src="/assets/img/icons/plus.svg" alt="img" class="me-1" />Add New
+          </div>
+        </div>
+        <div class="table-responsive mb-1">
+          <table class="table table-hover" id="tbl-print">
+            <thead>
+              <tr>
+                <th class="text-start">Id</th>
+                <th class="text-center">Main Party</th>
+                <th class="text-center">Sub Party</th>
+                <th class="text-center w-10">Action</th>
+              </tr>
+            </thead>
+            <tbody #voucherLists>
+              <tr *ngFor="let data of voucherList">
+                <td class="text-start">{{data.Id}}</td>
+                <td class="d-none">{{data.DmCode+data.Code}}</td>
+                <td class="text-center">{{data.PartyMain}}</td>
+                <td class="text-center">{{data.SubParty}}</td>
+                <td class="text-center">
+                  <span style="cursor: pointer;" (click)="PrintTermsConditions(data.DmCode+data.Code)"  class="btnRowPrint me-3">
+                    <i class="fas fa-print"></i>
+                  </span>
+                  <span style="cursor: pointer;"  (click)="editTermsConditions(data.Id)" class="me-3 btnEditCategory">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                  <span style="cursor: pointer;" (click)="deleteTermsConditions(data.Id)" class="confirm-text btnDelCategory">
+                    <i class="fas fa-trash"></i>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <div class="content ListPage" *ngIf="!isShowPage">
+        <div class="page-header">
+            <div class="page-title">
+                <h4 class="newcolor">Party Terms / Conditions</h4>
+            </div>
+            <div class="page-btn" >
+              <a (click)="togglePages()" class="btn btn-added btnList">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+                  aria-label="fa fa-th-list"></i>
+                Home
+              </a>
+            </div>
+        </div>
+
+        <div class="card"  [formGroup]="TermsConditionForm">
+            <div class="card-body">
+
+                <div class="row align-items-center mb-2">
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="position-relative w-100">
+                          <label class="fw-bold">Main Code</label>
+                          <ng-select class="bold-placeholder" [items]="partyMainList"
+                          placeholder="--- Select ---"  [readonly]="readonly"
+                          bindLabel="NAME" bindValue="CODE" formControlName="partyMain"
+                          (change)="getPartySub($event);" (clear)="onPartyClear();"
+                            [dropdownPosition]="'bottom'">
+                          </ng-select>
+                        </div>
+                      </div>
+        
+                      <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="position-relative w-100">
+                          <label class="fw-bold">Party</label>
+                          <ng-select class="bold-placeholder"  [items]="partySubList"
+                          placeholder="--- Select ---"  [readonly]="readonly"
+                          bindLabel="NAME" bindValue="CODE" formControlName="partySub"
+                            [dropdownPosition]="'bottom'">
+                          </ng-select>
+                        </div>
+                      </div>
+          
+                      
+                      <div class="row align-items-center mb-2">
+                        <div class="col-lg-1 col-md-1 col-sm-12 pt-3">
+                            <span style="border: none; padding:4px; background-color: #198754; color: #fff;">Sales Di</span>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="position-relative w-100 me-2">
+                              <label class="fw-bold">Poultry</label>
+                              <input formControlName="SalesDi1" [readOnly]="readonly" type="text" class="form-control me-2">
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="position-relative w-100 me-2">
+                              <label class="fw-bold">Fish</label>
+                              <input formControlName="SalesDi2" [readOnly]="readonly" type="text" class="form-control me-2">
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="position-relative w-100 me-2">
+                              <label class="fw-bold">Dairy</label>
+                              <input formControlName="SalesDi3" [readOnly]="readonly" type="text" class="form-control me-2">
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="position-relative w-100 me-2">
+                              <label class="fw-bold">Pet</label>
+                              <input formControlName="SalesDi4" [readOnly]="readonly" type="text" class="form-control me-2">
+                            </div>
+                          </div>
+
+                          <div class="col-lg-2 col-md-2 col-sm-12 pt-3">
+                            <div class="position-relative w-100 me-2">
+                              <ng-select class="bold-placeholder" placeholder="A" bindLabel="name" bindValue="id"
+                                formControlName="SalesDiDD1" [dropdownPosition]="'bottom'">
+                                <ng-option value="A">A</ng-option>
+                                <ng-option value="Q">Q</ng-option>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="col-lg-1 col-md-1 col-sm-12 pt-3">
+                            <div class="position-relative w-100 me-2">
+                              <input formControlName="SalesDi5" [readOnly]="readonly" type="text" class="form-control me-2">
+                            </div>
+                          </div>
+
+                          <!-- <div class="col-lg-1 col-md-1 col-sm-12 pt-3">
+                            <div class="position-relative w-100 me-2">
+                              <ng-select class="bold-placeholder" placeholder="Q" bindLabel="name" bindValue="id"
+                              formControlName="SalesDiDD2" [dropdownPosition]="'bottom'">
+                                <ng-option value="Q">Q</ng-option>
+                              </ng-select>
+                            </div>
+                          </div> -->
+                        </div>
+                      
+                        <div class="row align-items-center mb-2">
+                            <div class="col-lg-1 col-md-1 col-sm-12">
+                                <span style="border: none; padding:4px; background-color: #198754; color: #fff;">UnId &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                  <input formControlName="UnId1" [readOnly]="readonly" type="number" class="form-control me-2">
+                                </div>
+                              </div>
+                              <div class="col-lg-2 col-md-2 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                  <input formControlName="UnId2" [readOnly]="readonly" type="number" class="form-control me-2">
+                                </div>
+                              </div>
+                              <div class="col-lg-2 col-md-2 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                  <input formControlName="UnId3" [readOnly]="readonly" type="number" class="form-control me-2">
+                                </div>
+                              </div>
+                              <div class="col-lg-2 col-md-2 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                  <input formControlName="UnId4" [readOnly]="readonly" type="number" class="form-control me-2">
+                                </div>
+                              </div>
+    
+                              <div class="col-lg-2 col-md-2 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                  <ng-select class="bold-placeholder" placeholder="A" bindLabel="name" bindValue="id"
+                                  formControlName="UnId1DD" [dropdownPosition]="'bottom'">
+                                    <ng-option value="A">A</ng-option>
+                                    <ng-option value="Q">Q</ng-option>
+                                  </ng-select>
+                                </div>
+                              </div>
+                              <div class="col-lg-1 col-md-1 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                  <input formControlName="UnId5" [readOnly]="readonly" type="number" class="form-control me-2">
+                                </div>
+                              </div>
+    
+                              <!-- <div class="col-lg-1 col-md-1 col-sm-12">
+                                <div class="position-relative w-100 me-2">
+                                  <ng-select class="bold-placeholder" placeholder="Q" bindLabel="name" bindValue="id"
+                                  formControlName="UnId2DD" [dropdownPosition]="'bottom'">
+                                    <ng-option value="Q">Q</ng-option>
+                                  </ng-select>
+                                </div>
+                              </div> -->
+                            </div>
+
+                            <div class="row align-items-center mb-2">
+                                <div class="col-lg-1 col-md-1 col-sm-12">
+                                    <span style="border: none; padding:4px; background-color: #198754; color: #fff;">Tvda &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <input formControlName="TvDa1" [readOnly]="readonly" type="number" class="form-control me-2">
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-2 col-md-2 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <input formControlName="TvDa2" [readOnly]="readonly" type="number" class="form-control me-2">
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-2 col-md-2 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <input formControlName="TvDa3" [readOnly]="readonly" type="number" class="form-control me-2">
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-2 col-md-2 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <input formControlName="TvDa4" [readOnly]="readonly" type="number" class="form-control me-2">
+                                    </div>
+                                  </div>
+        
+                                  <div class="col-lg-2 col-md-2 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <ng-select class="bold-placeholder" placeholder="A" bindLabel="name" bindValue="id"
+                                      formControlName="TvDa1DD" [dropdownPosition]="'bottom'">
+                                        <ng-option value="A">A</ng-option>
+                                        <ng-option value="Q">Q</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-1 col-md-1 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <input formControlName="TvDa5" [readOnly]="readonly" type="number" class="form-control me-2">
+                                    </div>
+                                  </div>
+        
+                                  <!-- <div class="col-lg-1 col-md-1 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <ng-select class="bold-placeholder" placeholder="Q" bindLabel="name" bindValue="id"
+                                      formControlName="TvDa2DD" [dropdownPosition]="'bottom'">
+                                        <ng-option value="Q">Q</ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div> -->
+                                </div>
+
+
+                                <div class="col-lg-3 col-md-3 col-sm-12">
+                                    <div class="position-relative w-100">
+                                      <label class="fw-bold">Freight</label>
+                                      <div class="row">
+                                        <div class="col-6 pe-0">
+                                          <input type="number" formControlName="freight" [readonly]="readonly" class="form-control">
+                                        </div>
+                                        <div class="col-6">
+                                          <ng-select class="bold-placeholder" placeholder="" formControlName="freightDD"
+                                            [readonly]="readonly" [dropdownPosition]="'bottom'">
+                                            <ng-option value="S">S</ng-option>
+                                            <ng-option value="O">O</ng-option>
+                                          </ng-select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>    
+                                  
+                                  <div class="col-lg-3 col-md-3 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <label class="fw-bold">Condition</label>
+                                      <input formControlName="condition" [readOnly]="readonly" type="text" class="form-control me-2">
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="col-lg-3 col-md-3 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <label class="fw-bold">Bonus</label>
+                                      <input formControlName="bonus" [readOnly]="readonly" type="number" class="form-control me-2">
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-3 col-md-3 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <label class="fw-bold">Monthly Disc</label>
+                                      <input formControlName="monthlyDisc" [readOnly]="readonly" type="number" class="form-control me-2">
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-3 col-md-3 col-sm-12">
+                                    <div class="position-relative w-100">
+                                      <label class="fw-bold">Rate Diff</label>
+                                      <div class="row">
+                                        <div class="col-6 pe-0">
+                                          <input type="number" formControlName="RateDiff" [readonly]="readonly" class="form-control">
+                                        </div>
+                                        <div class="col-6">
+                                          <ng-select class="bold-placeholder" placeholder="Rate Choice" formControlName="RateChoice"
+                                            [readonly]="readonly" [dropdownPosition]="'bottom'">
+                                            <ng-option value="1">1</ng-option>
+                                            <ng-option value="2">2</ng-option>
+                                            <ng-option value="3">3</ng-option>
+                                            <ng-option value="4">4</ng-option>
+                                            <ng-option value="5">5</ng-option>
+                                            <ng-option value="6">6</ng-option>
+                                            <ng-option value="7">7</ng-option>
+                                          </ng-select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>    
+
+                                  <div class="col-lg-3 col-md-3 col-sm-12">
+                                    <div class="position-relative w-100 me-2">
+                                      <label class="fw-bold">Remarks</label>
+                                      <input formControlName="remarks" [readOnly]="readonly" type="text" class="form-control me-2">
+                                      <input formControlName="ID" [readOnly]="readonly" type="number" class="form-control me-2 d-none">
+                                      <input formControlName="ForPrint" [readOnly]="readonly" type="number" class="form-control me-2 d-none">
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-3 col-md-3 col-sm-12 pt-3">
+                                    <div class="position-relative w-100 me-2">
+                                      <input class="form-check-input me-1" formControlName="allowedWanda" type="checkbox" checked>
+                                        <label for="approved" class="mb-0 fw-bold" style="margin-left: 16px;">Allowed For Wanda</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-2 col-md-2 col-sm-12 pt-3">
+                                    <div class="position-relative w-100 me-2">
+                                      <input class="form-check-input me-1" formControlName="pBagAll" type="checkbox" checked>
+                                        <label for="approved" class="mb-0 fw-bold" style="margin-left: 16px;">P/Bag All</label>
+                                    </div>
+                                  </div>
+
+                                  
+                                  <div class="col-lg-1 col-md-1 col-sm-12 text-end">
+                                    <button type="submit" (click)="onAdd()" class="btn btn-success btn-sm me-1"
+                                      style="margin-top: 20px;">{{btnAdd}}</button>
+                                  </div>
+                  </div>
+
+                  <div class="table-responsive" style="height: 150px">
+                    <table class="table table-hover" id="tbl-print">
+                      <thead>
+                        <tr>
+                          <th class="text-center">Code</th>
+                          <th class="text-center">Main Party</th>
+                          <th class="text-center">Sub Party</th>
+                          <th class="text-center">Condition</th>
+                          <th class="text-center">Bonus</th>
+                          <th class="text-center">Monthy Disc</th>
+                          <th class="text-center">Allow For Wanda</th>
+                          <th class="text-center">P/Bag All</th>
+                          <th class="text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of TermsConditionList" (click)="rowHighLight($event)">
+          
+                          <td class="text-center">{{ data.partyMainCode }}</td>
+                          <td class="text-center">{{ data.partyMain }}</td>
+                          <td class="text-center">{{ data.partySub }}</td>
+                          <td class="text-center">{{ data.condition}}</td>
+                          <td class="text-center">{{ data.bonus }}</td>
+                          <td class="text-center">{{ data.monthlyDisc }}</td>
+                          <td class="text-center"><input type="checkbox" [checked]="data.allowedWanda"></td>
+                          <td class="text-center"><input type="checkbox" [checked]="data.pBagAll"></td>
+                          <td class="text-center">
+                              <!-- Edit Button -->
+                              <span (click)="editItem(data)" class="me-3 btnEditItem" style="cursor: pointer">
+                                <i class="fas fa-edit"></i>
+                              </span>
+                              <!-- Delete Button  -->
+                              <span (click)="deleteItem(data)" class="confirm-text btnDelItem" style="cursor: pointer">
+                                <i class="fas fa-trash"></i>
+                              </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+        
+                  <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-12 pt-3">
+                        <button class="btn btn-primary btn-sm me-1" (click)="onClickNew()" [hidden]="isShowBtn">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="onClickSave()"[hidden]="!isShowBtn">{{btnSave}}</button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshTermsConditions()">Refresh</button>
+              <button class="btn btn-primary btn-sm ml-6" [hidden]="!isSaveDone" (click)="PrintTermsConditions()">Print</button>
+                    </div>
+                  </div>
+                  
+            </div>
+        </div>
+    </div>
+</section>

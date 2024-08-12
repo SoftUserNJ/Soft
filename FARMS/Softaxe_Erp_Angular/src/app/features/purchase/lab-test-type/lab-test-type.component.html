@@ -1,0 +1,97 @@
+<section>
+    <div class="content ListPage">
+        <div class="page-header">
+            <div class="page-title">
+                <h4 class="newcolor">Lab Test Entry</h4>
+                <h6 class="newcolor">Manage Lab Tests</h6>
+            </div>
+            <div class="page-btn">
+                <div class="wordset newwordset">
+                    <ul>
+                        <li>
+                            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf"
+                                id="pdfPrint">
+                                <img src="/assets/img/icons/pdf.svg" alt="img">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Home/Index" role="button">
+                                <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row align-items-center mb-2">
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Search</label>
+                        <input (input)="searchGrid($event)" type="text" class="form-control me-2">
+                      </div>
+                    </div>
+          
+          
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Lab Test Entry</label>
+                        <input [readOnly]="readonly" [(ngModel)]="LabTestName" type="text" class="form-control me-2">
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Test UOM</label>
+                          <input [readOnly]="readonly" [(ngModel)]="TestUOM" type="text" class="form-control me-2">
+                        </div>
+                      </div>
+                    
+
+                    <div class="col-lg-2 col-md-2 col-sm-12 pt-3 text-end">
+                          <button class="btn btn-primary btn-sm me-1" (click)="newLabTestType()" [hidden]="isShowBtn">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateLabTestType()"
+                  [hidden]="!isShowBtn">{{btnSave}}</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshLabTestType()">Refresh</button>
+
+                      </div>
+          
+                  </div>
+
+                
+                <div class="table-responsive mb-1">
+                    <table class="table table-hover" id="tbl-print">
+                        <thead>
+                            <tr>
+                                <th class="text-start">ID</th>
+                                <th class="text-start">Lab Test Type</th>
+                                <th class="text-start">Test UOM</th>
+                                <th class="text-center w-12">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody #voucherLists>
+                            <tr *ngFor="let data of LabTestTypeList">
+                                <td class="text-start">{{data.LabTestNo}}</td>
+                                <td class="text-start">{{data.LabTestName}}</td>
+                                <td class="text-start">{{data.TestUOM}}</td>
+                                <td class="text-center">
+                                  
+                                    <span (click)="editLabTestType(data)" class="me-3 btnEditCategory">
+                                        <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                                    </span>
+                                    <span (click)="deleteLabTestType(data.LabTestNo)" class="confirm-text btnDelCategory">
+                                        <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete">
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,80 @@
+<div class="content">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4 class="newcolor">Product Rate Update</h4>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Product Rates', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Product Rates', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="form-group">
+            <input type="search"  class="form-control" (input)="searchGrid($event)" placeholder="Search....">
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height:330px;">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th class="w-0">Sr#</th>
+              <th class="text-start ">Category</th>
+              <th class="text-start">Product Name</th>
+              <th class="text-end w-10">Sale Rate</th>
+              <th class="text-end w-10">From Qty</th>
+              <th class="text-end w-10">Slab Rate</th>
+              <th class="text-end w-10">To Qty</th>
+              <th class="text-end w-10">Above Slab</th>
+            </tr>
+          </thead>
+          <tbody #productLists>
+            <tr *ngFor="let item of productList; let i = index">
+              <td class="sr">{{i+1}}</td>
+              <td class="category">{{item.CATEGORY}}</td>
+              <td class="text-start limited-text" title="{{item.PRODUCTNAME}}">{{item.PRODUCTNAME}}</td>
+              <td class="text-end">
+                <input type="number" [(ngModel)]="item.SALERATE" (input)="onInputRate(item)" class="form-control form-control-sm text-end w-10">
+              </td>
+              <td class="text-end">
+                <input type="number" [(ngModel)]="item.FROMQTY" (input)="onInputRate(item)" class="form-control form-control-sm text-end w-10">
+              </td>
+              <td class="text-end">
+                <input type="number" [(ngModel)]="item.SLABRATE" (input)="onInputRate(item)" class="form-control form-control-sm text-end w-20">
+              </td>
+              <td class="text-end">
+                <input type="number" [(ngModel)]="item.TOQTY" (input)="onInputRate(item)" class="form-control form-control-sm text-end w-20">
+              </td>
+              <td class="text-end">
+                <input type="number" [(ngModel)]="item.ABOVESLABRATE" (input)="onInputRate(item)" class="form-control form-control-sm text-end w-20">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr>
+      <div class="row mt-2">
+        <div class="col-lg-8 col-md-8 col-sm-12 d-flex align-items-center">
+          <div class="form-group">
+            <button class="btn btn-success btn-sm" (click)="onClickSave()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

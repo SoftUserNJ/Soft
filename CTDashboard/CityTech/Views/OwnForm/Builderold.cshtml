@@ -1,0 +1,1199 @@
+﻿@{
+    //Layout = null;
+}
+
+
+@*<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">*@
+@* <title>Generate and Display PDF</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>*@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
+<style>
+    /* Custom styles for the elements */
+    .draggable {
+        width: 200px;
+        height: 100px;
+        background-color: #007BFF;
+        color: white;
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .resizable {
+        width: 200px;
+        height: 100px;
+        background-color: #ff5722;
+        color: white;
+        padding: 10px;
+        border: 1px solid #ccc;
+        resize: both;
+        overflow: auto;
+    }
+
+    /* Style for the textbox and its wrapper */
+    /* .textbox-wrapper {
+            width: 200px;
+            padding: 5px;
+            margin: 10px;
+            border: 1px solid #ccc;
+        } */
+
+    /* Style for the "Print" button */
+    #printButton {
+        padding: 5px 10px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* Style for editable heading */
+    .editable-heading {
+        cursor: pointer;
+        user-select: text;
+    }
+
+    /* Style for resizable and draggable table */
+    .resizable-table {
+        width: 400px;
+        border: 1px solid #ccc;
+    }
+
+        .resizable-table th, .resizable-table td {
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+    /* Style for image preview */
+    .image-preview {
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    .empty-highlight {
+        border: 1px solid red !important; /* Add a red border to highlight the element */
+    }
+
+    #Customform div p {
+        margin: 3px 0; /* Adjust the margin as needed */
+        color: black;
+    }
+
+    .bold-header {
+        font-weight: bold;
+    }
+</style>
+@*</head>*@
+@*<body>*@
+<div class="content pt-2 ListPage">
+    <div class="row" style="display: none;">
+        <div class="col-md-6">
+            <!-- Draggable Element -->
+            <div id="draggableElement" class="draggable">
+                <h2></h2>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Resizable Element -->
+            <div id="resizableElement" class="resizable">
+                <h2></h2>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="CreationForm" class="mt-3">
+
+
+        <div class="form-group">
+            <label for="tableRows">Customer Name</label>
+            <select class="js-example-basic-single select2" id="drpCustomer" skinid="Select Customer....!"></select>
+
+        </div>
+        <div class="form-group" style="display:none">
+            <label for="tableRows">Form ID</label>
+            <input class="form-control" id="txtformid" placeholder="Form Id" readonly>
+        </div>
+
+
+        <div class="form-group">
+            <label for="tableRows">Form Name</label>
+            <input class="form-control" id="txtformname" style="    background: #11153a; color: white;" placeholder="Enter Form Name">
+        </div>
+
+
+        <div class="form-group">
+            <label for="tableRows">Number of Rows:</label>
+            <input type="number" class="form-control" id="tableRows" placeholder="Enter number of rows">
+        </div>
+        <div class="form-group">
+            <label for="tableColumns">Number of Columns:</label>
+            <input type="number" class="form-control" id="tableColumns" placeholder="Enter number of columns">
+
+        </div>
+        <div class="form-group">
+
+
+            <input type="checkbox" id="chkmandatory" style="margin-top:14px; height:19px; width:19px;" skinid="">Mandatory
+            <input type="checkbox" id="chkautoattach" style="margin-top:14px; height:19px; width:19px;" skinid="">Auto Attach
+
+            <button id="createTable" class="btn btn-primary">Create Table</button>
+            <button id="addButton" class="btn btn-primary">Add New Textbox</button>
+            <button id="createPictureBoxBtn" class="btn btn-primary">Create Picture Box</button>
+            <button id="btnappend" class="btn btn-info" style="display:none">btnappend</button>
+            <button id="btnsaveform" class="btn btn-primary">Save Form</button>
+            <button id="addYesNoButton" class="btn btn-primary">Add Yes/No Question</button>
+            <button id="openCustomerPopup" class="btn btn-primary">Customer Detail</button>
+            <button id="generatePdfBtn" class="btn btn-primary">Generate PDF</button>
+         
+
+        </div>
+
+
+
+
+
+
+        <!-- Add a button to add yes/no questions -->
+        <!-- Add a container for the questions -->
+        <div id="questionContainer">
+        </div>
+
+        <!-- Add a modal dialog for entering question details -->
+        <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addQuestionModalLabel">Enter Question Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Input for question header -->
+                        <div class="form-group">
+                            <label for="questionHeader">Question Header:</label>
+                            <input type="text" class="form-control" id="questionHeader">
+                        </div>
+                        <!-- Input for "Yes" option text -->
+                        <div class="form-group">
+                            <label for="yesText">Text for "Yes":</label>
+                            <input type="text" class="form-control" id="yesText">
+                        </div>
+                        <!-- Input for "No" option text -->
+                        <div class="form-group">
+                            <label for="noText">Text for "No":</label>
+                            <input type="text" class="form-control" id="noText">
+                        </div>
+                        <!-- Checkbox for adding sub-question if "No" is selected -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="addSubQuestion">
+                            <label class="form-check-label" for="addSubQuestion">
+                                Add sub-question if "No" is selected
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="addQuestionConfirm">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div id="Customform">
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+    <!-- Modal -->
+
+
+
+    <div class="modal fade" id="columnTypeModal" tabindex="-1" aria-labelledby="columnTypeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="columnTypeModalLabel">Choose Column Types</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="columnTypeBody">
+                    <!-- Dynamic content will be added here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmColumnTypes">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="customerPopupModal" tabindex="-1" aria-labelledby="customerPopupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="customerPopupModalLabel">Customer Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Customer Name Field -->
+                    <!-- Customer Name Field -->
+                    <div class="form-group">
+                        <input type="checkbox" id="showCustomerName"> <!-- Add checkbox here -->
+                        <label for="showCustomerName">Show Customer Name:</label>
+                        <input type="text" class="form-control" id="customerName">
+                    </div>
+
+                    <!-- Address Field -->
+                    <div class="form-group">
+                        <input type="checkbox" id="showCustomerAddress"> <!-- Add checkbox here -->
+                        <label for="showCustomerAddress">Show Address:</label>
+                        <input type="text" class="form-control" id="customerAddress">
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <input type="checkbox" id="showCustomerEmail"> <!-- Add checkbox here -->
+                        <label for="showCustomerEmail">Show Email:</label>
+                        <input type="text" class="form-control" id="customerEmail">
+                    </div>
+
+                    <!-- Phone Field -->
+                    <div class="form-group">
+                        <input type="checkbox" id="showCustomerPhone"> <!-- Add checkbox here -->
+                        <label for="showCustomerPhone">Show Phone:</label>
+                        <input type="text" class="form-control" id="customerPhone">
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="applyCustomerInfo">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            GetCustomerList();
+            var formIdFromModel = @Model.FormId;
+            $("#txtformid").val(formIdFromModel);
+
+            var formData = `@Html.Raw(Model.FormData)`;
+            $("#Customform").append(formData);
+            setConvasSettings();
+            $(".resizable-table").each(function () {
+                $(this).resizable({
+                    containment: "#Customform"
+                }).draggable({
+                    containment: "#Customform"
+                });
+            });
+
+
+
+
+
+            // Counter for generating unique table IDs
+            const canvasIds = [];
+            // Function to create a table with user-specified elements
+            function createTableWithElements(cellTypes, mandatoryColumns) {
+
+                const myDiv = document.getElementById("Customform");
+                const tablesInDiv = myDiv.querySelectorAll("table");
+                const tableCount = tablesInDiv.length;
+                let tableCounter = tableCount;
+                const tableRows = $("#tableRows").val();
+                const tableColumns = $("#tableColumns").val();
+
+                if (tableRows > 0 && tableColumns > 0) {
+
+
+                    const table = document.createElement("table");
+                    table.classList.add("resizable-table", "table-bordered", "mt-3");
+                    table.id = "resizableTable-" + tableCounter; // Generate a unique table ID
+
+                    for (let i = 0; i < parseInt(tableRows) + 1; i++) {
+                        const row = document.createElement("tr");
+
+                        for (let j = 0; j < tableColumns; j++) {
+                            const cell = document.createElement(i === 0 ? "th" : "td"); // Use "th" for table headers, "td" for data cells
+                            cell.style.width = "200px"; // Set the width of every column to 200 pixels
+
+                            if (i === 0) {
+                                // Set the header name for the current column
+                                const columnHeader = document.createElement("input");
+                                columnHeader.style.width = "200px";
+                                columnHeader.style.outline = "none";
+                                columnHeader.style.border = "none";
+                                columnHeader.setAttribute("type", "text");
+                                columnHeader.setAttribute("placeholder", "Column Header");
+                                columnHeader.classList.add("editable-heading"); // Make the column header editable
+                                columnHeader.setAttribute("contenteditable", "true");
+                                columnHeader.addEventListener("input", function () {
+                                    columnHeader.setAttribute("value", columnHeader.value);
+                                });
+
+                                // Check if the column is mandatory
+                                const isMandatory = mandatoryColumns[j];
+                                if (isMandatory) {
+                                    columnHeader.classList.add("mandatory-column");
+                                }
+
+                                const isBoldHeader = $("#bold" + j).prop("checked");
+                                if (isBoldHeader) {
+                                    columnHeader.classList.add("bold-header");
+                                }
+                                cell.appendChild(columnHeader);
+                            } else {
+                                const cellType = cellTypes[j]; // Get the cell type for this column
+
+                                if (cellType === "picturebox") {
+                                    // Create an input field for file upload
+                                    const fileInput = document.createElement("input");
+                                    fileInput.setAttribute("type", "file");
+                                    fileInput.style.display = "none";
+
+                                    // Create an image element for preview
+                                    const imagePreview = document.createElement("img");
+                                    imagePreview.classList.add("image-preview");
+
+
+                                    // Create a label to trigger file input click
+                                    const label = document.createElement("label");
+
+                                    // Create an <i> element with Font Awesome classes
+                                    const icon = document.createElement("i");
+                                    icon.classList.add("fa", "fa-picture-o");
+
+                                    // Append the icon and text to the label
+                                    label.appendChild(icon);
+                                    label.appendChild(document.createTextNode(" Picture Upload"));
+
+                                    label.setAttribute("for", "fileInput-" + tableCounter + "-" + i + "-" + j);
+
+                                    // Assign unique IDs to file input and label
+                                    const fileId = "fileInput-" + tableCounter + "-" + i + "-" + j;
+                                    fileInput.setAttribute("id", fileId);
+
+                                    // Add change event to show the selected image
+                                    fileInput.addEventListener("change", function (event) {
+                                        const file = event.target.files[0];
+                                        if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = function (e) {
+                                                imagePreview.src = e.target.result;
+                                            };
+                                            reader.readAsDataURL(file);
+                                        }
+                                    });
+
+                                    // Check if the column is mandatory
+                                    const isMandatory = mandatoryColumns[j];
+                                    if (isMandatory) {
+                                        fileInput.classList.add("mandatory-column");
+                                    }
+
+                                    // Append elements to the cell
+                                    cell.appendChild(label);
+                                    cell.appendChild(fileInput);
+                                    cell.appendChild(imagePreview);
+                                } else if (cellType === "inputbox") {
+                                    // Create an input field for text input
+                                    const inputField = document.createElement("input");
+                                    inputField.setAttribute("type", "text");
+                                    inputField.setAttribute("placeholder", "Enter text here");
+
+                                    inputField.style.width = "200px";
+                                    inputField.style.outline = "none";
+                                    inputField.style.border = "none";
+
+                                    // Attach an event listener to update the value attribute
+                                    inputField.addEventListener("input", function () {
+                                        inputField.setAttribute("value", inputField.value);
+                                    });
+
+                                    // Check if the column is mandatory
+                                    const isMandatory = mandatoryColumns[j];
+                                    if (isMandatory) {
+                                        inputField.classList.add("mandatory-column");
+                                    }
+
+                                    cell.appendChild(inputField);
+                                } else if (cellType === "radiobutton") {
+                                    // Create a radio button
+                                    const radioButton = document.createElement("input");
+                                    radioButton.setAttribute("type", "radio");
+                                    radioButton.setAttribute("name", table.id);
+
+                                    // Attach an event listener to update the checked attribute
+                                    radioButton.addEventListener("change", function () {
+                                        radioButton.setAttribute("checked", radioButton.checked);
+                                    });
+
+                                    // Check if the column is mandatory
+                                    const isMandatory = mandatoryColumns[j];
+                                    if (isMandatory) {
+                                        radioButton.classList.add("mandatory-column");
+                                    }
+
+                                    cell.appendChild(radioButton);
+                                } else if (cellType === "checkbox") {
+                                    // Create a radio button
+                                    const checkBox = document.createElement("input");
+                                    checkBox.setAttribute("type", "checkbox");
+
+                                    // Attach an event listener to update the checked attribute
+                                    checkBox.addEventListener("change", function () {
+                                        checkBox.setAttribute("checked", checkBox.checked);
+                                    });
+
+                                    // Check if the column is mandatory
+                                    const isMandatory = mandatoryColumns[j];
+                                    if (isMandatory) {
+                                        checkBox.classList.add("mandatory-column");
+                                    }
+
+                                    cell.appendChild(checkBox);
+                                } else if (cellType === "sketch") {
+                                    const signatureDiv = document.createElement("div");
+                                    signatureDiv.classList.add("signature-container");
+
+                                    const signatureCanvas = document.createElement("canvas");
+
+                                    const canvasId = "signatureCanvas-" + tableCounter + "-" + i + "-" + j;
+                                    signatureCanvas.id = canvasId;
+                                    signatureCanvas.width = 200; // Set the width to 400 pixels
+                                    signatureCanvas.height = 100; // Set the height to 200 pixels
+                                    signatureCanvas.style.border = "1px solid #000";
+                                    signatureCanvas.style.backgroundColor = "white";
+                                    signatureCanvas.classList.add("signature-canvas");
+
+                                    const clearButton = document.createElement("button");
+                                    clearButton.textContent = "Clear";
+                                    clearButton.classList.add("clear-button");
+                                    clearButton.addEventListener("click", function () {
+                                        clearSignature(signatureCanvas.id);
+                                    });
+
+                                    // Check if the column is mandatory
+                                    const isMandatory = mandatoryColumns[j];
+                                    if (isMandatory) {
+                                        signatureCanvas.classList.add("mandatory-column");
+                                    }
+
+                                    signatureDiv.appendChild(signatureCanvas);
+                                    signatureDiv.appendChild(clearButton);
+
+                                    cell.appendChild(signatureDiv);
+                                    canvasIds.push(canvasId); // Initialize the signature canvas
+                                }
+                            }
+
+                            row.appendChild(cell);
+                        }
+
+                        table.appendChild(row);
+                    }
+
+                    // Append the table to the "Customform" div
+                    $("#Customform").append(table);
+                    // canvasIds.forEach((canvasId) => {
+                    //     initializeSignatureCanvas(canvasId);
+                    // });
+
+                    setConvasSettings();
+
+                    $("#" + table.id).resizable({
+                        containment: "#Customform"
+                    }).draggable({
+                        containment: "#Customform"
+                    });
+                    $("#tableCounter").val($("#tableCounter").val() + 1);
+                    tableCounter++; // Increment the table counter
+                }
+            }
+
+
+
+
+
+            function setConvasSettings() {
+                const canvasElements = document.querySelectorAll('[id*="signatureCanvas"]');
+                for (let i = 0; i < canvasElements.length; i++) {
+                    initializeSignatureCanvas(canvasElements[i].id);
+
+                    retrieveSignature(canvasElements[i].id);
+                }
+
+            }
+
+            function initializeSignatureCanvas(signatureCanvas) {
+
+
+                const canvas = document.getElementById(signatureCanvas);
+                const ctx = canvas.getContext('2d');
+                let drawing = false;
+
+                canvas.addEventListener('mousedown', startDrawing);
+                canvas.addEventListener('touchstart', startDrawing);
+
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('touchmove', draw);
+
+                canvas.addEventListener('mouseup', stopDrawing);
+                canvas.addEventListener('touchend', stopDrawing);
+
+                function startDrawing(e) {
+                    e.preventDefault();
+                    drawing = true;
+                    const x = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+                    const y = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
+                    ctx.beginPath();
+                    ctx.moveTo(x - canvas.getBoundingClientRect().left, y - canvas.getBoundingClientRect().top);
+                }
+
+                function draw(e) {
+                    if (!drawing) return;
+                    e.preventDefault();
+                    const x = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+                    const y = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+                    ctx.lineTo(x - canvas.getBoundingClientRect().left, y - canvas.getBoundingClientRect().top);
+                    ctx.stroke();
+                    canvas.setAttribute('data-signature', canvas.toDataURL());
+                }
+
+                function stopDrawing() {
+                    drawing = false;
+                    ctx.closePath();
+                }
+            }
+            function clearSignature(signatureCanvasId) {
+                const canvas = document.getElementById(signatureCanvasId);
+                const ctx = canvas.getContext('2d');
+
+                // Clear the canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Set the canvas background color to white (you can also use 'transparent')
+                ctx.fillStyle = "white";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            function retrieveSignature(signatureCanvasId) {
+                const canvas = document.getElementById(signatureCanvasId);
+                const ctx = canvas.getContext('2d');
+                const signatureDataURL = canvas.getAttribute('data-signature');
+
+                if (signatureDataURL) {
+                    const img = new Image();
+                    img.src = signatureDataURL;
+                    img.onload = function () {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    };
+                }
+            }
+
+
+
+
+            function checkmandatory() {
+                // Find elements with the "mandatory-column" class
+                // Select all elements within the #Customform div
+                const allElements = document.querySelectorAll('#Customform .mandatory-column');
+
+                // Loop through each element
+                allElements.forEach(function (element) {
+                    if (element.tagName === 'INPUT' && element.value.trim() === '') {
+                        // Check if it's an input element and whether it's empty or not
+                        element.classList.add('empty-highlight'); // Highlight the empty input element
+                    } else if (element.tagName === 'INPUT' && element.type === 'radio') {
+                        // Check if it's a radio button
+                        const radioName = element.getAttribute('name');
+                        const radioButtons = document.querySelectorAll(`input[type="radio"][name="${radioName}"]`);
+
+                        // Check if any of the radio buttons with the same name are selected
+                        let isRadioSelected = false;
+                        radioButtons.forEach(function (radio) {
+                            if (radio.checked) {
+                                isRadioSelected = true;
+                            }
+                        });
+
+                        if (!isRadioSelected) {
+                            element.classList.add('empty-highlight'); // Highlight the empty radio buttons
+                        } else {
+                            element.classList.remove('empty-highlight');
+                        }
+                    } else if (element.tagName === 'IMG') {
+                        // Check if it's an image (for picturebox)
+                        const fileInput = element.previousSibling; // Assuming the file input is the previous sibling
+
+                        if (!fileInput || !fileInput.files[0]) {
+                            element.classList.add('empty-highlight'); // Highlight the empty image preview
+                        } else {
+                            element.classList.remove('empty-highlight');
+                        }
+                    }
+                });
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+            $("#btnappend").click(function () {
+
+                $("#Customform").append(`<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><table class="resizable-table table-bordered mt-3 ui-resizable ui-draggable ui-draggable-handle" id="resizableTable-0" style="position: relative;"><tbody><tr><th><input type="text" placeholder="Column Header" class="editable-heading" contenteditable="true"></th></tr><tr><td><label for="fileInput-0-1-0"><i class="fa fa-picture-o"></i> Picture Upload</label><input type="file" id="fileInput-0-1-0" style="display: none;"><img class="image-preview"></td></tr></tbody></table><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><table class="resizable-table table-bordered mt-3 ui-resizable ui-draggable ui-draggable-handle" id="resizableTable-1" style="position: relative; left: 0px; top: -2px;"><tbody><tr><th><input type="text" placeholder="Column Header" class="editable-heading" contenteditable="true"></th></tr><tr><td><label for="fileInput-1-1-0"><i class="fa fa-picture-o"></i> Picture Upload</label><input type="file" id="fileInput-1-1-0" style="display: none;"><img class="image-preview" src=""></td></tr></tbody></table></div>`);
+
+            });
+
+
+
+
+            let questionCount = 0;
+
+            // Handle the "Add Yes/No Question" button click
+            $("#addYesNoButton").click(function () {
+                // Show the modal dialog for entering question details
+                $("#addQuestionModal").modal("show");
+            });
+
+            // Handle the "Add" button click in the modal dialog
+            $("#addQuestionConfirm").click(function () {
+                // Get the question header, "Yes" text, "No" text, and the option to add sub-questions
+                const questionHeader = $("#questionHeader").val();
+                const yesText = $("#yesText").val();
+                const noText = $("#noText").val();
+                const addSubQuestion = $("#addSubQuestion").prop("checked");
+
+                // Check if the question header is provided
+                if (questionHeader.trim() !== "") {
+                    // Create the question element
+                    createQuestion($("#questionContainer")[0], questionHeader, yesText, noText, addSubQuestion);
+
+                    // Close the modal dialog for entering question details
+                    $("#addQuestionModal").modal("hide");
+
+                    // Clear the input fields
+                    $("#questionHeader").val("");
+                    $("#yesText").val("");
+                    $("#noText").val("");
+                    $("#addSubQuestion").prop("checked", false);
+                }
+            });
+
+            // Function to create a question element
+            function createQuestion(container, questionHeader, yesText, noText, addSubQuestion) {
+                // Create the question wrapper
+                const questionWrapper = document.createElement("div");
+                questionWrapper.classList.add("question-wrapper");
+
+                // Create the question header
+                const headerElement = document.createElement("h6");
+                headerElement.textContent = questionHeader;
+
+                // Create "Yes" and "No" radio buttons
+                const yesRadio = document.createElement("input");
+                yesRadio.type = "radio";
+                yesRadio.name = `question${questionCount}`;
+                yesRadio.value = "yes";
+                yesRadio.id = `yesRadio${questionCount}`;
+
+                const noRadio = document.createElement("input");
+                noRadio.type = "radio";
+                noRadio.name = `question${questionCount}`;
+                noRadio.value = "no";
+                noRadio.id = `noRadio${questionCount}`;
+
+                const yesLabel = document.createElement("label");
+                yesLabel.textContent = yesText;
+                yesLabel.setAttribute("for", `yesRadio${questionCount}`);
+
+                const noLabel = document.createElement("label");
+                noLabel.textContent = noText;
+                noLabel.setAttribute("for", `noRadio${questionCount}`);
+
+                // Append elements to the question wrapper
+                questionWrapper.appendChild(headerElement);
+                questionWrapper.appendChild(yesRadio);
+                questionWrapper.appendChild(yesLabel);
+                questionWrapper.appendChild(noRadio);
+                questionWrapper.appendChild(noLabel);
+
+                // Append the question wrapper to the container
+                container.appendChild(questionWrapper);
+
+                // If the user chose to add sub-questions when "No" is selected, create nested questions
+                if (addSubQuestion) {
+                    createQuestion(questionWrapper, "Nested Header", "Nested Yes", "Nested No", false);
+                }
+
+                // Increment the question count
+                questionCount++;
+            }
+
+
+
+            // Handle the button click event to open the customer popup
+            $("#openCustomerPopup").click(function () {
+                // Get the selected customer's information from the dropdown
+                const selectedCustomerName = $("#drpCustomer option:selected").text();
+                const selectedCustomerAddress = $("#drpCustomer option:selected").attr("business");
+                const selectedCustomerEmail = $("#drpCustomer option:selected").attr("email");
+                const selectedCustomerPhone = $("#drpCustomer option:selected").attr("phone");
+
+                // Fill the popup fields with customer information
+                $("#customerName").val(selectedCustomerName);
+                $("#customerAddress").val(selectedCustomerAddress);
+                $("#customerEmail").val(selectedCustomerEmail);
+                $("#customerPhone").val(selectedCustomerPhone);
+
+                // Show the customer popup modal
+                $("#customerPopupModal").modal("show");
+            });
+
+            // Handle the Apply button click event
+            // Handle the Apply button click event
+            // Handle the Apply button click event
+            $("#applyCustomerInfo").click(function () {
+                // Get the selected customer's information from the modal fields
+                const showCustomerName = $("#showCustomerName").prop("checked");
+                const showCustomerAddress = $("#showCustomerAddress").prop("checked");
+                const showCustomerEmail = $("#showCustomerEmail").prop("checked");
+                const showCustomerPhone = $("#showCustomerPhone").prop("checked");
+
+                // Create a container div for the customer information
+                const customerInfoContainer = document.createElement("div");
+
+                // Create and append elements for each piece of customer information based on checkbox state
+                if (showCustomerName) {
+                    const nameElement = document.createElement("p");
+                    nameElement.textContent = "Customer Name: " + $("#customerName").val();
+                    customerInfoContainer.appendChild(nameElement);
+                }
+
+                if (showCustomerAddress) {
+                    const addressElement = document.createElement("p");
+                    addressElement.textContent = "Address: " + $("#customerAddress").val();
+                    customerInfoContainer.appendChild(addressElement);
+                }
+
+                if (showCustomerEmail) {
+                    const emailElement = document.createElement("p");
+                    emailElement.textContent = "Email: " + $("#customerEmail").val();
+                    customerInfoContainer.appendChild(emailElement);
+                }
+
+                if (showCustomerPhone) {
+                    const phoneElement = document.createElement("p");
+                    phoneElement.textContent = "Phone: " + $("#customerPhone").val();
+                    customerInfoContainer.appendChild(phoneElement);
+                }
+
+                // Append the container div to your Customform div
+                $("#Customform").append(customerInfoContainer);
+
+                // Make the appended element resizable and draggable
+                $(customerInfoContainer).resizable({
+                    containment: "#Customform",
+                }).draggable({
+                    containment: "#Customform",
+                });
+
+                // Close the customer popup modal
+                $("#customerPopupModal").modal("hide");
+            });
+
+
+
+
+
+
+
+            $("#btnsaveform").click(function () {
+
+                if ($("#drpCustomer").val() == "0") {
+                    toastr.warning("Select Customer....!", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    $("#drpCustomer").focus();
+                    return false;
+                }
+
+
+                checkmandatory();
+                var Mandatory = false;
+                var AutoAttach = false;
+                if ($("#chkmandatory").is(":checked")) { Mandatory = true; }
+                if ($("#chkautoattach").is(":checked")) { AutoAttach = true; }
+
+                if ($("#txtformname").val() == "") {
+                    alert("Please Enter Form Name");
+                    return false;
+                }
+                var obj = {};
+                obj.FORMID = $("#txtformid").val();
+                obj.FORMNAME = $("#txtformname").val();
+                obj.FORMDATA = $('#Customform').html();
+                obj.Mandatory = Mandatory;
+                obj.AutoAttach = AutoAttach;
+                obj.Customerid = $("#drpCustomer option:selected").val();
+
+
+                try {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                        url: "/OwnForm/SaveForm/",
+                        data: obj,
+                        async: false,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data != false) {
+                                $("#gridCont").removeClass("EditDesign");
+                                toastr.success("DashBoard Updated Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            }
+                            else {
+                                toastr.error("Please Updated Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                }
+                catch (err) {
+                    alert(err)
+                }
+                return false;
+            });
+
+
+            function GetCustomerList() {
+                try {
+                    $.ajax({
+                        type: "Get",
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                        url: "/User/CustomerGet/",
+                        async: false,
+                        dataType: "json",
+                        success: function (data) {
+        @*      name = x.CustomerName ?? "",
+                                email = x.Email ?? "",
+                                phone = x.Phone ?? "",
+                                gender = x.Gender ?? "",
+                                business = x.BusinessName ?? "",
+                                vatno = x.VatNo ?? "",
+                                commercechamber = x.ChamberOfCommerceNo ?? "",*@
+                                $("#allCustomersList").empty();
+
+                            $("#drpCustomer").empty();
+                            $("#drpCustomer").append(`<option value="0"   email=" " phone=" "  business=" "   vatno=" "    commercechamber=" "    >--- Select Customer ---</option>`);
+
+                            $.each(data, function (i, item) {
+
+                                $("#drpCustomer").append(`<option value="${item.id}" email="${item.email}" phone="${item.phone}"  business="${item.business}"   vatno="${item.vatno}"    commercechamber="${item.commercechamber}"     >${item.name}</option>`);
+
+                            })
+                        },
+                        error: function (data) {
+                        }
+                    });
+                }
+                catch (err) {
+                    alert(err)
+                }
+            }
+
+
+
+            document.getElementById('Customform').addEventListener('change', function (event) {
+
+
+
+
+                if (event.target.type === 'file') {
+                    // Get the selected file
+                    const file = event.target.files[0];
+
+                    if (file) {
+                        const reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            // Find the nearest image preview element related to the file input
+                            const imgPreview = event.target.closest('td').querySelector('.image-preview');
+                            imgPreview.src = e.target.result;
+                        }
+
+                        reader.readAsDataURL(file);
+                    }
+                }
+
+
+
+
+            });
+
+
+
+
+            $("#createTable").click(function () {
+                const tableRows = $("#tableRows").val();
+                const tableColumns = $("#tableColumns").val();
+
+                if (tableRows > 0 && tableColumns > 0) {
+                    $('#columnTypeBody').empty();
+
+                    for (let j = 0; j < tableColumns; j++) {
+                        const selectorDiv = $('<div>').addClass('mb-3');
+                        const label = $('<label>').text("Column " + (j + 1));
+                        const select = $('<select>').addClass('form-control').attr('id', 'columnType' + j);
+
+                        const options = ["picturebox", "inputbox", "radiobutton", "checkbox", "sketch"];
+                        options.forEach(option => {
+                            select.append($('<option>').text(option).val(option));
+                        });
+
+                        // Add a checkbox for mandatory column selection
+                        const mandatoryCheckbox = $('<input>').attr('type', 'checkbox').addClass('form-check-input').attr('id', 'mandatory' + j);
+                        const mandatoryLabel = $('<label>').addClass('form-check-label').text('Mandatory Column').attr('for', 'mandatory' + j);
+
+                        const headerboldCheckbox = $('<input>').attr('type', 'checkbox').addClass('form-check-input').attr('id', 'bold' + j);
+                        const headerboldLabel = $('<label>').addClass('form-check-label').text('Bold Column').attr('for', 'bold' + j);
+
+                        headerboldCheckbox.on('change', function () {
+                            const isBoldHeader = $(this).prop('checked');
+                            const columnHeader = document.getElementById('columnHeader' + j);
+
+                            if (isBoldHeader) {
+                                columnHeader.classList.add('bold-header');
+                            } else {
+                                columnHeader.classList.remove('bold-header');
+                            }
+                        });
+
+                        selectorDiv.append(label);
+                        selectorDiv.append(select);
+                        selectorDiv.append(mandatoryCheckbox);
+                        selectorDiv.append(mandatoryLabel);
+                        selectorDiv.append(headerboldCheckbox);
+                        selectorDiv.append(headerboldLabel);
+
+                        $('#columnTypeBody').append(selectorDiv);
+                    }
+                    $("#columnTypeModal").modal("show");
+                }
+            });
+
+
+
+            $("#confirmColumnTypes").click(function () {
+                const tableColumns = $("#tableColumns").val();
+                const cellTypes = [];
+                const mandatoryColumns = [];
+
+                for (let j = 0; j < tableColumns; j++) {
+                    const selectedType = $("#columnType" + j).val();
+                    cellTypes.push(selectedType);
+
+                    // Check if the column is mandatory
+                    const isMandatory = $("#mandatory" + j).prop("checked");
+                    mandatoryColumns.push(isMandatory);
+                }
+
+                $("#columnTypeModal").modal("hide");
+                createTableWithElements(cellTypes, mandatoryColumns);
+            });
+
+
+            function generatePDF() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+                const element = document.getElementById('Customform');
+                // Choose the element and save the PDF for your user.
+                html2pdf().from(element).save();
+
+
+
+            }
+
+            // Button click event to generate the PDF
+            document.getElementById('generatePdfBtn').addEventListener('click', function () {
+                generatePDF();
+            });
+
+
+
+            // Make the draggable element
+            $("#draggableElement").draggable();
+
+            // Make the resizable element
+            $("#resizableElement").resizable();
+
+            // Function to add a new textbox with Bootstrap styling
+
+
+
+
+            function createPictureBox() {
+                const newPictureBoxWrapper = document.createElement("div");
+                newPictureBoxWrapper.style.width = "150px";
+                newPictureBoxWrapper.style.height = "150px";
+
+
+                //newPictureBoxWrapper.classList.add("textbox-wrapper");
+
+                const newPictureBox = new Image(); // Create an image element for the picture box
+                newPictureBox.classList.add("resizable-image"); // Add a class for styling
+                newPictureBox.classList.add("image-preview");
+                // newPictureBox.style.width = "150px";
+                // newPictureBox.style.height = "150px";
+                newPictureBoxWrapper.appendChild(newPictureBox);
+
+                const newFileInput = document.createElement("input"); // Create a file input element
+                newFileInput.classList.add("file-input");
+                newFileInput.type = "file";
+                newFileInput.accept = "image/*"; // Accept only image files
+                newPictureBoxWrapper.appendChild(newFileInput);
+
+                $("#Customform").append(newPictureBoxWrapper);
+
+                // Make the new picture box wrapper draggable
+                $(newPictureBoxWrapper).draggable({
+                    containment: "#Customform"
+                });
+
+                // Initialize resizable behavior for the picture box
+                $(newPictureBoxWrapper).resizable({
+                    aspectRatio: true, // Maintain aspect ratio while resizing
+                    handles: "n, e, s, w, ne, se, sw, nw", // Display all resizing handles
+                    containment: "#Customform",
+                    resize: function (event, ui) {
+                        // Update the image width and height while resizing
+                        const img = $(this).find("img");
+                        img.width(ui.size.width);
+                        img.height(ui.size.height);
+                    }
+                });
+
+                // Add event listener to enable selecting an image for the picture box
+                $(newFileInput).on("change", function (e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            newPictureBox.src = e.target.result; // Set the image source
+                            newFileInput.style.display = "none"; // Hide the file input
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                // Add click event to show/hide the file input when clicking on the image
+                $(newPictureBoxWrapper).on("click", function () {
+                    const fileInput = $(this).find(".file-input")[0];
+                    if (fileInput.style.display === "none") {
+                        fileInput.style.display = "block";
+                    } else {
+                        fileInput.style.display = "none";
+                    }
+                });
+            }
+
+            // Button click event to create a new picture box
+            $("#createPictureBoxBtn").click(function () {
+                createPictureBox();
+            });
+
+            // Add event listener to deselect picture boxes when clicking outside of them
+            $(document).on("click", function (e) {
+                if (!$(e.target).closest(".textbox-wrapper").length) {
+                    $(".textbox-wrapper").css("border-color", "black");
+                }
+            });
+
+
+
+
+            // Function to add a new textbox with an editable heading
+            $("#addButton").click(function () {
+                const newTextBoxWrapper = document.createElement("div");
+                newTextBoxWrapper.classList.add("textbox-wrapper");
+
+                const newHeading = document.createElement("label");
+                newHeading.textContent = "Label"; // Default heading text
+                newHeading.classList.add("editable-heading"); // Add a class for styling and interaction
+                newHeading.setAttribute("contenteditable", "true"); // Make the heading editable
+
+                const newTextBox = document.createElement("input");
+                newTextBox.setAttribute("type", "text");
+                newTextBox.setAttribute("placeholder", "Enter text here");
+
+                newTextBoxWrapper.appendChild(newHeading);
+                newTextBoxWrapper.appendChild(newTextBox);
+                $("#Customform").append(newTextBoxWrapper);
+
+                // Make the new textbox wrapper draggable and resizable
+                // $(newTextBoxWrapper).draggable().resizable();
+
+
+                $(newTextBoxWrapper).resizable({
+                    containment: "#Customform"
+                }).draggable({
+                    containment: "#Customform"
+                });
+
+
+                // Add event listener to enable editing for the heading
+                $(newHeading).on("click", function () {
+                    $(this).attr("contenteditable", "true").focus();
+                });
+
+                // Handle editing when heading loses focus
+                $(newHeading).on("blur", function () {
+                    $(this).attr("contenteditable", "true");
+                });
+            });
+
+        });
+    </script>
+    @*</body>
+    </html>*@

@@ -1,0 +1,949 @@
+<div class="content DashBoardAllow" *ngIf="this.isDashboard == 'true'" >
+  <div class="row">
+    <div class="col-lg-4 col-sm-6 col-12">
+      <div class="dash-widget purchaseStatus" style="padding: 7px 20px; height: 93px;" id="AppSys">
+        <div class="dash-widgetimg">
+          <span *ngIf="isApproval == 'true'" (click)="onClickVouchers('')" ><img src="/assets/img/icons/dash1.svg" alt="img"></span>
+        </div>
+        <div *ngIf="isApproval == 'true'" class="dash-widgetcontent w-100">
+          <h5 class="text-center"><span>Vouchers Pending Status</span></h5>
+          <table class="table mb-0 text-center">
+            <tbody>
+              <tr>
+                <td (click)="onClickVouchers('approve')" class="fw-bold" style="width:33%">Approve</td>
+                <td (click)="onClickVouchers('verify')" class="fw-bold" style="width:33%">Verify</td>
+                <td (click)="onClickVouchers('audit')" class="fw-bold" style="width:33%">Audit</td>
+              </tr>
+              <tr>
+                <td (click)="onClickVouchers('approve')">{{approve}}</td>
+                <td (click)="onClickVouchers('verify')">{{verify}}</td>
+                <td (click)="onClickVouchers('audit')">{{audit}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 col-12">
+      <div class="dash-widget SaleCost" id="SaleCost">
+        <div class="dash-widgetimg">
+          <span><img src="/assets/img/icons/dash2.svg" alt="img"></span>
+        </div>
+        <div class="dash-widgetcontent" data-bs-toggle="modal" data-bs-target="#CostProfit" *ngIf="mobApp != 'Regular'">
+          <h5><span id="CostProfitMargin" [ngClass]="costProfitMargin < 0 ? 'text-danger' : ''">{{costProfitMargin | number: "1.2-2"}}</span></h5>
+          <h6>Cost & Profit Margin Status</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 col-12" data-bs-toggle="modal" data-bs-target="#grossProfit">
+      <div class="dash-widget dash2" id="profitLoss">
+        <div class="dash-widgetimg">
+          <span><img src="/assets/img/icons/dash3.svg" alt="img"></span>
+        </div>
+        <div class="dash-widgetcontent">
+          <h5><span id="ProfitandLoss" [ngClass]="profitAndLoss < 0 ? 'text-danger' : ''">{{profitAndLoss | number: "1.2-2"}}</span></h5>
+          <h6>Profit & Loss</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 col-12">
+      <div class="dash-count bggradient p-0">
+        <div class="dash-counts w-100 MainShadow">
+          <div class="dash-counts align-items-center justify-content-between">
+            <div class="col-sm-12 MainOrder">
+              <i class="fab fa-first-order ordericn"></i>
+              <span class="MainHeading fw-bold ms-2 fs-5">Purchase Activity</span>
+            </div>
+            <div class="FirstRow">
+              <table class="w-100">
+                <thead class="whborder">
+                  <tr class="whborder">
+                    <th class="bgnone whborder"><i class="fab fa-product-hunt orderhdicon"></i> Products</th>
+                    <th class="bgnone whborder"><i class="fas fa-store orderhdicon"></i> Stock Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">0</h3><br /><span>{{products}}</span>
+                      <a routerLink="/products" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">0</h3><br /><span>{{stockAmount | number: "1.2-2"}}</span>
+                      <a routerLink="/stock-status" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="SecondRow">
+              <table class="w-100">
+                <thead class="whborder">
+                  <tr class="whborder">
+                    <th class="bgnone whborder"><i class="fas fa-coins orderhdicon"></i> Purchase Transactions</th>
+                    <th class="bgnone whborder"><i class="fas fa-money-bill orderhdicon"></i> Bills Due Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">{{purchase}}</h3><br /><span>{{purchaseAmount | number: "1.2-2"}}</span>
+                      <a routerLink="/purchase-invoice" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">{{purchaseBillDueSatuts}}</h3>
+                      <br /><span></span>{{totalPurchaseBillDueSatuts | number: "1.2-2"}}
+                      <a routerLink="/purchase-bill-due-status" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 col-12">
+      <div class="dash-count bggradient2 p-0">
+        <div class="dash-counts w-100 MainShadow">
+          <div class="dash-counts align-items-center justify-content-between">
+            <div class="col-sm-12 MainOrder">
+              <i class="fab fa-first-order ordericn"></i>
+              <span class="MainHeading fw-bold ms-2 fs-5">Sales Activity</span>
+            </div>
+            <div class="FirstRow" >
+              <table class="w-100">
+                <thead class="whborder">
+                  <tr class="whborder">
+                    <th class="bgnone whborder"><i class="fas fa-clock orderhdicon"></i> {{((mobApp == 'Regular') ? '' : 'Pending Orders')}} </th>
+                    <th class="bgnone whborder"><i class="fas fa-truck orderhdicon"></i> {{((mobApp == 'Regular') ? '' : 'Delivered Orders')}} </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">{{((mobApp == 'Regular') ? 0 : pendingOrders)}}</h3>
+                      <br /><span>{{((mobApp == 'Regular') ? 0 : pendingOrdersAmount) | number: "1.2-2"}}</span>
+                      <a *ngIf="mobApp != 'Regular'" routerLink="/sale-by-order" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">{{((mobApp == 'Regular') ? 0 : deliverOrders)}}</h3>
+                      <br /><span>{{ ((mobApp == 'Regular') ? 0 : deliverOrdersAmount) | number: "1.2-2"}}</span>
+                      <a *ngIf="mobApp != 'Regular'" routerLink="/sale-by-order" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class=" SecondRow">
+              <table class="w-100">
+                <thead class="whborder">
+                  <tr class="whborder">
+                    <th class="bgnone whborder"><i class="fas fa-coins orderhdicon"></i> Sale Transactions</th>
+                    <th class="bgnone whborder"><i class="fas fa-money-bill orderhdicon"></i> Bills Due Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">{{sale}}</h3><br /><span></span> {{saleAmount | number: "1.2-2" }}
+                      <a routerLink="/sale-invoice" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">{{saleBillDueStatus}}</h3><br /><span
+                        id="totalSaleDue">{{totalSaleBillDueStatus | number: "1.2-2" }}</span>
+                      <a routerLink="/sale-bill-due-status" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-sm-6 col-12">
+      <div class="dash-count bggradient3 p-0">
+        <div class="dash-counts w-100 MainShadow">
+          <div class="dash-counts align-items-center justify-content-between">
+            <div class="col-sm-12 MainOrder">
+              <i class="fab fa-first-order ordericn"></i>
+              <span class="MainHeading fw-bold ms-2 fs-5">Bank/Cash Activity</span>
+            </div>
+            <div class="FirstRow">
+              <table class="w-100">
+                <thead class="whborder">
+                  <tr class="whborder">
+                    <th class="bgnone whborder"><i class="fas fa-receipt orderhdicon"></i>Receipts
+                      <div class="dropdown me-2 float-end">
+                        <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"
+                          class="dropset text-white">
+                          <i class="fa fa-ellipsis-v"></i>
+                        </a>
+                        <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton">
+                          <li>
+                            <a routerLink="/sale-receipts" class="dropdown-item">Customer</a>
+                          </li>
+                          <li>
+                            <a routerLink="/purchase-receipts" class="dropdown-item">Supplier</a>
+                          </li>
+                          <li>
+                            <a routerLink="/accounts-receipts" class="dropdown-item">Other</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </th>
+                    <th class="bgnone whborder">
+                      <i class="fas fa-money-check-alt orderhdicon"></i>Payments
+                      <div class="dropdown me-2 float-end">
+                        <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"
+                          class="dropset text-white">
+                          <i class="fa fa-ellipsis-v"></i>
+                        </a>
+                        <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton">
+                          <li>
+                            <a routerLink="/purchase-payment" class="dropdown-item">Supplier</a>
+                          </li>
+                          <li>
+                            <a routerLink="/sale-payment" class="dropdown-item">Customer</a>
+                          </li>
+                          <li>
+                            <a routerLink="/accounts-payment" class="dropdown-item">Other</a>
+                          </li>
+                        </ul>
+                      </div>
+
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">{{receipts}}</h3><br /><span>{{ totalReceipts| number: "1.2-2"}}</span>
+                      <a routerLink="/sale-receipts" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">{{payment}}</h3><br /><span>{{ totalPayment | number: "1.2-2"}}</span>
+                      <a routerLink="/purchase-payment" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class=" SecondRow">
+              <table class="w-100">
+                <thead class="whborder">
+                  <tr class="whborder">
+                    <th class="bgnone whborder"><i class="fas fa-coins orderhdicon"></i>Trial Balance </th>
+                    <th class="bgnone whborder"><i class="fas fa-file-invoice-dollar orderhdicon"></i>Status </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">0</h3> <br /><span
+                        (click)="onClickTrial(trailBalance)">{{trailBalance | number: "1.2-2"}}</span>
+                      <a routerLink="/trial-balance" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+                    <td class="whborder orderdata">
+                      <h3 class="Amount">{{receiptsPayment}}</h3><br /><span>{{ 0 | number: "1.2-2"}}</span>
+                      <a routerLink="/recipts-payment-status" class="float-end me-4"><i
+                          class="far fa-arrow-alt-circle-right ms-2 text-white"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6 col-sm-12 col-12 d-flex">
+      <div class="card flex-fill">
+        <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+          <h4 class="card-title mb-0">Min Stock Products</h4>
+        </div>
+        <div class="card-body pt-1">
+          <div class="table-responsive bg-green" style="height:200px;">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th class="text-start text-white ">Products</th>
+                  <th class="text-start text-white">Category</th>
+                  <th class="text-center text-white">Min Lvl</th>
+                  <th class="text-center text-white">Rem</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of minLvlProductList">
+                  <td class="text-start limited-text" title="{{item.PRODUCT}}">{{item.PRODUCT}}</td>
+                  <td class="text-start" title="{{item.CATEGORY}}">{{item.CATEGORY}}</td>
+                  <td class="text-center">{{item.MINLVL}}</td>
+                  <td class="text-center">{{item.REM}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-sm-12 col-12 d-flex">
+      <div class="card flex-fill">
+        <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+          <h4 class="card-title mb-0">Expired Products</h4>
+          <div class="dropdown">
+            <a data-bs-toggle="dropdown" aria-expanded="false" class="dropset">
+              <i class="fa fa-ellipsis-v"></i>
+            </a>
+            <ul class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton">
+              <li>
+                <a class="dropdown-item" routerLink="/products">Product</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body pb-1 pt-1">
+          <div class="table-responsive" style="height:200px;">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>Products</th>
+                  <th>Category</th>
+                  <th class="text-center">ExpiryDate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of expireProductList">
+                  <td class="text-start limited-text" title="{{item.PRODUCT}}">{{item.PRODUCT}}</td>
+                  <td class="text-start" title="{{item.CATEGORY}}">{{item.CATEGORY}}</td>
+                  <td class="text-center">{{item.EXPDATE}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-0">
+    <div class="card-body">
+      <div class="row mb-1 align-items-center">
+        <div class="col-sm-5">
+          <input type="search" class="form-control form-control-sm" [(ngModel)]="searchPartyPostion"
+            (input)="searchGrid()" id="txtSearch" placeholder="Search">
+        </div>
+        <div class="col-sm-1 d-flex align-items-center">
+          <input type="radio" name="position" class="me-1" id="customer" [checked]="customer"
+            (click)="onClickFilter('cutomer')">
+          <label for="customer" class="fw-bold">Customer</label>
+        </div>
+        <div class="col-sm-1 d-flex align-items-center">
+          <input type="radio" name="position" class="me-1" id="supplier" [checked]="supplier"
+            (click)="onClickFilter('supplier')">
+          <label for="supplier" class="fw-bold">Supplier</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class=" ">
+          <div class="col-sm-12">
+            <div class="table-responsive bg-green" style="height:250px;">
+              <table class="table mb-0 my-table">
+                <thead class="dash-counts w-100">
+                  <tr rowsapn="2">
+                    <th colspan="6"></th>
+                    <th colspan="2" class="text-center text-white" style="width:20%;">Last Activity</th>
+                    <th colspan="4" class="text-center text-white" style="width:30%;">Financial Activity</th>
+                  </tr>
+                  <tr>
+                    <th class="w-0"></th>
+                    <th>Area</th>
+                    <th>Sub Area</th>
+                    <th>Main Account</th>
+                    <th>Party Name</th>
+                    <th class="text-end">Qty</th>
+                    <th class="text-center" *ngIf="customer">Sale</th>
+                    <th class="text-center" *ngIf="!customer">Purchase</th>
+                    <th class="text-center" *ngIf="customer">Receiving</th>
+                    <th class="text-center" *ngIf="!customer">Payment</th>
+                    <th class="text-end text-white">Opening Balance</th>
+                    <th class="text-end text-white">Debit</th>
+                    <th class="text-end text-white">Credit</th>
+                    <th class="text-end text-white">Current Balance</th>
+                  </tr>
+                </thead>
+                <tbody #partyPositionTable>
+                  <tr *ngFor="let item of partyPositionList">
+                    <td class="text-center">
+                      <span data-bs-toggle="modal" data-bs-target="#LedgerModal" (click)="onClickLedger(item.PartyCODE, item.ACtitle)">
+                        <i class="fas fa-eye"></i>
+                      </span>
+                    </td>
+                    <td class="text-start limited-text" title="{{item.Groupname}}">{{item.Groupname}}</td>
+                    <td class="text-start limited-text" title="{{item.subgroup}}">{{item.subgroup}}</td>
+                    <td class="text-start limited-text" title="{{item.MainAC}}">{{item.MainAC}}</td>
+                    <td class="text-start limited-text" title="{{item.ACtitle}}">{{item.ACtitle}}</td>
+                    <td class="text-end">{{item.Qty | number: "1.0-0"}}</td>
+                    <td class="text-center">{{(item.LastSale | date: "dd/MM/yyyy") == '01/01/1900' ? '' :  (item.LastSale | date: "dd/MM/yyyy") }}</td>
+                    <td class="text-center">{{(item.LastRcp | date: "dd/MM/yyyy") == '01/01/1900' ? '' :  (item.LastRcp | date: "dd/MM/yyyy") }}</td>
+                    <td class="text-end balOpen">{{item.OpBal | number: "1.2-2"}}</td>
+                    <td class="text-end balSalePurchase">{{item.Sale | number: "1.2-2"}}</td>
+                    <td class="text-end balRecPaid">{{item.Recv | number: "1.2-2"}}</td>
+                    <td class="text-end balCurrent">{{((item.OpBal + item.Sale) - item.Recv)  | number: "1.2-2"}}</td>
+                  </tr>
+                </tbody>
+                <tfoot style="border-top: 0px;" id="print-tbl">
+                  <tr>
+                    <td class="text-end" colspan="8">Grand Total =</td>
+                    <td class="text-end">{{balOpen | number: "1.2-2"}}</td>
+                    <td class="text-end">{{balSalePurchase | number: "1.2-2"}}</td>
+                    <td class="text-end">{{balRecPaid | number: "1.2-2"}}</td>
+                    <td class="text-end">{{balCurrent | number: "1.2-2"}}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VOUCHER MODAL -->
+<div class="modal fade" id="voucherModal">
+  <div class="modal-dialog" [ngStyle]="{'max-width': (isApprove && isVerify && isAudit) ? '80%' : ''}">
+    <div class="modal-content" style="height:630px;">
+      <div class="modal-header p-2 align-items-center" style="background-color:#ff9f43;color:white; ">
+        <h5 class="modal-title nModalTitle">Vouchers Pending Status</h5>
+        <div class="d-flex align-items-center" style="width:30%">
+          <div class="position-relative w-100 me-1">
+            <ng-select 
+                [items]="usersList" 
+                bindValue="UserId" 
+                bindLabel="UserName" 
+                [(ngModel)]="userId"
+                placeholder="---Select User---"
+                [clearable]="true"
+                (change)="getVoucherStatus()"
+                [dropdownPosition]="'bottom'">
+              </ng-select>
+          </div>
+
+          <div class="position-relative w-100">
+            <ng-select 
+                placeholder="---Select Location---" 
+                [dropdownPosition]="'bottom'"x
+                [disabled]="isDisableLoc" 
+                [(ngModel)]="locId"
+                (change)="getVoucherStatus()">
+                <ng-option *ngFor="let item of locationList" [value]="item.ID">
+                  {{ item.ID + " - " + item.NAME}}
+                </ng-option>
+              </ng-select>
+            </div>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+      </div>
+      <div class="modal-body p-2" id="appendModel">
+        <div class="row">
+          <div class="col-sm text-center" *ngIf="isApprove">
+            <label class="fw-bolder fs-18">To be Approval</label>
+            <div class="d-flex">
+              <div class="position-relative w-100 text-start me-2 mb-1">
+                <ng-select 
+                placeholder="---Select Vch Type---"
+                [items]="vchList" 
+                [(ngModel)]="approveType"
+                bindLabel="vchtype" 
+                bindValue="vchtype"
+                [dropdownPosition]="'bottom'" (change)="searchVoucher('approve')">
+                </ng-select>
+              </div>
+              <input type="text" class="form-control" placeholder="Voucher #" [(ngModel)]="approveNo" (input)="searchVoucher('approve')">
+            </div>
+            <div class="table-responsive" style="height:485px; font-size: 11px; border: 1px solid #e9ecef;">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-center"></th>
+                    <th class="text-center">VchType</th>
+                    <th class="text-center">VchNo</th>
+                    <th class="text-center">Loc</th>
+                    <th class="text-center">VchDate</th>
+                    <th class="text-start">User Name</th>
+                  </tr>
+                </thead>
+                <tbody #approveVoucher>
+                  <tr *ngFor="let item of approveVoucherList">
+                    <td class="" (click)="openReport(item)">
+                      <span class="me-3 vchPrint"><i class="fas fa-print"></i></span>
+                    </td>
+                    <td class="text-center vchtype">{{item.VCHTYPE}}</td>
+                    <td class="text-center vchno">{{item.VCHNO}}</td>
+                    <td class="text-center">{{item.LOCID}}</td>
+                    <td class="text-center">{{item.VCHDATE}}</td>
+                    <td class="text-start">{{item.USERNAME}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-sm text-center" *ngIf="isVerify">
+            <label class="fw-bolder fs-18">To be Verify</label>
+            <div class="d-flex">
+              <div class="position-relative w-100 text-start me-2 mb-1">
+                <ng-select 
+                placeholder="---Select Vch Type---"
+                [items]="vchList" 
+                [(ngModel)]="approveType2"
+                bindLabel="vchtype" 
+                bindValue="vchtype"
+                [dropdownPosition]="'bottom'" (change)="searchVoucher('verify')">
+                </ng-select>
+              </div>
+              <input type="text" class="form-control" placeholder="Voucher #" [(ngModel)]="approveNo2" (input)="searchVoucher('verify')">
+            </div>
+            <div class="table-responsive" style="height:485px; font-size: 11px; border: 1px solid #e9ecef;">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-center"></th>
+                    <th class="text-center">VchType</th>
+                    <th class="text-center">VchNo</th>
+                    <th class="text-center">Loc</th>
+                    <th class="text-center">VchDate</th>
+                    <th class="text-start">User Name</th>
+                  </tr>
+                </thead>
+                <tbody #varifyVoucher>
+                  <tr *ngFor="let item of verifyVoucherList">
+                    <td class="" (click)="openReport(item)">
+                      <span class="me-3 vchPrint"><i class="fas fa-print"></i></span>
+                    </td>
+                    <td class="text-center vchtype">{{item.VCHTYPE}}</td>
+                    <td class="text-center vchno">{{item.VCHNO}}</td>
+                    <td class="text-center">{{item.LOCID}}</td>
+                    <td class="text-center">{{item.VCHDATE}}</td>
+                    <td class="text-start">{{item.USERNAME}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-sm text-center" *ngIf="isAudit">
+            <label class="fw-bolder fs-18">To be Audit</label>
+            <div class="d-flex">
+              <div class="position-relative w-100 text-start me-2 mb-1">
+                <ng-select 
+                placeholder="---Select Vch Type---"
+                [items]="vchList" 
+                [(ngModel)]="approveType3"
+                bindLabel="vchtype" 
+                bindValue="vchtype"
+                [dropdownPosition]="'bottom'" (change)="searchVoucher('audit')">
+                </ng-select>
+              </div>
+              <input type="text" class="form-control" placeholder="Voucher #" [(ngModel)]="approveNo3" (input)="searchVoucher('audit')">
+            </div>
+            <div class="table-responsive" style="height:485px; font-size: 11px; border: 1px solid #e9ecef;">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-center"></th>
+                    <th class="text-center">VchType</th>
+                    <th class="text-center">VchNo</th>
+                    <th class="text-center">Loc</th>
+                    <th class="text-center">VchDate</th>
+                    <th class="text-start">User Name</th>
+                  </tr>
+                </thead>
+                <tbody #auditVoucher>
+                  <tr *ngFor="let item of auditVoucherList">
+                    <td class="" (click)="openReport(item)">
+                      <span class="me-3 vchPrint"><i class="fas fa-print"></i></span>
+                    </td>
+                    <td class="text-center vchtype">{{item.VCHTYPE}}</td>
+                    <td class="text-center vchno">{{item.VCHNO}}</td>
+                    <td class="text-center">{{item.LOCID}}</td>
+                    <td class="text-center">{{item.VCHDATE}}</td>
+                    <td class="text-start">{{item.USERNAME}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFT & LOSS MODAL -->
+<div class="modal fade" id="grossProfit">
+  <div class="modal-dialog" style="max-width:82%;">
+    <div class="modal-content" style="height:630px;">
+      <div class="modal-header p-2 align-items-center" style="background-color:#ff9f43;color:white; ">
+        <h5 class="modal-title">Gross Profit Margin Reports</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card">
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                      <label>From Date</label>
+                      <div class="input-groupicon">
+                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                          [matDatepicker]="datepicker" [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                        <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                        <div class="addonset">
+                          <img src="/assets/img/icons/calendars.svg" alt="img">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                      <label>To Date</label>
+                      <div class="input-groupicon">
+                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                          [matDatepicker]="datepicker1" [(ngModel)]="toDate" (click)="datepicker1.open()" />
+                        <mat-datepicker #datepicker1 [startAt]="toDate"></mat-datepicker>
+                        <div class="addonset">
+                          <img src="/assets/img/icons/calendars.svg" alt="img">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row content-justify-center">
+                  <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                    <button class="btn btn-primary btn-sm" (click)="onViewProfitLoss()">View</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRIAL BALANCE MODAL -->
+<div class="modal fade" id="trialModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center" style="background-color:#ff9f43;color:white; ">
+        <h5 class="modal-title">Trial Balance Difference</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="table-responsive" style="height:300px;">
+          <table class="table mb-0 productTable">
+            <thead>
+              <tr>
+                <th>VchType</th>
+                <th>VchNo</th>
+                <th class="text-center">VchDate</th>
+                <th class="text-end">Debit</th>
+                <th class="text-end">Credit</th>
+                <th class="text-end">Difference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of trialBalanceList">
+                <td>{{item.VCHTYPE}}</td>
+                <td>{{item.VCHNO}}</td>
+                <td class="text-center">{{item.VCHDATE}}</td>
+                <td class="text-end">{{item.DEBIT | number: "1.2-2"}}</td>
+                <td class="text-end">{{item.CREDIT | number: "1.2-2"}}</td>
+                <td class="text-end">{{item.DIFF | number: "1.2-2"}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3">Total: </td>
+                <td class="text-end">{{totalDebit | number: "1.2-2"}}</td>
+                <td class="text-end">{{totalCredit | number: "1.2-2"}}</td>
+                <td class="text-end">{{totalDff | number: "1.2-2"}}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COST PROFIT MODAL -->
+<div class="modal fade" id="CostProfit">
+  <div class="modal-dialog" style="max-width:82%;">
+    <div class="modal-content" style="height:630px;">
+      <div class="modal-header p-2 align-items-center" style="background-color:#ff9f43;color:white; ">
+        <h5 class="modal-title nModalTitle">Cost & Profit Margin Status</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="row fs-12 uls">
+          <div class="col-sm-2">
+            <span class="fw-bolder fs-14 text-danger">[Main Area/SubArea Wise]</span>
+            <ul class="fw-bold fs-12 mt-2 p-0">
+              <li>
+                <input type="radio" id="areasubarea" name="Vch" (click)="onClickCP('area')">
+                <label for="areasubarea">Area/Sub Area</label>
+              </li>
+              <li>
+                <input type="radio" id="areasubareaparty" name="Vch" (click)="onClickCP('areaParty')">
+                <label for="areasubareaparty">Area/Sub Area Party</label>
+              </li>
+              <li>
+                <input type="radio" id="areasubareaproduct" name="Vch" (click)="onClickCP('areaProduct')">
+                <label for="areasubareaproduct">Area/Sub Area Product</label>
+              </li>
+              <li>
+                <input type="radio" id="areasubareacatagory" name="Vch" (click)="onClickCP('areaCategory')">
+                <label for="areasubareacatagory">Area/Sub Area Catagory</label>
+              </li>
+              <li>
+                <input type="radio" id="areasubareasaleteam" name="Vch" (click)="onClickCP('areaSaleMan')">
+                <label for="areasubareasaleteam">Area/Sub Area SaleMan</label>
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-2">
+            <span class="fw-bolder fs-14 text-danger">[Party Wise]</span>
+            <ul class="fw-bold fs-12 mt-2 p-0">
+              <li>
+                <input type="radio" id="party" name="Vch"  (click)="onClickCP('party')">
+                <label for="party">Party</label>
+              </li>
+              <li>
+                <input type="radio" id="partyareasubarea" name="Vch" (click)="onClickCP('partyArea')" >
+                <label for="partyareasubarea">Party Area/Sub Area</label>
+              </li>
+              <li>
+                <input type="radio" id="partyareasubareaproduct" name="Vch" (click)="onClickCP('partyAreaProduct')">
+                <label for="partyareasubareaproduct">Party Area/Sub Area Product</label>
+              </li>
+              <li>
+                <input type="radio" id="partyareasubareacatagory" name="Vch" (click)="onClickCP('partyAreaCategory')">
+                <label for="partyareasubareacatagory">Party Area/Sub Area Catagory</label>
+              </li>
+              <li>
+                <input type="radio" id="partyareasubareasaleteam" name="Vch" (click)="onClickCP('partyAreaSaleTeam')">
+                <label for="partyareasubareasaleteam">Party Area/Sub Area SaleMan</label>
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-4">
+            <span class="fw-bolder fs-14 text-danger">[Product Wise][Catagory Wise][Sale's team Wise]</span>
+            <ul class="fw-bold fs-12 mt-2 p-0">
+              <li>
+                <input type="radio" id="product" name="Vch" (click)="onClickCP('product')">
+                <label for="product">Product</label>
+              </li>
+              <li>
+                <input type="radio" id="productareasubarea" name="Vch" (click)="onClickCP('productArea')">
+                <label for="productareasubarea">Product Area/Sub Area</label>
+              </li>
+              <li>
+                <input type="radio" id="productareasubareaparty" name="Vch" (click)="onClickCP('productAreaParty')">
+                <label for="productareasubareaparty">Product Area/Sub Area Party</label>
+              </li>
+              <li>
+                <input type="radio" id="catagory" name="Vch" (click)="onClickCP('catrgory')">
+                <label for="catagory">Catagory</label>
+              </li>
+              <li>
+                <input type="radio" id="catagoryareasubarea" name="Vch" (click)="onClickCP('catrgoryArea')">
+                <label for="catagoryareasubarea">Catagory Area/Sub Area</label>
+              </li>
+              <li>
+                <input type="radio" id="saleteam" name="Vch" (click)="onClickCP('saleTeam')">
+                <label for="saleteam">Sale Team</label>
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-4">
+            <div class="row">
+              <div class="col-lg-5 col-md-5 col-sm-5 ps-0">
+                <div class="form-group">
+                  <label>From Date:</label>
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepicker4" [(ngModel)]="fromDate1" (click)="datepicker4.open()" />
+                    <mat-datepicker #datepicker4 [startAt]="fromDate1"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5 col-md-5 col-sm-5 ps-0">
+                <div class="form-group">
+                  <label>To Date:</label>
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepicker5" [(ngModel)]="toDate1" (click)="datepicker5.open()" />
+                    <mat-datepicker #datepicker5 [startAt]="toDate1"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-2 col-sm-6 ps-0">
+                <div class="form-group">
+                  <label> . </label>
+                  <div class="add-icon">
+                    <a (click)="onClickCProfit()" href="javascript:void(0);" class="w-100"><img src="/assets/img/icons/search.svg" alt="img" class="searchSvg"></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-6 ps-0">
+                <div class="form-group">
+                  <label>Search</label>
+                  <input type="search" class="form-control" [(ngModel)]="searchCost" (input)="searchGridPC()" placeholder="Search">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive" style="height:420px;">
+          <table class="table mb-0">
+            <thead id="tableHead">
+              <tr>
+                <th class="text-center">Sno</th>
+                <!-- AREA WISE -->
+                <th *ngIf="costStatus.includes('area', 'areaParty', 'areaProduct', 'areaCategory', 'areaSaleMan')">Main Area</th>
+                <th *ngIf="costStatus.includes('area', 'areaParty', 'areaProduct', 'areaCategory', 'areaSaleMan')">Subarea</th>
+                <th *ngIf="costStatus == 'areaParty'">Party</th>
+                <th *ngIf="costStatus == 'areaProduct'">Product</th>
+                <th *ngIf="costStatus == 'areaCategory'">Category</th>
+                <th *ngIf="costStatus == 'areaSaleMan'">SaleMan</th>
+
+                <!-- PARTY WISE -->
+                <th *ngIf="costStatus.includes('party', 'partyArea', 'partyAreaProduct', 'partyAreaCategory', 'partyAreaSaleTeam')">Party</th>
+                <th *ngIf="costStatus.includes('partyArea', 'partyAreaProduct', 'partyAreaCategory', 'partyAreaSaleTeam')">Main Area</th>
+                <th *ngIf="costStatus.includes('partyArea', 'partyAreaProduct', 'partyAreaCategory', 'partyAreaSaleTeam')">Subarea</th>
+                <th *ngIf="costStatus == 'partyAreaProduct'">Product</th>
+                <th *ngIf="costStatus == 'partyAreaCategory'">Category</th>
+                <th *ngIf="costStatus == 'partyAreaSaleTeam'">SaleMan</th>
+
+                <!-- PRODUCT WISE -->
+                <th *ngIf="costStatus.includes('product', 'productArea', 'productAreaParty')">Product</th>
+                <th *ngIf="costStatus.includes('productArea', 'productAreaParty')">Main Area</th>
+                <th *ngIf="costStatus.includes('productArea', 'productAreaParty')">Subarea</th>
+                <th *ngIf="costStatus == 'productAreaParty'">Party</th>
+
+                <!-- CATEGORY WISE -->
+                <th *ngIf="costStatus.includes('catrgory', 'catrgoryArea')">Category</th>
+                <th *ngIf="costStatus == 'catrgoryArea'">Main Area</th>
+                <th *ngIf="costStatus == 'catrgoryArea'">Subarea</th>
+
+                <!-- SALE TEAM WISE -->
+                <th *ngIf="costStatus == 'saleTeam'">SaleMan</th>
+
+                <th class="text-end">Sale Amount</th>
+                <th class="text-end">(%)</th>
+                <th class="text-end">Received</th>
+                <th class="text-end">(%)</th>
+                <th class="text-end">Cost</th>
+                <th class="text-end">(%)</th>
+                <th class="text-end">Discount</th>
+                <th class="text-end">(%)</th>
+                <th class="text-end">Margin</th>
+                <th class="text-end">(%)</th>
+              </tr>
+            </thead>
+            <tbody #pcLists>
+              <tr *ngFor="let item of costProfitList; let i = index" >
+                <td class="text-center">{{i+1}}</td>
+                <!-- AREA WISE -->
+                <td *ngIf="costStatus.includes('area', 'areaParty', 'areaProduct', 'areaCategory', 'areaSaleMan')" class="limited-text" title="{{item.MAINAREA}}">{{item.MAINAREA}}</td>
+                <td *ngIf="costStatus.includes('area', 'areaParty', 'areaProduct', 'areaCategory', 'areaSaleMan')" class="limited-text" title="{{item.SUBAREA}}">{{item.SUBAREA}}</td>
+                <td *ngIf="costStatus == 'areaParty'" class="limited-text" title="{{item.PARTY}}">{{item.PARTY}}</td>
+                <td *ngIf="costStatus == 'areaProduct'" class="limited-text" title="{{item.PRODUCT}}">{{item.PRODUCT}}</td>
+                <td *ngIf="costStatus == 'areaCategory'" class="limited-text" title="{{item.CATAGORY}}">{{item.CATAGORY}}</td>
+                <td *ngIf="costStatus == 'areaSaleMan'" class="limited-text" title="{{item.SALEMAN}}">{{item.SALEMAN}}</td>
+
+                <!-- PARTY WISE -->
+                <td *ngIf="costStatus.includes('party', 'partyArea', 'partyAreaProduct', 'partyAreaCategory', 'partyAreaSaleTeam')" class="limited-text" title="{{item.PARTY}}">{{item.PARTY}}</td>
+                <td *ngIf="costStatus.includes('partyArea', 'partyAreaProduct', 'partyAreaCategory', 'partyAreaSaleTeam')" class="limited-text" title="{{item.MAINAREA}}">{{item.MAINAREA}}</td>
+                <td *ngIf="costStatus.includes('partyArea', 'partyAreaProduct', 'partyAreaCategory', 'partyAreaSaleTeam')" class="limited-text" title="{{item.SUBAREA}}">{{item.SUBAREA}}</td>
+                <td *ngIf="costStatus == 'partyAreaProduct'" class="limited-text" title="{{item.PRODUCT}}">{{item.PRODUCT}}</td>
+                <td *ngIf="costStatus == 'partyAreaCategory'" class="limited-text" title="{{item.CATAGORY}}">{{item.CATAGORY}}</td>
+                <td *ngIf="costStatus == 'partyAreaSaleTeam'" class="limited-text" title="{{item.SALEMAN}}">{{item.SALEMAN}}</td>
+
+                <!-- PRODUCT WISE -->
+                <td *ngIf="costStatus.includes('product', 'productArea', 'productAreaParty')" class="limited-text" title="{{item.PRODUCT}}">{{item.PRODUCT}}</td>
+                <td *ngIf="costStatus.includes('productArea', 'productAreaParty')" class="limited-text" title="{{item.MAINAREA}}">{{item.MAINAREA}}</td>
+                <td *ngIf="costStatus.includes('productArea', 'productAreaParty')" class="limited-text" title="{{item.SUBAREA}}">{{item.SUBAREA}}</td>
+                <td *ngIf="costStatus == 'productAreaParty'" class="limited-text" title="{{item.PARTY}}">{{item.PARTY}}</td>
+
+                <!-- CATEGORY WISE -->
+                <td *ngIf="costStatus.includes('catrgory', 'catrgoryArea')" class="limited-text" title="{{item.CATAGORY}}">{{item.CATAGORY}}</td>
+                <td *ngIf="costStatus == 'catrgoryArea'" class="limited-text" title="{{item.MAINAREA}}">{{item.MAINAREA}}</td>
+                <td *ngIf="costStatus == 'catrgoryArea'" class="limited-text" title="{{item.SUBAREA}}">{{item.SUBAREA}}</td>
+
+                <!-- SALE TEAM WISE -->
+                <td *ngIf="costStatus == 'saleTeam'" class="limited-text" title="{{item.SALEMAN}}">{{item.SALEMAN}}</td>
+
+                <td class="text-end sale">{{item.SALE | number: "1.2-2"}}</td>
+                <td class="text-end text-danger saleper"></td>
+                <td class="text-end recamt">{{item.RECEIVEAMOUNT | number: "1.2-2"}}</td>
+                <td class="text-end text-danger recamtper"></td>
+                <td class="text-end cost">{{item.COST | number: "1.2-2"}}</td>
+                <td class="text-end text-danger costper"></td>
+                <td class="text-end discount">{{item.DISCOUNT | number: "1.2-2"}}</td>
+                <td class="text-end text-danger discountper"></td>
+                <td class="text-end margin">{{(item.SALE - (item.COST + item.DISCOUNT)) | number: "1.2-2"}}</td>
+                <td class="text-end text-danger marginper"></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td [colSpan]="costLength" class="text-end">Total:</td>
+                <td class="text-end">{{costSale | number: "1.2-2"}}</td>
+                <td class="text-end">{{costSalePer | number: "1.2-2"}}</td>
+                <td class="text-end">{{costRecAmt | number: "1.2-2"}}</td>
+                <td class="text-end">{{costRecAmtPer | number: "1.2-2"}}</td>
+                <td class="text-end">{{cost | number: "1.2-2"}}</td>
+                <td class="text-end">{{costPer | number: "1.2-2"}}</td>
+                <td class="text-end">{{costDiscount | number: "1.2-2"}}</td>
+                <td class="text-end">{{costDiscountPer | number: "1.2-2"}}</td>
+                <td class="text-end">{{costMargin | number: "1.2-2"}}</td>
+                <td class="text-end">{{costMarginPer | number: "1.2-2"}}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-file-attachment [code]="outputCode" [name]="outputName"></app-file-attachment>

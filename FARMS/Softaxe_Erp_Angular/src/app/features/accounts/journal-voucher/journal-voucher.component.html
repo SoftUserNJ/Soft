@@ -1,0 +1,329 @@
+<div class="content ListPage" *ngIf="isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4 class="newcolor">Journal Voucher</h4>
+      <h6 class="newcolor">Manage Journal Voucher</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Journal-Voucher', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Journal-Voucher', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row align-items-center mb-2">
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="d-flex align-items-center">
+            <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+            <input type="search" class="form-control" placeholder="Search" (input)="searchGrid($event)" />
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-6 col-sm-12">
+          <div class="row align-items-center">
+            <div class="col-lg-2 col-md-2 text-end p-0">
+              <span class="fw-bolder">From Date</span>
+            </div>
+            <div class="col-lg-3 col-md-4 ps-1">
+              <div class="form-group mb-0">
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                    [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                  <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 text-end p-0">
+              <span class="fw-bolder">To Date</span>
+            </div>
+            <div class="col-lg-3 col-md-4 ps-1">
+              <div class="form-group mb-0">
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                    [matDatepicker]="datepicker2" [(ngModel)]="toDate" (click)="datepicker2.open()">
+                  <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+              <img src="/assets/img/icons/search.svg" alt="img" class="filter-img" (click)="getJVList()">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 ps-0">
+          <div class="d-flex align-items-center justify-content-end">
+            <p (click)="togglePages(); editDisabled= false" class="add-new">
+              <img src="/assets/img/icons/plus.svg" alt="img" class="filter-img">Add New
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive mb-1">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th class="text-center">Vch Type</th>
+              <th class="text-center">Vch No</th>
+              <th class="text-center">Vch Date</th>
+              <th class="text-end">Debit</th>
+              <th class="text-end">Credit</th>
+              <th class="text-center w-12 noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody #voucherLists>
+            <tr *ngFor="let data of voucherList">
+              <td class="text-center">{{data.VCHTYPE}}</td>
+              <td class="text-center">{{data.VCHNO}}</td>
+              <td class="text-center">{{data.VCHDATE}}</td>
+              <td class="text-end">{{data.DEBIT | number : "1.2-2" }}</td>
+              <td class="text-end">{{data.CREDIT | number : "1.2-2" }}</td>
+              <td class="text-center noPrint">
+                <span class="btnRowPrint me-3" (click)="openReportModal(data)">
+                  <i class="fas fa-print"></i>
+                </span>
+                <span class="me-3" data-bs-toggle="modal" data-bs-target="#Modal" (click)="onClickModel(data)">
+                  <i class="fas fa-images"></i>
+                </span>
+                <span (click)="editJV(data.VCHNO)" class="me-3 btnEditCategory">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span (click)="deleteJV(data.VCHNO, data.VCHTYPE)" class="confirm-text btnDelCategory">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<form class="content AddPage" *ngIf="!isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4 class="newcolor">Journal Voucher</h4>
+      <h6 class="newcolor">Add your Journal Voucher</h6>
+    </div>
+    <div class="page-btn" routerLink="/journal-voucher">
+      <a (click)="togglePages()" class="btn btn-added btnList">
+        <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+          aria-label="fa fa-th-list"></i>
+        Home
+      </a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body" style="padding-top: 0; padding-right: 12px; padding-left: 12px;padding-bottom: 5px;">
+      <div class="row activeForm " [formGroup]="voucherForm" [ngClass]="{ 'disabled': isDisabled }">
+        <div class="col-lg-12 mb-1 py-1 green-bg">
+          <div class="row">
+            <div class="col-lg-4 col-md-6">
+              <div>
+                <label class="fw-bolder">Account Head</label>
+                <ng-select id="drpCompanyGroup" [items]=" acc_head" placeholder="---Select Account---"
+                  formControlName="account" bindLabel="name" bindValue="code" (change)="onChangeAccount($event)"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="form-group">
+                <label>Vch Date</label>
+                <div class="input-groupicon">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepicker" formControlName="vchDate" (click)="datepicker.open()" />
+                    <mat-datepicker #datepicker [startAt]="vchDate"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="form-group">
+                <label>Vchno No</label>
+                <input type="number" id="voucherNo" class="form-control" formControlName="vchNo" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" class="form-control" formControlName="description" />
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <div class="form-group">
+            <label>DEBIT</label>
+            <input type="number" class="form-control" formControlName="debit" />
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <div class="form-group">
+            <label>CREDIT</label>
+            <input type="number" class="form-control" formControlName="credit" />
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-6">
+          <div class="form-group">
+            <label>Qty</label>
+            <input type="number" class="form-control" formControlName="qty" />
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <div class="mb-2" *ngIf="costCenter == 'true'">
+            <label class="fw-bolder mb-3px">Job No</label>
+            <ng-select placeholder="---Select Job No---" [items]="JobList" bindLabel="NAME" bindValue="ID"
+              [dropdownPosition]="'bottom'" formControlName="jobNo">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-1 col-lg-1 col-md-1 d-flex align-items-end justify-content-end">
+          <div class="form-group">
+            <button class="btn btn-primary btn-sm" id="btnAddVoucher" type="submit" (click)="appendData()">
+              {{ isRowEdit ? 'Update' : 'Add' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive" style="height: 280px" [ngClass]="{ 'disabled': isDisabled }">
+        <table class="table mb-0 custom-table-padding">
+          <thead>
+            <tr>
+              <th class="text-center w-0">Sno</th>
+              <th class="text-start">Account</th>
+              <th>Description</th>
+              <th class="jobNo" *ngIf="costCenter == 'true'">Job No</th>
+              <th class="text-center">Qty</th>
+              <th class="text-end">Debit</th>
+              <th class="text-end">Credit</th>
+              <th class="text-center w-10">Action</th>
+            </tr>
+          </thead>
+          <tbody id="detailList">
+            <tr *ngFor="let data of voucher_list;">
+              <td class="text-center">{{ data.sno }}</td>
+              <td class="limited-text text-start d-none">{{ data.account }}</td>
+              <td class="limited-text text-start">{{ data.accountName }}</td>
+              <td>{{ data.description }}</td>
+              <td class="limited-text" *ngIf="costCenter == 'true'">{{ data.jobName}}</td>
+              <td class="text-center">{{ data.qty }}</td>
+              <td class="text-end">{{ data.debit | number : "1.2-2" }}</td>
+              <td class="text-end">{{ data.credit | number : "1.2-2" }}</td>
+              <td class="text-center">
+                <span (click)="editRow(data)" class="me-3 btnEditCategory">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span (click)="removeRow(data)" class="confirm-text btnDelCategory">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot style="border-top: 0px">
+            <tr class="tfoot">
+              <td *ngIf="costCenter == 'true'" colspan="5"></td>
+              <td *ngIf="costCenter == 'false'" colspan="4"></td>
+              <td class="text-end" id="tDebit">{{ totalDebit | number : "1.2-2" }}</td>
+              <td class="text-end" id="tCredit">{{ totalCredit | number : "1.2-2" }}</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-sm-12 col-lg-12 col-md-12 text-end">
+          <div class="mb-1 d-flex justify-content-between">
+            <input type="file" id="my-file" accept="image/png, image/jpeg, application/pdf, image/jpg"
+              (change)="onChangeFile($event)">
+            <div>
+              <button class="btn btn-primary btn-sm me-1" *ngIf="!isNewClick" (click)="onClickNew()">New</button>
+              <button (click)="saveJV()" *ngIf="isNewClick" class="btn btn-success btn-sm  me-1">Save</button>
+              <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">Refresh</button>
+              <button class="btn btn-info btn-sm me-1" *ngIf="isPrint" (click)="printReport()">Print</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="modal fade" id="Modal">
+  <div class="modal-dialog" style="max-width: 60%;">
+    <div class="modal-content" style="height:353px; font-weight: 600;" aria-hidden="true">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Upload Invoice Receiving</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="row">
+          <div class="col-lg-6 col-sm-12 col-md-6">
+            <div class="card mb-0" style="height:288px;">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Sno</th>
+                      <th class="w-75">File</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of fileList; let i = index">
+                      <td class="text-center">{{ i + 1 }}</td>
+                      <td class="limited-text">{{item.name}}</td>
+                      <td class="text-center">
+                        <span class="me-3"><i class="fas fa-trash" (click)="onRemoveFile(item)"></i></span>
+                        <span><i class="fas fa-eye" (click)="onViewFile(item)"></i></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-12 col-md-6">
+            <div class="imgBox" style="height: 255px;">
+              <iframe *ngIf="isPdf" [src]="srcPdfImg | safeUrl" style="width: 100%;height: 100%;">
+              </iframe>
+              <img *ngIf="!isPdf" [src]="srcPdfImg" style="width: 100%; height: 100%;">
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <input type="file" accept="image/png, image/jpeg, application/pdf, image/jpg"
+                (change)="onFileSelected($event)" [(ngModel)]="file" class="form-control p-1px me-2">
+              <button class="btn btn-sm btn-success" (click)="onClickUpload(true)">Upload</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

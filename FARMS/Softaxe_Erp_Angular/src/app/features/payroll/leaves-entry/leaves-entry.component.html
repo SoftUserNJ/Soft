@@ -1,0 +1,205 @@
+<section>
+
+
+  
+    <div class="content AddPage" [formGroup]="LeavesEntryForm">
+  
+      <div class="page-header mb-4">
+        <div class="page-title">
+          <h4>Employee Leaves From</h4>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <div class="row align-items-center mb-2">
+
+            <div class="col-lg-3 col-md-3 col-sm-12 d-none">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Sr No.</label>
+                <input type="text" formControlName="SrNo" readonly class="form-control me-2">
+              </div>
+            </div>
+  
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="mb-2">
+                  <label class="fw-bolder">Employee Name</label>
+                  <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-12">
+                      <ng-select class="bold-placeholder" placeholder="--- Select Employee ---" (change)="editLeaves($event)"
+                      [items]="EmployeeList" 
+                      bindLabel="name"
+                      bindValue="empy_id"
+                        formControlName="empName"
+                        [dropdownPosition]="'bottom'" [readonly]="Disabled">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="position-relative w-100 me-2 form-group mb-0">
+                <label class="fw-bold" style="margin-bottom: 0px !important;">Date</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                    (click)="datepicker.open()" formControlName="Date" />
+                  <mat-datepicker #datepicker></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="position-relative w-100 me-2 form-group mb-0">
+                  <label class="fw-bold" style="margin-bottom: 0px !important;">Start Date</label>
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker1"
+                      (click)="datepicker1.open()" formControlName="StDate" />
+                    <mat-datepicker #datepicker1></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="position-relative w-100 me-2 form-group mb-0">
+                  <label class="fw-bold" style="margin-bottom: 0px !important;">End Date</label>
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker2"
+                      (click)="datepicker2.open()" formControlName="EndDate" />
+                    <mat-datepicker #datepicker2></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="mb-2">
+                  <label class="fw-bolder">Leave type</label>
+                  <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-12">
+                      <ng-select class="bold-placeholder" placeholder="--- Select Leave type---"
+                      [items]="LeaveTypeList"
+                      bindLabel="Name"
+                      bindValue="HrSetupId"
+                        formControlName="leaveType"
+                        [dropdownPosition]="'bottom'" [readonly]="Disabled">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+
+                <div class="table-responsive" style="height: 80px">
+                    <table class="table table-hover" id="tbl-print">
+                      <thead>
+                        <tr>
+                          <th  class="text-center">Leaves</th>
+                          <th  class="text-center">No Of Leaves</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of LeavesRemainingList" (click)="rowHighLight($event)">
+                          <td class="d-none">{{ data.lv_id }}</td>
+                          <td class="text-center">{{ data.LvName }}</td>
+                          <td class="text-center">{{ data.Total }}</td>
+                          <td class="d-none">{{ data.originalNoOfLvs}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+             
+              <!-- Your existing date pickers -->
+
+<!-- No. Of Days -->
+<div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="position-relative w-100 me-2">
+      <label class="fw-bold">No. Of Days</label>
+      <input type="number" formControlName="noOfDays" readonly class="form-control me-2">
+    </div>
+  </div>
+  
+              
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="position-relative w-100 me-2">
+                  <label class="fw-bold">Total Leaves</label>
+                  <input type="number" formControlName="totalLeaves" readonly class="form-control me-2">
+                </div>
+              </div>
+              
+              
+              <div class="col-lg-4 col-md-4 col-sm-12"> 
+                <div class="position-relative w-100 me-2">
+                  <label class="fw-bold">Remarks</label>
+                  <input type="text" formControlName="remarks" [readonly]="Disabled" class="form-control me-2">
+                </div>
+              </div>
+
+
+            <div class="col-lg-2 col-md-2 col-sm-12 pt-3">
+              <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+                (click)="onClickSave()">Save</button>
+              <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">Refresh</button>
+            </div>
+          </div>
+  
+          <div class="table-responsive" style="height: 200px">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th>Sr No.</th>
+                  <th>Employee Name</th>
+                  <th>NOD</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Leave Name</th>
+                  <th>Total Leaves</th>
+                  <th>Remarks</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of LeavesEntryList" (click)="rowHighLight($event)">
+  
+                  <td class="">{{ data.srno }}</td>
+                  <td class="">{{ data.empName }}</td>
+                  <td class="">{{ data.noOfDays }}</td>
+                  <td class="d-none">{{ data.EmpyId }}</td>
+                  <td class="">{{ data.StDate |  date: 'dd/MM/yyyy' }}</td>
+                  <td class="">{{ data.EndDate |  date: 'dd/MM/yyyy' }}</td>
+                  <td class="">{{ data.LeaveName }}</td>
+                  <td class="d-none">{{ data.leaveType }}</td>
+                  <td class="">{{ data.totalLeaves }}</td>
+                  <td class="">{{ data.remarks }}</td>
+                  <td class="text-center">
+                    <!-- Edit Button -->
+                    <span (click)="editItem(data)" class="me-3 btnEditItem" style="cursor: pointer">
+                      <i class="fas fa-edit"></i>
+                    </span>
+                    <!-- Delete Button  -->
+                    <span (click)="deleteLeaves(data.srno, data.EmpyId)" class="confirm-text btnDelItem" style="cursor: pointer">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+  

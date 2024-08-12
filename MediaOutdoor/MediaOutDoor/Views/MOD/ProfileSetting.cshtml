@@ -1,0 +1,333 @@
+﻿@{
+    Layout = null;
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - MediaOutDoor</title>
+    <link rel="icon" href="~/img/favicon.png" sizes="32x32" />
+
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/MediaOutDoor.styles.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/elegant-icons.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/nice-select.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/slicknav.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link href="~/lib/toastr/toatr.css" rel="stylesheet" asp-append-version="true" />
+</head>
+<body>
+
+    <style>
+        .card-registration .select-input.form-control[readonly]:not([disabled]) {
+            font-size: 1rem;
+            line-height: 2.15;
+            padding-left: .75em;
+            padding-right: .75em;
+        }
+
+        .card-registration .select-arrow {
+            top: 13px;
+        }
+    </style>
+
+    <section class="AddPage">
+        <div class="d-flex justify-content-center">
+            <div class="col-xl-7">
+                <div class="mt-4 mb-5 px-5 ms-xl-4 text-center">
+                    <img src="/img/logo.png" alt="" style="width:40%;">
+                </div>
+                <div class="card-body text-black">
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["FirstName"] <span class="text-danger">*</span></label>
+                                <input type="text" value="@ViewBag.fName" id="firstName" class="form-control form-control-lg" skinid="Enter First Name....!">
+                                <input type="hidden" id="txtUserId">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["LastName"] <span class="text-danger">*</span></label>
+                                <input type="text" value="@ViewBag.lName" id="secondName" class="form-control form-control-lg" skinid="Enter Last Name....!">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["UserName"] <span class="text-danger">*</span></label>
+                                <input type="text" value="@ViewBag.uName" disabled id="userName" class="form-control form-control-lg" skinid="Enter User Name....!">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">E-Mail <span class="text-danger">*</span></label>
+                                <input type="text" value="@ViewBag.email" disabled id="email" class="form-control form-control-lg" skinid="Enter E-Mail....!">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["Phone"] <span class="text-danger">*</span></label>
+                                <input type="text" value="@ViewBag.phone" id="phone" class="form-control form-control-lg" skinid="Enter Phone....!" placeholder="+31000000000">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">DOB</label>
+                                <input type="date" value="@ViewBag.DOB.ToString("yyyy-MM-dd")" id="dob" class="form-control form-control-lg" skinid="">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["Gender"]</label>
+
+                                <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+
+                                    <div class="form-check form-check-inline mb-0 me-4">
+                                        <input class="form-check-input" type="radio" name="gender" id="maleGender" skinid="" @(ViewBag.Gender == "Male" ? "checked" : "")>
+                                        <label class="form-check-label text-white" for="maleGender">@Localizer["Male"]</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline mb-0 me-4">
+                                        <input class="form-check-input" type="radio" name="gender" id="femaleGender" skinid="" @(ViewBag.Gender == "Female" ? "checked" : "")>
+                                        <label class="form-check-label text-white" for="femaleGender">@Localizer["Female"]</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline mb-0">
+                                        <input class="form-check-input" type="radio" name="gender" id="otherGender" skinid="" @(ViewBag.Gender == "Other" ? "checked" : "")>
+                                        <label class="form-check-label text-white" for="otherGender">@Localizer["Other"]</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["ProfileStatus"]</label>
+                                <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+                                    <div class="form-check form-check-inline mb-0 me-4">
+                                        <input disabled class="form-check-input" type="checkbox" skinid="" @(ViewBag.status == true ? "checked" : "")>
+                                        <label class="form-check-label text-white" for="maleGender">@Localizer["Active"]</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["ProfilePic"]</label>
+                                <input type="file" accept="image/jpg, image/jpeg, image/png" id="profilePic" class="form-control form-control-lg" style="padding:5px;" skinid="">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["Country"] <span class="text-danger">*</span></label>
+                                <input type="text" value="@ViewBag.Country" id="country" class="form-control form-control-lg" skinid="Enter Country....!">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["City"] <span class="text-danger">*</span></label>
+                                <input type="text" value="@ViewBag.City" id="city" class="form-control form-control-lg" skinid="Enter City....!">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["State"]</label>
+                                <input type="text" value="@ViewBag.State" id="state" class="form-control form-control-lg" skinid="">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["PostalCode"]</label>
+                                <input type="text" value="@ViewBag.pCode" id="postalCode" class="form-control form-control-lg" skinid="">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["Address1"] <span class="text-danger">*</span></label>
+                                <input type="text" value="@ViewBag.address1" id="address1" class="form-control form-control-lg" skinid="Enter Address1....!">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["Address2"]</label>
+                                <input type="text" value="@ViewBag.address2" id="address2" class="form-control form-control-lg" skinid="">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["OldPincode"] <span class="text-danger">*</span></label>
+                                <input type="text" id="userOldPassword" class="form-control form-control-lg" skinid="Enter Old Password....!">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["NewPincode"] <span class="text-danger">*</span></label>
+                                <input type="text" id="userNewPassword" class="form-control form-control-lg" skinid="Enter New Password....!">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label class="form-label text-white">@Localizer["ConfirmNewPincode"] <span class="text-danger">*</span></label>
+                                <input type="text" id="userConfirmPassword" class="form-control form-control-lg" skinid="Enter New Confirm Password....!">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <button class="btn btn-success btn-lg mt-3" style="width:40%;" id="btnSaveUser">@Localizer["Update"]</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.nicescroll.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.magnific-popup.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.countdown.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.slicknav.js" asp-append-version="true"></script>
+    <script src="~/js/mixitup.min.js" asp-append-version="true"></script>
+    <script src="~/js/owl.carousel.min.js" asp-append-version="true"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    <script src="~/lib/toastr/toastr.js" asp-append-version="true"></script>
+    <script src="~/lib/toastr/toastr.min.js" asp-append-version="true"></script>
+
+    <script>
+
+
+        $("#btnSaveUser").click(function () {
+
+            var userPassword = $("#userNewPassword").val();
+            var userConfirmPassword = $("#userConfirmPassword").val();
+
+            if ($("#userNewPassword").val() != "" || $("#userConfirmPassword").val() != "" || $("#userOldPassword").val() != "") {
+
+                if (CheckValidation("AddPage") == false) {
+
+                    return false;
+                }
+
+
+                if (userPassword != userConfirmPassword) {
+                    toastr.warning("Confirm Password Not Mach", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    return false;
+                }
+
+                if (userConfirmPassword.length < 6) {
+                    toastr.warning("Password must be in 6 digits", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    return false;
+                }
+
+            }
+
+            var gender = "other";
+
+            if ($("#maleGender").is(':checked')) {
+                gender = "Male";
+
+            } else if ($("#femaleGender").is(':checked')) {
+                gender = "Female";
+            }
+
+
+            var formData = new FormData();
+
+            var totalFiles = document.getElementById("profilePic").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("profilePic").files[i];
+                formData.append("profilePic", file);
+            }
+
+
+            formData.append("firstName", $("#firstName").val());
+            formData.append("secondName", $("#secondName").val());
+            formData.append("contactNo", $("#phone").val());
+            formData.append("dob", $("#dob").val());
+            formData.append("gender", gender);
+            formData.append("country", $("#country").val());
+            formData.append("city", $("#city").val());
+            formData.append("state", $("#state").val());
+            formData.append("postalCode", $("#postalCode").val());
+            formData.append("address1", $("#address1").val());
+            formData.append("address2", $("#address2").val());
+            formData.append("oldPassword", $("#userOldPassword").val());
+            formData.append("newPassword", userConfirmPassword);
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/MOD/UpdateProfileSetting/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data == true) {
+                            toastr.success("Profile Update Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                        else {
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $('body').on('input', "#userOldPassword, #userNewPassword, #userConfirmPassword", function () {
+
+            const inputValue = $(this).val();
+            $(this).val(inputValue.replace(/[^0-9+]/g, ''));
+
+            var v = $(this).val();
+
+            if (v.length > 6) {
+                v = v.substring(0, 6);
+                $(this).val(v);
+            }
+        });
+
+    </script>
+
+</body>

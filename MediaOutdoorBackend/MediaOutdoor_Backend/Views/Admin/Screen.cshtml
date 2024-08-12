@@ -1,0 +1,608 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+
+@{
+    ViewData["Title"] = "Screen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["ScreenManagement"]</h4>
+            <h6>@Localizer["Add/UpdateScreen"]</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="PDF" id="pdfPrint">
+                            <i class="far fa-file-pdf" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" id="convertExcel">
+                            <i class="far fa-file-excel" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="CSV" id="convertCsv">
+                            <i class="fa fa-file-csv" style="color: #000000; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #000000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch">
+                    </div>
+                </div>
+                <div class="wordset">
+                    <p href="javascript:void(0);" class="btn btn-addednew btnAdd ct-btns">
+                        <img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">@Localizer["AddNew"]
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />Id</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Screen"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Size"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Rate"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />Station</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />PlaySeconds</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />PlayTimes</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />PlayPer</th>
+                            <th class="text-center pe-3 last-th-sticky"><input type="checkbox" class="printCheckBox notPrintCol" hidden>@Localizer["Action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="screensList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content AddPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["ScreenAdd"]</h4>
+        </div>
+        <div class="page-btn">
+            <a href="javascript:void(0);" class="btn btn-added btnList ct-btns">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="" aria-label="fa fa-th-list"></i> @Localizer["Screens"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row activeForm disabled">
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["Station"]</label>
+                        <select class="form-control js-example-basic-single select2" id="drpStation" skinid="Select Station....!">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["ScreenName"]</label>
+                        <input type="text" class="" id="txtScreenName" skinid="Enter Screen Name....!">
+                        <input type="hidden" id="txtScreenId">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["Size"]</label>
+                        <select class="js-example-basic-single select2" id="drpSize">
+                            <option value="Single">Single</option>
+                            <option value="Double">Double</option>
+                            <option value="Triple">Triple</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["Rate"]</label>
+                        <input type="text" class="" id="txtRate" skinid="">
+                    </div>
+                </div>
+
+                 <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["Play Second"]</label>
+                        <input type="text" class="" id="txtPlaySecond" skinid="Enter Play Second....!">
+                        <input type="hidden" id="txtSettingsId">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["Play Time"]</label>
+                        <input type="text" class="" id="txtPlayTime" skinid="Enter Play Time....!">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["Play Per"]</label>
+                        <input type="text" value="Hour" id="txtPlayPer" skinid="">
+                    </div>
+                </div>
+@*
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["TopPosition"]</label>
+                        <input type="text" class="" id="txtTopPosition" skinid="">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["LeftPosition"]</label>
+                        <input type="text" class="" id="txtLeftPosition" skinid="">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["Height"]</label>
+                        <input type="text" class="" id="txtHeight" skinid="">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["Width"]</label>
+                        <input type="text" class="" id="txtWidth" skinid="">
+                    </div>
+                </div>*@
+
+            </div>
+
+            <div class="row">
+                <div class="mb-2">
+                    <button class="btn btn-primary btn-sm ct-btns" id="btnNew">@Localizer["New"]</button>
+                    <button class="btn btn-success btn-sm ct-btns" id="btnSave">@Localizer["Save"]</button>
+                    <button class="btn btn-secondary btn-sm ct-btns" id="btnRefresh">@Localizer["Refresh"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(function(){
+            $(".AddPage").hide();
+            GetStation();
+            GetScreensList();
+            $("#btnRefresh").click();
+        })
+
+        $(".btnAdd").click(function () {
+            $(".ListPage").hide();
+            $(".AddPage").show();
+            $("#txtScreenId").val("");
+            $("#btnRefresh").click();
+        });
+
+        $(".btnList").click(function () {
+            $(".ListPage").show();
+            $(".AddPage").hide();
+        });
+
+        //====================== Stations Get ========================\\
+        
+        function GetStation(){
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/GetStation/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        
+                        $("#drpStation").empty();
+                        $("#drpStation").append(` <option value="0"> --- Stations --- </option> `);
+
+                        $.each(data, function (i, item) {
+                            $("#drpStation").append(` <option value="${item.stationId}">${item.stationName}</option> `);
+                        });
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        //====================== Screens Get ========================\\
+
+        function GetScreensList(){
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/GetScreen/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#screensList").empty();
+                        $.each(data, function (i, item) {
+
+                            $("#screensList").append(`
+                             <tr>
+                                 <td class="screenId ps-2">${item.screenId}</td>
+                                 <td class="screenName">${item.screenName}</td>
+                                 <td class="screenSize">${item.screenSize}</td>
+                                 <td class="screenRate">${parseFloat(item.rate).toFixed(2)}</td>
+                                 <td class="stationName">${item.stationName}</td>
+                                 <td class="playSeconds">${item.playSeconds}</td>
+                                 <td class="playTimes">${item.playTimes}</td>
+                                 <td class="playPer">${item.playPer}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-2 btnEdit cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDel cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                                 <td class="stationId d-none">${item.stationId}</td>
+                                 <td class="topPosition d-none">${item.tpos}</td>
+                                 <td class="leftPosition d-none">${item.lpos}</td>
+                                 <td class="height d-none">${item.height}</td>
+                                 <td class="width d-none">${item.width}</td>
+                             </tr>
+                            `)
+                        });
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("#btnSave").click(function () {
+
+            if (CheckValidation("AddPage") == false) {
+
+                    return false;
+            }
+
+            var formData = new FormData();
+
+            formData.append("screenId", $("#txtScreenId").val());
+            formData.append("stationId", $("#drpStation option:selected").val());
+            formData.append("screenName", $("#txtScreenName").val());
+            formData.append("screenSize", $("#drpSize option:selected").val());
+            formData.append("rate", $("#txtRate").val());
+            formData.append("playSecond", $("#txtPlaySecond").val());
+            formData.append("playTime", $("#txtPlayTime").val());
+            formData.append("playPer", $("#txtPlayPer").val());
+            //formData.append("tPosition", $("#txtTopPosition").val());
+            //formData.append("lPosition", $("#txtLeftPosition").val());
+            //formData.append("height", $("#txtHeight").val());
+            //formData.append("width", $("#txtWidth").val());
+
+            ////CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            //if (CheckDuplicateEntry($("#txtUserName").val().trim(), "#allUsersList", ".userName", $("#txtUserId").val(), ".userId") == false) {
+            //    toastr.info("User Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+            //    $("#txtUserName").focus();
+            //    return false;
+            //}
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/SaveScreen/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetScreensList();
+                            $("#txtScreenId").val("");
+                            $("#btnRefresh").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDel", function(){
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".screenId").text();
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Admin/DelScreen/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetScreensList();
+                            $("#txtScreenId").val("");
+                            $("#btnRefresh").click();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEdit', function () {
+
+            $(".activeForm").removeClass('disabled');
+
+            var stationId = $(this).closest('tr').find('.stationId').text();
+            var screenId = $(this).closest('tr').find('.screenId').text();
+            var name = $(this).closest('tr').find('.screenName').text();
+            var size = $(this).closest('tr').find('.screenSize').text();
+            var rate = $(this).closest('tr').find('.screenRate').text();
+            var playSeconds = $(this).closest('tr').find('.playSeconds').text();
+            var playTimes = $(this).closest('tr').find('.playTimes').text();
+            var playPer = $(this).closest('tr').find('.playPer').text();
+
+
+
+            var tPos = $(this).closest('tr').find('.topPosition').text();
+            var lPos = $(this).closest('tr').find('.leftPosition').text();
+            var height = $(this).closest('tr').find('.height').text();
+            var width = $(this).closest('tr').find('.width').text();
+
+            $("#txtScreenId").val(screenId);
+
+            $("#drpStation").val(stationId);
+            $("#drpStation").next('span').find('.select2-selection__rendered').html($("#drpStation option:selected").text());
+
+            $("#txtScreenName").val(name);
+            $("#drpSize").val(size);
+            $("#drpSize").next('span').find('.select2-selection__rendered').html($("#drpSize option:selected").text());
+
+            $("#txtRate").val(rate);
+            $("#txtPlaySecond").val(playSeconds);
+            $("#txtPlayTime").val(playTimes);
+            $("#txtPlayPer").val(playPer);
+
+
+            $("#txtTopPosition").val(tPos);
+            $("#txtLeftPosition").val(lPos);
+            $("#txtHeight").val(height);
+            $("#txtWidth").val(width);
+            
+            $("#btnSave").show();
+            $("#btnNew").hide();
+            $("#btnSave").text('Update');
+
+            $(".ListPage").hide();
+            $(".AddPage").show();
+
+        });
+
+
+        //====================== Buttons ========================\\
+
+        $("#btnNew").click(function () {
+            $(".activeForm").removeClass('disabled');
+            
+            $(this).hide();
+            $("#btnSave").text('Save');
+            $("#btnSave").show();
+            $("#txtScreenName").focus();
+        });
+
+        $("#btnRefresh").click(function () {
+
+            var uId = $("#txtScreenId").val();
+
+            if (uId != 0) {
+                $(".screenId").each(function () {
+                    const userIdValue = $(this).text().trim();
+                    if (userIdValue === uId) {
+                        $(this).closest('tr').find('.btnEdit').click();
+                        return false;
+                    }
+                });
+            }
+            else {
+
+                $(".activeForm").addClass('disabled');
+
+                $("#btnSave").hide();
+                $("#btnNew").show();
+
+                $("#txtScreenId").val('');
+                $("#txtScreenName").val('');
+                $("#drpSize").val('Single');
+                $("#drpSize").next('span').find('.select2-selection__rendered').html($("#drpSize option:selected").text());
+
+                $("#txtRate").val('');
+                $("#txtPlaySecond").val('');
+                $("#txtPlayTime").val('');
+                $("#txtPlayPer").val('Hour');
+                $("#txtTopPosition").val('');
+                $("#txtLeftPosition").val('');
+                $("#txtHeight").val('');
+                $("#txtWidth").val('');
+
+                $("#drpStation").val("0");
+                $("#drpStation").next('span').find('.select2-selection__rendered').html($("#drpStation option:selected").text());
+
+            }
+        });
+
+
+        //====================== Search ========================\\
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#screensList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]"+".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+
+    </script>
+}

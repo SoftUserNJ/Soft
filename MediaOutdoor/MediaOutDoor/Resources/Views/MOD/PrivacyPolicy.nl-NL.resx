@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="FirstLinks" xml:space="preserve">
+    <value>&lt;h2 class="mt-5"&gt;Analytische cookies&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Op de website van City Media worden algemene bezoekgegevens bijgehouden. In dit kader kan met name het IP-adres van uw computer, de eventuele gebruikersnaam, het tijdstip van opvraging en gegevens die de browser van een bezoeker meestuurt worden geregistreerd en worden gebruikt voor statistische analyses van bezoek- en klikgedrag op de website. Tevens optimaliseert City Media de werking van de website.&lt;/p&gt;
+
+     &lt;p class="mb-3"&gt;City Media probeert deze gegevens zoveel mogelijk te anonimiseren. Deze informatie wordt niet aan derden verstrekt.&lt;/p&gt;
+    
+     &lt;p class="mb-3"&gt;City Media maakt gebruik van Google Analytics. Zo kunnen er cookies van Google Analytics worden geplaatst met als doel gegevens te verzamelen om u uiteindelijk een optimale gebruikerservaring te bieden. Door gegevens te verzamelen via Google Analytics krijgt City Media inzicht in het gebruik en kunnen deze statistieken worden toegepast op haar website. De cookie van Google wordt na maximaal 2 jaar verwijderd. Google deelt uw gegevens niet met derden.
+         Lees hier de &lt;a href="https://policies.google.com/privacy?hl=nl"&gt;Privacyverklaring&lt;/a&gt; van Google.
+     &lt;/p&gt;
+    
+     &lt;p class="mb-3"&gt;Wanneer u onze website voor het eerst bezoekt, wordt er een banner getoond waarin wordt aangegeven dat als u verder klikt op de website, u ons toestemming geeft om alle cookies en plug-ins te gebruiken zoals beschreven in deze privacy- en cookieverklaring.&lt;/p&gt;
+    
+     &lt;p class="mb-3"&gt;Wij hebben geen controle over wat eventuele derde partijen doen met uw gegevens verkregen via de geplaatste cookies. Meer informatie over hoe deze partijen de verkregen gegevens opslaan en wat zij met deze gegevens doen, vindt u in de privacyverklaring van de betreffende partij. (Let op: deze kunnen regelmatig wijzigen). Via het contactformulier kunt u contact met ons opnemen.&lt;/p&gt;
+
+
+     &lt;h2 class="mt-5"&gt;Trackingcookies&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Misschien maakt City Media gebruik van tracking cookies, zodat advertenties op de websites die u bezoekt beter kunnen worden afgestemd op uw behoeften en interesses, en om bij te houden hoeveel en welke advertenties aan jou zijn getoond (om te voorkomen dat je steeds dezelfde advertentie te zien krijgt) en om te controleren of je op een advertentie hebt geklikt.&lt;/p&gt;
+    
+     &lt;p class="mb-3"&gt;De Google AdWords-cookie onthoudt welke pagina's u bezoekt, zodat u gerichte en relevante aanbiedingen van ons kunt ontvangen. De cookie van Google wordt na maximaal 2 jaar verwijderd. Google deelt uw gegevens niet met derden.
+         Lees hier de &lt;a href="https://policies.google.com/privacy?hl=nl"&gt;Privacyverklaring&lt;/a&gt; van Google.
+     &lt;/p&gt;</value>
+  </data>
+  <data name="FirstPartWithouLink" xml:space="preserve">
+    <value>&lt;p class="mb-3 mt-5"&gt;
+         Als u de website city-media.nl bezoekt, kunnen uw privacygevoelige gegevens oftewel persoonsgegevens worden verwerkt.
+         City Media vindt uw privacy van groot belang.
+         Om jouw privacy zo goed mogelijk te garanderen, hanteren wij een aantal kernwaarden.
+     &lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Om te informeren.&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Wij willen u zo goed mogelijk informeren over hoe en waarom wij persoonsgegevens verwerken. Dat doen wij via deze privacy- en cookieverklaring.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Beperk verzameling.&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;We letten er nauw op dat onze verzameling van persoonlijke gegevens beperkt blijft tot wat nodig is voor de goede werking van de website en de diensten die u aanvraagt.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Om te beveiligen.&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Wij nemen passende beveiligingsmaatregelen om jouw persoonsgegevens te beschermen en eisen dit ook van partijen die in onze opdracht persoonsgegevens verwerken.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Toestemming.&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Wij vragen expliciete toestemming om uw persoonlijke gegevens te verwerken in gevallen waarin uw toestemming wettelijk vereist is.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Rechten van betrokkenen.&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Wij respecteren uw recht op inzage, correctie of verwijdering van de persoonsgegevens die wij over u verwerken en eventuele andere rechten die u heeft op grond van de toepasselijke privacywetgeving. In deze privacy- en cookieverklaring leest u hoe wij deze kernwaarden in de praktijk brengen en uw recht op privacy respecteren en beschermen.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Het gebruik van persoonlijke gegevens.&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Wanneer u onze website gebruikt, kunt u bepaalde gegevens bij ons achterlaten. Dit kunnen ook persoonsgegevens zijn. Wij verzamelen, bewaren en gebruiken uitsluitend persoonsgegevens die u rechtstreeks verstrekt (bijvoorbeeld via het contactformulier op de website) of waarvan bij opgave duidelijk is dat ze aan ons worden verstrekt om te verwerken.&lt;/p&gt;
+     &lt;p class="mb-3"&gt;Wij zullen uw persoonsgegevens niet gebruiken voor andere doeleinden dan waarvoor wij deze hebben verkregen, tenzij u daar vooraf toestemming voor heeft gegeven of wij dit op grond van de wet mogen of moeten doen.&lt;/p &gt;
+     &lt;p class="mb-3"&gt;Afhankelijk van welke functionaliteiten u via de website gebruikt, kunnen wij de volgende persoonsgegevens van u verwerken:&lt;/p&gt;
+
+     &lt;ul class="text-white ml-4"&gt;
+         &lt;li&gt;NAW-gegevens;&lt;/li&gt;
+         &lt;li&gt;telefoonnummer;&lt;/li&gt;
+         &lt;li&gt;factuuradres;&lt;/li&gt;
+         &lt;li&gt;e-mailadres;&lt;/li&gt;
+         &lt;li&gt;betalingsgegevens;&lt;/li&gt;
+         &lt;li&gt;geslacht;&lt;/li&gt;
+         &lt;li&gt;IP-adres.&lt;/li&gt;
+     &lt;/ul&gt;
+
+     &lt;h2 class="mt-5"&gt;Uw persoonlijke gegevens worden door ons gebruikt voor de onderstaande doeleinden (en voor doeleinden die daar nauw mee verband houden):&lt;/h2&gt;
+    
+     &lt;ul class="text-white ml-4 mt-3"&gt;
+         &lt;li&gt;het aanmaken van uw account;&lt;/li&gt;
+         &lt;li&gt;de toegang tot uw account controleren;&lt;/li&gt;
+         &lt;li&gt;het afhandelen van uw bestellingen;&lt;/li&gt;
+         &lt;li&gt;het factureren van de aangeschafte diensten;&lt;/li&gt;
+         &lt;li&gt;het versturen van nieuwsbrieven;&lt;/li&gt;
+         &lt;li&gt;het verbeteren en evalueren van onze website en diensten;&lt;/li&gt;
+         &lt;li&gt;het beantwoorden en afhandelen van vragen die u stelt;&lt;/li&gt;
+         &lt;li&gt;het aanbieden van gerichte advertenties via zoekmachines.&lt;/li&gt;
+     &lt;/ul&gt;
+
+     &lt;h2 class="mt-5"&gt;Contactformulieren en e-mails&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Als u vragen heeft over City Media of de diensten die wij aanbieden, neem dan contact met ons op. U kunt contact met ons opnemen via het contactformulier op onze website en per e-mail. Zie onze contactpagina voor actuele contactgegevens.&lt;/p&gt;
+    
+     &lt;p class="mb-3"&gt;Als u het contactformulier op de contactpagina invult, of als u ons een e-mail stuurt, worden de gegevens die u ons toestuurt bewaard zolang als naar de aard van het formulier of de inhoud van uw e-mail vereist dit voor een volledige beantwoording en afhandeling daarvan.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Cookies&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Op onze website worden cookies gebruikt. Een cookie is een klein bestandje dat met pagina’s van onze website wordt meegestuurd en in het geheugen van uw apparaat wordt opgeslagen. De informatie die in een cookie is opgeslagen kan worden overgebracht naar onze eigen beveiligde server of die van een derde partij.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;We onderscheiden drie soorten cookies:&lt;/h2&gt;
+     &lt;h2 class="mt-5"&gt;Functionele cookies&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Deze cookies zorgen voor een goede werking van onze website. Daarnaast zorgen ze ervoor dat u de website gemakkelijker kunt gebruiken, door bijvoorbeeld uw persoonlijke instellingen te onthouden.&lt;/p&gt;</value>
+  </data>
+  <data name="PrivacyPolicyHeading" xml:space="preserve">
+    <value>PRIVACYBELEID EN COOKIEVERKLARING</value>
+  </data>
+  <data name="SecondPartWithouLink" xml:space="preserve">
+    <value>&lt;h2 class="mt-5"&gt;Cookies in- en uitschakelen&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Je kunt het plaatsen van cookies uitschakelen door je browserinstellingen te wijzigen. Raadpleeg de handleiding van uw browser voor de exacte instructies. Houd er rekening mee dat (bepaalde functionaliteiten op) de website mogelijk niet of niet volledig werken als u cookies uitschakelt.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Cookies verwijderen&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;De meeste cookies hebben een vervaldatum. Dit betekent dat ze na een bepaalde periode automatisch verlopen en geen gegevens meer registreren over uw sitebezoek. U kunt er ook voor kiezen om de cookies handmatig te verwijderen voordat de houdbaarheidsdatum is verstreken. Voor meer informatie hierover kunt u de handleiding van uw browser raadplegen.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Websites van derden&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Deze privacy- en cookieverklaring is niet van toepassing op websites van derden die door middel van links met onze website zijn verbonden. Wij kunnen niet garanderen dat deze derden op een betrouwbare of veilige manier met uw persoonsgegevens omgaan. Wij raden u aan de privacyverklaring van deze websites te lezen voordat u van deze websites gebruik maakt.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Vertrouwelijkheid en openbaarmaking aan derden&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Wij behandelen uw persoonlijke gegevens vertrouwelijk. De persoonsgegevens die wij via onze website verzamelen, zullen wij niet aan andere partijen verstrekken, tenzij dit noodzakelijk is in het kader van de uitvoering van de overeenkomst of in gevallen waarin wij dit op grond van de wet mogen of moeten doen.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Beveiliging&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Wij nemen passende beveiligingsmaatregelen om misbruik van en ongeautoriseerde toegang tot uw persoonsgegevens te beperken. Zo zorgen wij ervoor dat alleen de noodzakelijke personen toegang hebben tot uw gegevens en dat de toegang tot uw persoonsgegevens afgeschermd is.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Bewaartermijn&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Wij bewaren uw persoonsgegevens niet langer dan noodzakelijk is voor de doeleinden waarvoor de gegevens zijn verstrekt of verkregen, rekening houdend met de doeleinden van de verwerking en eventuele wettelijke bewaartermijnen.&lt;/p class="mb-3"&gt; p&gt;
+
+     &lt;h2 class="mt-5"&gt;Rechten van betrokkenen&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Als u persoonsgegevens aan ons heeft verstrekt, kunt u ons een verzoek sturen om deze gegevens in te zien, te wijzigen, te verplaatsen of te verwijderen. U kunt uw verzoeken richten aan:&lt;/p&gt;
+
+     &lt;p class="mb-3"&gt;
+         Stadsmedia&lt;br /&gt;
+         Waldeck Pyrmontlaan 20 – 3LA&lt;br /&gt;
+         1075BX Amsterdam&lt;br /&gt;
+         0650203599&lt;br /&gt;
+     &lt;/p&gt;
+
+     &lt;p class="mb-3"&gt;Om misbruik te voorkomen kunnen wij u vragen zich te identificeren voordat wij gegevens versturen. Wanneer het gaat om inzage in persoonsgegevens gekoppeld aan een cookie, dien je een kopie van het betreffende cookie mee te sturen. Dit kunt u vinden in de instellingen van uw browser.&lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Wijzigingen in privacy- en cookieverklaring&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Wij behouden ons het recht voor om deze privacy- en cookieverklaring te wijzigen. Wijzigingen zullen op onze website worden gepubliceerd. Het verdient daarom aanbeveling deze verklaring regelmatig te raadplegen, zodat u van eventuele wijzigingen op de hoogte bent.&lt;/p&gt;</value>
+  </data>
+  <data name="SecondsLinks" xml:space="preserve">
+    <value>&lt;h2 class="mt-5"&gt;Autoriteit Persoonsgegevens&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Wij helpen u graag verder als u klachten heeft over de verwerking van uw persoonsgegevens. Op grond van de geldende privacywetgeving heeft u tevens het recht om een klacht in te dienen bij de Autoriteit Persoonsgegevens tegen deze verwerking van persoonsgegevens.
+         U kunt hiervoor contact opnemen met de &lt;a href="https://autoriteitpersoonsgegevens.nl/"&gt;Autoriteit Persoonsgegevens&lt;/a&gt;.
+     &lt;/p&gt;
+
+     &lt;p class="mb-3"&gt;
+         Indien City Media namens de gebruiker persoonsgegevens verwerkt, aanvaardt de gebruiker de op deze site geplaatste &lt;a href="https://media.solid-use.nl/verwerkersovereenkomst/"&gt;Verwerkersovereenkomst waarin afspraken worden vastgelegd over de verwerking en beveiliging van deze persoonsgegevens&lt;/a&gt;. Gebruikers kunnen te allen tijde in overleg met City Media wijzigingen aanbrengen.
+     &lt;/p&gt;
+
+     &lt;h2 class="mt-5"&gt;Contact&lt;/h2&gt;
+     &lt;p class="mb-3"&gt;Als u na het lezen van onze privacy- en cookieverklaring nog vragen of opmerkingen heeft, kunt u contact met ons opnemen via onderstaande contactgegevens.&lt;/p&gt;
+    
+     &lt;p class="mb-3"&gt;
+         &lt;a href="mailto:info@city-media.nl"&gt;info@city-media.nl&lt;/a&gt;&lt;br /&gt;
+         0650203599
+     &lt;/p&gt;</value>
+  </data>
+</root>

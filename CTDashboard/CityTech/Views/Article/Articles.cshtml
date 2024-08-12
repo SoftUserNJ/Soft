@@ -1,0 +1,929 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer;
+@{
+    ViewData["Title"] = "Articles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["ArticleManagement"]</h4>
+            <h6>@Localizer["Add/UpdateArticle"]</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #1265c3; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="PDF" id="pdfPrint">
+                            <i class="far fa-file-pdf" style="color: #ea5455; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" id="convertExcel">
+                            <i class="far fa-file-excel" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="CSV" id="convertCsv">
+                            <i class="fa-solid fa-file-csv" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="Dashboard" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch" class="rounded-pill">
+                    </div>
+                </div>
+                <div class="wordset">
+                    <p href="javascript:void(0);" class="btn btn-addednew btnAdd ct-btns">
+                        <img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">@Localizer["AddNew"]
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["ArticleNo"]</th>
+                            <th class="pe-3 w-45imp"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Name"]</th>
+                            <th class="pe-3 w-30imp"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Group"]</th>
+                            <th class="pe-3 w-10imp"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Unit"]</th>
+                            <th class="text-center pe-3 last-th-sticky"><input type="checkbox" hidden class="printCheckBox notPrintCol" />@Localizer["Action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allArticlesList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content AddPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["ArticleAdd"]</h4>
+        </div>
+        <div class="page-btn">
+            <a href="javascript:void(0);" class="btn btn-added btnList ct-btns">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="" aria-label="fa fa-th-list"></i> @Localizer["Articles"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="row activeForm disabled">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["ArticleNumber"]</label>
+                                <input type="text" class="rounded-pill disabled" id="txtArticleNo" skinid="Enter Article Number ....!">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Article"]</label>
+                                <input type="text" class="rounded-pill" id="txtArticle" skinid="Enter Article ....!">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Group"]</label>
+                                <div class="row">
+                                    <div class="col-lg-10 col-sm-10 col-10">
+                                        <select class="js-example-basic-single select2" id="drpGroup" skinid="Select Group ....!"></select>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                        <div @*class="add-icon text-end"*@>
+                                            <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="Group" data-bs-toggle="modal" data-bs-target="#GroupModal"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Unit"]</label>
+                                <div class="row">
+                                    <div class="col-lg-10 col-sm-10 col-10">
+                                        <select class="js-example-basic-single select2" id="drpUom" skinid="Select Unit ....!"></select>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                        <div @*class="add-icon text-end"*@>
+                                            <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="UOM" data-bs-toggle="modal" data-bs-target="#UomModal"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="mb-2">
+                            <button class="btn btn-primary btn-sm ct-btns" id="btnNewArticle">@Localizer["New"]</button>
+                            <button class="btn btn-success btn-sm ct-btns" id="btnSaveArticle">@Localizer["Save"]</button>
+                            <button class="btn btn-secondary btn-sm ct-btns" id="btnRefreshArticle">@Localizer["Refresh"]</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 activeForm disabled">
+                    <div class="commom-img mb-2 mt-1">
+                        <img src="" id="ImageArticle" />
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control text-white" type="file" id="articleImg" accept="image/jpg, image/jpeg, image/png" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="editStatus" />
+<input type="hidden" id="grpEditStatus" />
+<input type="hidden" id="maxArticleNo" />
+<input type="hidden" id="maxGroupNo" />
+
+<div class="modal fade groupmodal" id="GroupModal">
+    @Html.Partial("~/Views/PartialViews/Articles/Group.cshtml")
+</div>
+
+<div class="modal fade uommodal" id="UomModal">
+    @Html.Partial("~/Views/PartialViews/Articles/Uom.cshtml")
+</div>
+
+@section scripts{
+    <script>
+
+        $(function(){
+            $(".AddPage").hide();
+            GetArticle();
+            GetUom();
+            GetGroup();
+
+            $("#btnRefreshArticle").click();
+            $("#btnRefreshUom").click();
+            $("#btnRefreshGroup").click();
+            UserPageRights();
+        })
+
+        $(".btnAdd").click(function () {
+            $(".ListPage").hide();
+            $(".AddPage").show();
+            $("#editStatus").val('');
+            $("#btnRefreshArticle").click();
+        });
+
+        $(".btnList").click(function () {
+            $(".ListPage").show();
+            $(".AddPage").hide();
+        });
+        
+        //====================== Articles ========================\\
+
+        function GetArticle(){
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Article/GetArticle/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#allArticlesList").empty();
+                        $("#maxArticleNo").val(data.articleMaxNumber);
+                        //$("#maxGroupNo").val(data.groupMaxNumber);
+
+                        $.each(data.list, function (i, item) {
+                            $("#allArticlesList").append(`
+                             <tr>
+                                 <td class="articleNo">${item.ID}</td>
+                                 <td class="articleName">${item.NAME}</td>
+                                 <td class="articleGroupDes">${item.GROUPDESCRIPTION}</td>
+                                 <td class="articleuomname">${item.UOM}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditArticle cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelArticle cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                                 <td class="articleGroupDesId d-none">${item.GROUPDESCRIPTIONID}</td>
+                                 <td class="articleImg d-none">${item.IMG}</td>
+                             </tr>
+                            `)
+                        })
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#btnSaveArticle").click(function () {
+            
+            var id = $("#txtArticleNo").val();
+            var name = $("#txtArticle").val();
+            var groupId = $("#drpGroup option:selected").val();
+            var uom = $("#drpUom option:selected").val();
+            var status = $("#editStatus").val();
+
+            if (CheckValidation("AddPage") == false) {
+
+                return false;
+            }
+           
+            var formData = new FormData();
+
+            var totalFiles = document.getElementById("articleImg").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("articleImg").files[i];
+                formData.append("Image", file);
+            }
+
+            formData.append("id", id);
+            formData.append("name", name);
+            formData.append("groupId", groupId);
+            formData.append("uom", uom);
+            formData.append("status", status);
+            formData.append("activityLogDateTime", moment().format('YYYY-MM-DD HH:mm:ss'));
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtArticle").val(), "#allArticlesList", ".articleName", $("#txtArticleNo").val(), ".articleNo") == false) {
+                toastr.info("Article Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtArticle").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Article/SaveArticle/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetArticle();
+                            $("#btnRefreshArticle").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelArticle", function(){
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".articleNo").text();
+            obj.imgName = $(this).closest('tr').find(".articleImg").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Article/DelArticle/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetArticle();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditArticle', function () {
+            $(".activeForm").removeClass('disabled');
+
+            var articleNo = $(this).closest('tr').find('.articleNo').text();
+            var articleName = $(this).closest('tr').find('.articleName').text();
+            var articleGroupDesId = $(this).closest('tr').find('.articleGroupDesId').text();
+            var articleGroupDes = $(this).closest('tr').find('.articleGroupDes').text();
+            var articleuomname = $(this).closest('tr').find('.articleuomname').text();
+            var articleImg = $(this).closest('tr').find('.articleImg').text();
+
+            $("#txtArticleNo").val(articleNo);
+            $("#txtArticle").val(articleName);
+            $("#drpGroup").val(articleGroupDesId);
+            $("#drpGroup").next('span').find('.select2-selection__rendered').html($("#drpGroup option:selected").text());
+            $("#drpUom").val(articleuomname);
+            $("#drpUom").next('span').find('.select2-selection__rendered').html($("#drpUom option:selected").text());
+
+
+            var path = window.location.origin;
+            $("#ImageArticle").attr('src', path+"/"+articleImg);
+
+
+            $("#editStatus").val("Edit");
+
+            $("#btnSaveArticle").show();
+            $("#btnNewArticle").hide();
+            $("#btnSaveArticle").text('Update');
+
+            $(".ListPage").hide();
+            $(".AddPage").show();
+        });
+
+        //====================== Group ========================\\
+
+        function GetGroup(){
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Article/GetGroup/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+
+                        $("#groupDetail").empty();
+                        $("#drpGroup").empty();
+                        $("#drpGroup").append(`<option value="0" >--- Select Group ---</option>`);
+
+                        $.each(data, function (i, item) {
+                            $("#txtGroupNo").val(item.maxno);
+                            $("#maxGroupNo").val(item.maxno);
+                            $("#drpGroup").append(`<option value="${item.id}" >${item.groupDescription}</option>`);
+                            $("#groupDetail").append(`
+                             <tr>
+                                 <td class="grpArticleNo">${item.id}</td>
+                                 <td class="grpDescription">${item.groupDescription}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditGroup cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelGroup cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                             </tr>
+                            `)
+                        });
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#btnSaveGroup").click(function () {
+
+            if (CheckValidation("groupmodal") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtGroupNo").val();
+            obj.description = $("#txtGroupDescription").val();
+            obj.status = $("#grpEditStatus").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtGroupDescription").val(), "#groupDetail", ".grpDescription", $("#txtGroupNo").val(), ".grpArticleNo") == false) {
+                toastr.info("Description Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtGroupDescription").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Article/SaveGroup/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetGroup();
+                            $("#btnRefreshGroup").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelGroup", function(){
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".grpArticleNo").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Article/DelGroup/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Already In Use") {
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        } else
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetGroup();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditGroup', function () {
+
+            var GroupDescription = $(this).closest('tr').find('.grpDescription').text();
+            var grpArticleNo = $(this).closest('tr').find('.grpArticleNo').text();
+
+            $("#txtGroupDescription").val(GroupDescription);
+            $("#txtGroupNo").val(grpArticleNo);
+
+            $("#txtGroupDescription").removeClass('disabled');
+
+            $("#grpEditStatus").val("edit");
+
+            $("#btnSaveGroup").show();
+            $("#btnNewGroup").hide();
+            $("#btnSaveGroup").text('Update');
+        });
+
+
+        //====================== UOM ========================\\
+
+        function GetUom(){
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Article/GetUom/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#uomDetail").empty();
+                        $("#drpUom").empty();
+                        $("#drpUom").append(`<option value="0" >--- Select Unit ---</option>`);
+
+                        $.each(data, function (i, item) {
+                            $("#drpUom").append(`<option value="${item.uom}" >${item.uom}</option>`);
+                            $("#uomDetail").append(`
+                             <tr>
+                                 <td class="unitId d-none ps-2">${item.id}</td>
+                                 <td class="uomName">${item.uom}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditUom cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelUom cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                             </tr>
+                            `)
+                        })
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#btnSaveUom").click(function () {
+
+            if (CheckValidation("uommodal") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtUnitId").val();
+            obj.uom = $("#txtUnit").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtUnit").val(), "#uomDetail", ".uomName", $("#txtUnitId").val(), ".unitId") == false) {
+                toastr.info("Unit Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtUnit").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Article/SaveUom/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetUom();
+                            $("#btnRefreshUom").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelUom", function(){
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".unitId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Article/DelUom/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetUom();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditUom', function () {
+
+            var id = $(this).closest('tr').find('.unitId').text();
+            var name = $(this).closest('tr').find('.uomName').text();
+
+            $("#txtUnitId").val(id);
+            $("#txtUnit").val(name);
+            $("#txtUnit").removeClass('disabled');
+            $("#btnSaveUom").show();
+            $("#btnNewUom").hide();
+            $("#btnSaveUom").text('Update');
+        });
+
+
+        //====================== Buttons ========================\\
+
+        $("#btnNewArticle").click(function () {
+            $(".activeForm").removeClass('disabled');
+            
+            $(this).hide();
+            $("#btnSaveArticle").text('Save');
+            $("#btnSaveArticle").show();
+            $("#txtArticle").focus();
+
+
+        });
+
+        $("#btnRefreshArticle").click(function () {
+
+            var status = $("#editStatus").val();
+            var uId = $("#txtArticleNo").val();
+
+            if (status != "Edit") {
+                
+
+                $(".activeForm").addClass('disabled');
+
+                ;
+                $("#txtArticleNo").val($("#maxArticleNo").val())
+
+                $("#btnSaveArticle").hide();
+                $("#btnNewArticle").show();
+
+                $("#editStatus").val('');
+                $("#txtArticle").val('');
+                $("#drpGroup").val('0');
+                $("#drpGroup").next('span').find('.select2-selection__rendered').html($("#drpGroup option:selected").text());
+                $("#drpUom").val('0');
+                $("#drpUom").next('span').find('.select2-selection__rendered').html($("#drpUom option:selected").text());
+
+                $("#articleImg").val('');
+                $("#ImageArticle").attr('src', '');
+                
+            }
+            else {
+                $(".articleNo").each(function () {
+                    const userIdValue = $(this).text().trim();
+                    if (userIdValue === uId) {
+                        $(this).closest('tr').find('.btnEditArticle').click();
+                        return false;
+                    }
+                });
+
+            }
+        });
+
+        $("#btnNewUom").click(function () {
+            $(this).hide();
+            $("#txtUnit").removeClass('disabled');
+            $("#btnSaveUom").text('Save');
+            $("#btnSaveUom").show();
+            $("#txtUnit").focus();
+        });
+
+        $("#btnRefreshUom").click(function () {
+            $("#btnSaveUom").hide();
+            $("#btnNewUom").show();
+
+            $("#txtUnit").addClass('disabled');
+
+            $("#txtUnitId").val('');
+            $("#txtUnit").val('');
+        });
+
+        $("#btnNewGroup").click(function () {
+            $(this).hide();
+            $("#txtGroupDescription").removeClass('disabled');
+
+            $("#grpEditStatus").val('');
+            $("#btnSaveGroup").text('Save');
+            $("#btnSaveGroup").show();
+            $("#txtGroupDescription").focus();
+        });
+
+        $("#btnRefreshGroup").click(function () {
+            $("#btnSaveGroup").hide();
+            $("#btnNewGroup").show();
+
+            $("#txtGroupDescription").addClass('disabled');
+            $("#txtGroupNo").addClass('disabled');
+
+            $("#txtGroupDescription").val('');
+            $("#txtGroupNo").val($("#maxGroupNo").val())
+
+        });
+
+
+        //====================== Search ========================\\
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#allArticlesList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $(document).on('input', '#txtSearchUnit', function () {
+            var value = $(this).val().toLowerCase();
+            $("#uomDetail tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $(document).on('input', '#txtSearchGroupDescription', function () {
+            var value = $(this).val().toLowerCase();
+            $("#groupDetail tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        //====================== Artical Image ========================\\
+        $("#articleImg").change(function (event) {
+            $("#ImageArticle").attr('src', URL.createObjectURL(event.target.files[0]));
+        });
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]"+".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+        //================ User Page Rights ==================\\
+
+        function UserPageRights(){
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/UserPageRights/",
+                    data: { url: window.location.pathname },
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.word == false) { $("#convertWord").closest('li').remove(); }
+                        if(data.pdf == false){ $("#pdfPrint").closest('li').remove(); }
+                        if (data.excel == false) { $("#convertExcel").closest('li').remove(); }
+                        if (data.csv == false) { $("#convertCsv").closest('li').remove(); }
+                        if (data.delete == false) { $(".btnDelObjectLoc").remove(); }
+                        if (data.edit == false) { $(".btnEditObjectLoc").remove(); }
+
+                        if(data.save == false){
+                            $(".btnAdd").closest('div').remove();
+                            $("#btnRefreshArticle, #btnNewGroup, #btnSaveGroup, #btnRefreshGroup, .btnEditGroup, .btnDelGroup, #btnNewUom, #btnSaveUom, #btnRefreshUom, .btnDelUom, .btnEditUom").remove();
+                            $("#drpGroup, #drpUom").closest('.row').find('.custom-plus-icon').addClass('disabled');
+                        }
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+    </script>
+}

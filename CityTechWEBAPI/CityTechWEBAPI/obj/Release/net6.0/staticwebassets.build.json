@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "Hash": "mpaZNmgwuu8692LvqS0/LJqZdG2tB/sKP/+mnYq8nqA=",
+  "Source": "CityTechWEBAPI",
+  "BasePath": "_content/CityTechWEBAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "CityTechWEBAPI\\wwwroot",
+      "Source": "CityTechWEBAPI",
+      "ContentRoot": "E:\\REPO\\CT_Dashboard_API\\CityTechWEBAPI\\CityTechWEBAPI\\wwwroot\\",
+      "BasePath": "_content/CityTechWEBAPI",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "E:\\REPO\\CT_Dashboard_API\\CityTechWEBAPI\\CityTechWEBAPI\\wwwroot\\Images\\Artical\\20-Wire-Meter-.jpg",
+      "SourceId": "CityTechWEBAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\REPO\\CT_Dashboard_API\\CityTechWEBAPI\\CityTechWEBAPI\\wwwroot\\",
+      "BasePath": "_content/CityTechWEBAPI",
+      "RelativePath": "Images/Artical/20-Wire-Meter-.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Artical\\20-Wire-Meter-.jpg"
+    }
+  ]
+}

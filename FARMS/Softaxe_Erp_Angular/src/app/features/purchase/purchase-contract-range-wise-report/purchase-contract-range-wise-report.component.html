@@ -1,0 +1,117 @@
+<div class="content ListPage">
+  <div class="page-header mb-2">
+    <div class="page-title">
+      <h4>Purchase Contract Report</h4>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+              <div class="fw-bolder">
+                <label class="mb-1">Voucher Type</label>
+                <div class="position-relative w-100">
+                  <ng-select bindLabel="name" bindValue="id" placeholder="---Select Voucher Type---"
+                    [dropdownPosition]="'bottom'" [(ngModel)]="selectedVchType">
+                    <ng-option [value]="'PO-PUR'">PO-PUR</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+              <div class="fw-bolder">
+                <label class="mb-1">Party</label>
+                <div class="position-relative w-100">
+                  <ng-select bindLabel="NAMES" bindValue="CODE" [items]="partyList" placeholder="---Select Party---"
+                    [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+              <div class="fw-bolder">
+                <label class="mb-1">Cost Center</label>
+                <div class="position-relative w-100">
+                  <ng-select bindLabel="LocName" bindValue="LocID" [items]="costCenterList"
+                    placeholder="---Select Cost Center---" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+              <div class="fw-bolder">
+                <label class="mb-1">Item</label>
+                <div class="position-relative w-100">
+                  <ng-select bindLabel="NAMES" bindValue="CODE" [items]="itemList" placeholder="---Select Item---"
+                    [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="form-group">
+                <label>From Date</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" matInput [matDatepicker]="datepicker"
+                    (click)="datepicker.open()" [(ngModel)]="fromDate" />
+                  <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="assets/img/icons/calendars.svg" alt="img" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="form-group">
+                <label>To Date</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" matInput [matDatepicker]="datepicker2"
+                    (click)="datepicker2.open()" [(ngModel)]="toDate" />
+                  <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="assets/img/icons/calendars.svg" alt="img" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+              <div class="fw-bolder">
+                <label class="mb-1">From PoNo</label>
+                <div class="position-relative w-100">
+                  <input type="text" class="form-control" [(ngModel)]="poNoFrom" placeholder="From PoNo" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+              <div class="fw-bolder">
+                <label class="mb-1">To PoNo</label>
+                <div class="position-relative w-100">
+                  <input type="text" class="form-control" [(ngModel)]="poNoTo" placeholder="To PoNO" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+              <button class="btn btn-primary btn-sm" (click)="openPurDetailReport()" id="btnView">View</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

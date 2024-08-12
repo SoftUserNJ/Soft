@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+}
+
+<style>
+    .down-arrow {
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid white;
+        transform: rotate(360deg);
+        margin-top: -25px;
+        padding-bottom: 12px;
+        margin-left: 180px;
+    }
+
+</style>
+
+<div class="modal-dialog" style="max-width:634px;">
+
+    <div class="modal-content modal-content-cs" style="border: 2px solid #b01d16 !important;">
+        <div class="modal-body modal-body-cs">
+            <input type="hidden" id="iNo" />
+            <div class="container1">
+                <div><h2 class="main-head1">PRIO <span id="incidentPrio"></span></h2></div>
+                <div><p class="main-head2">NEW INCIDENT<br>ACTION REQUIRED</p></div>
+                <div><i class="fa-solid fa-triangle-exclamation main-head3" style="color: #f53d6a;"></i></div>
+            </div>
+            <div class="container2">
+                <div class="box-1">
+                    <p>Incident:  <span id="incidentName"></span></p>
+                    <p>Location: <span id="incidentLocation"></span></p>
+                    <p>Object:   <span id="incidentObject"></span></p>
+                </div>
+                <div class="box-2">
+                    <h3>SLA</h3>
+                    <p>Response: before <span id="incidentResponse"></span></p>
+                    <p>Secure: before <span id="incidentSecure"></span></p>
+                    <p>Fixed: before <span id="incidentFixed"></span></p>
+                </div>
+            </div>
+
+            <div class="container3 pb-1">
+                <div class="SchBox1">
+                    <p class="sch-head">Schedule now</p>
+                    <div>
+                        <label>Name mechanic:</label>
+                        <select class="form-control rounded-pill login-input pt-1 pb-1 mt-1 mb-2" name="" id="drpMechanic" skinid="Select Mechanic....!">
+                        </select>
+                        @*<div class="down-arrow"></div>*@
+                    </div>
+
+                    <h3>Preparations:</h3>
+                    <input type="text" id="incidentPrepration" class="form-control rounded-pill login-input-c" style="width:100%;" skinid="Enter Preparations....!" />
+                    <h3>Requirements:</h3>
+                    <p id="incidentRequirements"></p>
+                </div>
+                <div class="SchBox2 pt-3">
+                    <h3 class="mb-2">Secure date:</h3>
+                    <input type="datetime-local" class="form-control rounded-pill login-input-c" id="txtSecureDate" style="width:210px;" skinid="Select Secure Date....!">
+                    <h3 class="mb-2 mt-4">Fixed date:</h3>
+                    <input type="datetime-local" class="form-control rounded-pill login-input-c" id="txtFixedDate" style="width:210px;" skinid="Select Fixed Date....!">
+
+                    <button class="rounded-pill schedule-btn login-button p-0" id="btnIncidentSchedule">Schedule</button>
+                    <button id="closeIncidentScheduleAlert" data-bs-dismiss="modal" hidden></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

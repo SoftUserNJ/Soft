@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout - City Tech</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <style>
+        .widget-menu {
+           position: fixed;
+           background-color: #533152;
+           font-weight: 400;
+           padding: 0px;
+           list-style: none;
+           cursor: pointer;
+         }
+     
+         .widget-menu li {
+           color: white;
+           padding: 0px 5px;
+           border: 1px solid #11153a;
+           text-decoration: none;
+           transition: background-color 0.3s;
+         }
+     
+         .widget-menu li:hover {
+           background-color: #684a68;
+         }
+       </style>
+</head>
+
+<body oncontextmenu="EditMenu(event)">
+    <div class="row row-h100">
+        <div class="col-2 col-lg-2 col-md-2 ps-0 left-panel-menu">
+            <div class="left-menu">
+                <div>
+                    <img src="assets/img/city-tech-logo.png" class="img-fluid" style="max-width: 160px;" alt="">
+                    <p class="logo-bottom">DASHBOARD</p>
+                </div>
+                <div class="menu-list">
+                    <ul>
+                        <li class="first-list"><strong>Globale IT</strong></li>
+                        <li><a href="#">OBJECTEN</a></li>
+                        <li><a href="#">STATISTIEKEN</a></li>
+                        <li><a href="#">MELDINGEN</a></li>
+                        <li><a href="#">MIJN WERK</a></li>
+                    </ul>
+                </div>
+                <div class="menu-list">
+                    <ul>
+                        <li class="first-list"><strong>Beheer</strong></li>
+                        <li><a href="salas.html">SLA'S</a></li>
+                        <li><a href="#">INCIDENTEN</a></li>
+                        <li><a href="#">SERVICE AANVRAAG</a></li>
+                        <li><a href="#">UW BEDRIJF</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-10 col-lg-10 col-md-10">
+            <div class="right-content">
+                <div class="row text-end"><span>v3.8</span></div>
+                <div class="row mt-3 mb-3">
+                    <div class="col-3 col-lg-3 col-md-3">
+                        <h2>STATISTIEKEN</h2>
+                    </div>
+                    <div class="col-5 col-lg-5 col-md-5 d-flex">
+                        <div class="p-0">
+                            <select class="form-select">
+                                <option>Weesperplein-001</option>
+                                <option>Weesperplein-002</option>
+                                <option>Weesperplein-003</option>
+                                <option>Weesperplein-004</option>
+                            </select>
+                        </div>
+                        <div class="p-0 ms-auto">
+                            <select class="form-select">
+                                <option>Weesperplein</option>
+                                <option>Weesperplein-0</option>
+                                <option>Weesperplein-1</option>
+                                <option>Weesperplein-2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4 col-lg-4 col-md-4">
+                        <div class="d-flex d-flex align-items-center justify-content-end">
+                            <h4 class="m-0">8 aug - 14 aug 2022</h4>
+                            <button class="button-1 ms-3" style="border-radius: 10px;">Datum</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0 p-4 pt-0 sortable-list">
+                    <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-1" draggable="false">
+                        <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                            <div class="text-center">
+                                <p class="add-btn-msg">Voeg hier een nieuwe blok toe 1</p>
+                                <img src="assets/icons/plus-con.svg" alt="" class="w-14">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-2" draggable="false">
+                        <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                            <div class="text-center">
+                                <p class="add-btn-msg">Voeg hier een nieuwe blok toe 2</p>
+                                <img src="assets/icons/plus-con.svg" alt="" class="w-14">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-3" draggable="false">
+                        <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                            <div class="text-center">
+                                <p class="add-btn-msg">Voeg hier een nieuwe blok toe 3</p>
+                                <img src="assets/icons/plus-con.svg" alt="" class="w-14">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-4" draggable="false">
+                        <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                            <div class="text-center">
+                                <p class="add-btn-msg">Voeg hier een nieuwe blok toe 4</p>
+                                <img src="assets/icons/plus-con.svg" alt="" class="w-14">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-5" draggable="false">
+                        <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                            <div class="text-center">
+                                <p class="add-btn-msg">Voeg hier een nieuwe blok toe 5</p>
+                                <img src="assets/icons/plus-con.svg" alt="" class="w-14">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-6" draggable="false">
+                        <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                            <div class="text-center">
+                                <p class="add-btn-msg">Voeg hier een nieuwe blok toe 6</p>
+                                <img src="assets/icons/plus-con.svg" alt="" class="w-14">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-7" draggable="false">
+                        <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                            <div class="text-center">
+                                <p class="add-btn-msg">Voeg hier een nieuwe blok toe 7</p>
+                                <img src="assets/icons/plus-con.svg" alt="" class="w-14">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-8" draggable="false">
+                        <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                            <div class="text-center">
+                                <p class="add-btn-msg">Voeg hier een nieuwe blok toe 8</p>
+                                <img src="assets/icons/plus-con.svg" alt="" class="w-14">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4 mb-4 item resize-box btn-widgetEdit" id="box-9" draggable="false">
+                        <div class="center-content" data-bs-toggle="modal" data-bs-target="#WidgetsModal">
+                            <div class="text-center">
+                                <p class="add-btn-msg">Voeg hier een nieuwe blok toe 9</p>
+                                <img src="assets/icons/plus-con.svg" alt="" class="w-14">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="WidgetsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn-close1" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="form-group text-center">
+                        <h1>Select Widget</h1>
+                    </div>
+                    <dvi class="form-group text-center">
+                        <ul class="widget-list">
+                            <li class="p-2 m-2 rounded-pill">
+                                <div class="d-flex align-items-center pe-3 ps-3">
+                                    <input data-bs-dismiss="modal" type="radio" id="" class="me-1" name="widget-radio">
+                                    <label for="" class="m-0 p-0">Party</label>
+                                </div>
+                            </li>
+                            <li class="p-2 m-2 rounded-pill">
+                                <div class="d-flex align-items-center pe-3 ps-3">
+                                    <input data-bs-dismiss="modal" type="radio" id="" class="me-1" name="widget-radio">
+                                    <label for="" class="m-0 p-0">Party</label>
+                                </div>
+                            </li>
+                            <li class="p-2 m-2 rounded-pill">
+                                <div class="d-flex align-items-center pe-3 ps-3">
+                                    <input data-bs-dismiss="modal" type="radio" id="" class="me-1" name="widget-radio">
+                                    <label for="" class="m-0 p-0">Party</label>
+                                </div>
+                            </li>
+                            <li class="p-2 m-2 rounded-pill">
+                                <div class="d-flex align-items-center pe-3 ps-3">
+                                    <input data-bs-dismiss="modal" type="radio" id="" class="me-1" name="widget-radio">
+                                    <label for="" class="m-0 p-0">Party</label>
+                                </div>
+                            </li>
+                            <li class="p-2 m-2 rounded-pill">
+                                <div class="d-flex align-items-center pe-3 ps-3">
+                                    <input data-bs-dismiss="modal" type="radio" id="" class="me-1" name="widget-radio">
+                                    <label for="" class="m-0 p-0">Party</label>
+                                </div>
+                            </li>
+                            <li class="p-2 m-2 rounded-pill">
+                                <div class="d-flex align-items-center pe-3 ps-3">
+                                    <input data-bs-dismiss="modal" type="radio" id="" class="me-1" name="widget-radio">
+                                    <label for="" class="m-0 p-0">Party</label>
+                                </div>
+                            </li>
+                            <li class="p-2 m-2 rounded-pill">
+                                <div class="d-flex align-items-center pe-3 ps-3">
+                                    <input data-bs-dismiss="modal" type="radio" id="" class="me-1" name="widget-radio">
+                                    <label for="" class="m-0 p-0">Party</label>
+                                </div>
+                            </li>
+                            <li class="p-2 m-2 rounded-pill">
+                                <div class="d-flex align-items-center pe-3 ps-3">
+                                    <input data-bs-dismiss="modal" type="radio" id="" class="me-1" name="widget-radio">
+                                    <label for="" class="m-0 p-0">Party</label>
+                                </div>
+                            </li>
+                            <li class="p-2 m-2 rounded-pill">
+                                <div class="d-flex align-items-center pe-3 ps-3">
+                                    <input data-bs-dismiss="modal" type="radio" id="" class="me-1" name="widget-radio">
+                                    <label for="" class="m-0 p-0">Party</label>
+                                </div>
+                            </li>
+                            <li class="p-2 m-2 rounded-pill">
+                                <div class="d-flex align-items-center pe-3 ps-3">
+                                    <input data-bs-dismiss="modal" type="radio" id="" class="me-1" name="widget-radio">
+                                    <label for="" class="m-0 p-0">Party</label>
+                                </div>
+                            </li>
+                            <li class="p-2 m-2 rounded-pill">
+                                <div class="d-flex align-items-center pe-3 ps-3">
+                                    <input data-bs-dismiss="modal" type="radio" id="" class="me-1" name="widget-radio">
+                                    <label for="" class="m-0 p-0">Party</label>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </dvi>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="assets/js/script.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>

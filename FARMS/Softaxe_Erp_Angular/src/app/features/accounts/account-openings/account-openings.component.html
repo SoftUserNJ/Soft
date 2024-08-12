@@ -1,0 +1,127 @@
+<div class="content">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4 class="newcolor">Accounts Opening</h4>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <button class="btn btn-sm btn-info" (click)="onClickUpdateBs()" >Update BS</button>
+          </li>
+          <li>
+            <a title="pdf" (click)="export('Account Opening', 'pdf')">
+              <img src="/assets/img/icons/pdf.svg" alt="img" />
+            </a>
+          </li>
+          <li>
+            <a title="excel" (click)="export('Account Opening', 'xlxs')">
+              <img src="/assets/img/icons/excel.svg" alt="img" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY" [matDatepicker]="datepicker"
+                [(ngModel)]="date" [disabled]="true" (click)="datepicker.open()">
+              <mat-datepicker #datepicker [startAt]="date"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="Date">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="form-group mb-1">
+            <label class="form-label mb-1">Search Party</label>
+            <input type="search" class="form-control" placeholder="Search...." (input)="onSearchInput($event)" />
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 d-flex">
+          <div class="form-group d-flex align-items-end">
+            <div class="d-flex align-items-center me-3">
+              <input type="radio" class="me-1" id="all" name="AO" checked="checked" value="all" [checked]="all"
+                (click)="onClickFilter($event)" />
+              <label for="all" class="mb-0">All</label>
+            </div>
+            <div class="d-flex align-items-center me-3">
+              <input type="radio" id="customer" class="me-1" name="AO" value="customer" [checked]="customer"
+                (click)="onClickFilter($event)" />
+              <label for="customer" class="mb-0">Customer</label>
+            </div>
+            <div class="d-flex align-items-center me-3">
+              <input type="radio" id="supplier" class="me-1" name="AO" value="supplier" [checked]="supplier"
+                (click)="onClickFilter($event)" />
+              <label for="supplier" class="mb-0">Supplier</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-2 mt-4">
+          <div class="add-icon float-end">
+            <a (click)="onViewReport()" href="javascript:void(0);"><img src="/assets/img/icons/printer.svg" alt="img"
+                class="searchSvg"></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2">
+          <div class="form-group">
+            <label class="form-label">Opening Stock Value</label>
+            <input type="number" id="openingStockValue" class="form-control text-end" [(ngModel)]="stockValue" disabled>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height: 350px">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th class="text-center w-0">Sno</th>
+              <th style="width: 12%;">Code</th>
+              <th>Name</th>
+              <th class="text-end" style="width: 12%;">Debit</th>
+              <th class="text-end" style="width: 12%;">Credit</th>
+            </tr>
+          </thead>
+          <tbody #AccountOpening>
+            <tr *ngFor="let data of acccount_list; let i = index">
+              <td class="text-center w-0">{{ i + 1 }}</td>
+              <td class="tag d-none">{{ data.TAG }}</td>
+              <td class="Code limited-text Code w-12 " title="{{data.CODE}}">{{ data.CODE }}</td>
+              <td class="Name width52p limited-text" title="{{data.NAMES}}">{{ data.NAMES + " " + data.CITY }}</td>
+              <td>
+                <input type="number" class="form-control form-control-sm text-end debit" [(ngModel)]="data.DEBIT"
+                  (input)="onDebitChange(data)" />
+              </td>
+              <td>
+                <input type="number" class="form-control form-control-sm text-end credit" [(ngModel)]="data.CREDIT"
+                  (input)="onCreditChange(data)" />
+              </td>
+            </tr>
+          </tbody>
+          <tfoot id="grdEnd">
+            <tr>
+              <td class="text-end" colspan="3">Total = </td>
+              <td class="text-end">{{ debit | number : "1.2-2" }}</td>
+              <td class="text-end">{{ credit | number : "1.2-2" }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="row mt-2">
+        <div class="col-lg-8 col-md-8 col-sm-12 d-flex align-items-center">
+          <div class="form-group">
+            <button (click)="saveAccountOp()" class="btn btn-success btn-sm" id="btnSave" type="submit">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

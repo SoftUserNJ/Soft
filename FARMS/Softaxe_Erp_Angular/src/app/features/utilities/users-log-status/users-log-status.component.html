@@ -1,0 +1,152 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Users Log Status</h4>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('User-Logs', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('User-Logs', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-5 col-md-5 col-lg-5">
+          <div class="row">
+            <div class="col-lg-6 col-md-3 col-sm-6 pe-0">
+              <div class="form-group">
+                <label>Search</label>
+                <input type="text" (input)="searchInput($event)" class="form-control" placeholder="Search">
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-2 col-sm-6 pe-0">
+              <div class="">
+                <label>Type</label>
+                <div class="position-relative w-100">
+                  <ng-select placeholder="---Select Type---" bindLabel="TYPE" bindValue="TYPE" [items]="logType"
+                    [dropdownPosition]="'bottom'" (change)="onChangeType($event)" (clear)="onClearType()">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-1 col-sm-6 pe-0">
+              <div class="form-group">
+                <label>VchNo</label>
+                <input type="text" (input)="serachInv($event)" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-7 col-sm-6">
+          <div class="row">
+            <div class="col-lg-3 col-md-2 col-sm-6 pe-0">
+              <div class="form-group">
+                <label class="form-label">From Date</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                    [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                  <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-2 col-sm-6 pe-0">
+              <div class="form-group">
+                <div class="form-group">
+                  <label class="form-label">To Date</label>
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker2"
+                      [(ngModel)]="toDate" (click)="datepicker2.open()" />
+                    <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-2 col-sm-6 pe-0">
+              <div class="">
+                <label>Location</label>
+                <div class="position-relative w-100">
+                  <ng-select 
+                    placeholder="---Select Location---" 
+                    [dropdownPosition]="'bottom'"
+                    [disabled]="isDisableLoc" 
+                    [(ngModel)]="locId">
+                    <ng-option *ngFor="let item of locationList" [value]="item.ID">
+                      {{ item.ID + " - " + item.NAME}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-1 col-sm-6">
+              <div>
+                <label>.</label>
+                <button class="btn btn-secondary btn-sm mt-1" (click)="getUserLogStatus()">Refresh</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height:400px;">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th class="text-center">Date</th>
+              <th class="text-center">Time</th>
+              <th class="text-start">User Name</th>
+              <th class="text-center">Loc</th>
+              <th class="text-start">Type</th>
+              <th class="text-center">VchNo</th>
+              <th class="text-center">VchDate</th>
+              <th class="text-start limited-text">Remarks</th>
+              <th class="text-end">Purchase Rate</th>
+              <th class="text-end">Min Rate</th>
+              <th class="text-end">Max Rate</th>
+              <th class="text-end">Amount</th>
+              <!-- <th class="text-center noPrint">Action</th> -->
+            </tr>
+          </thead>
+          <tbody #userLogStatusLists id="detailList">
+            <tr *ngFor="let item of userLogStatusList">
+              <td class="text-center d-none">{{item.USERID}}</td>
+              <td class="text-center">{{item.DATE}}</td>
+              <td class="text-center">{{item.TIME}}</td>
+              <td class="text-start">{{item.USERNAME}}</td>
+              <td class="text-center">{{item.Loc}}</td>
+              <td class="text-start type">{{item.TYPE}}</td>
+              <td class="text-center vchno">{{item.VCHNO}}</td>
+              <td class="text-center">{{item.VCHDATE}}</td>
+              <td class="text-start limited-text" title="{{item.REMARKS}}">{{item.REMARKS}}</td>
+              <td class="text-end">{{item.PURCHASERATE | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.MINRATE | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.MAXRATE | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.AMOUNT | number : "1.2-2"}}</td>
+              <!-- <td class="text-center noPrint">
+                <span (click)="deleteUserLog(item.ID, item.USERID)" class="confirm-text">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

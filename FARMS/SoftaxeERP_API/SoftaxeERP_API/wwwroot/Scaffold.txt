@@ -1,0 +1,6 @@
+﻿Scaffold-DbContext "Server=104.37.190.170; user id=sa; password=Asl@m@US@; Database=ERPSoftaxe; TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+
+email :softaxeuser4@gmail.com
+userName : softaxe
+pass :(Sotaxe).#123

@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog" style="max-width:1200px;">
+    <div class="modal-content">
+        <div class="modal-body p-0">
+            <div class="card mb-0">
+                <div class="card-body p-3">
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 d-flex justify-content-between">
+                            <div style="width:199px;">
+                                <h5 class="text-dark">@Localizer["SingleScreen"]</h5>
+                                <img src="" id="modalImgDownloadSingle" style="height:339px; width:199px; border: 1px solid silver;" />
+                                <button class="ct-btns btn btn-primary btn-sm" id="btnDownloadOrderImgSingle">@Localizer["Download"]</button>
+                            </div>
+
+                            <div style="width:387px;">
+                                <h5 class="text-dark">@Localizer["DoubleScreen"]</h5>
+                                <img src="" id="modalImgDownloadDouble" style="height:310px; width:387px; border: 1px solid silver;" />
+                                <button class="ct-btns btn btn-primary btn-sm" id="btnDownloadOrderImgDouble">@Localizer["Download"]</button>
+                            </div>
+
+
+                            <div style="width:566px;">
+
+                                <h5 class="text-dark">@Localizer["TripleScreen"]</h5>
+                                <img src="" id="modalImgDownloadTriple" style="height:289px; width:566px; border: 1px solid silver;" />
+                                <button class="ct-btns btn btn-primary btn-sm" id="btnDownloadOrderImgTriple">@Localizer["Download"]</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                   @* <div class="">
+                        
+                        <div class="d-flex justify-content-end" style="margin-top: 5px; margin-right: 5px;">
+                            <button type="button" class="btn-close1 bg-dark" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div style="margin-top: -25px;">
+                            <img src="" id="modalImgDownload">
+                        </div>
+
+                    </div>
+                    <div class="mt-2">
+                        <button class="ct-btns btn btn-primary btn-sm" id="btnDownloadOrderImg">@Localizer["Download"]</button>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

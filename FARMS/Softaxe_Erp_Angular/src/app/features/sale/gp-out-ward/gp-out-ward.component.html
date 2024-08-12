@@ -1,0 +1,250 @@
+<div class="content ListPage" *ngIf="isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Gate Pass Out Ward</h4>
+      <h6>Manage your Gate Pass Out Ward</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Gate-Pass-Outward', 'pdf')" title="pdf">
+              <img src="assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Gate-Pass-Outward', 'xlxs')" title="excel">
+              <img src="assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between mb-1">
+        <div class="d-flex align-items-center">
+          <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+          <input type="search" class="form-control" placeholder="Search" (input)="searchGrid($event)" />
+        </div>
+        <div class="add-new" (click)="togglePages()">
+          <img src="/assets/img/icons/plus.svg" alt="img" class="me-1" />Add New
+        </div>
+      </div>
+      <div class="table-responsive mt-1" style="height:360px;">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th>Gate Pass No</th>
+              <th>Gate Pass Date</th>
+              <th>Vehicle No</th>
+              <th>Driver Name</th>
+              <th>Qty</th>
+              <th>Freight</th>
+              <th class="text-center noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody #customerLists>
+            <tr *ngFor="let data of gpList">
+                <td class="limited-text" title="{{data.GPNO}}">{{data.GPNO}}</td>
+                <td class="d-none">{{data.DONO}}</td>
+                <td class="limited-text" title="{{data.GPDATE}}">{{data.GPDATE}}</td>
+                <td class="limited-text" title="{{data.VEHICLENO}}">{{data.VEHICLENO}}</td>
+                <td class="limited-text" title="{{data.DRIVERNAME}}">{{data.DRIVERNAME}}</td>
+                <td class="limited-text" title="{{data.QTY}}">{{data.QTY}}</td>
+                <td class="limited-text" title="{{data.FREIGHT}}">{{data.FREIGHT}}</td>
+                <td class="text-center noPrint">
+                  <span class="me-3" style="cursor: pointer;" (click)="editGatePassOutward(data.GPNO)">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                  <span style="cursor: pointer;"  (click)="DeleteGpNo(data.GPNO)">
+                    <i class="fas fa-trash"></i>
+                  </span>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content AddPage" *ngIf="!isShowPage">
+  <div class="page-header">
+    <div class="page-title">
+      <h4 class="newcolor">Gate Pass Out Ward</h4>
+    </div>
+    <div class="page-btn">
+      <a (click)="togglePages()" class="btn btn-added btnList">
+        <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+          aria-label="fa fa-th-list"></i>
+        Home
+      </a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row align-items-center mb-2" [formGroup]="GatePassOutwardForm">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="position-relative w-100">
+            <label class="fw-bold">Gate Pass No</label>
+            <input formControlName="GPNO" [readOnly]="true" type="number" class="form-control me-2">
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <label class="fw-bold">Gate Pass Date</label>
+          <div class="form-group mb-0">
+            <div class="input-groupicon">
+              <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY" [matDatepicker]="datepicker"
+                formControlName="gpDate" (click)="datepicker.open()">
+              <mat-datepicker #datepicker></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="position-relative w-100">
+            <label class="fw-bold">Vehicle No</label>
+            <input formControlName="vehicleNo" [readOnly]="isDisabled" type="text" class="form-control me-2">
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="position-relative w-100">
+            <label class="fw-bold">Driver Name</label>
+            <input formControlName="DriverName" [readOnly]="isDisabled" type="text" class="form-control me-2">
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="position-relative w-100">
+            <label class="fw-bold">Phone #</label>
+            <input formControlName="Phone" [readOnly]="isDisabled" type="text" class="form-control me-2">
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="position-relative w-100">
+            <label class="fw-bold">Bilty No</label>
+            <input formControlName="BiltyNo" [readOnly]="isDisabled" type="text" class="form-control me-2">
+          </div>
+        </div>
+      </div>
+      <div class="row align-items-center mb-2">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="page-title dis-In-bl">
+            <h6 style="margin-bottom:0;font-weight: 900;">Pending D.O</h6>
+          </div>
+          <div class="table-responsive mb-2" style="height: 130px; border: 1px solid lightgray;">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th class="text-center">DONO</th>
+                  <th class="text-center">DO Date</th>
+                  <th class="">Party</th>
+                  <th class="text-end">Qty</th>
+                  <th class="text-end">Delivered Qty</th>
+                  <th class="text-end">Balance Qty</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of PendingDOList; let i = index" >
+                  <td class="text-center">{{ data.DONO }}</td>
+                  <td class="text-center">{{ data.DODATE }}</td>
+                  <td class="">{{ data.PARTY }}</td>
+                  <td class="text-end">{{ data.QTY}}</td>
+                  <td class="text-end">{{ data.DELQTY }}</td>
+                  <td class="text-end">{{ data.QTY - data.DELQTY }}</td>
+                  <td class="text-center">
+                    <span style="cursor: pointer" (click)="onClickPendingDo(data, i)">
+                      <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="page-title dis-In-bl">
+            <h6 style="margin-bottom:0;font-weight: 900;">Gate Pass Detail</h6>
+          </div>
+          <div class="table-responsive mb-2" style="height: 130px;border: 1px solid lightgray;">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th class="text-center">Action</th>
+                  <th class="text-center">DONO</th>
+                  <th class="text-center">DO Date</th>
+                  <th class="">Party</th>
+                  <th class="text-end">DO. Qty</th>
+                  <th class="text-end">Delivered Qty</th>
+                  <th class="text-end">Freight</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of GpDetailList; let i = index" (dblclick)="onClickDoDetail(data)" >
+                  <td class="text-center">
+                    <span style="cursor: pointer" (click)="ClearGpNo(data.DONO);" >
+                      <i class="fa-solid fa-arrow-left"></i>
+                    </span>
+                  </td>
+                  <td class="text-center">{{ data.DONO }}</td>
+                  <td class="text-center">{{ data.DODATE }}</td>
+                  <td class="">{{ data.PARTY }}</td>
+                  <td class="text-end">{{ data.QTY}}</td>
+                  <td class="text-end">{{ data.DELQTY }}</td>
+                  <td class="text-end"><input type="number" [(ngModel)]="Freight"  class="form-control text-end"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="page-title dis-In-bl">
+        <h6 style="margin-bottom:0;font-weight: 900;">Order Detail</h6>
+      </div>
+      <div class="table-responsive mb-2" style="height: 130px; border: 1px solid lightgray;">
+        <table class="table table-hover" id="tbl-print">
+          <thead>
+            <tr>
+              <th class="text-center">DONO</th>
+              <th class="text-center">DO Date</th>
+              <th>Party</th>
+              <th>Sub Party</th>
+              <th>Product</th>
+              <th class="text-end w-10">DO. Qty</th>
+              <th class="text-end w-10">Delivered Qty</th>
+              <th class="text-end w-10">Balanace Qty</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of OrderDetailList; let i = index;">
+              <td class="text-center">{{ data.DONO }}</td>
+              <td class="text-center">{{ data.DODATE }}</td>
+              <td>{{ data.PARTY}}</td>
+              <td>{{ data.SUBPARTY}}</td>
+              <td>{{ data.PRODUCT }}</td>
+              <td class="d-none">{{ data.ProductCode }}</td>
+              <td class="text-end">{{ data.QTY }}</td>
+              <td class="text-end">
+                <input type="number" class="form-control text-end" [(ngModel)]="data.DELQTY" (input)="onInputDelQty(i)">
+              </td>
+              <td class="text-end">{{ data.QTYBALANCE }}</td>
+            </tr>
+          </tbody>
+
+          
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12 pt-3">
+          <button class="btn btn-primary btn-sm me-1" (click)="onClickNew()" [hidden]="isShow">New</button>
+          <button type="submit" class="btn btn-success btn-sm me-1" (click)="onClickSave()"
+            [hidden]="!isShow">Save</button>
+          <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+        </div>
+      </div>
+    </div>
+  </div>

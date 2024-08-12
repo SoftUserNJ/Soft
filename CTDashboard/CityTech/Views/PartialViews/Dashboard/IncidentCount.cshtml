@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+<div style="float: left; width: 100%;">
+    <h3 style="float: left;">Incidents</h3>
+</div>
+<p style="clear: both;"></p>
+<div class="container" >
+
+    <div class="main" style="display: flex;justify-content: space-between;padding: 16px 0 16px 0;">
+        <div style="font-size: 25px;">Open</div>
+        <div style="font-size: 45px; font-weight: 900; margin-right: 34px;" id="txtopen">4</div>
+    </div>
+    <div class="main" style="display: flex;justify-content: space-between;padding: 10px 0 10px 0; background-color: #66363f; border-radius: 14px;">
+        <div style="font-size: 18px; margin-left: 10px; margin-top: 12px;">Unassigned</div>
+        <div style="font-size: 45px; font-weight: 900; margin-right: 34px;" id="txtunassigned">1</div>
+    </div>
+    <i class="fa-solid fa-circle-exclamation status-icon" style="float:right ;color: #c31313; font-size: 24px;margin-top: -18px;"></i>
+</div>
+    <script>
+    function IncidentCountWidgetFunPartial(fromDate, toDate,location,objects) {
+
+
+  
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Home/IncidentCount/",
+                    dataType: "json",
+                    async: false,
+                data: { fromDate: fromDate, toDate: toDate, location: location, objects: objects },
+                    success: function (data) {
+                        $.each(data.Open, function (i, Open) {
+                            $("#txtopen").text(Open.COUNT);
+                        });
+                        $.each(data.Unassign, function (i, Unassign) {
+                            $("#txtunassigned").text(Unassign.COUNT);
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+    IncidentCountWidgetFunPartial('@ViewBag.FromDate', '@ViewBag.ToDate', '@ViewBag.Location', '@ViewBag.Objects');
+
+
+           // setInterval(updateIncidentCountsWidgetFunPartial, 5000);
+    </script>

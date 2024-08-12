@@ -1,0 +1,87 @@
+.btn-addednew {
+    background: #ff9f43;
+    padding: 7px 15px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+} 
+
+.commom-img {
+    border: 1px solid #e9e4e4;
+    height: 356px;
+    width: 100%;
+}
+
+.commom-img img {
+    height: 100%;
+    width: 100%;
+}
+
+.imgBox img, .imgBox iframe {
+    height: 290px;
+    width: 100%;
+}
+
+
+.form-control {
+    height: 22px !important;
+}
+
+.form-group input[type=text] {
+    height: 22px !important;
+}
+
+::ng-deep .ng-select.ng-select-single .ng-select-container {
+    height: 22px !important;
+}
+
+::ng-deep .ng-select .ng-select-container {
+    min-height: 22px !important;
+    border-radius: 2px;
+}
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    padding: 0px 6px;
+}
+
+.search-set .search-input input[type=search] {
+    height: 22px !important;
+}
+
+
+label {
+    font-size: 11px !important;
+}
+
+/* For ng drop down */
+
+::ng-deep .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+    top: 0;
+}
+
+::ng-deep .ng-clear,
+.ng-value,
+.ng-placeholder {
+    margin-top: 4px;
+}
+
+::ng-deep .ng-option {
+    padding: 3px 10px !important;
+}
+
+::ng-deep .ng-option span,
+.ng-option-disabled {
+    font-size: 12px;
+}
+
+::ng-deep .ng-value-label,
+.ng-placeholder {
+    font-size: 13px;
+}
+
+::ng-deep .ng-input input {
+    font-size: 13px;
+}

@@ -1,0 +1,35 @@
+
+  .green-bg {
+      background: #cbeb8e;
+      border-radius: 5px 5px 0px 0px;
+  }
+  table {
+    font-size: small;
+  }
+  
+  .py-1 {
+      padding-top: 0.25rem!important;
+      padding-bottom: 0.25rem!important;
+  }
+  .mb-1 {
+      margin-bottom: 0.25rem!important;
+  }
+
+.filter-img {
+  background: #ff9f43;
+  padding: 2px;
+  border-radius: 4px;
+  width: 35px;
+  height: 23px;
+  cursor: pointer;
+}
+
+.add-new {
+  background: #ff9f43;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  padding: 2px;
+  width: 9%;
+  cursor: pointer;
+}

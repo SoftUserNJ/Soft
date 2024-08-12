@@ -1,0 +1,193 @@
+<div class="content ListPage pt-1">
+    <div class="page-header mb-0">
+        <div class="page-title">
+            <h4>Daily Arrival Report</h4>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="pdfPrint"
+                            data-bs-original-title="pdf">
+                            <img src="assets/img/icons/pdf.svg" alt="img" />
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="convertExel"
+                            data-bs-original-title="excel">
+                            <img src="assets/img/icons/excel.svg" alt="img" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-0">
+        <div class="card-body pt-2">
+
+            <div class="row align-items-center mb-2">
+
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <div class="d-flex align-items-center">
+                        <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+                        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchQuery"
+                            (input)="filterData()" />
+                    </div>
+                </div>
+
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="row align-items-center">
+                        <div class="col-lg-2 col-md-2 text-end p-0">
+                            <span class="fw-bolder">From Date</span>
+                        </div>
+                        <div class="col-lg-3 col-md-4 ps-1">
+                            <div class="form-group mb-0">
+                                <div class="input-groupicon">
+                                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                                        [matDatepicker]="datepicker" [(ngModel)]="fromDate"
+                                        (click)="datepicker.open()" />
+                                    <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                                    <div class="addonset">
+                                        <img src="/assets/img/icons/calendars.svg" alt="img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 text-end p-0">
+                            <span class="fw-bolder">To Date</span>
+                        </div>
+                        <div class="col-lg-3 col-md-4 ps-1">
+                            <div class="form-group mb-0">
+                                <div class="input-groupicon">
+                                    <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                                        [matDatepicker]="datepicker2" [(ngModel)]="toDate" (click)="datepicker2.open()">
+                                    <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                                    <div class="addonset">
+                                        <img src="/assets/img/icons/calendars.svg" alt="img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 d-flex ps-0">
+                            <div class="" (click)="getArrivalList();">
+                                <img src="/assets/img/icons/search.svg" alt="img" class="filter-img">
+                            </div>
+
+                            <div class="ms-auto ps-2" (click)="printReport();">
+                                <img src="/assets/img/icons/printer.svg" alt="img" class="filter-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-12">
+                    <div class="card flex-fill p-2" style="margin-bottom: 0px;">
+                        <div class="table-responsive" style="height: 350px">
+                            <table class="table tableSticky productTable fs-13 mb-0 StatusList">
+                                <thead>
+
+                                    <tr>
+                                        <th class="text-center" colspan="4"></th>
+                                        <th class="text-center br" colspan="3">Party</th>
+                                        <th class="text-center" colspan="3">Our</th>
+                                        <th class="text-center"></th>
+                                        <th class="text-center br" colspan="4">Deductions</th>
+                                        <th class="text-center" colspan="3">Payable</th>
+                                        <th class="text-center" colspan="4"></th>
+                                        <th class="text-center" colspan="3">Bags</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-start">Date</th>
+                                        <th class="text-start">Vch#</th>
+                                        <th class="text-start">Party</th>
+                                        <th class="text-start">VehicleNo</th>
+                                        <th class="text-end bt">Gross</th>
+                                        <th class="text-end bt">Tare</th>
+                                        <th class="text-end bt">Net</th>
+                                        <th class="text-end bt">Gross</th>
+                                        <th class="text-end bt">Tare</th>
+                                        <th class="text-end bt">Net</th>
+                                        <th class="text-end">Avg P.B</th>
+                                        <th class="text-end bt">Diff</th>
+                                        <th class="text-end bt">Bags</th>
+                                        <th class="text-end bt">Lab</th>
+                                        <th class="text-end bt">Oth</th>
+                                        <th class="text-end bt">Party</th>
+                                        <th class="text-end bt">Our</th>
+                                        <th class="text-end bt">Taken</th>
+                                        <th class="text-end">Freight</th>
+                                        <th class="text-end">TimeIn</th>
+                                        <th class="text-end">TimeOut</th>
+                                        <th class="text-start">Item</th>
+                                        <th class="text-end bt">Rcv</th>
+                                        <th class="text-end bt">Rej</th>
+                                        <th class="text-end bt">Acp</th>
+                                    </tr>
+                                </thead>
+                                <tbody #voucherLists>
+                                    <tr *ngFor="let data of filteredArrivalList" (click)="rowHighLight($event)">
+
+                                        <td class="text-start">{{ data.VchDate }}</td>
+                                        <td class="text-start">{{ data.Vchno }}</td>
+                                        <td class="text-start">{{ data.SPARTY }}</td>
+                                        <td class="text-start">{{ data.VehicleNo }}</td>
+                                        <td class="text-end totalGrossParty">{{ data.Gross }}</td>
+                                        <td class="text-end totalTareParty">{{ data.Tare }}</td>
+                                        <td class="text-end totalNetParty">{{ data.Gross??0 - data.Tare??0 }}</td>
+                                        <td class="text-end totalGrossOur">{{ data.firstweight }}</td>
+                                        <td class="text-end totalTareOur">{{ data.secweight }}</td>
+                                        <td class="text-end totalNetOur">{{ data.firstweight??0 - data.secweight??0 }}
+                                        </td>
+                                        <td class="text-end totalAvg">{{ data.avgPB }}</td>
+                                        <td class="text-end totalDiff">{{ (data.firstweight??0 - data.secweight??0) -
+                                            (data.Gross??0 - data.Tare??0 ) }}</td>
+                                        <td class="text-end totalBags">{{ data.SBags }}</td>
+                                        <td class="text-end totalLab">{{ data.LabDed }}</td>
+                                        <td class="text-end totalOth">0</td>
+                                        <td class="text-end totalParty">{{ data.PayableWt1 }}</td>
+                                        <td class="text-end totalOur">{{ data.PayableWt }}</td>
+                                        <td class="text-end totalTaken">{{ data.PayableWt1 }}</td>
+                                        <td class="text-end totalFreight">{{ data.Freight }}</td>
+                                        <td class="text-end">{{ data.TimeIn }}</td>
+                                        <td class="text-end">{{ data.TimeOut }}</td>
+                                        <td class="text-start">{{ data.ITEM }}</td>
+                                        <td class="text-end totalRcv">{{ data.Bags }}</td>
+                                        <td class="text-end totalRej">{{ data.RejBags }}</td>
+                                        <td class="text-end totalAcp">{{ (data.Bags??0) - (data.RejBags??0) }}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td class="text-end" colspan="4">Total:</td>
+                                        <td class="text-end pe-0">{{ totalGrossParty }}</td>
+                                        <td class="text-end pe-0">{{ totalTareParty }}</td>
+                                        <td class="text-end pe-0">{{ totalNetParty }}</td>
+                                        <td class="text-end pe-0">{{ totalGrossOur }}</td>
+                                        <td class="text-end pe-0">{{ totalTareOur }}</td>
+                                        <td class="text-end pe-0">{{ totalNetOur }}</td>
+                                        <td class="text-end pe-0">{{ totalAvg }}</td>
+                                        <td class="text-end pe-0">{{ totalDiff }}</td>
+                                        <td class="text-end pe-0">{{ totalBags }}</td>
+                                        <td class="text-end pe-0">{{ totalLab }}</td>
+                                        <td class="text-end pe-0">{{ totalOth }}</td>
+                                        <td class="text-end pe-0">{{ totalParty }}</td>
+                                        <td class="text-end pe-0">{{ totalOur }}</td>
+                                        <td class="text-end pe-0">{{ totalTaken }}</td>
+                                        <td class="text-end pe-0">{{ totalFreight }}</td>
+                                        <td class="text-end" colspan="3"></td>
+                                        <td class="text-end pe-0">{{ totalRcv }}</td>
+                                        <td class="text-end pe-0">{{ totalRej }}</td>
+                                        <td class="text-end pe-0">{{ totalAcp }}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

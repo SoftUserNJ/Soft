@@ -1,0 +1,9 @@
+.bold-placeholder ::ng-deep .ng-placeholder {
+    color: black !important;
+  }
+  
+
+  .HighLightRow{
+    background-color: #dee2e6 !important;
+    background: #dee2e6 !important;
+  }

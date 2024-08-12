@@ -1,0 +1,381 @@
+﻿@{
+     
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Microsoft.AspNetCore.Mvc.Localization;
+
+
+
+@using Newtonsoft.Json.Linq;
+@model IEnumerable<MediaOutDoor.Models.TblSlider>
+
+@inject IViewLocalizer Localizer
+
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="hero__slider owl-carousel">
+
+        @foreach (var slider in Model)
+        {
+            JObject jsonStyling = new JObject();
+
+            if (!string.IsNullOrEmpty(slider.HtmlStyling))
+            {
+                jsonStyling = JObject.Parse(slider.HtmlStyling);
+            }
+
+            <div class="hero__items set-bg" data-setbg="@slider.Image">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-7 col-md-8">
+                            <div class="hero__text">
+                                <h2 id="hero1txt" style="color: @(jsonStyling["headingcolor"] ?? "#fff");"> @slider.Heading   </h2>
+                                <p style="font-weight:600; color: @(jsonStyling["textcolor"] ?? "#fff");">
+                                    @slider.Text
+                                </p>
+                                <a href="#mapSection" class="primary-btn">@Localizer["BookNow"] <span class="arrow_right"></span></a>
+                                <div class="hero__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</section>
+<!-- Hero Section End -->
+<section class="contact spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 text-center contact">
+                <div class="contact__widget">
+                    <img src="~/img/icon/clients.png" style=" height: 50px; margin-bottom: 10px;" />
+                    <h2 style=" font-weight: 600; ">102</h2>
+                    <h6 style="font-family: 'Montserrat'; letter-spacing: 2px;">
+                        @Localizer["OurClients"]
+                    </h6>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+                <div class="contact__widget">
+                    <img src="~/img/icon/station.png" style=" height: 50px; margin-bottom: 10px;" />
+                    <h2 style=" font-weight: 600; ">30</h2>
+                    <h6 style="font-family: 'Montserrat'; letter-spacing: 2px;">
+                        @Localizer["TotalStations"]
+                    </h6>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+                <div class="contact__widget">
+                    <img src="~/img/icon/locations.png" style=" height: 50px; margin-bottom: 10px;" />
+                    <h2 style=" font-weight: 600; ">102</h2>
+                    <h6 style="font-family: 'Montserrat'; letter-spacing: 2px;">
+                        @Localizer["TotalLocations"]
+                    </h6>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+                <div class="contact__widget">
+                    <img src="~/img/icon/Happy.png" style=" height: 50px; margin-bottom: 10px;" />
+                    <h2 style=" font-weight: 600; ">98 %</h2>
+                    <h6 style="font-family: 'Montserrat'; letter-spacing: 2px;">
+                        @Localizer["HappyCustomer"]
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner Section Begin -->
+<section class="testimonial">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__text">
+                    <p>
+                        @Localizer["ThisIsTheOpportunity"]
+                        @*This is the opportunity to promote your company in Amsterdam and the surrounding area. With
+                        screen advertisements that draw very targeted attention to your company, your store or whatever
+                        service you provide. Also suitable for events, sports competitions, festivals. For less than €50
+                        per hour you are visible 100 times per hour for 6 seconds. You determine the time and number of
+                        hours that your campaign is visible.*@
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__pic set-bg" data-setbg="img/banner/SttionBilboard-.png"
+                     style="background-image: url(&quot;img/banner/SttionBilboard-.png&quot;);"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner Section End -->
+<!-- Product Section Begin -->
+<div class="col-lg-12">
+    <div class="section-title">
+        @*<span>STATIONS</span>*@
+        <h2>@Localizer["SELECTYOURSTATION"]</h2>
+    </div>
+</div>
+<!-- Map -->
+
+<section id="mapSection" class="map">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2.5 p-0 responsive">
+                <div id="searchMap" style="height:100%; background-color:#393a55; border-radius:15px; margin-right:10px;">
+                    <h3 style="padding:45px;font-family: 'Montserrat';font-size: 27px;">@Localizer["SearchStations"]</h3>
+                    <div style=" padding-left: 20px; padding-right: 10px; "> <div class="input-group"> <div class="form-outline"> <input type="search" id="searchMapsBtn" class="form-control"> </div> <button style=" margin-left: 4px; " type="button" class="btn btn-primary"> <i class="fas fa-search"></i> </button> </div> </div>
+                    <div style="padding:30px;" id="SearchMapLocations">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 p-0"><div id="map"></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- SideBar -->
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <center>
+        <h4>Order Overview</h4>
+        <h4 style="padding: 0px 0px 0px 0px;margin-bottom: 20px;">___________________</h4>
+    </center>
+    <div id="sideBarBody" style="height:320px; overflow-y:scroll;">
+    </div>
+    <div id="sidebarFooter">
+    </div>
+    <div style="padding-left: 12px; padding-bottom:10px; position:absolute;bottom:0">
+        <button type="button" class="btn btn-info" onclick="navigateToDesign()" style="padding-left: 20px;padding-right: 20px;font-size:14px" id="designButton">Proceed To Design</button>
+        <button type="button" class="btn btn-info" onclick="navigateToDesignMV()" style="padding-left: 20px;padding-right: 20px;font-size:14px;" id="designButtonMV">Proceed To Design</button>
+        <button type="button" onclick="navigateToCart()" class="btn btn-success" style="margin-left:10px;"><img src="~/img/icon/cart.png" /></button>
+        
+    </div>
+
+
+</div>
+
+
+<!-- Product Section End -->
+<!-- Categories Section Begin -->
+<section class="categories spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="categories__text" style="color:black">
+                    <h2>
+                        @Localizer["AnExceptionallyGood"]
+                        @*An exceptionally good price-quality guarantee <br /><br /> <span>
+                            Competitive prices for
+                            (long-running) campaigns
+                        </span> <br /><br /> Extremely suitable for the business market*@
+                    </h2>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="categories__hot__deal">
+                    <img src="img/banner/billboard.png" style="height:400px;border-radius:16px" alt="">
+                    <div class="hot__deal__sticker">
+                        <span>@Localizer["SaleOf"]</span>
+                        <h5 id="billboardamount">€50.00</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 offset-lg-1">
+                <div class="categories__deal__countdown">
+                    <span>@Localizer["GROWYOURBUSINESS"]</span>
+                    <h2>
+                        @Localizer["AtTheMostVisitedPlaces"]
+
+                       @* At the most visited places in Amsterdam, the metro stations, our screen advertisements are
+                        visible 100 times per hour for 6 seconds. That's purposeful screen communication. Choose the
+                        station (or several stations) where you expect your target group and where your message comes
+                        across crystal clear*@
+                        
+                    </h2>
+                    <a href="#mapSection" style="margin-top:70px" class="primary-btn">@Localizer["BookNow"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+<!-- Instagram Section Begin -->
+<div class="container" style="margin-top: 100px;margin-bottom:100px;">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 text-center">
+            <div class="about__item">
+                <h4>@Localizer["WhoWeAre"]</h4>
+                <p>
+                    @Localizer["WhoWeAreContent"]
+                    @*Media Outdoor is a media company with experienced professionals in marketing, outdoor media and
+                    communication.*@
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 text-center">
+            <div class="about__item">
+                <h4>@Localizer["WhatWeDo"]</h4>
+                <p>
+                    @Localizer["WhatWeDoContent"]
+                    @*The head office is located in Amsterdam. They advise and support in the field of screen advertising
+                    in all Amsterdam metro stations.*@
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 text-center">
+            <div class="about__item">
+                <h4>@Localizer["WhyChooseUs"]</h4>
+                <p>
+                    @Localizer["WhyChooseUsContent"]
+                    
+                    @*Choose one close by or go for more stations if you want to reach a larger part of Amsterdam. Need
+                    help? We are happy to assist you with advice.*@
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Instagram Section End -->
+<section class="testimonial">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__text">
+                    <span class="icon_quotations"></span>
+                    <p>
+                        @Localizer["ForAnyoneWhoWants"]
+                    </p>
+                    <div class="testimonial__author">
+                        <div class="testimonial__author__pic">
+                            <img src="img/favicon.png" alt="">
+                        </div>
+                        <div class="testimonial__author__text">
+                            <h5>Media Outdoor</h5>
+                            <p>@Localizer["DynamicMediaCompany"]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__pic set-bg" data-setbg="img/banner/TestimonialMetro.png"
+                     style="background-image: url(&quot;img/banner/TestimonialMetro.png&quot;);"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonial">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__text">
+                    <span class="icon_quotations"></span>
+                    <h3 style="color:black;">
+                        Download Our Mobile App
+                    </h3>
+                    <p>
+                        Download Our Free Mobile App For IPhone And Android
+                    </p>
+                    <div class="testimonial__author">
+                        <div class="testimonial__author__pic">
+                            <img style=" height: 62px;border-radius:0px;width:178px; " src="img/icon/app.png" alt="">
+                            <img style=" height: 60px;border-radius:0px;width:180px; " src="img/icon/play.png" alt="">
+                        </div>
+                        <div class="testimonial__author__text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__pic set-bg" data-setbg="img/banner/mobile.png"
+                     style="background-image: url(&quot;img/banner/TestimonialMetro.png&quot;);"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Latest Blog Section Begin -->
+<section class="latest spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    @*<span>Screen Sizes</span>*@
+                    <h2>@Localizer["ScreenSizeSpecifications"]</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic set-bg" data-setbg="img/banner/Single.jpg"></div>
+                    <div class="blog__item__text">
+                        <span><img src="img/icon/calendar.png" alt=""> Shelter single wxh 1080 x 1920 </span>
+                        <h5>@Localizer["SingleScreen"]</h5>
+                        <a href="#">@Localizer["ShowMore"]</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic set-bg" data-setbg="img/banner/Triple.jpg"></div>
+                    <div class="blog__item__text">
+                        <span><img src="img/icon/calendar.png" alt=""> Triple wxh 3240 x 1920 </span>
+                        <h5>@Localizer["DoubleScreen"]</h5>
+                        <a href="#">@Localizer["ShowMore"]</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic set-bg" data-setbg="img/banner/Triple.jpg"></div>
+                    <div class="blog__item__text">
+                        <span><img src="img/icon/calendar.png" alt=""> Triple wxh 3240 x 1920 </span>
+                        <h5>@Localizer["TripleScreen"]</h5>
+                        <a href="#">@Localizer["ShowMore"]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--App -->
+
+<!--Modal-->
+<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header" id="modalHead">
+                <center>
+                    <h3>Select Your Screens</h3>
+                </center><button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="stationPopup" style="height: 450px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Cart Button-->
+<a onclick="openNav()" class="float" title="Click to Open Your Cart" style=" position: fixed; width: 60px; height:60px; bottom: 40px; right: 40px; cursor:pointer; background-color: #152a25; color:#FFF; border-radius:50px; text-align:center; box-shadow: 0px 2px 3px #999; ">
+    <img src="img/icon/cart1.png" alt="" style=" margin-top: 18px; height: 25px; width: 28px;">
+</a>
+<!--Cart Button-->
+
+@section scripts{
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkm76bzi-jCEicB-wsTV7DqxfJrR478tM&callback=loadProducts"></script>
+}

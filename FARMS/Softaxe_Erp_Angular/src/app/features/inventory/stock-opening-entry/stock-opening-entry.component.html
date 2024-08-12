@@ -1,0 +1,216 @@
+<div class="content">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4 class="newcolor">Stock Opening</h4>
+      <h6 class="newcolor">Manage your Stock</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Stock Opening', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Stock Opening', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card ">
+    <div class="card-body ">
+      <div class="d-flex justify-content-between mb-1">
+        <div class="d-flex align-items-center">
+          <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+          <input type="search" class="form-control" placeholder="Search" (input)="onInputSearch($event)" />
+        </div>
+        <div class="d-flex">
+          <div class="add-new me-2 px-2" (click)="onViewReport()">
+            <img src="/assets/img/icons/printer.svg" alt="img" />
+          </div>
+          <div class="add-new" (click)="onClickRefresh()" data-bs-toggle="modal" data-bs-target="#productModal">
+            <img src="/assets/img/icons/plus.svg" alt="img" />Add New
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="table-top table-topm mb-2">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="assets/img/icons/filter.svg" alt="img">
+              <span><img src="assets/img/icons/closes.svg" alt="img"></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <input (input)="onInputSearch($event)" type="search" placeholder="Search ...." id="txtSearch">
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 ps-0">
+          <div class="wordset d-flex align-items-center">
+            <p class="btn btn-addednew mb-0 ms-0" (click)="onViewReport()">
+              <img src="/assets/img/icons/printer.svg" alt="img" style="width: 24px;">
+            </p>
+            <p class="btn-addednew btnAdd" data-bs-toggle="modal" data-bs-target="#productModal"
+              (click)="onClickRefresh()">
+              <img src="/assets/img/icons/plus.svg" alt="img" class="me-1">Add New
+            </p>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="table-responsive" style="height:360px;">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th class="text-center w-0">Sno</th>
+              <th style="width: 20%;">Product Name</th>
+              <th>Des</th>
+              <th>Category</th>
+              <th>Brand </th>
+              <th class="text-end">Qty </th>
+              <th></th>
+              <th class="text-end">Rate</th>
+              <th class="text-end">Amount</th>
+              <th class="text-center">Location </th>
+              <th class="text-center">Expiry</th>
+              <th class="text-center w-0 noPrint">Actions</th>
+            </tr>
+          </thead>
+          <tbody #stockOpenLists>
+            <tr *ngFor="let item of stockOpenList let i = index">
+              <td class="text-center w-2">{{ i + 1 }}</td>
+              <td class="limited-text prodName" title="{{item.PRODUCTNAME}}">{{item.PRODUCTNAME}}</td>
+              <td class="limited-text desc" title="{{item.DESCRIPTION}}">{{item.DESCRIPTION}}</td>
+              <td class="limited-text cate" title="{{item.CATEGORY}}">{{item.CATEGORY}}</td>
+              <td class="limited-text brand" title="{{item.BRAND}}">{{item.BRAND}}</td>
+              <td class="limited-text text-end qty" title="{{item.QTY}}">{{item.QTY}}</td>
+              <td class="limited-text text-end qty" title="{{item.UOMNAME}}">{{item.UOMNAME}}</td>
+              <td class="limited-text text-end rate" title="{{item.RATE}}">{{item.RATE | number: "1.2-2"}}</td>
+              <td class="limited-text text-end amount" title="{{item.AMOUNT}}">{{item.AMOUNT | number: "1.2-2"}}</td>
+              <td class="limited-text text-center loc" title="{{item.LOCATION}}">{{item.LOCATION}}</td>
+              <td class="limited-text text-center exp" title="{{item.EXPIRYDATE}}">{{item.EXPIRYDATE}}</td>
+              <td class="text-center noPrint">
+                <span (click)="editStock(item)" class="me-3" style="cursor: pointer;">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span (click)="deleteStock(item)" class="confirm-text" style="cursor: pointer;">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot style="border-top: 0px;" id="grdEnd">
+            <tr>
+              <td class="text-end" colspan="8">Total = </td>
+              <td class="text-end">{{totalAmount | number: "1.2-2"}}</td>
+              <td class="text-end"></td>
+              <td class="text-end"></td>
+              <td class="text-end"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Popup -->
+
+<div class="modal fade ProductStock" id="productModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2  align-items-center text-center">
+        <h5 class="modal-title">Stock Opening
+        </h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-1">
+          <div class="card-body" style="padding: 8px;">
+            <form action="" [formGroup]="stockOpenForm" (ngSubmit)="onSubmit()" [ngClass]="{ 'disabled': isDisabled }">
+              <div class="form-group">
+                <input type="text" class="form-control" (input)="onSearchProduct($event)"
+                  formControlName="searchProduct" placeholder="Search Product">
+              </div>
+              <div class="mb-2">
+                <label class="fw-bolder">Product</label>
+                <ng-select placeholder="---Select Product ---" [items]="productList" formControlName="productId"
+                  bindValue="code" bindLabel="name" (change)="onChangeProduct($event)" [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Rate</label>
+                <input type="number" (input)="onInputStock()" class="form-control" formControlName="rate">
+              </div>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div>
+                    <label class="fw-bolder mb-1">UOM</label>
+                    <ng-select placeholder="--Select UOM--" [items]="uomList" formControlName="uomId" bindLabel="UOM"
+                      bindValue="UOMID" (change)="onChangeUom($event)" [dropdownPosition]="'bottom'">
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="form-group">
+                    <label class="form-label">OP-Stock</label>
+                    <input type="number" (input)="onInputStock()" formControlName="stock" min="0" class="form-control">
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="form-group">
+                    <label class="form-label">Closing Stock </label>
+                    <input type="text" class="form-control" formControlName="closingStock">
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="form-group">
+                    <label class="form-label">Amount</label>
+                    <input type="number" formControlName="amount" class="form-control">
+                  </div>
+                </div>
+                <div class="col-lg-{{costCenter == 'true' ? '6' : '12'}} col-md-6 col-sm-12">
+                  <div class="mb-2">
+                    <label class="fw-bolder">Location</label>
+                    <ng-select placeholder="--- Select Product" formControlName="locationId" [items]="locationList"
+                      bindLabel="name" bindValue="id" [dropdownPosition]="'bottom'">
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-2" *ngIf="costCenter == 'true'">
+                    <label class="form-label">Job No</label>
+                    <ng-select placeholder="--- Select Product" formControlName="jobNo" [items]="JobList"
+                      bindLabel="NAME" bindValue="ID" [dropdownPosition]="'bottom'">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group mb-0">
+                <label class="form-label">Expiry</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                  formControlName="expiryDate"  (click)="datepicker.open()" />
+                  <mat-datepicker #datepicker></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="mt-3">
+              <button class="btn btn-primary btn-sm me-1" *ngIf="!isNewClick" (click)="onClickNew()">New</button>
+              <button *ngIf="isNewClick" class="btn btn-success btn-sm  me-1" (click)="onSubmit()">Save</button>
+              <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">Refresh</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

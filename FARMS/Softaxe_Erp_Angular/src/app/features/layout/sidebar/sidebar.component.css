@@ -1,0 +1,17 @@
+.sidebar a{
+    text-decoration: none;
+}
+
+.ml-20 {
+    margin-left: 20px;
+}
+
+.mainmenu {
+    float: right;
+}
+
+
+/* .submenu li a{
+    font-size: 10px !important;
+    font-weight: bold;
+} */

@@ -1,0 +1,461 @@
+<div class="sidebar" id="sidebar" [ngClass]="{'show': sidebarVisible}" *ngIf="sharedService.showHeaderSidebar">
+  <div class="sidebar-inner slimscroll">
+    <div id="sidebar-menu" class="sidebar-menu">
+      <ul class="p-0">
+        <li class="active">
+          <a routerLink="/dashboard"><img src="assets/img/icons/dashboard.svg" alt="img"><span>Dashboard</span> </a>
+        </li>
+        <li class="submenu justadmin" *ngIf="superAdmin == 'true'">
+          <a href="javascript:void(0);"><img src="assets/img/icons/product.svg" alt="img"><span> Admin </span><span
+              class="menu-arrow"></span></a>
+          <ul>
+            <li><a routerLink="company-group">Company Group </a></li>
+            <li><a routerLink="company">Company</a></li>
+            <li><a routerLink="location">Location </a></li>
+          </ul>
+        </li>
+
+        <!-- ACCOUNTS -->
+        <li class="submenu securityLi">
+          <a href="javascript:void(0);"><img src="assets/img/icons/users1.svg" alt="img"><span> Accounts </span><span
+              class="menu-arrow"></span></a>
+          <ul>
+            <li id="1" *ngIf="distributionPos != 'ERP'"><a routerLink="chart-of-account">Chart Of Account</a></li>
+            <li id="1002" *ngIf="distributionPos == 'ERP' && locId == 'HO'"><a routerLink="chart-of-account-erp">Chart Of Account</a></li>
+            <li id="2" *ngIf="distributionPos == 'ERP' && locId == 'HO'"><a routerLink="jv-opening">Accounts Opening </a></li>
+            <!-- <li id="3" *ngIf="costCenter == 'false'"><a routerLink="accounts-opening">Accounts Opening </a></li> -->
+            <li id="4"><a routerLink="accounts-payment" [queryParams]="{tag: 'Account'}">Payment</a></li>
+            <li id="5"><a routerLink="accounts-receipts" [queryParams]="{tag: 'Account'}">Receipts</a></li>
+            <li id="6"><a routerLink="journal-voucher">Journal Voucher</a></li>
+            <li id="7"><a routerLink="recipts-payment-status">Recipts/Payments Status</a></li>
+            <li id="8"><a routerLink="cash-flow">Cash Flow</a></li>
+            <li id="9"><a routerLink="account-ledger">Accounts Ledger</a></li>
+            <li id="10" *ngIf="distributionPos == 'ERP' && locId == 'HO'"><a routerLink="balance-Sheet">Balance Sheet</a></li>
+            <li id="11" *ngIf="distributionPos == 'ERP' && locId == 'HO'"><a routerLink="trial-balance">Trial Balance</a></li>
+            <li id="12" *ngIf="isApproval == 'true'"><a routerLink="approval">Approval</a></li>
+            <li id="13" *ngIf="isApproval == 'true' && distributionPos == 'ERP' && locId == 'HO'"><a routerLink="verification">Verification</a></li>
+            <li id="14" *ngIf="isApproval == 'true' && distributionPos == 'ERP' && locId == 'HO'"><a routerLink="audit">Audit</a></li>
+            <li id="15" *ngIf="isApproval == 'true' && distributionPos == 'ERP' && locId == 'HO'"><a routerLink="vch-type-setting">VchType Setting</a></li>
+            <li id="16" *ngIf="distributionPos == 'ERP' && locId == 'HO'"><a routerLink="profit-and-loss-comparison">Profit & Loss Comparison</a></li>
+            <li id="17"><a routerLink="day-book">Day Book</a></li>
+            <li id="18" *ngIf="costCenter == 'true'"><a routerLink="exp-order">Expense Order</a></li>
+            <li id="19"><a routerLink="print-voucher-range-wise">Print Vch Range Wise</a></li>
+            <li id="191" [ngClass]="(distributionPos == 'ERP' && locId != 'HO') ? '' : 'd-none'" >
+              <a>Freight Vouchers <i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li class="ml-20" id="20"><a routerLink="freight-payments">Payment</a></li>
+                <li class="ml-20" id="21"><a>Check List</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <!-- APPROVALS -->
+        <li class="submenu securityLi">
+          <a href="javascript:void(0);"><img src="assets/img/icons/quotation1.svg" alt="img"><span> Approvals </span><span class="menu-arrow"></span></a>
+          <ul>
+            <li id="22" [ngClass]="(distributionPos == 'ERP' && locId != 'HO') ? '' : 'd-none'"><a routerLink="gate-pass-inward-approval">Stock Inward</a></li>
+            <li id="23" *ngIf="distributionPos == 'ERP' && locId == 'HO'"><a routerLink="purchase-order-approval">Approve (Purchase Orders)</a></li>
+            <li id="224252" *ngIf="distributionPos == 'ERP' && locId == 'HO'"><a routerLink="maize-rate-approval">Approve (Maize Rate)</a></li>
+            <li id="42523531"><a routerLink="party-terms-condition-approval">Party Terms/Conditons</a></li>
+            <li id="454226"><a routerLink="do-approval">D.O Approval</a></li>
+          </ul>
+        </li>
+
+        <!-- INVENTORY -->
+        <li class="submenu securityLi">
+          <a href="javascript:void(0);"><img src="assets/img/icons/quotation1.svg" alt="img"><span> Inventory
+            </span><span class="menu-arrow"></span></a>
+          <ul>
+            <li id="24" *ngIf="distributionPos == 'ERP' && locId == 'HO'"><a routerLink="wearhouse">Warehouse</a></li>
+            <li id="252" *ngIf="distributionPos == 'ERP' && locId == 'HO'"><a routerLink="products-erp">Products</a></li>
+            <li id="25" *ngIf="distributionPos != 'ERP'"><a routerLink="products">Products</a></li>
+            <li id="26" *ngIf="distributionPos != 'ERP'"><a routerLink="change-category">Change Category</a></li>
+            <li id="27" *ngIf="distributionPos != 'ERP'"><a routerLink="products-rate-update">Product Rate Update</a></li>
+            <li id="28"><a routerLink="stock-opening-entry">Stock Opening Entry</a></li>
+            <li id="29"><a routerLink="stock-debit-note">Stock Debit Note</a></li>
+            <li id="30"><a routerLink="stock-credit-note">Stock Credit Note</a></li>
+            <li id="31"><a routerLink="stock-transfer">Transfer</a></li>
+            <li id="32" *ngIf="costCenter == 'true' && locId != 'HO'"><a routerLink="sale-invoice" [queryParams]="{tag: 'GetCostCodes'}">Consume</a></li>
+            <li id="33"><a routerLink="stock-status">Stock Status</a></li>
+            <li id="34"><a routerLink="product-ledger">Product Ledger</a></li>
+            <li id="35"><a routerLink="inventory-list">Inventory List</a></li>
+            <li id="36"><a routerLink="product-rate-comparison">Product Rate Comparison</a></li>
+            <li id="37"><a routerLink="purchase-rate-comparison">Purchase Rate Comparison</a></li>
+            <li id="37"><a routerLink="material-consumption">Material Consumption</a></li>
+          </ul>
+        </li>
+
+        <!-- PRODUCTION -->
+        <li class="submenu securityLi" *ngIf="costCenter == 'true'">
+          <a href="javascript:void(0);"><img src="assets/img/icons/quotation1.svg" alt="img"><span> Production
+            </span><span class="menu-arrow"></span></a>
+          <ul>
+            <li id="318"><a routerLink="finished-goods-production">Finished Goods Production</a></li>
+            <li id="38"><a routerLink="job-update">Job Update</a></li>
+            <li id="39"><a routerLink="flock-detail-report">Flock Detail Report</a></li>
+          </ul>
+        </li>
+
+        <!-- GENERAL STORE MODULE -->
+        <li class="submenu d-none">
+          <a href="javascript:void(0);"><img src="assets/img/icons/quotation1.svg" alt="img"><span> General Store Module
+            </span><span class="menu-arrow"></span></a>
+          <ul>
+            <li><a>Product Groups</a></li>
+            <li><a routerLink="department-entry">Department Entry</a></li>
+            <li><a routerLink="sub-department-entry">Sub Department Entry</a></li>
+            <li><a>Products Entry</a></li>
+            <li><a>Products List</a></li>
+            <li><a>Parties Entry Form</a></li>
+            <li class=""><a>Requisitions<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li class="ml-20"><a routerLink="requisitions-entry">Entry</a></li>
+                <li class="ml-20"><a>Approval</a></li>
+                <li class="ml-20"><a>Status</a></li>
+              </ul>
+            </li>
+            <li class=""><a>Demand<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li class="ml-20"><a routerLink="demand-entry">Entry</a></li>
+                <li class="ml-20"><a>Approval</a></li>
+                <li class="ml-20"><a>Status</a></li>
+              </ul>
+            </li>
+            <li class=""><a>Material Receive<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li class="ml-20"><a routerLink="material-receive-entry">Entry Receive Against Demmad</a></li>
+                <li class="ml-20"><a>Approval</a></li>
+                <li class="ml-20"><a>Entry Receive Repir</a></li>
+                <li class="ml-20"><a>Repair StatusReport</a></li>
+                <li class="ml-20"><a routerLink="material-received-in-store">Received In Store</a></li>
+                <li class="ml-20"><a>Verify</a></li>
+              </ul>
+            </li>
+            <li><a>Purchase Report</a></li>
+            <li class=""><a>Material Issuance<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li class="ml-20"><a>Entry</a></li>
+                <li class="ml-20"><a>Consumption Report (Expense)</a></li>
+                <li class="ml-20"><a>Consumption Report (Other)</a></li>
+                <li class="ml-20"><a>Consumption Detail Report</a></li>
+              </ul>
+            </li>
+            <li><a>Inventory list</a></li>
+            <li><a>Store Ledger</a></li>
+            <li><a>Store Status - Form</a></li>
+            <li><a>Openings Entry Form</a></li>
+            <li><a routerLink="gate-pass-inward-report">Gate Pass Inward Report</a></li>
+            <li><a>Gate Pass Outward Report</a></li>
+            <li class=""><a>Return From Departments<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li class="ml-20"><a>Entry</a></li>
+                <li class="ml-20"><a>Report</a></li>
+              </ul>
+            </li>
+            <li><a>Consumption</a></li>
+          </ul>
+        </li>
+
+        <!-- PURCHASE -->
+        <li class="submenu securityLi">
+          <a href="javascript:void(0);"><img src="assets/img/icons/purchase1.svg" alt="img"><span> Purchase </span><span
+              class="menu-arrow"></span></a>
+          <ul>
+            <li id="40" *ngIf="distributionPos == 'ERP' && locId == 'HO'"><a routerLink="supplier-bio-data">Supplier's BioData</a></li>
+            <li id="41" [ngClass]="(locId == 'HO' && distributionPos == 'ERP') ? '' : 'd-none'" class=""><a>Purchase Orders<i class=" mainmenu"></i></a>
+              <ul>
+                <li id="42" class="ml-20"><a routerLink="purchase-contract-form">P.O Entry</a></li>
+                <li id="43" class="ml-20"><a routerLink="purchase-contract-report">P.O Report</a></li>
+                <li id="44" class="ml-20"><a routerLink="purchase-contract-range-wise-report">Printing Range Wise</a></li>
+                <li id="45" class="ml-20"><a>P.O View</a></li>
+              </ul>
+            </li>
+            <!-- <li [ngClass]="(locId != 'HO' && distributionPos == 'ERP') ? '' : 'd-none'"  class="" id="46"><a>Factory Wrok<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul> -->
+                <li [ngClass]="(locId != 'HO' && distributionPos == 'ERP') ? '' : 'd-none'" class="" id="48"><a routerLink="purchase-gate-pass-inward-entry">Stock Inward</a></li>
+                <li [ngClass]="(locId != 'HO' && distributionPos == 'ERP') ? '' : 'd-none'"  class="" id="50"><a>Purchase Correction<i class="fa-solid fa-angle-down mainmenu"></i></a>
+                  <ul>
+                    <li class="ml-20" id="51"><a routerLink="purchase-correction-form">Raw Material</a></li>
+                  </ul>
+                </li>
+              <!-- </ul>
+            </li> -->
+            <li [ngClass]="(locId != 'HO' && distributionPos == 'ERP') ? '' : 'd-none'" class="" id="53"><a>Lab System<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li class="ml-20" id="54"><a>Lab Entry<i class="fa-solid fa-angle-down mainmenu"></i></a>
+                  <ul>
+                    <li class="ml-20" id="55"><a routerLink="lab-test-entry">First Lab Test</a></li>
+                    <li class="ml-20" id="56"><a routerLink="lab-test-result-entry">Final Lab Test</a>
+                    </li>
+                    <li class="ml-20" id="57"><a>Lab (Commercial)</a></li>
+                    <li class="ml-20" id="58"><a> Lab Test (Feed) </a></li>
+                  </ul>
+                </li>
+
+                <li class="ml-20" id="59"><a>Lab Results Report</a></li>
+                <li class="ml-20" id="60"><a routerLink="lab-test-type-entry">Lab Type - Entry</a></li>
+              </ul>
+            </li>
+            <li [ngClass]="(locId == 'HO' && distributionPos == 'ERP') ? '' : 'd-none'" class="" id="61"><a>Purchase Working Form<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li class="ml-20" id="62"><a routerLink="purchase-working-form">Purchase</a></li>
+              </ul>
+            </li>
+            <li *ngIf="distributionPos == 'ERP' && locId == 'HO'" id="64"><a routerLink="purchase-invoice">Purchase Invoice</a></li>
+            <li *ngIf="distributionPos == 'ERP' && locId == 'HO'" id="65"><a routerLink="purchase-bill-due-status">Bill Due Status</a></li>
+            <li id="66"><a routerLink="accounts-payment" [queryParams]="{tag: 'Supplier'}">Payment</a></li>
+            <li id="67"><a routerLink="accounts-receipts" [queryParams]="{tag: 'Supplier'}">Recipts</a></li>
+            <li *ngIf="distributionPos == 'ERP' && locId == 'HO'" id="68"><a routerLink="purchase-post-dated-cheque">Post Dated Cheque</a></li>
+            <li *ngIf="distributionPos == 'ERP' && locId == 'HO'" id="69"><a routerLink="supplier-ledger">Supplier Leadger</a></li>
+            <li *ngIf="distributionPos == 'ERP' && locId == 'HO'" id="70"><a routerLink="purchase-party-balance-status">Party Balances Status</a></li>
+            <li *ngIf="distributionPos == 'ERP' && locId == 'HO'" id="71"><a routerLink="purchase-payable-aging">Payable Aging</a></li>
+            <li *ngIf="distributionPos == 'ERP' && locId == 'HO'" id="72"><a routerLink="purchase-print-invoice-range-wise">Print Invoice Range Wise</a></li>
+            <li *ngIf="distributionPos == 'ERP' && locId == 'HO'" id="7288"><a routerLink="maize-rate">Maize Rate - Entry</a></li>
+            <li  *ngIf="distributionPos == 'ERP'" id="5251"><a routerLink="material-receiving-report">Material Receiving Report</a></li>
+          </ul>
+        </li>
+
+        <!-- SALE -->
+        <li class="submenu securityLi">
+          <a href="javascript:void(0);"><img src="assets/img/icons/expense1.svg" alt="img"><span> Sales </span><span
+              class="menu-arrow"></span></a>
+          <ul>
+            <li id="73"><a routerLink="customer-bio-data">Customer's BioData</a></li>
+            <li id="74" *ngIf="costCenter == 'true'"><a routerLink="cost-centre">Cost Centre</a></li>
+            <li id="75" *ngIf="costCenter == 'true'"><a routerLink="cost-centre-status">Cost Centre Status</a></li>
+            <li id="76"><a routerLink="customer-updation">Customer Updation</a></li>
+            <!-- <li id="m42"><a routerLink="avail-service">Avail Service</a></li>
+            <li id="m43"><a routerLink="service">Service</a></li> -->
+            <li id="77" *ngIf="mobApp != 'Regular'"><a routerLink="sale-area-updation">Sale Area Updation</a></li>
+            <li id="78" *ngIf="mobApp != 'Regular'"><a routerLink="ot-live-activity">Order Taker's Live Activity</a>
+            </li>
+            <li id="79" *ngIf="mobApp != 'Regular'"><a routerLink="sale-by-order">Sales (By Order)</a></li>
+            <li id="80" *ngIf="mobApp != 'Regular'"><a routerLink="order-position">Order Position</a></li>
+            <li id="81"><a routerLink="delivery-order" >Sales</a></li>
+            <li id="82"><a routerLink="sale-bill-due-status">Bill Due Status</a></li>
+            <li id="83"><a routerLink="job-wise-due-status">Job Wise Due Status</a></li>
+            <li id="84"><a routerLink="accounts-receipts" [queryParams]="{tag: 'Customer'}">Recipts</a></li>
+            <li id="85"><a routerLink="accounts-payment" [queryParams]="{tag: 'Customer'}">Payment</a></li>
+            <li id="86"><a routerLink="sale-post-dated-cheque">Post Dated Cheque</a></li>
+            <li id="87"><a routerLink="customer-ledger">Customer Leadger</a></li>
+            <li id="88"><a routerLink="parties-tax-deduction">Party Tax Deduction</a></li>
+            <li id="89"><a routerLink="sale-party-balance-status">Party Balances Status</a></li>
+            <li id="90"><a routerLink="customer-receivable-aging">Receivable Aging</a></li>
+            <li id="91"><a routerLink="product-wise-sale">Product Wise Sale</a></li>
+            <li id="92"><a routerLink="product-sale-issue">Product Sale/Issue</a></li>
+            <li id="93"><a routerLink="flock-exp-report">Flock Expense Report</a></li>
+            <li id="931"><a routerLink="gate-pass-out-ward">Gate Pass Out Ward</a></li>
+            <li id="94" *ngIf="mobApp != 'Regular'"><a routerLink="sale-margin-status">Sales Margin Status</a></li>
+            <li id="95" *ngIf="mobApp != 'Regular'"><a routerLink="salesman-comission">Salesmen Commission</a></li>
+            <li id="96" *ngIf="mobApp != 'Regular'"><a routerLink="order-taker-comission">Order Taker Commission</a></li>
+            <li id="97"><a routerLink="sale-print-invoice-range-wise">Print Invoice Range Wise</a></li>
+            <li id="94"><a routerLink="party-terms-and-conditions">Party Terms / Conditions</a></li>
+            <li id="991"><a routerLink="sale-gate-pass-out">Out Ward</a></li>
+            <li id="992"><a routerLink="finished-goods-entry">DO Sale</a></li>
+            <li id="993"><a routerLink="sale-booking-entry">Sale Booking</a></li>
+            <li id="994"><a routerLink="products-wise-sale-report">Product Sale Rpt</a></li>
+            <li id="995"><a routerLink="daily-freight-report">Daily Freight Rpt</a></li>
+            <li id="996"><a routerLink="daily-sale-activity-report">Daily Sale Rpt</a></li>
+            <li id="997"><a routerLink="print-booking-report">Print Booking Rpt</a></li>
+            <li id="998"><a routerLink="sale-person-wise-sale-report">Sale Person Sale Rpt</a></li>
+          
+          </ul>
+        </li>
+
+        <!-- WEIGHBRIDGE -->
+        <li class="submenu securityLi" [ngClass]="(distributionPos == 'ERP' && locId != 'HO') ? '' : 'd-none'">
+          <a href="javascript:void(0);"><img src="assets/img/icons/quotation1.svg" alt="img"><span> Weighbridge Module
+            </span><span class="menu-arrow"></span></a>
+          <ul>
+            <li id="199"><a>Inward Weighment<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="200" class="ml-20"><a routerLink="inward-weighment">Raw Material</a></li>
+                <li id="201" class="ml-20"><a>Finished Goods</a></li>
+                <li id="2001" class="ml-20"><a routerLink="daily-arrival-report">Daily Arrival Report</a></li>
+                <!-- <li id="202" class="ml-20"><a>F.G Purchase</a></li> -->
+                <li id="203" class="ml-20"><a routerLink="inward-purchase-status">Live Status</a></li>
+                <!-- <li id="204" class="ml-20"><a>Inward Status - F.G Return</a></li>
+                <li id="2041" class="ml-20"><a routerLink="inward-status-finised-goods">Inward Status - Purchase of F.G</a></li> -->
+              </ul>
+            </li>
+            <li id="205"><a>Outward Weighment<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="206" class="ml-20"><a routerLink="outward-weighment">Finished Goods</a></li>
+                <li id="207" class="ml-20"><a>Raw Material</a></li>
+                <li id="208" class="ml-20"><a routerLink="inward-status-finised-goods">Finished Goods - Status</a></li>
+                <li id="209" class="ml-20"><a>Raw Material - Status</a></li>
+              </ul>
+            </li>
+            <li><a>Slips Re-Printing</a></li>
+            <li id="210"><a>Comercial<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="211" class="ml-20"><a>Weighment</a></li>
+                <li id="212" class="ml-20"><a>Status</a></li>
+              </ul>
+            </li>
+            <li id="213"><a>Miscellaneous<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="214" class="ml-20"><a>Inward Weighment</a></li>
+                <li id="215" class="ml-20"><a>Outward Weighment</a></li>
+                <li id="216" class="ml-20"><a>Inward Status</a></li>
+                <li id="217" class="ml-20"><a>Outward Status</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <!-- PAYROLL -->
+        <li class="submenu securityLi">
+          <a href="javascript:void(0);"><img src="assets/img/icons/payroll.svg" alt="img"><span> Payroll </span> <span
+              class="menu-arrow"></span></a>
+          <ul>
+            <li id="981" class=""><a>File Maintain <i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="98" class="ml-20"><a routerLink="department-form">Department Setup</a>
+                <li id="99" class="ml-20"><a routerLink="designation-form">Designation Setup</a>
+                <li id="100" class="ml-20"><a routerLink="holiday-setup">Holidays Setup</a>
+                <li id="101" class="ml-20"><a routerLink="leave-type-entry">Leaves Setting</a>
+                <li id="102" class="ml-20"><a>TSR Setting <i class="fa-solid fa-angle-down mainmenu"></i></a>
+                  <ul>
+                    <li id="103" class="ml-20"><a routerLink="employee-type">Type Setting</a>
+                    <li id="104" class="ml-20"><a routerLink="shift-entry">Shift Setting</a>
+                    <li id="105" class="ml-20"><a routerLink="salary-reason">Reason Setting</a>
+                  </ul>
+                <li id="106" class="ml-20"><a routerLink="salary-settlement-labels">Salary Setllement Labels</a>
+                <li id="107" class="ml-20"><a routerLink="salary-days">Set Salary Days</a>
+                <li id="108" class="ml-20"><a routerLink="set-months-years">Set Month and Years</a>
+                <li id="109" class="ml-20"><a>Allow Provident Fund and EOBI</a>
+                <li id="110" class="ml-20"><a routerLink="overtime-formula">Overtime Calculation Formula</a>
+              </ul>
+            </li>
+            <li id="111"><a>Employee Information <i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="112" class="ml-20"><a routerLink="employee-entry">Employee Setup</a>
+                <li id="113" class="ml-20"><a routerLink="salary-settlement">Employee Salary</a>
+                <li id="114" class="ml-20"><a routerLink="employee-family">Employee Family Detail</a>
+              </ul>
+            </li>
+            <li id="115"><a>Provident Fund Module<i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="116" class="ml-20"><a routerLink="bank-entry">Bank Entry</a>
+                <li id="117" class="ml-20"><a>Bank Receipt</a>
+                <li id="118" class="ml-20"><a routerLink="provident-fund-deduction">Provident Fund</a>
+                <li id="119" class="ml-20"><a routerLink="provident-loan">Provident Laon</a>
+                <li id="120" class="ml-20"><a>Bank Amount Approval</a>
+                <li id="121" class="ml-20"><a>Provident Laon Approval</a>
+                <li id="122" class="ml-20"><a>Provident Fund Ledger</a>
+                <li id="123" class="ml-20"><a>Provident Fund Report</a>
+                <li id="124" class="ml-20"><a>Provident Fund Profit</a>
+              </ul>
+            </li>
+            <li id="125"><a>Employee Deduction <i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="126" class="ml-20"><a routerLink="income-tax">Income Tax</a>
+                <li id="127" class="ml-20"><a routerLink="eobi-entry">E.O.B.I</a>
+                <li id="128" class="ml-20"><a routerLink="staff-loan">Staff Loan</a>
+                <li id="129" class="ml-20"><a routerLink="advance-salary">Advance Salary</a>
+                <li id="130" class="ml-20"><a routerLink="vehicle-loan">Vehicle Loan</a>
+                <li id="131" class="ml-20"><a routerLink="insurance-entry">Insurance Entry</a>
+                <li id="132" class="ml-20"><a routerLink="other-deduction">Other Deduction</a>
+                <li id="133" class="ml-20"><a routerLink="loan-status">Loan Status</a>
+              </ul>
+            </li>
+
+            <li id="134"><a>Deduction Report <i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="1341" class="ml-20"><a routerLink="ipe-deduction-report">Employee Income Tax, Provident, EOBI, Report</a>
+                <li id="135" class="ml-20"><a>Employee Advance Salary Deduction Report</a>
+                <li id="136" class="ml-20"><a>Employee Loan Report</a>
+                <li id="137" class="ml-20"><a routerLink="employee-loan-ledger">Employee Loan Ledger</a>
+                <li id="138" class="ml-20"><a>Employee All Deduction Report</a>
+              </ul>
+            </li>
+            <li id="139"><a>Incentive <i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="140" class="ml-20"><a routerLink="employee-incentive">Employee Incentive</a>
+                <li id="141" class="ml-20"><a routerLink="arrears">Arrears</a>
+                <li id="142" class="ml-20"><a routerLink="yearly-bonus">Yearly Bonus</a>
+                <li id="143" class="ml-20"><a>Employee Bonus Report</a>
+                <li id="144" class="ml-20"><a routerLink="leave-enchasement">Leaves Enchasement Payment</a>
+                <li id="145" class="ml-20"><a routerLink="employee-overtime">OverTime</a>
+                <li id="146" class="ml-20"><a>OverTime Report Day Wise</a>
+                <li id="147" class="ml-20"><a>Leaves Enchasement Payment Report</a>
+                <li id="148" class="ml-20"><a>Incentive Report</a>
+                <li id="149" class="ml-20"><a>Yearly Bonus and Arrears Report</a>
+                <li id="150" class="ml-20"><a>Overtime Amount Report</a>
+                <li id="151" class="ml-20"><a>Loan Adjustment</a>
+                <li id="152" class="ml-20"><a>Make Leaves Enchasement</a>
+                <li id="153" class="ml-20"><a>Leave Enchasement Report</a>
+              </ul>
+            </li>
+
+            <li id="154"><a>Employee Leaves <i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="155" class="ml-20"><a routerLink="leaves-entry">Leaves</a>
+                <li id="156" class="ml-20"><a>Leave Balance Report</a>
+                <li id="157" class="ml-20"><a>Attendance System</a>
+                <li id="158" class="ml-20"><a>Yearly Leaves Report</a>
+                <li id="159" class="ml-20"><a>Attendance Sheet</a>
+              </ul>
+            </li>
+            <li id="160"><a>Salary Calculation <i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="161" class="ml-20"><a routerLink="salary-sheet">Salary Sheet</a>
+                <li id="162" class="ml-20"><a>Pay Slip</a>
+                <li id="163" class="ml-20"><a routerLink="salary-type">Salary Type</a>
+                <li id="164" class="ml-20"><a routerLink="salary-payable">Salary Payable</a>
+              </ul>
+            </li>
+
+            <li id="165"><a>Reports <i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="166" class="ml-20"><a>Employee Listing </a>
+                <li id="167" class="ml-20"><a routerLink="Employee-Salary-Detail-Report">All Employee Salary Report</a>
+                <li id="168" class="ml-20"><a routerLink="Advanced-salary-Report">Advanced Salary Report</a>
+                <li id="169" class="ml-20"><a routerLink="Other-Deduction-Report">Other Deduction Report</a>
+                <li id="170" class="ml-20"><a routerLink="Monthly-deduction-Report">Monthly deduction Report</a>
+                <li id="171" class="ml-20"><a routerLink="vehicel-loan-report">Vehicle Loan Report</a>
+                <li id="172" class="ml-20"><a routerLink="provident-loan-report">Provident Loan Report</a>
+                <li id="173" class="ml-20"><a routerLink="insurance-loan-report">Insurance Loan Report</a>
+                <li id="174" class="ml-20"><a routerLink="staff-loan-balance-report">Staff Loan Balance Report</a>
+                <li id="175" class="ml-20"><a routerLink="vehicle-loan-balance-report">Vehicle Loan Balance Report</a>
+                <li id="176" class="ml-20"><a routerLink="prov-loan-balance-report">Provident Loan Balance Report</a>
+                <li id="177" class="ml-20"><a routerLink="insurance-loan-balance-report">Insurance Loan Balance Report</a>
+                <li id="178" class="ml-20"><a routerLink="department-list-report">Department Listing</a>
+                <li id="179" class="ml-20"><a routerLink="designation-list-report">Designation Listing</a>
+              </ul>
+            </li>
+            <li id="180"><a>Audit <i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+                <li id="181" class="ml-20"><a routerLink="vouchers-aprroval">Voucher Approval</a>
+                <li id="182" class="ml-20"><a routerLink="allow-same-leave">Allow Leaves Same</a>
+                <li id="183" class="ml-20"><a>Make Payment Voucher</a>
+                <li id="184" class="ml-20"><a>Make Payable Voucher</a>
+                <li id="185" class="ml-20"><a>Make Salary Paid Voucher</a>
+                <li id="186" class="ml-20"><a>Paid Voucher</a>
+              </ul>
+            </li>
+            <li id="187"><a>Factory Transacton <i class="fa-solid fa-angle-down mainmenu"></i></a>
+              <ul>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <!-- UTILITIES -->
+        <li class="submenu justadmin" *ngIf="admin == 'true' && locId == 'HO'">
+          <a href="javascript:void(0);"><img src="assets/img/icons/transfer1.svg" alt="img"><span> Utilities
+            </span><span class="menu-arrow"></span></a>
+          <ul>
+            <li><a routerLink="security">Security System</a></li>
+            <li><a routerLink="users-list">Users</a></li>
+            <li><a routerLink="users-log-status">Users Log Status</a></li>
+            <li *ngIf="mobApp != 'Regular'"><a routerLink="mobile-app-slider">Mobile App Slider</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>

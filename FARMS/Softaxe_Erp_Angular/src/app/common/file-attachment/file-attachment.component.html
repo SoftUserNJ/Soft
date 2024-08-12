@@ -1,0 +1,172 @@
+<!-- LEDGER MODAL -->
+<div class="modal fade" id="LedgerModal"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width:60%;">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <div class="col-sm-4">
+          <img src="{{cmpLogo}}" class="logoImg" style="width:45px;">
+        </div>
+        <div class="col-sm-4 text-center">
+          <h5 class="modal-title fw-bolder">Account Ledger</h5>
+        </div>
+        <div class="col-sm-4 d-flex justify-content-end">
+          <button type="button" class="close fs-30 myClose" data-bs-dismiss="modal" aria-label="Close">×</button>
+        </div>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="row">
+              <div class="col-lg-2 col-sm-2 mb-1">
+                <span class="fw-bold">Account Code :</span>
+              </div>
+              <div class="col-lg-10 col-sm-10 ps-0 mb-1">
+                <span class="fw-bold">{{accountCode}}</span>
+              </div>
+              <div class="col-lg-2 col-sm-2 mb-1">
+                <span class="fw-bold">Account Title :</span>
+              </div>
+              <div class="col-lg-10 col-sm-6 ps-0 mb-1">
+                <span class="fw-bold">{{accountName}}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-5">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchLedger"
+                    (input)="onSearchLedger()">
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepicker2" [(ngModel)]="fromDate2" (click)="datepicker2.open()" />
+                    <mat-datepicker #datepicker2 [startAt]="fromDate2"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="assets/img/icons/calendars.svg" alt="img" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepicker3" [(ngModel)]="toDate2" (click)="datepicker3.open()" />
+                    <mat-datepicker #datepicker3 [startAt]="toDate2"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="assets/img/icons/calendars.svg" alt="img" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="form-group">
+                  <div class="add-icon">
+                    <a href="javascript:void(0);" class="w-100" (click)="onClickLedger(accountCode)">
+                      <img src="/assets/img/icons/search.svg" alt="img" class="searchSvg w-20px"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-0">
+              <div class="table-responsive" style="height:400px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="w-0"></th>
+                      <th class="text-center">Date</th>
+                      <th>Voucher #</th>
+                      <th class="text-center" style="width:45%;">Narration</th>
+                      <th class="text-end">Debit</th>
+                      <th class="text-end">Credit</th>
+                      <th class="text-end">Balance</th>
+                    </tr>
+                  </thead>
+                  <tbody #ledgerLists>
+                    <tr *ngFor="let item of ledgerList">
+                      <td>
+                        <span *ngIf="item.VchType != 'OB' && item.VchType != 'CB'" class="me-2" (click)="openReportVoucher(item)">
+                          <i class="fas fa-print"></i>
+                        </span>
+                        <span *ngIf="item.VchType != 'OB' && item.VchType != 'CB'" data-bs-toggle="modal" data-bs-target="#AttachModal" (click)="onClickModel(item)">
+                          <i class="fas fa-images"></i>
+                        </span>
+                      </td>
+                      <td class="text-center">
+                        {{(item.VchType != "OB" && item.VchType != "CB") ? (item.VchDate | date: "dd/MM/yyyy") : ""}}
+                      </td>
+                      <td class="vchtype">
+                        {{(item.VchType != "OB" && item.VchType != "CB") ? item.VchType+'-'+item.VchNo : ""}}</td>
+                      <td class="limited-text" title="{{item.Narration}}">{{item.Narration}}</td>
+                      <td class="text-end debit" [ngClass]="item.VchType == 'CB' ? 'text-danger fw-bolder' : ''">
+                        {{item.Debit | number: "1.2-2"}}</td>
+                      <td class="text-end credit" [ngClass]="item.VchType == 'CB' ? 'text-danger fw-bolder' : ''">
+                        {{item.Credit | number: "1.2-2"}}</td>
+                      <td class="text-end" [ngClass]="item.VchType == 'CB' ? 'text-danger fw-bolder' : ''">
+                        {{item.Balance | number: "1.2-2"}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ATTACHMENT FILE -->
+<div class="modal fade " id="AttachModal"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 65%;">
+    <div class="modal-content" style="height:485px; font-weight: 600;" aria-hidden="true">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Upload Attachment</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close" (click)="onClickCloseAtt()" >×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="row">
+          <div class="col-lg-5 col-sm-12 col-md-6">
+            <div class="card mb-0" style="height:420px;">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Sno</th>
+                      <th class="w-75">File</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of fileList; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td class="limited-text">{{item.name}}</td>
+                      <td class="text-center">
+                        <span class="me-3"><i class="fas fa-trash" (click)="onRemoveFile(item)"></i></span>
+                        <span><i class="fas fa-eye" (click)="onViewFile(item)"></i></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7 col-sm-12 col-md-6">
+            <div class="imgBox" style="height: 388px; border: 1px solid #d2d2d2;">
+              <iframe *ngIf="isPdf" [src]="srcPdfImg | safeUrl" style="width: 100%;height: 100%;">
+              </iframe>
+              <img *ngIf="!isPdf" [src]="srcPdfImg" style="width: 100%; height: 100%;">
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <input type="file" accept="image/png, image/jpeg, application/pdf, image/jpg"
+                (change)="onFileSelected($event)" [(ngModel)]="file" class="form-control p-1px me-2">
+              <button class="btn btn-sm btn-success" (click)="onClickUpload()">Upload</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

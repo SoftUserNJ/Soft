@@ -1,0 +1,392 @@
+  <section>
+    <div class="content ListPage">
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-12 mx-auto">
+          <div class="card">
+            <div class="card-body">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <div class="mb-2">
+                  <label class="fw-bolder">Farm Name</label>
+                  <div class="row">
+                    <div class="col-md-10 col-lg-10 col-sm-10">
+                      <ng-select class="bold-placeholder"
+                        placeholder="--- Select Farm ---" 
+                        [items]="costCentreList"
+                        bindLabel="CostcentreName" 
+                        bindValue="CostcentreId" 
+                        [(ngModel)]="ngFarmId"
+                        (change)="getJobNo();"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-sm-2 ps-0 d-flex justify-content-between">
+                      <div class="add-icon text-center">
+                        <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal" (click)="refreshCostCentre()"
+                          data-bs-target="#CostCentreModal"></i>
+                      </div>
+                      <div class="add-icon text-center" *ngIf="ngFarmId">
+                        <i class="fa fa-user custom-plus-icon text-center" data-bs-toggle="modal" data-bs-target="#ShareModaleModal" (click)="onClickShareHolder()"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <div class="mb-2">
+                  <label class="fw-bolder">Flock No</label>   
+                  <div class="row">
+                    <div class="col-md-10 col-lg-10 col-sm-10">
+                      <ng-select class="bold-placeholder" 
+                        placeholder="--- Select Flock No ---" 
+                        [items]="jobNoList"
+                        (change)="onJobNoChange($event)"
+                        bindLabel="JOBNO" 
+                        bindValue="JOBNO"
+                        [(ngModel)]="ngJobNo"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-sm-2 ps-0">
+                      <div class="add-icon text-center" *ngIf="ngFarmId">
+                        <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal" (click)="refreshJobNo()"
+                          data-bs-target="#JobNoModal"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <p>
+                  <span class="fw-bold">Start Date: </span>{{jobNoStartDate}}<br>
+                  <span class="fw-bold">End Date: </span>{{jobNoEndDate}}<br>
+                  <span class="fw-bold">Days: </span>{{days}}<br>
+                  <span class="fw-bold">Remarks: </span>{{jobNoRemarks}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  <!-- Cost Centre Modal -->
+  <div class="modal fade" id="CostCentreModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center">
+          <h5 class="modal-title ">Farm Name
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group">
+                <div class="row">
+
+                  <div class="col-md-12 mb-1">
+                    <label class="form-label mb-1">Farm Name</label>
+                    <input type="text" id="costCentreName" class="form-control" [(ngModel)]="costCentreName"
+                      [disabled]="isDisabledCostCentre">
+                  </div>
+
+                  <div class="col-md-3 mb-1 ">
+                    <label class="form-label mb-1">Com</label>
+                    <input type="number" class="form-control" [(ngModel)]="costCommission"
+                      [disabled]="isDisabledCostCentre">
+                  </div>
+
+                  <div class="col-md-3 mb-1 px-1">
+                    <label class="form-label mb-1">Type</label>
+                    <select class="form-control" [(ngModel)]="comType" [disabled]="isDisabledCostCentre">
+                      <option value="A">Percent</option>
+                      <option value="B">Bag</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 mb-1 px-1">
+                    <label class="form-label mb-1">Rent</label>
+                    <input type="number" class="form-control" [(ngModel)]="rent"
+                      [disabled]="isDisabledCostCentre">
+                  </div>
+
+                  <div class="col-md-3 mb-1 ps-1">
+                    <label class="form-label mb-1">Installment</label>
+                    <input type="number" class="form-control" [(ngModel)]="rentInstallment"
+                      [disabled]="isDisabledCostCentre">
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="mb-1">
+                <label class="fw-bolder mb-1">Select User</label>
+                <ng-select class="bold-placeholder"
+                  placeholder="--- Select User ---" 
+                  [items]="usersList"
+                  bindLabel="UserName" 
+                  bindValue="UserId"
+                  [(ngModel)]="userId"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newCostCentre()"
+                  [hidden]="isShowCostCentre">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="saveCostCentre()"
+                  [hidden]="!isShowCostCentre">Save</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshCostCentre()">Refresh</button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th class="w-75">Farm Name</th>
+                        <th class="text-center w-25">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of costCentreList">
+                        <td>{{item.CostcentreId}}</td>
+                        <td>{{ item.CostcentreName }}</td>
+                        <td class="text-center">
+                          <span (click)=" editCostCentre(item)" class="me-3 btnEditLevel1">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                          <span (click)="deleteCostCentre(item)" class="confirm-text btnDelLevel1">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Job No Modal -->
+  <div class="modal fade" id="JobNoModal">
+    <div class="modal-dialog" style="max-width: 700px;">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center">
+          <h5 class="modal-title ">Flock No
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-4 col-lg-4 col-sm-12">
+                    <label class="form-label mb-1">Flock No</label>
+                    <input type="number" id="jobNo" class="form-control" 
+                    [(ngModel)]="jobNo" 
+                    [disabled]="isDisabledJobNo">
+                  </div>
+                  <div class="col-md-4 col-lg-4 col-sm-12">
+                    <label class="form-label mb-1">Start Date</label>
+                    <div class="position-relative w-100 me-2 form-group mb-0">
+                      <div class="input-groupicon">
+                        <input type="text" class="form-control" 
+                          matInput
+                          placeholder="DD/MM/YYYY" 
+                          [matDatepicker]="datepicker1" 
+                          (click)="datepicker1.open()" 
+                          [disabled]="isDisabledJobNo"
+                          (dateChange)="daysCalculation()" 
+                          [(ngModel)]="jobStartDate" />
+                        <mat-datepicker #datepicker1></mat-datepicker>
+                        <div class="addonset">
+                          <img src="/assets/img/icons/calendars.svg" alt="img">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-4 col-sm-12">
+                    <label class="form-label mb-1">End Date</label>
+                    <div class="position-relative w-100 me-2 form-group mb-0">
+                      <div class="input-groupicon">
+                        <input type="text" class="form-control" 
+                          matInput
+                          placeholder="DD/MM/YYYY" 
+                          [matDatepicker]="datepicker2" 
+                          (click)="datepicker2.open()" 
+                          [disabled]="isDisabledJobNo"
+                          (dateChange)="daysCalculation()" 
+                          [(ngModel)]="jobEndDate" />
+                        <mat-datepicker #datepicker2></mat-datepicker>
+                        <div class="addonset">
+                          <img src="/assets/img/icons/calendars.svg" alt="img">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 col-lg-8 col-sm-10">
+                    <label class="form-label mb-1">Remarks</label>
+                    <input type="text" class="form-control" [(ngModel)]="remarks" [disabled]="isDisabledJobNo">
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-sm-2">
+                    <label class="form-label mb-1">Days</label>
+                    <input type="number" class="form-control" [(ngModel)]="days" [disabled]="true">
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-sm-2">
+                    <div class="d-flex align-items-center" style="margin-top: 30px;">
+                      <input type="checkbox" class="me-1" id="finished" [(ngModel)]="finished" [disabled]="isDisabledJobNo">
+                      <label style="margin-bottom: 0px!important;" for="finished" >Finished</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 d-flex align-items-center">
+                    <button class="btn btn-primary btn-sm me-1" (click)="newJobNo()" [hidden]="isShowJobNo">New</button>
+                    <button type="submit" class="btn btn-success btn-sm me-1" (click)="saveJobNo()" [hidden]="!isShowJobNo">Save</button>
+                    <button class="btn btn-secondary btn-sm" (click)="refreshJobNo()">Refresh</button>
+                    <div class="d-flex align-items-center ms-3">
+                      <input type="radio" class="me-1" name="filterRadio" value="Started" id="Started" checked
+                        (change)="filterRadio($event)">
+                      <label class="fw-bold mt-1" for="Started" >Started</label>
+                    </div>
+                    <div class="d-flex align-items-center ms-3">
+                      <input type="radio" class="me-1" name="filterRadio" value="Finished" id="finished1" (change)="filterRadio($event)">
+                      <label class="fw-bold mt-1" for="finished1">Finished</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 d-flex align-items-center">
+                    <div class="me-1">
+                      <label class="fw-bold mt-1" for="finished1">Total Chicks</label>
+                      <input type="number" [(ngModel)]="totalChicks" [disabled]="isDisabledJobNo">
+                    </div>
+                    <div class="ms-1">
+                      <label class="fw-bold mt-1" for="finished1">Weight</label>
+                      <input type="number" [(ngModel)]="weight" [disabled]="isDisabledJobNo">
+                    </div>
+                    <div class="ms-1">
+                      <label class="fw-bold mt-1" for="finished1">Exp %</label>
+                      <input type="number" [(ngModel)]="expense" [disabled]="isDisabledJobNo">
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th>Flock No</th>
+                        <th>StartDate</th>
+                        <th>EndDate</th>
+                        <th>Days</th>
+                        <th class="w-25">Remarks</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of jobNoListFilter">
+                        <td>{{item.JOBNO}}</td>
+                        <td>{{item.STARTDATE}}</td>
+                        <td>{{item.ENDDATE}}</td>
+                        <td>{{item.DAYS}}</td>
+                        <td class="limited-text" title="{{item.REMARKS}}">{{item.REMARKS}}</td>
+                        <td class="text-center">
+                          <span  (click)=" editJobNo(item)" class="me-3 btnEditLevel1">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                          <span (click)="deleteJobNo(item)" class="confirm-text btnDelLevel1">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="ShareModaleModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center">
+          <h5 class="modal-title ">Share Holders
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="mb-2">
+                <label class="fw-bolder mb-1">Share Holder</label>
+                <ng-select class="bold-placeholder"
+                  placeholder="--- Select Account ---" 
+                  [items]="accountList"
+                  bindLabel="name" 
+                  bindValue="code"
+                  [(ngModel)]="account"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="d-flex">
+                  <div class="form-group me-2">
+                    <label class="fw-bolder mb-1" >Commission</label>
+                    <input type="number" [(ngModel)]="commission" >
+                  </div>
+                  <div class="form-group">
+                    <label class="fw-bolder mb-1" >Share Type</label>
+                    <select class="form-control"  [(ngModel)]="ngShareType">
+                      <option value="A">A</option>
+                      <option value="Q">Q</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="text-end mt-4">
+                  <button (click)="addShareHolder()" class="btn btn-primary btn-sm me-1">Add</button>
+                  <button (click)="saveShareHolder()" class="btn btn-success btn-sm">Save</button>
+                </div>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th class="w-0">Code</th>
+                        <th class="w-75">Name</th>
+                        <th>Comm</th>
+                        <th class="text-center w-25">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of appendAccountList; let i = index">
+                        <td>{{item.code}}</td>
+                        <td class="limited-text">{{ item.name }}</td>
+                        <td class="limited-text">{{ item.comm }}</td>
+                        <td class="text-center">
+                          <span (click)="deleteAccount(i)" class="confirm-text btnDelLevel1">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

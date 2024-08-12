@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="FirstLinks" xml:space="preserve">
+    <value>&lt;h2 class="mt-5"&gt;Analytical cookies&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;General visitor data is kept on the City Media website. In this context, in particular, the IP address of your computer, any user name, the time of request and data that a visitor's browser sends can be registered and used for statistical analyzes of visiting and clicking behavior on the website. City Media also optimizes the operation of the website.&lt;/p&gt;
+
+    &lt;p class="mb-3"&gt;City Media tries to anonymize this data as much as possible. This information is not provided to third parties.&lt;/p&gt;
+    
+    &lt;p class="mb-3"&gt;City Media uses Google Analytics. For example, cookies from Google Analytics may be placed with the aim of collecting data to ultimately provide you with an optimal user experience. By collecting data via Google Analytics, City Media gains insight into usage and these statistics can be applied to its website. Google's cookie is deleted after a maximum of 2 years. Google does not share your data with third parties. 
+        Read  Google's &lt;a href="https://policies.google.com/privacy?hl=nl"&gt;Privacy Statement here&lt;/a&gt;.
+    &lt;/p&gt;
+    
+    &lt;p class="mb-3"&gt;When you visit our website for the first time, a banner will be shown indicating that if you click further on the website, you give us permission to use all cookies and plug-ins as described in this privacy and cookie statement.&lt;/p&gt;
+    
+    &lt;p class="mb-3"&gt;We have no control over what any third parties do with your data obtained via the placed cookies. More information about how these parties store the data obtained and what they do with this data can be found in the privacy statement of the relevant party. (Note: these can change regularly). You can inquire with us via the contact form.&lt;/p&gt;
+
+
+    &lt;h2 class="mt-5"&gt;Tracking cookies&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;Provided you have given permission for this, City Media also uses tracking cookies so that advertisements on the websites you visit can be better tailored to your needs and interests, and to keep track of how many and which advertisements have been shown to you (to prevent that you always see the same advertisement) and to check whether you have clicked on an advertisement.&lt;/p&gt;
+    
+    &lt;p class="mb-3"&gt;The Google AdWords cookie remembers which pages you visit, so that you can receive targeted and relevant offers from us. Google's cookie is deleted after a maximum of 2 years. Google does not share your data with third parties. 
+        Read  Google's &lt;a href="https://policies.google.com/privacy?hl=nl"&gt;Privacy Statement here&lt;/a&gt;.
+    &lt;/p&gt;</value>
+  </data>
+  <data name="FirstPartWithouLink" xml:space="preserve">
+    <value>&lt;p class="mb-3 mt-5"&gt;
+        If you visit the city-media.nl website, your privacy-sensitive data or personal data may be processed.
+        City Media considers your privacy to be of great importance.
+        To guarantee your privacy as best as possible, we apply a number of core values.
+    &lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;To inform.&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;We want to inform you as well as possible about how and why we process personal data. We do this via this privacy and cookie statement.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Limit collection.&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;We pay close attention to ensuring that our collection of personal data is limited to what is necessary for the proper functioning of the website and the services you request.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;To secure.&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;We take appropriate security measures to protect your personal data and also require this from parties that process personal data on our behalf.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Permission.&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;We request explicit consent to process your personal data in cases where your consent is required by law.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Rights of data subjects.&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;We respect your right to view, correct or delete the personal data we process about you and any other rights you have under applicable privacy legislation. In this privacy and cookie statement you can read how we put these core values ​​into practice and respect and protect your right to privacy.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;The use of personal data.&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;When using our website, you may leave certain information with us. This can also be personal data. We only collect, store and use personal data that you provide directly (for example via the contact form on the website) or for which it is clear that it is provided to us for processing.&lt;/p&gt;
+    &lt;p class="mb-3"&gt;We will not use your personal data for purposes other than those for which we obtained it, unless you have given your prior permission or we are allowed or required to do so by law.&lt;/p&gt;
+    &lt;p class="mb-3"&gt;Depending on which functionalities you use via the website, we may process the following personal data from you:&lt;/p&gt;
+
+    &lt;ul class="text-white ml-4"&gt;
+        &lt;li&gt;name and address details;&lt;/li&gt;
+        &lt;li&gt;phone number;&lt;/li&gt;
+        &lt;li&gt;billing address;&lt;/li&gt;
+        &lt;li&gt;e-mail address;&lt;/li&gt;
+        &lt;li&gt;payment details;&lt;/li&gt;
+        &lt;li&gt;sex;&lt;/li&gt;
+        &lt;li&gt;IP address.&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;h2 class="mt-5"&gt;Your personal data will be used by us for the purposes below (and for purposes closely related to them):&lt;/h2&gt;
+    
+    &lt;ul class="text-white ml-4 mt-3"&gt;
+        &lt;li&gt;creating your account;&lt;/li&gt;
+        &lt;li&gt;controlling access to your account;&lt;/li&gt;
+        &lt;li&gt;handling your orders;&lt;/li&gt;
+        &lt;li&gt;invoicing the services purchased;&lt;/li&gt;
+        &lt;li&gt;sending newsletters;&lt;/li&gt;
+        &lt;li&gt;improving and evaluating our website and services;&lt;/li&gt;
+        &lt;li&gt;answering and handling questions you ask;&lt;/li&gt;
+        &lt;li&gt;offering targeted advertisements via search engines.&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;h2 class="mt-5"&gt;Contact forms and emails&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;If you have any questions about City Media or the services we offer, please contact us. You can contact us via the contact form on our website and by e-mail. Please see our contact page for current contact details.&lt;/p&gt;
+    
+    &lt;p class="mb-3"&gt;If you fill in the contact form on the contact page, or if you send us an e-mail, the data you send us will be kept for as long as the nature of the form or the content of your e-mail requires it for a complete response and handling thereof.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Cookies&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;Cookies are used on our website. A cookie is a small file that is sent with the pages of our website and stored in the memory of your device. The information stored in a cookie can be transferred to our own secure server or that of a third party.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;We distinguish three types of cookies:&lt;/h2&gt;
+    &lt;h2 class="mt-5"&gt;Functional cookies&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;These cookies ensure the proper functioning of our website. In addition, they ensure that you can use the website more easily by, for example, remembering your personal settings.&lt;/p&gt;</value>
+  </data>
+  <data name="PrivacyPolicyHeading" xml:space="preserve">
+    <value>PRIVACY POLICY AND COOKIE STATEMENT</value>
+  </data>
+  <data name="SecondPartWithouLink" xml:space="preserve">
+    <value>&lt;h2 class="mt-5"&gt;Enabling and disabling cookies&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;You can disable the placing of cookies by changing your browser settings. Check your browser manual for exact instructions. Please note that (certain functionalities on) the website may not work or not work fully if you disable cookies.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Delete cookies&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;Most cookies have an expiration date. This means that they expire automatically after a certain period and no longer record data from your site visit. You can also choose to manually delete the cookies before the expiry date has expired. For more information about this, please consult your browser manual.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Third party websites&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;This privacy and cookie statement does not apply to third-party websites that are connected to our website through links. We cannot guarantee that these third parties handle your personal data in a reliable or secure manner. We recommend that you read the privacy statement of these websites before using these websites.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Confidentiality and disclosure to third parties&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;We handle your personal data confidentially. We will not provide the personal data that we collect via our website to other parties, unless this is necessary in the context of the execution of the agreement or in cases where we are allowed or required to do so by law.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Security&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;We take appropriate security measures to limit misuse of and unauthorized access to your personal data. In this way we ensure that only the necessary persons have access to your data and that access to your personal data is protected.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Retention period&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;We do not store your personal data for longer than is necessary for the purposes for which the data was provided or obtained, taking into account the purposes of the processing and any legal retention periods.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Rights of data subjects&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;If you have provided us with personal data, you can send us a request to view, change, move or delete this data. You can address your requests to:&lt;/p&gt;
+
+    &lt;p class="mb-3"&gt;
+        City Media&lt;br /&gt;
+        Waldeck Pyrmontlaan 20 – 3LA&lt;br /&gt;
+        1075 BX Amsterdam&lt;br /&gt;
+        0650203599&lt;br /&gt;
+    &lt;/p&gt;
+
+    &lt;p class="mb-3"&gt;To prevent misuse, we may ask you to identify yourself before we send data. When it concerns access to personal data linked to a cookie, you must send a copy of the relevant cookie. You can find this in the settings of your browser.&lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Changes to privacy and cookie statement&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;We reserve the right to amend this privacy and cookie statement. Changes will be published on our website. It is therefore recommended that you consult this statement regularly so that you are aware of any changes.&lt;/p&gt;</value>
+  </data>
+  <data name="SecondsLinks" xml:space="preserve">
+    <value>&lt;h2 class="mt-5"&gt;Dutch Data Protection Authority&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;We are happy to help you if you have complaints about the processing of your personal data. Under the applicable privacy legislation, you also have the right to file a complaint with the Dutch Data Protection Authority against this processing of personal data.
+        You can contact the &lt;a href="https://autoriteitpersoonsgegevens.nl/"&gt;Dutch Data Protection Authority&lt;/a&gt; for this.
+    &lt;/p&gt;
+
+    &lt;p class="mb-3"&gt;
+        If City Media processes personal data on behalf of the user, the user will accept the &lt;a href="https://media.solid-use.nl/verwerkersovereenkomst/"&gt;Processing Agreement placed on this site in which agreements are recorded about the processing and security of this personal data&lt;/a&gt;. Users can make changes at any time in consultation with City Media.
+    &lt;/p&gt;
+
+    &lt;h2 class="mt-5"&gt;Contact&lt;/h2&gt;
+    &lt;p class="mb-3"&gt;If you have any questions or comments after reading our privacy and cookie statement, you can contact us via the contact details below.&lt;/p&gt;
+    
+    &lt;p class="mb-3"&gt;
+        &lt;a href="mailto:info@city-media.nl"&gt;info@city-media.nl&lt;/a&gt;&lt;br /&gt;
+        0650203599
+    &lt;/p&gt;</value>
+  </data>
+</root>

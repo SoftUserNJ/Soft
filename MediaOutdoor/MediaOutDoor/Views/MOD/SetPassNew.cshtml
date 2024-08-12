@@ -1,0 +1,111 @@
+﻿@{
+    Layout = null;
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Password - MediaOutDoor</title>
+    <link rel="icon" href="~/img/favicon.png" sizes="32x32" />
+
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/MediaOutDoor.styles.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/elegant-icons.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/nice-select.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/slicknav.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link href="~/lib/toastr/toatr.css" rel="stylesheet" asp-append-version="true" />
+
+</head>
+<body>
+
+    <style>
+        .bg-image-vertical {
+            position: relative;
+            overflow: hidden;
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: auto 100%;
+        }
+
+        @@media (min-width: 1025px) {
+            .h-custom-2 {
+                height: 100%;
+            }
+        }
+    </style>
+
+    <section class="vh-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6 col-md-5 col-lg-5 mx-auto text-black">
+
+                    <div class="mt-4 mb-5 px-5 ms-xl-4 text-center">
+                        <img src="/img/logo.png" alt="" style="width:60%;">
+                    </div>
+
+                    <form asp-controller="MOD" asp-action="SetPassNew" method="post">
+
+                        <input type="hidden" value="@ViewBag.vcode" name="vCode" />
+                        <input type="hidden" value="@ViewBag.email" name="email" />
+
+                        <div class="form-outline ml-5 mr-5 mb-4">
+                            <label class="form-label text-white" for="password">@Localizer["Pincode"]</label>
+                            <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Enter 6 digit pincode" />
+                        </div>
+
+                        @if (ViewBag.Error != "")
+                        {
+                            <div class="text-center mb-1">
+                                <span class="text-danger p-pad">@ViewBag.Error</span>
+                            </div>
+                        }
+
+                        <div class="form-outline ml-5 mr-5 mb-4">
+                            <button class="btn btn-success btn-lg btn-block" type="submit">Update</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.nicescroll.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.magnific-popup.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.countdown.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.slicknav.js" asp-append-version="true"></script>
+    <script src="~/js/mixitup.min.js" asp-append-version="true"></script>
+    <script src="~/js/owl.carousel.min.js" asp-append-version="true"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    <script src="~/lib/toastr/toastr.js" asp-append-version="true"></script>
+    <script src="~/lib/toastr/toastr.min.js" asp-append-version="true"></script>
+
+    <script>
+
+
+        $('body').on('input', "#password", function () {
+
+            const inputValue = $(this).val();
+            $(this).val(inputValue.replace(/[^0-9+]/g, ''));
+            var v = $(this).val();
+
+            if (v.length > 6) {
+                v = v.substring(0, 6);
+                $(this).val(v);
+            }
+        });
+    </script>
+</body>

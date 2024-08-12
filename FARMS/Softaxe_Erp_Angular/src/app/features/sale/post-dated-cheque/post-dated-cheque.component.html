@@ -1,0 +1,224 @@
+<div class="content">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>PD Cheque</h4>
+      <h6 style="font-size: 12px">Manage your Post Dated Cheque</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Sale Post Dated Cheque', 'pdf')" title="pdf">
+              <img src="assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Sale Post dated Cheque', 'xlxs')" title="excel">
+              <img src="assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-3 col-lg-3">
+          <div class="form-group">
+            <label class="form-label">From Date</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                [(ngModel)]="fromDate" (dateChange)="getPDChequeList()" (click)="datepicker.open()" />
+              <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <div class="form-group">
+            <label class="form-label">To Date</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker2"
+                [(ngModel)]="toDate" (dateChange)="getPDChequeList()" (click)="datepicker2.open()" />
+              <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <div class="form-group">
+            <label class="form-label">Deposit Date</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker3"
+                [(ngModel)]="dpDate" (dateChange)="getPDChequeList()" (click)="datepicker3.open()" />
+              <mat-datepicker #datepicker3 [startAt]="dpDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+          <div class="mb-2">
+            <label class="fw-bolder">Select Bank</label>
+            <div class="position-relative w-100">
+              <ng-select placeholder="---Select Bank---" [items]="pdBank" bindValue="CODE" bindLabel="NAMES"
+                [dropdownPosition]="'bottom'" (change)="onChangeBank($event)" (clear)="onClearBank()">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-6">
+          <div class="mb-2">
+            <label>Select Party</label>
+            <div class="position-relative w-100">
+              <ng-select placeholder="---Select Party---" [items]="pdParty" bindLabel="NAMES" bindValue="CODE"
+                [dropdownPosition]="'bottom'" (change)="onChangeParty($event)" (clear)="onClearParty()">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-6">
+          <div class="form-group">
+            <label>Status</label>
+            <div class="d-flex align-items-end mt-3">
+              <div class="d-flex align-items-center me-3 dohand">
+                <input type="radio" id="all" class="me-1" name="dataGet" value="all" [checked]="all"
+                  (click)="onClickFilter($event)" />
+                <label for="all" class="mb-0">All</label>
+              </div>
+              <div class="d-flex align-items-center me-3 bill">
+                <input type="radio" class="me-1" id="today" name="dataGet" value="today" [checked]="today"
+                  (click)="onClickFilter($event)" />
+                <label for="today" class="mb-0">Today</label>
+              </div>
+              <div class="d-flex align-items-center me-3 bill">
+                <input type="radio" class="me-1" id="deposit" name="dataGet" value="deposit" [checked]="deposit"
+                  (click)="onClickFilter($event)" />
+                <label for="deposit" class="mb-0">Deposit</label>
+              </div>
+              <div class="d-flex align-items-center me-3 bill">
+                <input type="radio" class="me-1" id="cleared" name="dataGet" value="cleared" [checked]="cleared"
+                  (click)="onClickFilter($event)" />
+                <label for="cleared" class="mb-0">Cleared</label>
+              </div>
+              <div class="d-flex align-items-center me-3 bill">
+                <input type="radio" class="me-1" id="bounced" name="dataGet" value="bounced" [checked]="bounced"
+                  (click)="onClickFilter($event)" />
+                <label for="bounced" class="mb-0">Bounced</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height: 300px; font-size: 12px">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th class="text-center">Sno</th>
+              <th class="text-center">Type-No</th>
+              <th class="text-center">VchDate</th>
+              <th class="text-start">Party</th>
+              <th class="text-start">Bank</th>
+              <th class="text-center">ChqDate</th>
+              <th class="text-start">ChqNo</th>
+              <th class="text-start">Remarks</th>
+              <th class="text-end">Amount</th>
+              <th class="text-center">Deposit</th>
+              <th class="text-center">Cleared</th>
+              <th class="text-center">Bounced</th>
+              <th class="text-center noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody #pdChequeLists>
+            <tr *ngFor="let item of pdChequeList let i = index">
+              <td class="text-center">{{i+1}}</td>
+              <td class="text-start">{{item.TYPENO}}</td>
+              <td class="text-center">{{item.VCHDATE}}</td>
+              <td class="text-start party limited-text" [title]="item.PARTYNAME">{{item.PARTYNAME}}</td>
+              <td class="text-start bank limited-text" [title]="item.BANK">{{item.BANK}}</td>
+              <td class="text-center">{{item.CHQDATE}}</td>
+              <td class="text-start limited-text" [title]="item.REMARKS">{{item.CHQNO}}</td>
+              <td class="text-start limited-text" [title]="item.REMARKS">{{item.REMARKS}}</td>
+              <td class="text-end">{{item.AMOUNT | number : "1.2-2"}}</td>
+              <td class="text-center"><input type="checkbox" class="mx-auto mb-0" [(ngModel)]="item.DEPOSIT"
+                  (change)="onDepositChange(item)"></td>
+              <td class="text-center"><input type="checkbox" class="mx-auto mb-0" [(ngModel)]="item.CLEARED"
+                  (change)="onClearedChange(item)"></td>
+              <td class="text-center"><input type="checkbox" class="mx-auto mb-0" [(ngModel)]="item.BOUNCED"
+                  (change)="onBouncedChange(item)"></td>
+              <td class="text-center noPrint">
+                <span data-bs-toggle="modal" data-bs-target="#Modal" (click)="onClickModel(item)">
+                  <i class="fas fa-images"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-sm-12 text-end">
+          <button class="btn btn-success btn-sm" (click)="savePDCheque()" id="btnSave">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="Modal">
+  <div class="modal-dialog" style="max-width: 60%;">
+    <div class="modal-content" style="height:365px; font-weight: 600;" aria-hidden="true">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Upload Invoice Receiving</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="row">
+          <div class="col-lg-6 col-sm-12 col-md-6">
+            <div class="card mb-0" style="height:300px;">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Sno</th>
+                      <th class="w-75">File</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of fileList; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td class="limited-text" title="{{item.name}}">{{item.name}}</td>
+                      <td class="text-center">
+                        <span class="me-3"><i class="fas fa-trash" (click)="onRemoveFile(item)"></i></span>
+                        <span><i class="fas fa-eye" (click)="onViewFile(item)"></i></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-12 col-md-6">
+            <div class="imgBox" style="height: 255px;">
+              <iframe *ngIf="isPdf" [src]="srcPdfImg | safeUrl" style="width: 100%;height: 100%;">
+              </iframe>
+              <img *ngIf="!isPdf" [src]="srcPdfImg" style="width: 100%; height: 100%;">
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <input type="file" accept="image/png, image/jpeg, application/pdf, image/jpg"
+                (change)="onFileSelected($event)" [(ngModel)]="file" class="form-control p-1 me-2">
+              <button class="btn btn-sm btn-success" (click)="onClickUpload()">Upload</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

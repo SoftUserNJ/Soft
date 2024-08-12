@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewData["Title"] = "UserLiveTracking";
+}
+
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer;
+@{
+    ViewData["Title"] = "Device Locations";
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>User Live Tracking</h4>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            <div id="map" style="height: 400px;width: 100%;border-radius: 20px;"></div>
+
+            <script>
+                function initMap() {
+                    debugger;
+                    $.ajax({
+                        type: "GET",
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                        url: "/Settings/TrackUserLocations/",
+                        async: true,
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            try {
+                                const mapCenter = { lat:52.377956, lng:4.897070 };
+                                const map = new google.maps.Map(document.getElementById('map'), {
+                                    center: mapCenter,
+                                    zoom: 11
+                                });
+
+                                data.forEach(userData => {
+                                    const position = {
+                                        lat: parseFloat(userData.Latitude),
+                                        lng: parseFloat(userData.Longitude)
+                                    };
+                                     let iconUrl = '';
+                                   
+                                    debugger;
+                                    if (userData.Gender == "Female") {
+                                        if(userData.IncidentName=="")
+                                        {
+                                            iconUrl = '/img/Female.png';
+                                        }
+                                        else
+                                        {
+                                           iconUrl = '/img/Female-working.png'; 
+                                        }
+                                       
+                                    } else {
+                                       if(userData.IncidentName=="")
+                                        {
+                                            iconUrl = '/img/Male.png';
+                                        }
+                                        else
+                                        {
+                                           iconUrl = '/img/Male-working.png'; 
+                                           }
+                                        
+                                    }
+
+                                    const marker = new google.maps.Marker({
+                                        position: position,
+                                        map: map,
+                                        
+                                        icon: iconUrl
+                                    });
+                                     
+
+                                    const infoWindow = new google.maps.InfoWindow();
+
+                                    marker.addListener('click', () => {
+                                        
+                                        infoWindow.setContent('<div style="color:black;"><div style="padding:6px;"><h4>' + userData.UserName + '</h4></div><div><ul><li>' + userData.IncidentName + '</li><li>'+ userData.locname +'</li></ul></div></div>');
+                                        infoWindow.open(map, marker);
+                                        map.setCenter(marker.getPosition());
+                                        
+                                    });
+                                });
+                            } catch (err) {
+                                alert(err);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.error("AJAX Error: " + textStatus, errorThrown);
+                        }
+                    });
+                }
+
+
+            </script>
+
+
+
+
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkm76bzi-jCEicB-wsTV7DqxfJrR478tM&callback=initMap"></script>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade AddTypePage" id="LocationModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="height: 500px;">
+            <div class="modal-body p-0">
+                <div class="card mb-0">
+                    <div class="card-body p-3" style="height: 550px;">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn-close1" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="card mb-0 pt-2 pb-1 scroll" style=" height: 500px;">
+                            <div class="table-responsive p-2 pt-0 pb-0">
+                                <div id="popup-content">
+                                    <!-- Content for the popup will go here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

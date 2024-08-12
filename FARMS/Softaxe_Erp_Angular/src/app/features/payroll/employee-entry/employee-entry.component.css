@@ -1,0 +1,85 @@
+.btn-addednew {
+    background: #ff9f43;
+    padding: 7px 15px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+} 
+
+.commom-img {
+    border: 1px solid #e9e4e4;
+    height: 350px;
+    width: 100%;
+}
+
+.commom-img img {
+    height: 100%;
+    width: 100%;
+}
+
+.imgBox img, .imgBox iframe {
+    height: 290px;
+    width: 100%;
+}
+
+.pl-10 {
+    padding-left: 10px;
+}
+
+
+/* Upload Document */
+
+.upload-container {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 32px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.upload-input {
+    display: none;
+}
+
+.upload-label {
+    background-color: #198754;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+   
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.upload-label:hover {
+    background-color: #198754;
+}
+
+.file-name {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}   
+
+
+.doc-section {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.doc-link {
+    padding: 8px;
+   font-size: 16px;;
+    text-decoration: none;
+    color: black;
+    border-radius: 8px;
+}
+
+
+.fa-file:before {
+margin-right: 8px;
+}

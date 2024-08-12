@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+<div style="float: left; width: 100%;">
+    <h5 style="float: left;">Maintenance History</h5>
+</div>
+<hr style="clear: both; background:DIMGREY;">
+<div style="float: left; width: 100%;">
+    <table style="width: 100%;">
+        <tbody id="tblmaintenancehistory">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function MaintenanceHistoryWidgetFunPartial(fromDate, toDate, location, objects) {
+            try {
+            $.ajax({
+                type: "Get",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                url: "/Home/MaintenanceHistory/",
+                dataType: "json",
+                async: false,
+                data: { fromDate: fromDate, toDate: toDate, location: location, objects: objects },
+                success: function (data) {
+                    $("#tblmaintenancehistory").empty();
+                    $.each(data, function (i, item) {
+                        $("#tblmaintenancehistory").append(`<tr style = "border-bottom: 1px solid DIMGREY ;">
+                                            <td style="float: left;">${item.DETAIL}</td >
+                                            <td style="float: right;">${item.DATEDETAIL}</td > </tr>`)
+                    });
+
+
+                },
+                error: function (data) {
+                }
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    MaintenanceHistoryWidgetFunPartial('@ViewBag.FromDate', '@ViewBag.ToDate', '@ViewBag.Location', '@ViewBag.Objects');
+
+
+                           // setInterval(MaintenanceHistory, 5000);
+</script>
+

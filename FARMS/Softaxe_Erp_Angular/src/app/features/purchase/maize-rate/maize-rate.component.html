@@ -1,0 +1,165 @@
+<section>
+    <div class="content ListPage">
+        <div class="page-header">
+            <div class="page-title">
+                <h4 class="newcolor">Set Maize Rates</h4>
+                <h6 class="newcolor">Manage Maize Rates</h6>
+            </div>
+            <div class="page-btn">
+                <div class="wordset newwordset">
+                    <ul>
+                        <li>
+                            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf"
+                                id="pdfPrint">
+                                <img src="/assets/img/icons/pdf.svg" alt="img">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Home/Index" role="button">
+                                <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row align-items-center mb-2">
+
+                    <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Search</label>
+                        <input (input)="searchGrid($event)" type="text" class="form-control me-2">
+                      </div>
+                    </div> -->
+          
+          
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Vch No</label>
+                        <input readonly [(ngModel)]="VchNo" type="text" class="form-control me-2">
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                            <label class="fw-bold">Select Item</label>
+                          <ng-select class="bold-placeholder" [items]="ItemList"
+                          placeholder="--- Select Item--"
+                          bindLabel="Names" bindValue="Code" [(ngModel)]="Item"
+                            [dropdownPosition]="'bottom'" [readonly]="readonly">
+                          </ng-select>
+                        </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="position-relative w-100 me-2 form-group mb-0">
+                              <label class="fw-bold" style="margin-bottom: 0px !important;">From Date</label>
+                              <div class="input-groupicon">
+                                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                                  (click)="datepicker.open()" [(ngModel)]="FromDate" />
+                                <mat-datepicker #datepicker></mat-datepicker>
+                                <div class="addonset">
+                                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="position-relative w-100 me-2 form-group mb-0">
+                              <label class="fw-bold" style="margin-bottom: 0px !important;">To Date</label>
+                              <div class="input-groupicon">
+                                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker1"
+                                  (click)="datepicker1.open()" [(ngModel)]="ToDate" />
+                                <mat-datepicker #datepicker1></mat-datepicker>
+                                <div class="addonset">
+                                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="position-relative w-100 me-2">
+                              <label class="fw-bold">Rate</label>
+                              <input [readonly]="readonly" [(ngModel)]="Rate" type="text" class="form-control me-2">
+                            </div>
+                          </div>
+
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="position-relative w-100 me-2">
+                              <label class="fw-bold">Moisture</label>
+                              <input [readonly]="readonly" [(ngModel)]="Moisture" type="text" class="form-control me-2">
+                            </div>
+                          </div>
+
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="position-relative w-100 me-2">
+                                <label class="fw-bold">Select Uom</label>
+                              <ng-select class="bold-placeholder" [items]="UOMList"
+                              placeholder="--- Select UOM--"
+                              bindLabel="UOM" bindValue="UOM" [(ngModel)]="uom"
+                                [dropdownPosition]="'bottom'" [readonly]="readonly">
+                              </ng-select>
+                            </div>
+                            </div>
+
+
+                            <div class="col-lg-3 col-md-3 col-sm-12 pt-3 text-end">
+                    <button class="btn btn-primary btn-sm me-1" (click)="newMaizeRate()" [hidden]="isShowBtn">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateMaizeRate()"
+                  [hidden]="!isShowBtn">{{btnSave}}</button>
+                <button class="btn btn-secondary btn-sm" (click)="refresh()">Refresh</button>
+
+                      </div>
+          
+                  </div>
+
+                
+                <div class="table-responsive mb-1">
+                    <table class="table table-hover" id="tbl-print">
+                        <thead>
+                            <tr>
+                                <th class="text-start">Vch No</th>
+                                <th class="text-start">Item</th>
+                                <th class="text-start">UOM</th>
+                                <th class="text-start">FromDate</th>
+                                <th class="text-start">To Date</th>
+                                <th class="text-start">Rate</th>
+                                <th class="text-start">Moisture</th>
+                                <th class="text-center w-12">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody #voucherLists>
+                            <tr *ngFor="let data of MaizeRateList">
+                                <td class="text-start">{{data.VchNo}}</td>
+                                <td class="text-start">{{data.ItemName}}</td>
+                                <td class="text-start">{{data.uom}}</td>
+                                <td class="text-start d-none">{{data.ItemCode}}</td>
+                                <td class="text-start">{{data.FromDate}}</td>
+                                <td class="text-start">{{data.ToDate}}</td>
+                                <td class="text-start">{{data.Rate}}</td>
+                                <td class="text-start">{{data.Moisture}}</td>
+                                <td class="text-center">
+                                  
+                                    <span (click)="editMaizeRate(data)" class="me-3 btnEditCategory">
+                                        <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                                    </span>
+                                    <span (click)="deleteMaizeRate(data.VchNo)" class="confirm-text btnDelCategory">
+                                        <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete">
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

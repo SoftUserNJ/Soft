@@ -1,0 +1,528 @@
+<div class="content ListPage" *ngIf="isShowPage">
+    <div class="page-header">
+        <div class="page-title">
+            <h4 class="newcolor">Sale Gate Pass Out</h4>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf"
+                            id="pdfPrint">
+                            <img src="/assets/img/icons/pdf.svg" alt="img">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            <div class="row align-items-center mb-2">
+                <div class="col-lg-10 col-md-10 col-sm-12">
+                    <div class="search-set">
+                        <div class="search-path">
+                            <a class="btn btn-filter" id="filter_search">
+                                <img src="/assets/img/icons/filter.svg" alt="img">
+                                <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+                            </a>
+                        </div>
+                        <div class="search-input">
+                            <input (input)="searchGrid($event)" type="search" id="txtSearch" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-2 ps-0">
+                    <div class="wordset ms-4 text-center">
+                        <p class="btn-addednew btnAdd" (click)="togglePages()">
+                            <img src="/assets/img/icons/plus.svg" alt="img" class="me-1">Add New
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive mb-1">
+                <table class="table table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="text-start">VchNo</th>
+                            <th class="text-start">Date</th>
+                            <th class="text-start">Vch Type</th>
+
+                            <th class="text-center w-10">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody #voucherLists>
+                        <tr *ngFor="let data of voucherList">
+                            <td class="text-start">{{data.SRNO}}</td>
+                            <td class="text-start">{{data.CHQDATE}}</td>
+                            <td class="text-start">{{data.SRNO}}</td>
+                            <td class="text-center">
+                                <span (click)="edit(data)" class="me-3 btnEditCategory">
+                                    <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                                </span>
+                                <span (click)="delete(data.SRNO)" class="confirm-text btnDelCategory">
+                                    <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete">
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="content AddPage p-2" *ngIf="!isShowPage">
+    <div class="page-header mb-2">
+        <div class="page-title">
+            <h4>Sale Gate Pass Out</h4>
+        </div>
+        <div class="page-btn">
+            <a (click)="togglePages()" class="btn btn-added btnList">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+                    aria-label="fa fa-th-list"></i>
+                Home
+            </a>
+        </div>
+    </div>
+
+    <div class="px-1 bg-white">
+        <div class="row mt-2">
+            <div class="col-lg-12 col-sm-12" [ngClass]="{ disabled: isDisabled }">
+
+                <fieldset style="border: 1px solid #cccccc; border-radius: 3px; padding: 5px;">
+                    <legend class="fw-bold"
+                        style="font-size: 11px; float:none; margin-bottom:-6px; width: auto; padding:0 2%;">DO Info
+                    </legend>
+
+                    <div class="row" [formGroup]="gatePassOutForm">
+
+                        <div class="col-md-2 col-lg-2">
+                            <label class="fw-bold">Vch Type</label>
+                            <input type="text" [readOnly]="true" class="form-control" formControlName="vchType"
+                                value="SP">
+                        </div>
+
+                        <div class="col-md-2 col-lg-2">
+                            <label class="fw-bold">Vch#</label>
+                            <div class="d-flex">
+
+                                <div class="col-md-8 col-lg-8">
+                                    <input type="number" [readOnly]="true" class="form-control" formControlName="vchNo">
+                                </div>
+
+                                <div class="col-md-4 col-lg-4 d-flex justify-content-end">
+                                    <i class="fa-solid fa-list p-1 bg-info" data-bs-toggle="modal"
+                                        data-bs-target="#gpInfoModal" (click)="GetDoListOutPass()"></i>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2">
+                            <label class="fw-bold">Date</label>
+                            <div class="form-group mb-0">
+                                <div class="input-groupicon">
+                                    <input type="text" class="form-control" placeholder="DD/MM/YYYY"
+                                        formControlName="vchDate" matInput [matDatepicker]="datepicker5"
+                                        (click)="datepicker5.open()" />
+                                    <mat-datepicker #datepicker5></mat-datepicker>
+                                    <div class="addonset">
+                                        <img src="/assets/img/icons/calendars.svg" alt="img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 col-lg-2">
+                            <label class="fw-bold">Vehicle No</label>
+                            <input type="text" class="form-control" formControlName="vehicleNo">
+                        </div>
+
+                        <div class="col-md-2 col-lg-2">
+                            <label class="fw-bold">Bilty No</label>
+                            <input type="number" class="form-control" formControlName="biltyNo">
+                        </div>
+
+                        <div class="col-md-2 col-lg-2">
+                            <label class="fw-bold">Freight</label>
+                            <input type="number" class="form-control" formControlName="freight">
+                        </div>
+
+                        <div class="col-md-2 col-lg-2">
+                            <label class="fw-bold">Driver Name</label>
+                            <input type="text" class="form-control" formControlName="driverName">
+                        </div>
+
+                        <div class="col-md-2 col-lg-2">
+                            <label class="fw-bold">Driver Contact</label>
+                            <input type="text" class="form-control" formControlName="driverContact">
+                        </div>
+
+                        <div class="col-md-2 col-lg-2">
+                            <label class="fw-bold">Driver NIC</label>
+                            <input type="text" class="form-control" formControlName="driverCNIC">
+                        </div>
+
+                        <div class="col-md-2 col-lg-2">
+                            <label class="fw-bold">Extra Freight</label>
+                            <input type="number" class="form-control" formControlName="extraFreight">
+                        </div>
+
+                        <div class="col-md-2 col-lg-2">
+                            <label class="fw-bold">Freight SubParty</label>
+                            <input type="number" class="form-control" formControlName="freightSubParty">
+                        </div>
+
+                        <div class="col-md-2 col-lg-2">
+                            <label class="fw-bold">Crop Year</label>
+                            <input type="number" class="form-control" formControlName="cropYear" readonly>
+                        </div>
+
+                    </div>
+
+                    <fieldset *ngIf="exportDetails" style="border: 1px solid #cccccc; border-radius: 3px; padding: 5px;">
+                        <legend class="fw-bold"
+                            style="font-size: 11px; float:none; margin-bottom:-6px; width: auto; padding:0 2%;">Export
+                            Details</legend>
+
+                        <div class="row" [formGroup]="gatePassOutForm">
+
+                            <div class="col-md-3 col-lg-3">
+
+                                <div class="d-flex p-0 mt-1">
+                                    <div class="col-md-4 col-lg-4">
+                                        <label class="fw-bold">Fwd Booking</label>
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-4 pe-1">
+                                        <input type="number" class="form-control" formControlName="fwdBooking1">
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-4 ps-1">
+                                        <input type="number" class="form-control" formControlName="fwdBooking2">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3 col-lg-3">
+                                <div class="d-flex p-0 mt-1">
+                                    <div class="col-md-4 col-lg-4">
+                                        <label class="fw-bold">Country</label>
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-4 pe-1">
+                                        <input type="number" class="form-control" formControlName="country1">
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-4 ps-1">
+                                        <input type="number" class="form-control" formControlName="country2">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-lg-3">
+
+                                <div class="d-flex p-0 mt-1">
+                                    <div class="col-md-4 col-lg-4">
+                                        <label class="fw-bold">Port</label>
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-4 pe-1">
+                                        <input type="number" class="form-control" formControlName="port1">
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-4 ps-1">
+                                        <input type="number" class="form-control" formControlName="port2">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3 col-lg-3">
+
+                                <div class="d-flex p-0 mt-1">
+                                    <div class="col-md-4 col-lg-4">
+                                        <label class="fw-bold">Container No</label>
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-4 pe-1">
+                                        <input type="number" class="form-control" formControlName="containerNo1">
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-4 ps-1">
+                                        <input type="number" class="form-control" formControlName="containerNo2">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3 col-lg-3">
+
+                                <div class="d-flex p-0 mt-1">
+                                    <div class="col-md-4 col-lg-4">
+                                        <label class="fw-bold">Seal#</label>
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-4 pe-1">
+                                        <input type="number" class="form-control" formControlName="sealNo1">
+                                    </div>
+
+                                    <div class="col-md-4 col-lg-4 ps-1">
+                                        <input type="number" class="form-control" formControlName="sealNo2">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3 col-lg-3">
+                                <div class="d-flex p-0 mt-1">
+                                    <div class="col-md-4 col-lg-4">
+                                        <label class="fw-bold" style="font-size: 10px !important;">Container Size
+                                            Ft</label>
+                                    </div>
+
+                                    <div class="col-md-8 col-lg-8 lts">
+                                        <input type="number" class="form-control" formControlName="containerSize">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-lg-3">
+                                <div class="d-flex p-0 mt-1">
+                                    <div class="col-md-4 col-lg-4">
+                                        <label class="fw-bold">Transporter</label>
+                                    </div>
+
+                                    <div class="col-md-8 col-lg-8  lts">
+                                        <ng-select [items]="transporter" formControlName="transporter"
+                                            bindLabel="L5NAMES" bindValue="L5CODE"
+                                            placeholder="---Select Transporter---" [dropdownPosition]="'bottom'">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+                    <div class="table-responsive my-2" style="height: 270px">
+                        <table class="table table-hover" id="tbl-print">
+                            <thead>
+                                <tr>
+                                    <th class="wd-2">Do#</th>
+                                    <th class="wd-5">Date</th>
+                                    <th class="wd-20">Party</th>
+                                    <th class="wd-15">Item</th>
+                                    <th class="wd-20">SubParty</th>
+                                    <th class="wd-5">Qty</th>
+                                    <th class="wd-5">DeliverQty</th>
+                                    <th class="wd-5">Freight</th>
+                                    <th class="wd-15">Godown</th>
+                                    <th class="wd-5"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of gpDetailsList">
+                                    <td>{{item.DONO}}</td>
+                                    <td>{{item.DoDate}}</td>
+                                    <td>{{item.Names}}</td>
+                                    <td>{{item.itemName}}</td>
+                                    <td>{{item.SubParty}}</td>
+                                    <td><input [(ngModel)]="item.Qty" [readOnly]="true" type="number"
+                                            class="form-control text-end amount me-2 ht-25"></td>
+                                    <td><input [(ngModel)]="item.deliverQty" type="number"
+                                            class="form-control text-end amount me-2 ht-25"></td>
+                                    <td><input type="number" class="form-control text-end amount me-2 ht-25"
+                                            [(ngModel)]="item.doFreight"></td>
+                                    <td class="wd-10">
+                                        <ng-select [items]="godownsList" bindLabel="GODOWNNAME"
+                                            [(ngModel)]="item.godown" [clearable]="none" bindValue="GODOWNID"
+                                            placeholder="---Select Godown---" [dropdownPosition]="'bottom'">
+                                        </ng-select>
+                                    </td>
+                                    <td class="text-center">
+                                        <!-- Delete Button  -->
+                                        <span class="confirm-text btnDelItem" style="cursor: pointer">
+                                            <img src="/assets/img/icons/delete.svg" alt="Delete"
+                                                (click)="deleteItem(item)" />
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+
+            </div>
+
+            <div class="col-lg-12 col-sm-12">
+
+                <div class="card-body">
+                    <div class="row text-end mt-2">
+                        <div class="col-lg-12 px-1">
+                            <button class="btn btn-success btn-sm me-1" *ngIf="!isDisabled" (click)="onClickSave()">
+                                Save
+                            </button>
+                            <button class="btn btn-primary btn-sm me-1" *ngIf="isDisabled" (click)="onClickNew()">
+                                New
+                            </button>
+                            <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">
+                                Refresh
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="modal fade" id="gpInfoModal">
+    <div class="modal-dialog" style="max-width:900px;">
+        <div class="modal-content">
+            <div class="modal-header p-2 align-items-center">
+                <h5 class="modal-title">DO Info</h5>
+                <button type="button" (click)="doListDetailOutPass = []" class="close fs-30" data-bs-dismiss="modal"
+                    aria-label="Close">×</button>
+            </div>
+            <div class="modal-body p-2">
+                <div class="card mb-0">
+                    <div class="card-body p-2">
+
+                        <div class="row align-items-center mb-2">
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="search-set">
+                                    <div class="search-path">
+                                        <a class="btn btn-filter" id="filter_search">
+                                            <img src="/assets/img/icons/filter.svg" alt="img">
+                                            <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+                                        </a>
+                                    </div>
+                                    <div class="search-input">
+                                        <input type="search" id="txtSearch" placeholder="Search..." class="w-100" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-8 col-md-8 col-sm-12">
+
+                                <div class="row align-items-center">
+                                    <div class="col-lg-2 col-md-2 text-end p-0">
+                                        <span class="fw-bolder">From Date</span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 ps-1">
+                                        <div class="form-group mb-0">
+                                            <div class="input-groupicon">
+                                                <input type="text" class="form-control" placeholder="DD/MM/YYYY"
+                                                    matInput [matDatepicker]="datepicker" [(ngModel)]="fromDate"
+                                                    (click)="datepicker.open()" />
+                                                <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                                                <div class="addonset">
+                                                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 text-end p-0">
+                                        <span class="fw-bolder">To Date</span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 ps-1">
+                                        <div class="form-group mb-0">
+                                            <div class="input-groupicon">
+                                                <input type="text" class="form-control" matInput
+                                                    placeholder="DD/MM/YYYY" [matDatepicker]="datepicker2"
+                                                    [(ngModel)]="toDate" (click)="datepicker2.open()">
+                                                <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                                                <div class="addonset">
+                                                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="add-icon">
+                                            <a class="w-50" (click)="GetDoListOutPass()"><img
+                                                    src="/assets/img/icons/search.svg" alt="img" class="searchSvg"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-8 pe-1">
+                                <div class="table-responsive my-2" style="height: 300px">
+                                    <table class="table table-hover" id="tbl-print">
+                                        <thead>
+                                            <tr>
+                                                <th class="">Vch Type</th>
+                                                <th class="">DoNo</th>
+                                                <th class="">DoDate</th>
+                                                <th class="">Party</th>
+                                                <th class="">Qty</th>
+                                                <th class="">Deliver Qty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of doListOutPass"
+                                                (click)="GetDoDetailListOutPass($event,item)"
+                                                (dblclick)="AppendDo(item)">
+                                                <td class="text-start">{{item.VchType}}</td>
+                                                <td class="text-start">{{item.DONO}}</td>
+                                                <td class="text-center">{{item.DoDate}}</td>
+                                                <td class="text-center">{{item.Names}}</td>
+                                                <td class="text-start">{{item.GQTY}}</td>
+                                                <td class="text-end">{{item.DeliverQty}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-4 ps-1">
+                                <div class="table-responsive my-2" style="height: 300px">
+                                    <table class="table table-hover" id="tbl-print">
+                                        <thead>
+                                            <tr>
+                                                <th class="">Item</th>
+                                                <th class="">Qty</th>
+                                                <th class="">Deliver Qty</th>
+                                                <th class="">SubParty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of doListDetailOutPass">
+                                                <td class="text-start">{{item.itemName}}</td>
+                                                <td class="text-start">{{item.Qty}}</td>
+                                                <td class="text-center">{{item.Qty}}</td>
+                                                <td class="text-center">{{item.SubParty}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

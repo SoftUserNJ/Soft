@@ -1,0 +1,143 @@
+﻿@{
+    Layout = null;
+}
+<div style="float: left; width: 100%;">
+    <h5 style="float: left;">BRIGHTNESS</h5>
+    <button class="ct-btnsHistory" id="btnChartBirghtnessHistory" style="float: right;">History</button>
+</div>
+<p style="clear: both;"></p>
+<div style="width: 100%; height:90%;">
+    <canvas id="ChartBirghtness"></canvas>
+</div>
+
+
+<script>
+    var ChartBirghtness;
+    function BrightnessWidgetFunPartial(fromDate, toDate, location, objects) {
+        try {
+            $.ajax({
+                type: "Get",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                url: "/Home/Brightness/",
+                dataType: "json",
+                async: false,
+                data: { fromDate: fromDate, toDate: toDate, location: location, objects: objects },
+                success: function (data1) {
+                    var labelArray = [];
+                    var DataArray = [];
+
+                    if (data1.length === 0) {
+                        labelArray = null;
+                        DataArray = null;
+                    } else {
+                        $.each(data1, function (i, item) {
+                            var labelvalue = item.Xasix.replace(/'/g, '');
+                            labelArray.push(labelvalue);
+                            DataArray.push(item.Datavalue);
+                        });
+                    }
+
+
+                    var data = {
+                        labels: labelArray,
+                        datasets: [{
+                            label: 'Brightness (%)',
+                            data: DataArray,
+                            borderColor: '#b51716',
+                            backgroundColor: 'transparent',
+                            lineTension: 0.2,
+                        }]
+                    };
+
+
+                   
+
+
+
+                    var options = {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        title: {
+                            display: false,
+                            text: 'Line Chart Example'
+                        },
+                        legend: {
+                            display: false // Hide the dataset label checkbox
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: false,
+                                    labelString: 'Day',
+                                    fontSize: 3
+                                },
+                                gridLines: {
+                                    display: false,
+                                    color: 'white',
+                                    lineWidth: 1,
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    fontSize: 9
+                                },
+                            }],
+                            yAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: false,
+                                    labelString: 'Value',
+                                    fontSize: 3
+                                },
+                                ticks: {
+                                    min: 0,
+                                    max: 100,
+                                    stepSize: 25,
+                                    fontSize: 9,
+                                    callback: function (value) {
+                                        return value + '%';
+                                    }
+                                },
+                                gridLines: {
+                                    color: '#85888c',
+                                    lineWidth: 1,
+                                    drawBorder: false
+                                },
+                            }]
+                        },
+                        tooltips: {
+                            callbacks: {
+                                title: function (tooltipItem, data) {
+                                    var label = data.labels[tooltipItem[0].index];
+                                    var datasetLabel = data.datasets[tooltipItem[0].datasetIndex].label;
+                                    return label + ' - ' + datasetLabel; // Concatenate date and dataset label
+                                },
+                                label: function (tooltipItem, data) {
+                                    var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    };
+
+                    var ctx = document.getElementById('ChartBirghtness').getContext('2d');
+                    if (ChartBirghtness) {
+                        ChartBirghtness.destroy();
+                    }
+                     ChartBirghtness = new Chart(ctx, {
+                        type: 'line',
+                        data: data,
+                        options: options
+                    });
+                },
+                error: function (data1) {
+                }
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    BrightnessWidgetFunPartial('@ViewBag.FromDate', '@ViewBag.ToDate', '@ViewBag.Location', '@ViewBag.Objects');
+
+</script>

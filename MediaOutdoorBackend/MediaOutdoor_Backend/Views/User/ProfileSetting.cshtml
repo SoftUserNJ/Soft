@@ -1,0 +1,225 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+@using MediaOutdoor_Backend;
+@model TblUser;
+
+@{
+    ViewData["Title"] = "Profile Setting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content AddPage pt-1">
+
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["ProfileUpdate"]</h4>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["FirstName"]</label>
+                                <input type="text" value="@Model.FirstName" class="disabled" skinid="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["SecondName"]</label>
+                                <input type="text" value="@Model.SecondName" class="disabled" skinid="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Phone"]</label>
+                                <input type="text" value="@Model.ContactNo" class="disabled" skinid="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Email"]</label>
+                                <input type="email" value="@Model.Email" class="disabled" skinid="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Address"]</label>
+                                <input type="text" value="@Model.UserAddress1" class="disabled" skinid="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["UserName"]</label>
+                                <input type="text" value="@Model.UserName" class="disabled" skinid="">
+                                <input type="hidden" value="@Model.UserId" class="disabled" skinid="" id="LoginUserId">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["OldPassword"]</label>
+                                <div class="pass-group">
+                                    <input type="password" class="pass-input" id="userOldPassword" skinid="Enter Old Password....!">
+                                    <span class="fas toggle-password fa-eye-slash"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["NewPassword"]</label>
+                                <div class="pass-group">
+                                    <input type="password" class="pass-input" id="userNewPassword" skinid="Enter New Password....!">
+                                    <span class="fas toggle-password fa-eye-slash"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["ConfirmNewPassword"]</label>
+                                <div class="pass-group">
+                                    <input type="password" class="pass-inputs" id="userConfirmPassword" skinid="Confirm New Password....!">
+                                    <span class="fas toggle-passworda fa-eye-slash"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    
+                    <div class="commom-img mb-2">
+                        <img src="" id="ImageUser">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="file" id="userImg" accept="image/jpg, image/jpeg, image/png">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div>
+                    <button class="btn btn-success btn-sm ct-btns" id="btnSaveUser">@Localizer["Save"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+    
+
+        $(function(){
+            var srcAttr = $('body').find(".menu-drop-user").find(".user-img").find('img').attr('src');
+            $("#ImageUser").attr('src', srcAttr);
+        });
+
+        //====================== User Image ========================\\
+        $("body #userImg").change(function (event) {
+            $("#ImageUser").attr('src', URL.createObjectURL(event.target.files[0]));
+        });
+
+
+        $('body').on('input', "#userNewPassword, #userConfirmPassword", function () {
+
+            const inputValue = $(this).val();
+            $(this).val(inputValue.replace(/[^0-9+]/g, ''));
+
+            if ($(this).prop('id') != "txtUserContact") {
+
+                var v = $(this).val();
+
+                if (v.length > 6) {
+                    v = v.substring(0, 6);
+                    $(this).val(v);
+                }
+            }
+        });
+
+
+        $("#btnSaveUser").click(function () {
+
+            var userPassword = $("#userNewPassword").val();
+            var userConfirmPassword = $("#userConfirmPassword").val();
+
+            if ($("#userNewPassword").val() != "" || $("#userConfirmPassword").val() != "" || $("#userOldPassword").val() != "") {
+
+                if (CheckValidation("AddPage") == false) {
+
+                    return false;
+                }
+
+
+                if (userPassword != userConfirmPassword) {
+                    toastr.warning("Confirm Password Not Mach", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    return false;
+                }
+
+                if (userConfirmPassword.length < 6) {
+                    toastr.warning("Password must be in 6 digits", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    return false;
+                }
+
+            }
+
+            
+
+            //var obj = {};
+            //obj.oldPassword = $("#userOldPassword").val();
+            //obj.newPassword = userConfirmPassword;
+
+            var formData = new FormData();
+
+            var totalFiles = document.getElementById("userImg").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("userImg").files[i];
+                formData.append("profilePic", file);
+            }
+
+            formData.append("oldPassword", $("#userOldPassword").val());
+            formData.append("newPassword", userConfirmPassword);
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/UpdateProfileSetting/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data == true) {
+                            toastr.success("Password Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            $("#userOldPassword").val('');
+                            $("#userNewPassword").val('');
+                            $("#userConfirmPassword").val('');
+                        }
+                        else if (data == "PicChanged") {
+                            toastr.success("Profile Pic Changed", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                        else {
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+    </script>
+}

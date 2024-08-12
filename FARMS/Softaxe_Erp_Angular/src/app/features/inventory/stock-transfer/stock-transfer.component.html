@@ -1,0 +1,328 @@
+<div class="content ListPage" *ngIf="isShowPage">
+  <div class="page-header d-block mb-1">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="page-title">
+          <h4 class="newcolor">Transfer List</h4>
+          <h6 class="newcolor">Transfer your stocks to one godown another godown.</h6>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="page-btn float-end">
+          <div class="wordset newwordset">
+            <ul>
+              <li>
+                <a (click)="export('Stock-Transfer', 'pdf')" title="pdf">
+                  <img src="/assets/img/icons/pdf.svg" alt="img">
+                </a>
+              </li>
+              <li>
+                <a (click)="export('Stock-Transfer', 'xlxs')" title="excel">
+                  <img src="/assets/img/icons/excel.svg" alt="img">
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row align-items-center mb-2">
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="d-flex align-items-center">
+            <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+            <input type="search" class="form-control" placeholder="Search" (input)="searchGrid($event)" />
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-6 col-sm-12">
+          <div class="row align-items-center">
+            <div class="col-lg-2 col-md-2 text-end p-0">
+              <span class="fw-bolder">From Date</span>
+            </div>
+            <div class="col-lg-3 col-md-4 ps-1">
+              <div class="form-group mb-0">
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                    [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                  <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 text-end p-0">
+              <span class="fw-bolder">To Date</span>
+            </div>
+            <div class="col-lg-3 col-md-4 ps-1">
+              <div class="form-group mb-0">
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                    [matDatepicker]="datepicker2" [(ngModel)]="toDate" (click)="datepicker2.open()">
+                  <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+              <img src="/assets/img/icons/search.svg" alt="img" class="filter-img" (click)="getStockTransferList()">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 ps-0">
+          <div class="d-flex align-items-center justify-content-end">
+            <p (click)="togglePages(); editDisabled= false" class="add-new">
+              <img src="/assets/img/icons/plus.svg" alt="img" class="filter-img">Add New
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive mb-1" style="height:400px;">
+        <table class="table mb-0 custom-table-padding" id="export">
+          <thead>
+            <tr>
+              <th class="text-center">Vch No</th>
+              <th class="text-center">Vch Type</th>
+              <th class="text-center">Vch Date</th>
+              <th class="text-center w-0 noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody #stockTransferLists>
+            <tr *ngFor="let item of stockTransferList">
+              <td class="vchno text-center"> {{item.VCHNO}} </td>
+              <td class="vchtype text-center">{{item.VCHTYPE}}</td>
+              <td class="vchdate text-center">{{item.VCHDATE}}</td>
+              <td class="text-center noPrint">
+                <span class="me-3 btnPrintInvoice" (click)=" openRowReport(item)">
+                  <i class="fas fa-print"></i>
+                </span>
+                <span (click)="editStockTransfer(item.VCHNO)" class="me-3 btnEditData">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span (click)="deleteStockTransfer(item.VCHNO)" class="btnDelData">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Page -->
+<div class="content AddPage" *ngIf="!isShowPage">
+  <div class="row align-items-center">
+    <div class="col-lg-4 col-md-12">
+      <div class="page-header mb-1">
+        <div class="page-title">
+          <h4 class="newcolor">Transfer</h4>
+          <h6 class="newcolor">Transfer your stocks to one godown another godown.</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="d-flex align-items-center justify-content-end">
+        <div class="d-flex align-items-center me-4">
+          <input type="radio" id="vchCP" class="me-1" name="Vch" [checked]="!otherLocation"
+            (click)="onClickSameLocation($event)">
+          <label for="vchCP" class="mb-0 fw-bolder">Same Location</label>
+        </div>
+        <div class="d-flex align-items-center">
+          <input type="radio" id="vchBP" class="me-1" [checked]="otherLocation" name="Vch"
+            (click)="onClickOtherLocation($event)">
+          <label for="vchBP" class="fw-bolder mb-0">Other Location</label>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1 col-md-4 pe-0">
+      <input type="number" [(ngModel)]="vchno" class="form-control" disabled="">
+    </div>
+    <div class="col-lg-2 col-md-4">
+      <div class="form-group" style="margin-bottom:0!important;">
+        <div class="input-groupicon">
+          <input type="text" class="form-control" 
+            placeholder="DD/MM/YYYY" 
+            matInput 
+            [matDatepicker]="datepicker2"
+            [(ngModel)]="vchDate" 
+            (click)="datepicker2.open()" />
+          <mat-datepicker #datepicker2  [startAt]="vchDate"></mat-datepicker>
+          <div class="addonset">
+            <img src="/assets/img/icons/calendars.svg" alt="img">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1 col-md-4 p-0">
+      <div class="page-header mb-1">
+        <div class="page-btn">
+          <a (click)="togglePages()" class="btn btn-added btnList">
+            <i class="fa me-2 fa-th-list"></i> Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="stockTransferForm" [ngClass]="{ 'disabled': isPageDisabled }">
+        <div class="row AddAdjust activeForm">
+          <div class="col-lg-4 col-md-4">
+            <div class="mb-2">
+              <label class="fw-bolder">Product</label>
+              <div class="position-relative w-100">
+                <ng-select 
+                  placeholder="---Select Product---" 
+                  [items]="productList"
+                  bindLabel="name" 
+                  bindValue="code" 
+                  formControlName="productCode"
+                  (change)="onChangeProduct($event)"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-{{costCenter == 'true' ? '3' : '4'}} col-md-3">
+            <div class="mb-2">
+              <label class="fw-bolder">From Location</label>
+              <div class="position-relative w-100">
+                <ng-select placeholder="---Select From Location---" 
+                  formControlName="locFromId"
+                  [items]="fromLocationList"
+                  bindValue="SHELFID" 
+                  bindLabel='LOCATIONLABEL'
+                  (change)="onChangeFromLoc($event)" 
+                  [clearable]="false"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-3" *ngIf="costCenter == 'true'">
+            <div class="mb-2">
+              <label class="fw-bolder">From Job No</label>
+              <ng-select placeholder="---Select Job No---" [items]="JobList" bindLabel="NAME" bindValue="ID"
+                [dropdownPosition]="'bottom'" formControlName="fromJobNo">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-{{costCenter == 'true' ? '2' : '4'}} col-md-2">
+            <div class="mb-2">
+              <label class="fw-bolder">UOM</label>
+              <div class="position-relative w-100">
+                <ng-select 
+                  placeholder="---Select UOM---" 
+                  [items]="uomList"
+                  bindLabel="UOM" 
+                  bindValue="UOMID" 
+                  formControlName="uomId" 
+                  [clearable]="false"
+                  (change)="OnInputQty()"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-4">
+            <div class="form-group">
+              <label>Qty</label>
+              <input type="number" class="form-control" (input)="OnInputQty()" formControlName="qty">
+            </div>
+          </div>
+          <div class="col-lg-{{costCenter == 'true' ? '3' : '4'}} col-sm-3">
+            <div class="">
+              <label class="fw-bolder">To Location</label>
+              <div class="position-relative w-100">
+                <ng-select 
+                  placeholder="---Select To Location---" 
+                  [items]="toLocationList"
+                  bindLabel="name" 
+                  bindValue="id" 
+                  formControlName="locToId" 
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-3" *ngIf="costCenter == 'true'">
+            <div class="mb-2">
+              <label class="fw-bolder">To Job No</label>
+              <ng-select placeholder="---Select Job No---" [items]="JobList" bindLabel="NAME" bindValue="ID"
+                [dropdownPosition]="'bottom'" formControlName="toJobNo">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-{{costCenter == 'true' ? '2' : '4'}} col-md-2 d-flex align-items-end justify-content-end">
+            <div class="form-group">
+              <button class="btn btn-primary btn-sm" (click)="appendData()">{{ isRowEdit ? 'Update' : 'Add' }}</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive mb-2" style="height:280px;" [ngClass]="{ 'disabled': isPageDisabled }">
+        <table class="table mb-0 custom-table-padding">
+          <thead>
+            <tr>
+              <th class="text-start">Product</th>
+              <th class="text-center w-7">From Location</th>
+              <th *ngIf="costCenter == 'true'">From Job No</th>
+              <th class="text-center w-10">Expiry Date</th>
+              <th class="text-center">Uom</th>
+              <th class="text-end pe-2">Qty</th>
+              <th class="text-center">To Location</th>
+              <th *ngIf="costCenter == 'true'">To Job No</th>
+              <th class="text-center w-10">Action</th>
+            </tr>
+          </thead>
+          <tbody id="grdAddVoucher">
+            <tr *ngFor="let data of stockTransfer_List;">
+              <td class="text-center d-none">{{ data.sno }}</td>
+              <td class="text-start d-none">{{data.productCode}}</td>
+              <td class="limited-text text-start" title="{{data.productName}}">{{data.productName}}</td>
+              <td class="text-center d-none">{{data.locFromId}}</td>
+              <td class="text-center">{{data.fLocation}}</td>
+              <td class="limited-text" *ngIf="costCenter == 'true'">{{ data.fromJobName}}</td>
+              <td class="text-center">{{data.expiryDate}}</td>
+              <td class="text-center d-none">{{data.uomId}}</td>
+              <td class="text-center">{{data.uom}}</td>
+              <td class="text-end">{{data.qty}}</td>
+              <td class="text-center d-none">{{data.locToId}}</td>
+              <td class="text-center">{{data.tLocation}}</td>
+              <td class="limited-text" *ngIf="costCenter == 'true'">{{ data.toJobName}}</td>
+              <td class="text-center">
+                <span (click)="editRow(data)" class="me-3 btnEditData">
+                  <i class="fas fa-edit"></i>
+                </span>
+                <span (click)="removeRow(data)" class="btnDelData">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr class="m-0">
+      <div class="row">
+        <div class="col-sm-12 col-lg-12 col-md-12 text-end">
+          <div class="mt-4">
+            <button class="btn btn-primary btn-sm me-1" *ngIf="!isNewClick" (click)="onClickNew()">New</button>
+            <button *ngIf="isNewClick" (click)="onClickSave()" class="btn btn-success btn-sm  me-1">Save</button>
+            <button class="btn btn-secondary btn-sm me-1" (click)="resetForm()"
+              (click)="onClickRefresh()">Refresh</button>
+
+
+              <button class="btn btn-info btn-sm" *ngIf="isPrint" (click)="onViewReport()">Print</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

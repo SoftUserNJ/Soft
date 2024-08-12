@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\Repo\\Softaxe_Erp_Angular\\FARMS\\SoftaxeERP_API\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0FAFB40B-FAF2-4D0F-BE1E-C4F5934232CF}|SoftaxeERP_API\\SoftaxeERP_API.csproj|e:\\repo\\softaxe_erp_angular\\farms\\softaxeerp_api\\softaxeerp_api\\services\\istock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0FAFB40B-FAF2-4D0F-BE1E-C4F5934232CF}|SoftaxeERP_API\\SoftaxeERP_API.csproj|solutionrelative:softaxeerp_api\\services\\istock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0FAFB40B-FAF2-4D0F-BE1E-C4F5934232CF}|SoftaxeERP_API\\SoftaxeERP_API.csproj|e:\\repo\\softaxe_erp_angular\\farms\\softaxeerp_api\\softaxeerp_api\\controllers\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0FAFB40B-FAF2-4D0F-BE1E-C4F5934232CF}|SoftaxeERP_API\\SoftaxeERP_API.csproj|solutionrelative:softaxeerp_api\\controllers\\inventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 197,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IStock.cs",
+              "DocumentMoniker": "E:\\Repo\\Softaxe_Erp_Angular\\FARMS\\SoftaxeERP_API\\SoftaxeERP_API\\Services\\IStock.cs",
+              "RelativeDocumentMoniker": "SoftaxeERP_API\\Services\\IStock.cs",
+              "ToolTip": "E:\\Repo\\Softaxe_Erp_Angular\\FARMS\\SoftaxeERP_API\\SoftaxeERP_API\\Services\\IStock.cs",
+              "RelativeToolTip": "SoftaxeERP_API\\Services\\IStock.cs",
+              "ViewState": "AQIAAFkAAAAAAAAAAAAAAGUAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-05T10:24:38.609Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "InventoryController.cs",
+              "DocumentMoniker": "E:\\Repo\\Softaxe_Erp_Angular\\FARMS\\SoftaxeERP_API\\SoftaxeERP_API\\Controllers\\InventoryController.cs",
+              "RelativeDocumentMoniker": "SoftaxeERP_API\\Controllers\\InventoryController.cs",
+              "ToolTip": "E:\\Repo\\Softaxe_Erp_Angular\\FARMS\\SoftaxeERP_API\\SoftaxeERP_API\\Controllers\\InventoryController.cs",
+              "RelativeToolTip": "SoftaxeERP_API\\Controllers\\InventoryController.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAgwCMAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-05T10:24:20.284Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

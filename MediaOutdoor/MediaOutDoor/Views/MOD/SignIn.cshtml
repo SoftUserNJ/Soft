@@ -1,0 +1,227 @@
+﻿@{
+    Layout = null;
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In - MediaOutDoor</title>
+    <link rel="icon" href="~/img/favicon.png" sizes="32x32" />
+
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/MediaOutDoor.styles.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/elegant-icons.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/nice-select.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/slicknav.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link href="~/lib/toastr/toatr.css" rel="stylesheet" asp-append-version="true" />
+
+</head>
+<body>
+
+    <style>
+        .bg-image-vertical {
+            position: relative;
+            overflow: hidden;
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: auto 100%;
+        }
+
+        @@media (min-width: 1025px) {
+            .h-custom-2 {
+                height: 100%;
+            }
+        }
+    </style>
+
+    <section class="vh-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6 col-md-5 col-lg-5 mx-auto text-black">
+
+                    <div class="mt-4 mb-5 px-5 ms-xl-4 text-center">
+                        <img src="/img/logo.png" alt="" style="width:60%;">
+                    </div>
+
+                    <form asp-controller="MOD" asp-action="SignIn" method="post">
+
+                        <div class="form-outline ml-5 mr-5 mb-4">
+                            <label class="form-label text-white" for="email">@Localizer["EmailAddress"]</label>
+                            <input type="email" id="email" name="email" class="form-control form-control-lg" />
+                        </div>
+
+                        <div class="form-outline ml-5 mr-5 mb-4">
+                            <label class="form-label text-white" for="password">@Localizer["Pincode"]</label>
+                            <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Enter 6 digit pincode" />
+                        </div>
+
+                        @if (ViewBag.Error != "")
+                        {
+                            <div class="text-center mb-1">
+                                <span class="text-danger p-pad">@ViewBag.Error</span>
+                            </div>
+                        }
+
+                        <div class="form-outline ml-5 mr-5 mb-4">
+                            <button class="btn btn-success btn-lg btn-block" type="submit">@Localizer["Login"]</button>
+                        </div>
+
+                    </form>
+
+                    <p class="text-center mt-2 mb-0">
+                        <a class="text-primary" href="JavaScript:void(0)" data-target="#pwdModal" data-toggle="modal">@Localizer["ForgotMyPassword"]</a>
+                    </p>
+
+                    <p class="text-center text-muted mt-2 mb-0">
+                        @Localizer["DontHaveAnAccount"]
+                        <a asp-controller="MOD" asp-action="Register" class="fw-bold text-body"><u class="text-primary">@Localizer["RegisterHere"]</u></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="recoverMsg" class="d-none">
+        <p style="font-size:16px;">We have received a request to reset the password for your account.</p>
+        <a style="
+            background: black;
+            color: white !important;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration:none;
+            padding: 8px;"
+           href="SOFTAXEURL">
+            Reset Password
+        </a>
+    </div>
+
+    <div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog mt-5 pt-5">
+            <div class="modal-content">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="close text-white p-3" data-dismiss="modal" aria-hidden="true" id="btnDismissModal">×</button>
+                </div>
+                <div class="modal-body px-5 pt-0 pb-5">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="text-start">
+                                    <h4 class="pb-2">@Localizer["ForgotPassword"]</h4>
+                                    <p class="pb-3">@Localizer["ForgotPasswordLine"]</p>
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <label class="text-white">@Localizer["EmailAddress"]</label>
+                                                <input class="form-control input-lg" placeholder="E-mail Address" id="emailR" type="email">
+                                            </div>
+                                            <button class="btn btn-success btn-lg btn-block" id="resetPassword">@Localizer["ResetPassword"]</button>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.nice-select.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.nicescroll.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.magnific-popup.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.countdown.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.slicknav.js" asp-append-version="true"></script>
+    <script src="~/js/mixitup.min.js" asp-append-version="true"></script>
+    <script src="~/js/owl.carousel.min.js" asp-append-version="true"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    <script src="~/lib/toastr/toastr.js" asp-append-version="true"></script>
+    <script src="~/lib/toastr/toastr.min.js" asp-append-version="true"></script>
+
+    <script>
+
+        $('body').on('click', "#resetPassword", function () {
+
+            // Email Validation
+            var email = $("#emailR").val();
+
+            if (email == "") {
+
+                toastr.warning("Enter email to reset your password.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $('#emailR').focus();
+                return false;
+            }
+
+
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (email.length > 0) {
+                if (!emailRegex.test(email)) {
+                    toastr.warning("Invalid Email Address", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    $('#emailR').focus();
+                    return false;
+                }
+            }
+
+            var formData = new FormData();
+            formData.append("email", email);
+            formData.append("recoverMsg", $("#recoverMsg").html());
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/MOD/ForgotPassword/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data != false) {
+                            if (data != true) {
+                                toastr.warning(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            } else {
+                                toastr.success("Check your email. We have sent you an email to reset your password.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                                $("#btnDismissModal").click();
+                            }
+                        }
+                        else {
+                            toastr.error("Reset Password Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $('body').on('input', "#password", function () {
+
+            const inputValue = $(this).val();
+            $(this).val(inputValue.replace(/[^0-9+]/g, ''));
+            var v = $(this).val();
+
+            if (v.length > 6) {
+                v = v.substring(0, 6);
+                $(this).val(v);
+            }
+        });
+    </script>
+</body>

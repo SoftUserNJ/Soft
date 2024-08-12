@@ -1,0 +1,141 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = MediaOutdoor_Backend
+build_property.RootNamespace = MediaOutdoor_Backend
+build_property.ProjectDir = D:\REPO\MediaOutdoor_Backend\MediaOutdoor_Backend\MediaOutdoor_Backend\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\REPO\MediaOutdoor_Backend\MediaOutdoor_Backend\MediaOutdoor_Backend
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Admin/CpmEntry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3BtRW50cnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Admin/PlaySettings.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUGxheVNldHRpbmdzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Admin/Promotion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUHJvbW90aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Admin/Screen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU2NyZWVuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Admin/Sliders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU2xpZGVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Admin/Station.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU3RhdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Backend/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFja2VuZFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Backend/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFja2VuZFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Content/ContentCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGVudFxDb250ZW50Q2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Content/ContentDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGVudFxDb250ZW50RGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Invoices/OrderInvoice.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52b2ljZXNcT3JkZXJJbnZvaWNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Order/EditOrderImage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcRWRpdE9yZGVySW1hZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Order/OrderCart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcT3JkZXJDYXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Order/OrderCompleted.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcT3JkZXJDb21wbGV0ZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Order/OrderDisapproved.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcT3JkZXJEaXNhcHByb3ZlZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Order/OrderPending.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcT3JkZXJQZW5kaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Order/OrderProcessing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcT3JkZXJQcm9jZXNzaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/PartialView/Order/ImgDownload.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGlhbFZpZXdcT3JkZXJcSW1nRG93bmxvYWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/PartialView/Order/OrderDisapproved-mail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGlhbFZpZXdcT3JkZXJcT3JkZXJEaXNhcHByb3ZlZC1tYWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/PartialView/Order/OrderPending-mail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGlhbFZpZXdcT3JkZXJcT3JkZXJQZW5kaW5nLW1haWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/PartialView/Order/OrderProcessing-mail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGlhbFZpZXdcT3JkZXJcT3JkZXJQcm9jZXNzaW5nLW1haWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/User/Customers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxDdXN0b21lcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/User/ProfileSetting.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQcm9maWxlU2V0dGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/User/UserEntry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyRW50cnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/REPO/MediaOutdoor_Backend/MediaOutdoor_Backend/MediaOutdoor_Backend/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-9b1fvytkig

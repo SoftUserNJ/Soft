@@ -1,0 +1,268 @@
+<div class="content ListPage">
+    <div class="page-header mb-0">
+        <div class="page-title">
+            <h4>Gate Pass Inward (Purchase Status)</h4>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="pdfPrint"
+                            data-bs-original-title="pdf">
+                            <img src="assets/img/icons/pdf.svg" alt="img" />
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="convertExel"
+                            data-bs-original-title="excel">
+                            <img src="assets/img/icons/excel.svg" alt="img" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-0">
+        <div class="card-body pt-2">
+            <div class="row fw-bolder">
+
+                <div class="col-lg-5 col-md-5 col-sm-6 ps-0">
+                    <div class="form-group">
+                        <label>From Date</label>
+                        <div class="input-groupicon">
+                            <input type="text" class="form-control" matInput [matDatepicker]="datepicker"
+                                (click)="datepicker.open()" [(ngModel)]="fromDate" />
+                            <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                            <div class="addonset">
+                                <img src="assets/img/icons/calendars.svg" alt="img" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-6 ps-0">
+                    <div class="form-group">
+                        <label>To Date</label>
+                        <div class="input-groupicon">
+                            <input type="text" class="form-control" matInput [matDatepicker]="datepicker2"
+                                (click)="datepicker2.open()" [(ngModel)]="toDate" />
+                            <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                            <div class="addonset">
+                                <img src="assets/img/icons/calendars.svg" alt="img" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-6 ps-0 pt-2">
+                    <div class="d-flex align-items-center me-3 pt-3">
+                        <img src="/assets/img/icons/search.svg" alt="img" class="filter-img"
+                            (click)="getInwardPurchaseStatusReport()">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row fw-bolder">
+
+                <div class="col-lg-7 col-md-7 col-sm-6 ps-0 pt-2">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." (input)="filterData()"
+                            [(ngModel)]="searchQuery" />
+                    </div>
+                </div>
+
+                <div class="col-5 d-flex">
+                    <div class="form-group d-flex align-items-end">
+
+                        <div class="d-flex align-items-center me-3">
+                            <input type="radio" (change)="onRadioChange($event);" id="allR" name="GIP" value="allR"
+                                class="me-1" [checked]="true">
+                            <label for="allR" class="mt-1">All</label>
+                        </div>
+
+                        <div class="d-flex align-items-center me-3">
+                            <input type="radio" (change)="onRadioChange($event);" id="pendingR" name="GIP"
+                                value="pendingR" class="me-1">
+                            <label for="pendingR" class="mt-1">Pending</label>
+                        </div>
+
+                        <div class="d-flex align-items-center me-3">
+                            <input type="radio" (change)="onRadioChange($event);" id="unloadedR" name="GIP"
+                                value="unloadedR" class="me-1">
+                            <label for="unloadedR" class="mt-1">UnLoaded</label>
+                        </div>
+
+                        <div class="d-flex align-items-center me-3">
+                            <input type="radio" (change)="onRadioChange($event);" id="rejectedR" name="GIP"
+                                value="rejectedR" class="me-1">
+                            <label for="rejectedR" class="mt-1">Rejected</label>
+                        </div>
+
+                        <div class="d-flex align-items-center me-3">
+                            <input type="radio" (change)="onRadioChange($event);" id="atGateR" name="GIP"
+                                value="atGateR" class="me-1">
+                            <label for="atGateR" class="mt-1">At-Gate</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row mb">
+                <div class="col-lg-12 col-sm-12 col-12 ps-0">
+                    <div class="card mb-0 p-2">
+                        <div class="table-responsive" style="height: 350px">
+                            <table class="table  table-hover tableSticky productTable fs-13 mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="">Date</th>
+                                        <th class="ps-2" >Ar#</th>
+                                        <th class="ps-2">GP#</th>
+                                        <th class="ps-2">Party</th>
+                                        <th class="ps-2">VehicleNo</th>
+                                        <th class="ps-2">Product</th>
+                                        <th class="ps-2 text-end">PBags</th>
+                                        <th class="ps-2 text-end">RBags</th>
+                                        <th class="ps-2 text-end">RejBg</th>
+
+                                        <th class="ps-2 text-end">First Wt</th>
+                                        <th class="ps-2 text-end">Sec Wt</th>
+                                        <th class="ps-2 text-end">Net Wt</th>
+                                        <th class="ps-2 text-end">Party Wt</th>
+                                        
+                                        <th class="ps-2 text-end">Diff</th>
+                                        <th class="ps-2 text-center">O/S</th>
+                                        <th class="ps-2 text-end">Labded</th>
+                                        <th class="ps-2 text-end">PayableWt</th>
+                                        <th class="ps-2 text-end">BagsDed</th>
+                                        <th class="ps-2 text-end">Stock-Wt</th>
+                                        <th class="ps-2 text-end">Freight</th>
+                                        <th class="ps-2 text-center">O/S</th>
+                                        <!-- <th class="ps-1 "><i class="fas fa-clock"></i></th> -->
+                                        <th class="ps-1 ">Processing</th> 
+                                        <th class="ps-2 text-center" style=" width:10%;">GRN</th>
+                                        <th class="ps-2 text-center" style="width:10%;">Receiving</th>
+                                        <th class="ps-2 text-center" style="width:10%;">Lab</th>
+                                    </tr>
+                                </thead>
+                                <tbody #voucherLists>
+                                    <tr *ngFor="let item of filteredinwardPurchaseStatusList">
+                                        <td class="">{{ item.Date }}</td>
+                                        <td class="ps-2" style="width:10%;">{{ item.ArNo }}</td>
+                                        <td class="ps-2">{{ item.GpNo }}</td>
+                                        <td class="ps-2">{{ item.Party }}</td>
+                                        <td class="ps-2">{{ item.VehicleNo }}</td>
+                                        <td class="ps-2">{{ item.Product }}</td>
+
+                                        <td class="ps-2 text-end">{{ item.Sbags }}</td>
+                                        <td class="ps-2 text-end">{{ item.Bags }}</td>
+                                        <td class="ps-2 text-end">{{ item.RejBg }}</td>
+
+                                         
+                                        <td class="ps-2 text-end">{{ item.FirstWeight }}</td>
+                                        <td class="ps-2 text-end">{{ item.SecWeight }}</td>
+                                        <td class="ps-2 text-end">{{ item.NetWt }}</td>
+
+                                        <td class="ps-2 text-end">{{ item.PartyWt }}</td>
+                                        <td class="ps-2 text-end">{{ item.QtDiff }}</td>
+                                        <td class="ps-2 text-center">{{ item.Wtype }}</td>
+                                        
+
+
+                                        <td class="ps-2 text-end">{{ item.Labded }}</td>
+                                        <td class="ps-2 text-end">{{ item.Payablewt }}</td>
+                                        <td class="ps-2 text-end">{{ item.Bagsded }}</td>
+                                        <td class="ps-2 text-end">{{ item.StockWt }}</td>
+                                        <td class="ps-2 text-end">{{ item.Freight }}</td>
+                                        <td class="ps-2 text-center">{{ item.FreightType }}</td>
+                     
+                                      
+                                        <td class="text-end width:10%; " style="width:10%;">
+                                            <span style="cursor: pointer;" (click)="getProcessing(item.EntryDate , item.DateIn  , item.DateOut  , item.GateDiffWithIn, item.InDiffWithOut,  item.GateDiffWithOut)"  class="btnRowPrint me-3">
+                                              <i  class="fas fa-clock text-end"></i>
+                                              </span>
+                                        </td>
+                         
+                                      
+                                        <td class="text-center width:10%; " style="width:10%;">
+                                            <span style="cursor: pointer;" (click)="SecondWeightSlip(item.ArNo, item.VchDate, item.VehicleNo, item.GpNo , item.Locid)"  class="btnRowPrint me-3">
+                                              <i class="fas fa-print"></i>
+                                              </span>
+                                        </td>
+                                        <td class="text-center width:10%;" style="width:10%;">
+                                          <span style="cursor: pointer;" (click)="ReceiveingReportSlip(item.ArNo, item.VchDate, item.VehicleNo, item.GpNo , item.Locid)"  class="btnRowPrint me-3">
+                                            <i class="fas fa-print"></i>
+                                            </span>
+                                        </td>
+
+                                         <td class="text-center width:10%;" style="width:10%;">
+                                            <span style="cursor: pointer;" (click)="PrintSlip(item.ArNo, item.Date, item.VehicleNo, item.Locid)"  class="btnRowPrint me-3">
+                                              <i class="fas fa-print"></i>
+                                              </span>
+                                          </td>
+
+                                    </tr>
+                                </tbody>
+                                <tfoot style="border-top: 0px;">
+                                    <tr>
+                                        <td colspan="6"></td>
+
+
+                                        
+                                        <td class="ps-2 text-end pe-0">{{ totalPBags }}</td>
+                                        <td class="ps-2 text-end pe-0">{{ totalBags }}</td>
+                                        <td class="ps-2 text-end pe-0">{{ totalRejBg }}</td>
+                                        <td colspan="4"></td>
+                                        <td class="ps-2 text-end pe-0">{{ totalDiff }}</td>
+                                        <td colspan="1"></td>
+
+                                        <td class="ps-2 text-end pe-0">{{ totalLabded }}</td>
+                                        <td class="ps-2 text-end pe-0">{{ totalPayableWt }}</td>
+                                        <td class="ps-2 text-end pe-0">{{ totalBagsDed }}</td>
+                                        <td class="ps-2 text-end pe-0">{{ totalStockWt }}</td>
+                                        <td class="ps-2 text-end pe-0">{{ totalFreight }}</td>
+                                        <td colspan="5"></td>
+                            
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="processingdetailmodel">
+    <div class="modal-dialog" style="max-width: 30%; margin: 50px auto">
+      <div class="modal-content">
+        <div class="modal-header p-2 align-items-center">
+          <h5 class="modal-title" style="font-size: 10px ;">Vehicle Processing Details</h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="table-responsive" style="height: 200px">
+                <table class="table table-hover" id="tbl-print">
+                  <thead>
+                    <tr>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of processingDetails" (click)="rowHighLight($event)">
+                      <td class="">{{data.Detail}}</td>
+                      <td class="" [ngStyle]="{'color': data.Color}">{{data.Values}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,715 @@
+<section>
+
+  
+    <div class="content AddPage">
+  
+      <div class="page-header mb-4">
+        <div class="page-title">
+          <h4>Salary Settlement From</h4>
+        </div>
+        
+      </div>
+      
+      <div class="card" [formGroup]="SalarySetlementForm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div class="row w-50 mb-2">
+              <div class="card" style="margin: 0 0 0;">
+                <div class="row mb-2">
+
+                  <div class="col-lg-6 col-md-6 col-sm-12 d-none">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Sr #</label>
+                      <input type="number" formControlName="SrNo" readonly class="form-control me-2">
+                    </div>
+                  </div>
+      
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="mb-2">
+                      <label class="fw-bolder">Employee Name</label>
+                      <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-12">
+                          <ng-select class="bold-placeholder" placeholder="--- Select Employee ---" (change)="editSalary($event)"
+                          [items]="EmployeeList" 
+                          bindLabel="name"
+                          bindValue="empy_id"
+                            formControlName="empName"
+                            [dropdownPosition]="'bottom'" [readonly]="Disabled">
+                          </ng-select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    
+    
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="position-relative w-100 me-2 form-group mb-0">
+                      <label class="fw-bold" style="margin-bottom: 0px !important;">Entry Date</label>
+                      <div class="input-groupicon">
+                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                          (click)="datepicker.open()" formControlName="entryDate" />
+                        <mat-datepicker #datepicker></mat-datepicker>
+                        <div class="addonset">
+                          <img src="/assets/img/icons/calendars.svg" alt="img">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                      <div class="position-relative w-100 me-2 form-group mb-0">
+                        <label class="fw-bold" style="margin-bottom: 0px !important;">Hire Date</label>
+                        <div class="input-groupicon">
+                          <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker1"
+                            (click)="datepicker1.open()" formControlName="hireDate" />
+                          <mat-datepicker #datepicker1></mat-datepicker>
+                          <div class="addonset">
+                            <img src="/assets/img/icons/calendars.svg" alt="img">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+    
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <div class="position-relative w-100 me-2 form-group mb-0">
+                        <label class="fw-bold" style="margin-bottom: 0px !important;">Join Date</label>
+                        <div class="input-groupicon">
+                          <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker2"
+                            (click)="datepicker2.open()" formControlName="joinDate" />
+                          <mat-datepicker #datepicker2></mat-datepicker>
+                          <div class="addonset">
+                            <img src="/assets/img/icons/calendars.svg" alt="img">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+    
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <div class="mb-2">
+                        <label class="fw-bolder">Department</label>
+                        <div class="row">
+                          <div class="col-lg-11 col-sm-11 col-11">
+                            <ng-select class="bold-placeholder" placeholder="--- Select Department ---" [readonly]="Disabled"
+                            [items]="DepartmentList" 
+                            bindLabel="Department" 
+                            bindValue="Id"
+                              formControlName="department"
+                              [dropdownPosition]="'bottom'">
+                            </ng-select>
+                          </div>
+      
+                          <div class="col-lg-1 col-sm-1 col-1 ps-0">
+                            <div class="add-icon text-end">
+                              <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                                data-bs-target="#DepartmentModal" (click)="refreshDepartment()"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <div class="mb-2">
+                        <label class="fw-bolder">Designation</label>
+                        <div class="row">
+                          <div class="col-lg-11 col-sm-11 col-11">
+                            <ng-select class="bold-placeholder" placeholder="--- Select Designation ---" [readonly]="Disabled"
+                            [items]="DesignationList" 
+                            bindLabel="Designation" 
+                            bindValue="Id"
+                              formControlName="designation"
+                              [dropdownPosition]="'bottom'">
+                            </ng-select>
+                          </div>
+                          
+                          <div class="col-lg-1 col-sm-1 col-2 ps-0">
+                            <div class="add-icon text-end">
+                              <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                                data-bs-target="#DesignationModal" (click)="refreshDesignation()"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <div class="col-lg-12 col-md-12 col-sm-12"> 
+                      <div class="position-relative w-100 me-2">
+                        <label class="fw-bold">Remarks</label>
+                        <input type="text" formControlName="remarks" [readonly]="Disabled" class="form-control me-2">
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-sm-4 col-12 pt-4">
+                      <input class="form-check-input" formControlName="active1"  type="checkbox" checked>
+                      <label class="form-check-label pl-10 ">Active</label>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="row w-50 mb-2">
+              <div class="card" style="margin: 0 0 0;">
+                <div class="row mb-2">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-2">
+                      <label class="fw-bolder">Type</label>
+                      <div class="row">
+                        <div class="col-lg-10 col-sm-10 col-10">
+                          <ng-select class="bold-placeholder" placeholder="--- Select Type ---" [readonly]="Disabled"
+                          [items]="EmpTypeList" 
+                          bindLabel="EmployeeType" 
+                          bindValue="Id"
+                            formControlName="type"
+                            [dropdownPosition]="'bottom'">
+                          </ng-select>
+                        </div>
+                        
+                        <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                          <div class="add-icon text-end">
+                            <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                              data-bs-target="#EmpTypeModal" (click)="refreshEmpType()"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-2">
+                      <label class="fw-bolder">Salary</label>
+                      <div class="row">
+                        <div class="col-lg-10 col-sm-10 col-10">
+                          <ng-select class="bold-placeholder" placeholder="--- Select Salary ---" [readonly]="Disabled"
+                          [items]="SalaryTypeList" 
+                          bindLabel="SalaryType" 
+                          bindValue="Id"
+                            formControlName="SalaryType"
+                            [dropdownPosition]="'bottom'">
+                          </ng-select>
+                        </div>
+                        
+                        <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                          <div class="add-icon text-end">
+                            <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                              data-bs-target="#SalaryTypeModal" (click)="refreshSalaryType()"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-2">
+                      <label class="fw-bolder">Reason</label>
+                      <div class="row">
+                        <div class="col-lg-10 col-sm-10 col-10">
+                          <ng-select class="bold-placeholder" placeholder="--- Select Reason ---" [readonly]="Disabled"
+                          [items]="SalaryReasonList" 
+                          bindLabel="Reason" 
+                          bindValue="Id"
+                            formControlName="reason"
+                            [dropdownPosition]="'bottom'">
+                          </ng-select>
+                        </div>
+                        
+                        <div class="col-lg-2 col-sm-2 col-2 ps-0">
+                          <div class="add-icon text-end">
+                            <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" data-bs-toggle="modal"
+                              data-bs-target="#SalaryReasonModal" (click)="refreshSalaryReason()"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Grade</label>
+                      <input type="text" formControlName="grade" [readonly]="Disabled" class="form-control me-2">
+                    </div>
+                  </div>
+
+
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Gross Salary</label>
+                      <input type="number" formControlName="grossSalary" [readonly]="Disabled" class="form-control me-2" (input)="CalculateSalary()">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Bank Salary</label>
+                      <input type="number" formControlName="bankSalary" [readonly]="Disabled" class="form-control me-2">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Cash Salary</label>
+                      <input type="number" formControlName="cashSalary" [readonly]="Disabled" class="form-control me-2">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">P/F</label>
+                      <input type="text" formControlName="pf" [readonly]="Disabled" class="form-control me-2">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Basic</label>
+                      <input type="number" formControlName="basic" readonly class="form-control me-2">
+                      <input type="number" formControlName="s1" readonly class="form-control me-2 d-none">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Level 2</label>
+                      <input type="number" formControlName="lvl2" readonly class="form-control me-2">
+                      <input type="number" formControlName="s2"  readonly class="form-control me-2 d-none">
+                    </div>
+                  </div>
+    
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Level 3</label>
+                      <input type="number" formControlName="lvl3"  readonly class="form-control me-2">
+                      <input type="number" formControlName="s3"  readonly class="form-control me-2 d-none">
+                    </div>
+                  </div>
+    
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Level 4</label>
+                      <input type="number" formControlName="lvl4" readonly class="form-control me-2">
+                      <input type="number" formControlName="s4"  readonly class="form-control me-2 d-none">
+                    </div>
+                  </div>
+    
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Level 5</label>
+                      <input type="number" formControlName="lvl5"  readonly class="form-control me-2">
+                      <input type="number" formControlName="s5" readonly class="form-control me-2 d-none">
+                    </div>
+                  </div>
+    
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Level 6</label>
+                      <input type="number" formControlName="lvl6"readonly class="form-control me-2">
+                      <input type="number" formControlName="s6" readonly  class="form-control me-2 d-none">
+                    </div>
+                  </div>
+    
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Level 7</label>
+                      <input type="number" formControlName="lvl7" readonly class="form-control me-2">
+                      <input type="number" formControlName="s7" readonly class="form-control me-2 d-none">
+                    </div>
+                  </div>
+
+
+                  <div class="col-lg-6 col-md-6 col-sm-12"> 
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Net Salary</label>
+                      <input type="number" formControlName="netSalary" readonly class="form-control me-2">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+          
+            </div>
+          </div>
+          
+          <div class="row mb-2">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 text-end">
+              <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+                (click)="onClickSave()">Save</button>
+              <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">Refresh</button>
+            </div>
+          </div>
+
+
+          <div class="table-responsive" style="height: 200px">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th>Sno</th>
+                  <th>Employee Name</th>
+                  <th>Department</th>
+                  <th>Designation</th>
+                  <th>Join Date</th>
+                  <th>Type</th>
+                  <th>Salary</th>
+                  <th>Gross Salary</th>
+                  <th>Net Salary</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of SalarySetlementList" (click)="rowHighLight($event)">
+  
+                  <td class="">{{ data.SrNo }}</td>
+                  <td class="">{{ data.empName }}</td>
+                  <td class="d-none">{{ data.EmpyId }}</td>
+                  <td class="d-none">{{ data.deptId }}</td>
+                  <td class="">{{ data.department }}</td>
+                  <td class="d-none">{{ data.desgnId }}</td>
+                  <td class="">{{ data.designation }}</td>
+                  <td class="">{{ data.joinDate }}</td>
+                  <td class="d-none">{{ data.hireDate }}</td>
+                  <td class="d-none">{{ data.entryDate }}</td>
+                  <td class="d-none">{{ data.typeId }}</td>
+                  <td class="">{{ data.type }}</td>
+                  <td class="d-none">{{ data.SalaryTypeId }}</td>
+                  <td class="">{{ data.SalaryType }}</td>
+                  <td class="">{{ data.grossSalary }}</td>
+                  <td class="">{{ data.netSalary }}</td>
+                  <td class="d-none">{{ data.reason }}</td>
+                  <td class="d-none">{{ data.cashSalary }}</td>
+                  <td class="d-none">{{ data.bankSalary }}</td>
+                  <td class="d-none">{{ data.grade }}</td>
+                  <td class="d-none">{{ data.active1 }}</td>
+                  <td class="text-center">
+                    <!-- Edit Button -->
+                    <span (click)="editItem(data)" class="me-3 btnEditItem" style="cursor: pointer">
+                      <i class="fas fa-edit"></i>
+                    </span>
+                    <!-- Delete Button  -->
+                    <span (click)="deleteSalary(data.SrNo, data.EmpyId)" class="confirm-text btnDelItem" style="cursor: pointer">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+  
+<!-- Department Modal -->
+
+<div class="modal fade" id="DepartmentModal" aria-labelledby="DepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center">
+          <h5 class="modal-title ">Department
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12 mb-1">
+                    <label class="form-label mb-1">Department</label>
+                    <input type="text" class="form-control" [(ngModel)]="DepartMentName" [disabled]="isDisabledDepartment">
+                  </div>
+                </div>
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newDepartment()" [hidden]="isShowDepartment">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateDepartment()"
+                  [hidden]="!isShowDepartment">Save</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshDepartment()">Refresh</button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Department</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of DepartmentList">
+                        <td>{{item.Id}}</td>
+                        <td>{{ item.Department }}</td>
+                        <td class="text-center">
+                          <span (click)=" editDepartment(item.Id, item.Department)"
+                            class="me-3 btnEditLevel1">
+                            <img src="/assets/img/icons/edit.svg" alt="Edit">
+                          </span>
+                          <span (click)="deleteDepartment(item.Id)" class="confirm-text btnDelLevel1">
+                            <img src="/assets/img/icons/delete.svg" alt="Delete">
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Designation Modal -->
+
+<div class="modal fade" id="DesignationModal" aria-labelledby="DesignationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center">
+          <h5 class="modal-title ">Designation
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12 mb-1">
+                    <label class="form-label mb-1">Designation</label>
+                    <input type="text" class="form-control" [(ngModel)]="DesignationName" [disabled]="isDisabledDesignation">
+                  </div>
+                </div>
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newDesignation()" [hidden]="isShowDesignation">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateDesignation()"
+                  [hidden]="!isShowDesignation">Save</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshDesignation()">Refresh</button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Designation</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of DesignationList">
+                        <td>{{item.Id}}</td>
+                        <td>{{ item.Designation }}</td>
+                        <td class="text-center">
+                          <span (click)=" editDesignation(item.Id, item.Designation)"
+                            class="me-3 btnEditLevel1">
+                            <img src="/assets/img/icons/edit.svg" alt="Edit">
+                          </span>
+                          <span (click)="deleteDesignation(item.Id)" class="confirm-text btnDelLevel1">
+                            <img src="/assets/img/icons/delete.svg" alt="Delete">
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Salary Type Modal  -->
+
+<div class="modal fade" id="SalaryTypeModal" aria-labelledby="SalaryTypeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2  align-items-center">
+        <h5 class="modal-title ">Salary Type
+        </h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-12 mb-1">
+                  <label class="form-label mb-1">Salary Type</label>
+                  <input type="text" class="form-control" [(ngModel)]="SalaryTypeName" [disabled]="isDisabledSalaryType">
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <button class="btn btn-primary btn-sm me-1" (click)="newSalaryType()" [hidden]="isShowSalaryType">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateSalaryType()"
+                [hidden]="!isShowSalaryType">Save</button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshSalaryType()">Refresh</button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height:205px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Salary Type</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of SalaryTypeList">
+                      <td>{{item.Id}}</td>
+                      <td>{{ item.SalaryType }}</td>
+                      <td class="text-center">
+                        <span (click)=" editSalaryType(item.Id, item.SalaryType)"
+                          class="me-3 btnEditLevel1">
+                          <img src="/assets/img/icons/edit.svg" alt="Edit">
+                        </span>
+                        <span (click)="deleteSalaryType(item.Id)" class="confirm-text btnDelLevel1">
+                          <img src="/assets/img/icons/delete.svg" alt="Delete">
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+   <!-- Employee Type Modal  -->
+
+   <div class="modal fade" id="EmpTypeModal" aria-labelledby="EmpTypeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center">
+          <h5 class="modal-title ">Employee Type
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12 mb-1">
+                    <label class="form-label mb-1">Employee Type</label>
+                    <input type="text" class="form-control" [(ngModel)]="EmpTypeName" [disabled]="isDisabledEmpType">
+                  </div>
+                </div>
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newEmpType()" [hidden]="isShowEmpType">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateEmpType()"
+                  [hidden]="!isShowEmpType">Save</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshEmpType()">Refresh</button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Employee Type</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of EmpTypeList">
+                        <td>{{item.Id}}</td>
+                        <td>{{ item.EmployeeType }}</td>
+                        <td class="text-center">
+                          <span (click)=" editEmpType(item.Id, item.EmployeeType)"
+                            class="me-3 btnEditLevel1">
+                            <img src="/assets/img/icons/edit.svg" alt="Edit">
+                          </span>
+                          <span (click)="deleteEmpType(item.Id)" class="confirm-text btnDelLevel1">
+                            <img src="/assets/img/icons/delete.svg" alt="Delete">
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <!-- Salary Reason Modal  -->
+
+    <div class="modal fade" id="SalaryReasonModal" aria-labelledby="SalaryReasonModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header p-2  align-items-center">
+            <h5 class="modal-title ">Reason
+            </h5>
+            <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+          </div>
+          <div class="modal-body p-2">
+            <div class="card mb-0">
+              <div class="card-body p-2">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12 mb-1">
+                      <label class="form-label mb-1">Reason</label>
+                      <input type="text" class="form-control" [(ngModel)]="SalaryReasonName" [disabled]="isDisabledSalaryReason">
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-1">
+                  <button class="btn btn-primary btn-sm me-1" (click)="newSalaryReason()" [hidden]="isShowSalaryReason">New</button>
+                  <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateSalaryReason()"
+                    [hidden]="!isShowSalaryReason">Save</button>
+                  <button class="btn btn-secondary btn-sm" (click)="refreshSalaryReason()">Refresh</button>
+                </div>
+                <div class="card mb-0 scroll">
+                  <div class="table-responsive" style="height:205px;">
+                    <table class="table mb-0">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Reason</th>
+                          <th class="text-center">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of SalaryReasonList">
+                          <td>{{item.Id}}</td>
+                          <td>{{ item.Reason }}</td>
+                          <td class="text-center">
+                            <span (click)=" editSalaryReason(item.Id, item.Reason)"
+                              class="me-3 btnEditLevel1">
+                              <img src="/assets/img/icons/edit.svg" alt="Edit">
+                            </span>
+                            <span (click)="deleteSalaryReason(item.Id)" class="confirm-text btnDelLevel1">
+                              <img src="/assets/img/icons/delete.svg" alt="Delete">
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

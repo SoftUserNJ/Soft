@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+<div style="
+            background: #ffe0b9;
+            width: 800px;
+            margin: auto;
+            padding: 50px;
+            font-family: sans-serif;">
+
+    <div style="
+            display: flex;
+            ">
+        <img src="http://mediaoutdoorbackend.softaxe.com/img/logo.png" />
+    </div>
+
+    <p style="font-size:16px; margin-top:25px;">
+        <strong>@Localizer["Dear"] <span id="cName"></span>,</strong><br><br>
+        <span id="first-line"></span><br><br>
+        @Localizer["QueryLine"]<br><br>
+        @Localizer["ThankLine"]<br><br>
+        <strong>@Localizer["BestRegards"],</strong><br>
+        <strong>Team Media Outdoor</strong><br><br>
+    </p>
+
+    <a style="
+            background: black;
+            color: white !important;
+            border-radius: 5px;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 15px;"
+       href="javascript:void(0);">
+
+        @Localizer["ViewYourOrder"]
+
+      @*  <img style="
+            filter: brightness(10);
+            width: 25px;
+            margin-bottom: -5px;
+            margin-left: 10px;"
+             src="http://mediaoutdoorbackend.softaxe.com/assets/img/icons/sales1.svg" alt="img">*@
+    </a>
+
+    <table style="
+                    margin-top:30px;
+                    font-family: sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;">
+        <thead>
+            <tr>
+                <th style="padding:6px; font-weight:bold; font-size:20px; text-align:start;">Station</th>
+                <th style="padding:6px; font-weight:bold; font-size:20px; text-align:start;">@Localizer["Screens"]</th>
+                <th style="padding:6px; font-weight:bold; font-size:20px; text-align:start;">@Localizer["Size"]</th>
+                <th style="padding:6px; font-weight:bold; font-size:20px; text-align:end;">@Localizer["Rate"]</th>
+            </tr>
+        </thead>
+        <tbody id="listToSend"></tbody>
+    </table>
+</div>

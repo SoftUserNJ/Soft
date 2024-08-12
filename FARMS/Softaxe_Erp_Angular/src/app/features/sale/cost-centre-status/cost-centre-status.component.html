@@ -1,0 +1,141 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Cost Centre Status</h4>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Cost-Centre-Status', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Cost-Centre-Status', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card mt-0">
+    <div class="card-body pt-2">
+      <div class="row">
+        <div class="col-lg-3 col-md-2 col-sm-6">
+          <div class="form-group">
+            <label>Search</label>
+            <input type="text" class="form-control" placeholder="Search..." (input)="onSearchInput($event)" />
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-6">
+          <div class="form-group me-1">
+            <label>From Date:</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                [(ngModel)]="fromDate" (click)="datepicker.open()" (dateChange)="getCostCentre()" />
+              <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-6">
+          <div class="form-group ms-1">
+            <label>To Date:</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker2"
+                [(ngModel)]="toDate" (click)="datepicker2.open()" (dateChange)="getCostCentre()" />
+              <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 d-flex col align-self-center ps-0 justify-content-between mt-3">
+          <button class="btn btn-primary btn-sm me-2" (click)="getCostCentre()">Refresh</button>
+          <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center me-3">
+              <input type="radio" class="me-1"  id="Started" name="dataGet" value="Started" (click)="onClickFilter($event)" checked />
+              <label for="Started" class="mb-0 fw-bolder">Started</label>
+            </div>
+            <div class="d-flex align-items-center me-3">
+              <input type="radio" id="Finished" class="me-1" name="dataGet" value="Finished" (click)="onClickFilter($event)" />
+              <label for="Finished" class="mb-0 fw-bolder">Finished</label>
+            </div>
+            <div class="d-flex align-items-center me-3">
+              <input type="radio" id="All" class="me-1" name="dataGet" value="All" (click)="onClickFilter($event)"  />
+              <label for="All" class="mb-0 fw-bolder">All</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height: 350px">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th class="w-0" colspan="3"></th>
+              <th class="text-center w-0">Id</th>
+              <th class="text-center w-0">Job No</th>
+              <th>Cost Centre</th>
+              <th>Farm</th>
+              <th class="text-center">Start Date</th>
+              <th class="text-end">Opening Bal</th>
+              <th class="text-end">Debit</th>
+              <th class="text-end">Credit</th>
+              <th class="text-end">Closing Bal</th>
+            </tr>
+          </thead>
+          <tbody #costList>
+            <tr class="activeRow" *ngFor="let item of jobNoListFilter; let i = index">
+              <td class="text-center">
+                <span (click)="onViewReport(item)">
+                  <i class="fas fa-print"></i>
+                </span>
+              </td>
+              <td class="text-center">
+                <span (click)="rptFlockPerformance(item)">
+                  <i class="fas fa-edit"></i>
+                </span>
+              </td>
+              <td class="text-center">
+                <a routerLink="/flock-performance" [queryParams]="{jobNo: item.ID}">
+                  <i class="fas fa-chart-simple"></i>
+                </a>
+              </td>
+              <td class="id text-center">{{ item.ID }}</td>
+              <td class="jobNo text-center">{{ item.JOBNO }}</td>
+              <td class="costCentre limited-text" title="{{ item.COSTCENTRE }}">{{ item.COSTCENTRE }}</td>
+              <td class="farmName limited-text" title="{{ item.FARMNAME }}">{{ item.FARMNAME }}</td>
+              <td class="start-date limited-text text-center" title="{{ item.STARTDATE }}">{{ item.STARTDATE }}</td>
+              <td class="opBal text-end">
+                {{ item.OPBALANCE | number : "1.2-2" }}
+              </td>
+              <td class="debit text-end">
+                {{ (item.DEBIT + item.EXPBALANCE) | number : "1.2-2" }}
+              </td>
+              <td class="credit text-end">
+                {{ item.CREDIT | number : "1.2-2" }}
+              </td>
+              <td class="clBal text-end">
+                {{ (item.OPBALANCE + (item.DEBIT + item.EXPBALANCE) - item.CREDIT) | number : "1.2-2" }}
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td class="text-end" colspan="8">Total =</td>
+              <td class="text-end">{{ totalOpening | number : "1.2-2" }}</td>
+              <td class="text-end">{{ totalDebit | number : "1.2-2" }}</td>
+              <td class="text-end">{{ totalCredit | number : "1.2-2" }}</td>
+              <td class="text-end">{{ totalClosing | number : "1.2-2" }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

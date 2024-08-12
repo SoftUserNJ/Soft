@@ -1,0 +1,9 @@
+
+.filter-img {
+    background: #ff9f43;
+    padding: 2px;
+    border-radius: 4px;
+    width: 35px;
+    height: 23px;
+    cursor: pointer;
+  }

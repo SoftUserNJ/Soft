@@ -1,0 +1,352 @@
+@{
+    ViewData["Title"] = "User Rights";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    ul, #myUL {
+        list-style-type: none;
+    }
+
+    #myUL {
+        margin: 0;
+        padding: 0;
+    }
+
+    .caret {
+        cursor: pointer;
+        -webkit-user-select: none; /* Safari 3.1+ */
+        -moz-user-select: none; /* Firefox 2+ */
+        -ms-user-select: none; /* IE 10+ */
+        user-select: none;
+        font-weight: 900;
+    }
+
+    /*.caret-down::before {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        top: calc(var(--spacing) / -2);
+                        left: -2px;
+                        width: calc(var(--spacing) + 2px);
+                        height: calc(var(--spacing) + 1px);
+                        border: solid #ddd;
+                        border-width: 0 0 2px 2px;
+                    }*/
+
+    .nested {
+        display: none;
+        margin-left: 20px;
+    }
+
+    .active {
+        display: block;
+    }
+
+    #securityList {
+        /*height: 500px;*/
+        border: 1px solid #dce0e4;
+        /*overflow-y: scroll;*/
+        border-radius: 15px;
+        padding: 15px;
+    }
+
+</style>
+
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>Incident Details Report</h4>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #1265c3; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" id="pdfPrint">
+                            <img src="~/assets/img/icons/pdf.svg" alt="img">
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel" id="convertExel">
+                            <img src="~/assets/img/icons/excel.svg" alt="img">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="form-group mb-1 me-2">
+                        <label>Select User</label>
+                        <select style="width:300px;" class="form-select drp-arrow rounded-pill" id="drpUsers" skinid="Select User....!"></select>
+                    </div>
+                    <div class="wordset mt-4">
+                        <p href="javascript:void(0);" class="btn btn-addednew ct-btns disabled" id="btnSave">Save</p>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive" @*style="height:395px;"*@>
+                <div id="securityList">
+                    <ul id="myUL">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        $(function () {
+            Menu();
+            GetSecurityUsers();
+        });
+
+        $("#drpUsers").change(function () {
+            if ($(this).val() == "0") {
+                $("#btnSave").addClass('disabled');
+            }
+            else {
+                $("#btnSave").removeClass('disabled');
+            }
+        });
+
+        function GetSecurityUsers() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/GetSecurityUsers/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpUsers").empty();
+                        $("#drpUsers").append(`<option value="0"> --- Select User --- </option>`);
+
+                        $.each(data, function (i, item) {
+                            $("#drpUsers").append(`<option value="${item.id}">${item.username}</option>`);
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        function Menu() {
+
+            var myhtml = "";
+            $(".securityLi").each(function () {
+
+                var mainMenu = $(this).find('span').text();
+
+                myhtml += `<li class="mb-1 parentli"><input type="checkbox" class="chkMain"> <span class="caret">${mainMenu}</span>`
+                myhtml += `<ul class="nested">`;
+
+                $(this).find('li').each(function () {
+                    var subMenu = $(this).text();
+                    var subMenuId = $(this).attr('id');
+                    var url = $(this).find('a').attr('href');
+
+                    if (subMenuId != "0") {
+                        myhtml += `<li class="justMenu"> <input type="checkbox" class="chkMain chkMenu" id="${subMenuId}" url="${url}" menuName="${subMenu}">  <span class="caret">${subMenu}</span>
+                                    <ul class="nested ms-3 mb-1">
+                                        <li><input type="checkbox" class="me-1 save" /><span>Save</span></li>
+                                        <li><input type="checkbox" class="me-1 edit" /><span>Edit</span></li>
+                                        <li><input type="checkbox" class="me-1 delete" /><span>Delete</span></li>
+                                        <li><input type="checkbox" class="me-1 pdfexport" /><span>PDF Export</span></li>
+                                        <li><input type="checkbox" class="me-1 excelexport" /><span>Excel Export</span></li>
+                                        <li><input type="checkbox" class="me-1 wordexport" /><span>Word Export</span></li>
+                                        <li><input type="checkbox" class="me-1 alert" /><span>Alert</span></li>
+                                    </ul>
+                                </li>`
+                    }
+                });
+
+                myhtml += `</ul>`;
+                myhtml += `</li>`;
+
+            });
+
+            $("#myUL").html(myhtml);
+            treeView();
+        }
+
+        function treeView() {
+            var toggler = document.getElementsByClassName("caret");
+            var i;
+
+            for (i = 0; i < toggler.length; i++) {
+                toggler[i].addEventListener("click", function () {
+                    this.parentElement.querySelector(".nested").classList.toggle("active");
+                    this.classList.toggle("caret-down");
+                });
+            }
+        }
+
+        function clearChk() {
+
+            $("#myUL").find('ul').find('li').each(function () {
+
+                $(this).find('input').prop('checked', false);
+                $(this).closest('.parentli').find('.chkMain').prop('checked', false);
+            });
+        }
+
+        $("body").on('click', '.chkMain', function () {
+
+            if ($(this).is(':checked')) {
+                $(this).closest('li').find('li').each(function () {
+                    $(this).find('input').prop('checked', true);
+                });
+            }
+            else {
+                $(this).closest('li').find('li').each(function () {
+                    $(this).find('input').prop('checked', false);
+                });
+            }
+
+        });
+
+        $("#btnSave").click(function () {
+
+            var GridData = [];
+
+            $("#myUL").find('ul').find('.justMenu').each(function () {
+                var menuId = $(this).find('.chkMenu').attr('id');
+                var url = $(this).find('.chkMenu').attr('url');
+                var menuName = $(this).find('.chkMenu').attr('menuName');
+
+                if ($(this).find('.chkMenu').is(':checked')) {
+
+                    var obj = {};
+                    obj.menuId = menuId;
+                    obj.url = url;
+                    obj.menuName = menuName;
+                    obj.Save = ($(this).find('.save').is(':checked')) ? true : false;
+                    obj.Edit = ($(this).find('.edit').is(':checked')) ? true : false;
+                    obj.Delete = ($(this).find('.delete').is(':checked')) ? true : false;
+                    obj.PDF = ($(this).find('.pdfexport').is(':checked')) ? true : false;
+                    obj.Excel = ($(this).find('.excelexport').is(':checked')) ? true : false;
+                    obj.Word = ($(this).find('.wordexport').is(':checked')) ? true : false;
+                    obj.Alert = ($(this).find('.alert').is(':checked')) ? true : false;
+
+                    GridData.push(obj);
+                }
+            });
+
+            var data = { GridData: GridData, userId: $("#drpUsers option:selected").val() }
+
+            try {
+                $.ajax({
+                    type: "Post",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/SecurityUpdate/",
+                    data: data,
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        if (data === true) {
+                            toastr.success("Saved Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            $("#drpUsers").val('0');
+                            $("#drpUsers").trigger('change');
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+
+        });
+
+        $("#drpUsers").change(function () {
+
+            if ($(this).val() == "0") {
+                clearChk();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "Post",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/GetAllowFoarms?userId=" + $(this).val(),
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+
+                        clearChk();
+
+                        $.each(data.Forms, function (i, item) {
+
+                            $("#myUL").find('ul').find('.justMenu').each(function () {
+                                var menuId = $(this).find('.chkMenu').attr('id');
+
+                                if (menuId == item.menuId) {
+                                    $(this).find('.chkMenu').prop('checked', true);
+
+                                    $(this).closest('.parentli').find('.chkMain').prop('checked', true);
+                                }
+                            });
+                        });
+
+                        //$("#chkdashBoard").prop('checked', data.Dashboard);
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+
+        });
+
+                //$("body").on("click", "#chkdashBoard", function () {
+
+                //    var obj = {}
+                //    obj.status = ($(this).is(':checked')) ? true : false;
+                //    obj.userId = $("#PermissionUser option:selected").val();
+
+                //    $.ajax({
+                //        async: true,
+                //        type: "Get",
+                //        url: '/Account/DashBoardAllow/',
+                //        dataType: 'json',
+                //        data: obj,
+                //        success: function (data) {
+                //        },
+                //        error: function (result) {
+                //            alert("Failed")
+                //        }
+                //    });
+                //})
+    </script>
+}

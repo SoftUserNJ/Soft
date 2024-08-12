@@ -1,0 +1,136 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer;
+
+@using CityTech;
+@model TblSetting;
+
+@{
+    ViewData["Title"] = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content AddPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["SettingsManagement"]</h4>
+            <h6>@Localizer["Add/UpdateSettings"]</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset" hidden>
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" id="pdfPrint">
+                            <img src="~/assets/img/icons/pdf.svg" alt="img">
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel" id="warehouseDetailList">
+                            <img src="~/assets/img/icons/excel.svg" alt="img">
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="print">
+                            <img src="~/assets/img/icons/printer.svg" alt="img">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["NextCallerWaitingTime"]</label>
+                        <input type="text" value="@Model.CallerWait" class="rounded-pill" id="callerWaitingTime" skinid="Enter Time....!">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label>@Localizer["NextEngineeWaitingTime"]</label>
+                        <input type="text" value="@Model.EngineerCallerWait" class="rounded-pill" id="nextEngineerWaitingTime" skinid="Enter Enginner Waiting Time....!">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="">
+                    <button class="btn btn-primary btn-sm ct-btns mt-1" id="save">@Localizer["Save"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+
+        $("#save").click(function () {
+
+            if (CheckValidation("AddPage") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+            obj.callerWaitingTime = $("#callerWaitingTime").val();
+            obj.nextEngineerWaitingTime = $("#nextEngineerWaitingTime").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Settings/SaveSettings/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetUsersList();
+                            $("#btnRefreshUser").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("#callerWaitingTime, #nextEngineerWaitingTime").on('input', function () {
+            var inputValue = $(this).val();
+
+            if (inputValue.length > 2) {
+                inputValue = inputValue.slice(0, 2);
+            }
+
+            var numericValue = parseInt(inputValue, 10);
+
+            if (numericValue < 0 || isNaN(numericValue)) {
+                numericValue = 0;
+            }
+
+            $(this).val(numericValue);
+        });
+
+
+    </script>
+}

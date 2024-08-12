@@ -1,0 +1,104 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="modal-dialog" style="max-width:800px !important;">
+    <div class="modal-content">
+        @*<div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">User Types</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+        </div>*@
+        <div class="modal-body p-0">
+            <div class="card mb-0">
+                <div class="card-body p-3">
+                    <div class="d-flex">
+                        <h3>Customers</h3>
+                        <button type="button" class="btn-close1 ms-auto" data-bs-dismiss="modal"></button>
+                    </div>
+                    <hr style="margin-top: 0;margin-bottom: 10px;">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+                                <label>Customer Name</label>
+                                <input type="text" class="rounded-pill" id="txtCustomerName" skinid="Enter Customer Name....!">
+                                <input type="hidden" id="txtCustomerId">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+                                <label>Phone</label>
+                                <input type="text" class="rounded-pill" id="txtCustomerPhone" skinid="">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+                                <label>Email</label>
+                                <input type="email" class="rounded-pill" id="txtCustomerEmail" skinid="">
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+                                <label>Gender</label>
+                                <select class="form-select drp-arrow" id="drpCustomerGender" skinid="">
+                                    <option value="">--- Select Gender ---</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+                                <label>Business</label>
+                                <input type="text" class="rounded-pill" id="txtCustomerBusiness" skinid="">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+                                <label>Vat No</label>
+                                <input type="text" class="rounded-pill" id="txtCustomerVatNo" skinid="">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+                                <label>Chamber of commerce no</label>
+                                <input type="text" class="rounded-pill" id="txtCustomerChamberCommerce" skinid="">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="mb-2">
+                        <button class="ct-btns btn btn-primary btn-sm" id="btnNewCustomer">New</button>
+                        <button class="ct-btns btn btn-success btn-sm" id="btnSaveCustomer">Save</button>
+                        <button class="ct-btns btn btn-secondary btn-sm" id="btnRefreshCustomer">Refresh</button>
+                    </div>
+                    <div class="card mb-0 pt-2 pb-1 scroll">
+                        <div class="table-responsive p-2 pt-0 pb-0">
+                            <table class="table text-white table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="ps-1 partial-head-leftr">Id</th>
+                                        <th class="">Customer Name</th>
+                                        <th class="">Email</th>
+                                        <th class="">Phone</th>
+                                        <th class="">Gender</th>
+                                        <th class="">Business</th>
+                                        <th class="">Vat No</th>
+                                        <th class="">Chamber of commerce</th>
+                                        <th class="text-center partial-head-rightr last-th-sticky">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allCustomersList">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

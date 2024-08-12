@@ -1,0 +1,50 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Expense Order</h4>
+      <h6>Manage your Expense Order</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="form-group">
+            <input type="search" (input)="searchGrid($event)" class="form-control" placeholder="Search....">
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height:330px;">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th class="text-center w-5">Order No</th>
+              <th>Account</th>
+            </tr>
+          </thead>
+          <tbody #expList>
+            <tr *ngFor="let item of expenseList">
+              <td>
+                <input type="number" class="form-control text-center" [(ngModel)]="item.OrderByNo">
+              </td>
+              <td title="{{item.name}}">{{item.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row mt-2">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <button class="btn btn-success btn-sm me-1" (click)="onClickSave()">Save</button>
+          <button class="btn btn-secondary btn-sm" (click)="getExpense()">Refresh</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

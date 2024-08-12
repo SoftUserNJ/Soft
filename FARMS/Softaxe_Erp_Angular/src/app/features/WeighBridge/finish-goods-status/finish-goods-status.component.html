@@ -1,0 +1,190 @@
+<div class="content ListPage">
+    <div class="page-header mb-0">
+      <div class="page-title">
+        <h4>Finish Goods Status</h4>
+      </div>
+      <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="pdfPrint" data-bs-original-title="pdf">
+                <img src="assets/img/icons/pdf.svg" alt="img" />
+              </a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="convertExel"
+                data-bs-original-title="excel">
+                <img src="assets/img/icons/excel.svg" alt="img" />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-0">
+      <div class="card-body pt-2">
+        <div class="row fw-bolder">
+  
+          <div class="col-lg-2 col-md-3 col-sm-6 ">
+            <label class="fw-bolder mb-1">Voucher Type</label>
+            <div class="">
+              <ng-select bindLabel="name" bindValue="id" placeholder="---Select Voucher Type---"
+                [dropdownPosition]="'bottom'" [(ngModel)]="selectedVchType">
+                <ng-option [value]="'PO-PUR'">PO-PUR</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6 ps-0">
+            <div class="form-group">
+              <label>From Date</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" matInput [matDatepicker]="datepicker" (click)="datepicker.open()"
+                  [(ngModel)]="fromDate" />
+                <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                <div class="addonset">
+                  <img src="assets/img/icons/calendars.svg" alt="img" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-6 ps-0">
+            <div class="form-group">
+              <label>To Date</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" matInput [matDatepicker]="datepicker2"
+                  (click)="datepicker2.open()" [(ngModel)]="toDate" />
+                <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                <div class="addonset">
+                  <img src="assets/img/icons/calendars.svg" alt="img" />
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-lg-2 col-md-3 col-sm-6 ps-0">
+            <label class="fw-bolder mb-1">Cost Center</label>
+            <div class="">
+              <ng-select bindLabel="LocName" bindValue="LocID" [items]="costCenterList"
+                placeholder="---Select Cost Center---" [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6 ps-0">
+            <label class="fw-bolder mb-1">Party</label>
+            <div class="">
+              <ng-select bindLabel="NAMES" bindValue="CODE" [items]="partyList" placeholder="---Select Party---"
+                [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6 ps-0">
+            <label class="fw-bolder mb-1">Item</label>
+            <div class="">
+              <ng-select bindLabel="NAMES" bindValue="CODE" [items]="itemList" placeholder="---Select Item---" [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="row fw-bolder">
+          <div class="col-lg-2 col-md-3 col-sm-6">
+            <label class="fw-bolder mb-1">DO Range</label>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Enter DO Range" />
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6">
+            <label class="fw-bolder mb-1">To</label>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Enter DO To" />
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6 ps-0">
+            <label class="fw-bolder mb-1">Vehicle No </label>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Enter Vehicle No" />
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-2 col-sm-6 d-flex">
+            <div class="form-group d-flex align-items-end">
+              <div class="d-flex align-items-center me-3">
+                <input type="checkbox" id="waiting" name="GIP" value="waiting" class="me-1">
+                <label for="waiting" class="mb-0">Waiting to Enter</label>
+              </div>
+              <div class="d-flex align-items-center me-3">
+                <input type="checkbox" id="loading" name="GIP" value="loading" class="me-1">
+                <label for="loading" class="mb-0">In for Loading</label>
+              </div>
+              <div class="d-flex align-items-center me-3">
+                <input type="checkbox" id="afterload" name="GIP" value="afterload" class="me-1">
+                <label for="afterload" class="mb-0">Out After Loading</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-3 mt-4">
+            <div class="d-flex justify-content-end mt-2">
+              <button class="btn btn-primary btn-sm">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8 col-sm-12 col-12 d-flex">
+            <div class="card flex-fill p-2">
+              <div class="table-responsive" style="height: 400px">
+                <table class="table tableSticky productTable fs-13 mb-0">
+                  <thead>
+                    <tr>
+                      <th style="width: 7.5%" class="text-start">Sno</th>
+                      <th style="width: 7.5%" class="text-start">Date</th>
+                      <th style="width: 7.5%" class="text-start">Ar#</th>
+                      <th style="width: 7.5%" class="text-start">GPNo</th>
+                      <th style="width: 7.5%" class="text-start">VehicleNo</th>
+                      <th style="width: 7.5%" class="text-start">Qty</th>
+                      <th style="width: 7.5%" class="text-start">F.Wt Time</th>
+                      <th style="width: 7.5%" class="text-start">S.Wt Time</th>
+                      <th style="width: 7.5%" class="text-start">Fir-Wt</th>
+                      <th style="width: 7.5%" class="text-start">Sec-Wt</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                  <!-- <tfoot  id="print-tbl">
+                      <tr>
+                          <td></td>
+                      </tr>
+                    </tfoot> -->
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-12 col-12 d-flex ps-0">
+            <div class="card flex-fill p-2">
+              <div class="table-responsive" style="height: 400px">
+                <table class="table tableSticky productTable fs-13 mb-0">
+                  <thead>
+                    <tr>
+                      <th style="width: 7.5%" class="text-start">DoNo</th>
+                      <th style="width: 7.5%" class="text-center">Item</th>
+                      <th style="width: 7.5%" class="text-end">Qty</th>
+                      <th style="width: 7.5%" class="text-end">Freight</th>
+                      <th style="width: 7.5%" class="text-end">Party</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

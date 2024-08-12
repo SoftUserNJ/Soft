@@ -1,0 +1,135 @@
+<div class="content ListPage">
+    <div class="page-header mb-1">
+      <div class="page-title">
+        <h4>Job Wise Due Status</h4>
+      </div>
+      <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+            <li>
+              <a (click)="export('Job-Wise-Due-Status', 'pdf')" title="pdf">
+                <img src="/assets/img/icons/pdf.svg" alt="img">
+              </a>
+            </li>
+            <li>
+              <a (click)="export('Job-Wise-Due-Status', 'xlxs')" title="excel">
+                <img src="/assets/img/icons/excel.svg" alt="img">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-0">
+      <div class="card-body pt-2">
+        <div class="row">
+          <div class="col-lg-1 col-md-2 col-sm-6 pe-1">
+            <div class="form-group">
+              <label>Job No</label>
+              <input type="text" class="form-control" placeholder="Job No..." [(ngModel)]="jonNo" (input)="searchGrid()" />
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-3 col-sm-6 px-1">
+            <div class="form-group">
+              <label>Cost Centre</label>
+              <input type="text" class="form-control" placeholder="Cost Centre..." [(ngModel)]="costCentre" (input)="searchGrid()" />
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-3 col-sm-6 px-1">
+            <div class="form-group">
+              <label>Farm</label>
+              <input type="text" class="form-control" placeholder="Farm..." [(ngModel)]="farm" (input)="searchGrid()" />
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-2 col-sm-6 px-1">
+            <div class="form-group">
+              <label>Search Party</label>
+              <input type="text" class="form-control" placeholder="Search Party..." [(ngModel)]="party" (input)="searchGrid()" />
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-3 col-sm-6 px-1">
+            <div class="form-group me-1">
+              <label>From Date:</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                  [(ngModel)]="fromDate" (click)="datepicker.open()" (dateChange)="getBalanceList()" />
+                <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="form-group ms-1">
+              <label>To Date:</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker2"
+                  [(ngModel)]="toDate" (click)="datepicker2.open()" (dateChange)="getBalanceList()" />
+                <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive" style="height: 350px">
+          <table class="table mb-0" id="export">
+            <thead>
+              <tr>
+                <th class="w-0"></th>
+                <th class="text-center w-0">Job No</th>
+                <th>Cost Centre</th>
+                <th>Farm</th>
+                <th>Party</th>
+                <th class="text-end">Opening Bal</th>
+                <th class="text-end">Debit</th>
+                <th class="text-end">Credit</th>
+                <th class="text-end">Closing Bal</th>
+              </tr>
+            </thead>
+            <tbody #costList>
+              <tr class="activeRow" *ngFor="let item of balanceList; let i = index">
+                <td class="text-center">
+                  <span (click)="onViewReport(item)">
+                    <i class="fas fa-print"></i>
+                  </span>
+                </td>
+                <td class="jobNo text-center">{{ item.JOBNO }}</td>
+                <td class="costCentre limited-text" title="{{ item.COSTCENTRE }}">{{ item.COSTCENTRE }}</td>
+                <td class="farmName limited-text" title="{{ item.FARMNAME }}">{{ item.FARMNAME }}</td>
+                <td class="party limited-text" title="{{ item.PARTY }}">{{ item.PARTY }}</td>
+                <td class="opBal text-end">
+                  {{ item.OPBALANCE | number : "1.2-2" }}
+                </td>
+                <td class="debit text-end">
+                  {{ item.DEBIT | number : "1.2-2" }}
+                </td>
+                <td class="credit text-end">
+                  {{ item.CREDIT | number : "1.2-2" }}
+                </td>
+                <td class="clBal text-end">
+                  {{ (item.OPBALANCE + item.DEBIT - item.CREDIT) | number : "1.2-2" }}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="text-end" colspan="5">Total =</td>
+                <td class="text-end">{{ totalOpening | number : "1.2-2" }}</td>
+                <td class="text-end">{{ totalDebit | number : "1.2-2" }}</td>
+                <td class="text-end">{{ totalCredit | number : "1.2-2" }}</td>
+                <td class="text-end">{{ totalClosing | number : "1.2-2" }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  

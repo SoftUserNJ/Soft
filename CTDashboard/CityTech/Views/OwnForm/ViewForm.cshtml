@@ -1,0 +1,574 @@
+﻿@model CityTech.Models.ViewModel.ViewForm;
+@{
+    Layout = "_LayoutMobile";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
+<style>
+    .draggable {
+        width: 200px;
+        height: 100px;
+        background-color: #007BFF;
+        color: white;
+        padding: 15px;
+        border: 1px solid #ccc;
+    }
+
+    .resizable {
+        width: 200px;
+        height: 100px;
+        background-color: #ff5722;
+        color: white;
+        padding: 15px;
+        border: 1px solid #ccc;
+        resize: both;
+        overflow: auto;
+    }
+
+    /* Style for the textbox and its wrapper */
+    .textbox-wrapper {
+        @* width: 200px; *@
+        padding: 5px;
+        margin: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .textbox-wrapper1 {
+        @* width: 200px; *@
+        /* padding: 15px;
+                                margin: 10px; */
+        /* border: 1px solid #ccc; */
+    }
+
+    .textbox-wrapper2 {
+        margin-left: 5px;
+    }
+
+    #printButton {
+        padding: 5px 10px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+
+    .editable-heading {
+        cursor: pointer;
+        user-select: text;
+    }
+
+    /* Style for resizable and draggable table */
+    .resizable-table {
+        border: 1px solid #ccc;
+    }
+
+        .resizable-table th, .resizable-table td {
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+    /* Style for image preview */
+    .image-preview {
+        max-width: 50px;
+        max-height: 50px;
+    }
+
+    .empty-highlight {
+        border: 1px solid red !important; /* Add a red border to highlight the element */
+    }
+
+    #Customform div p {
+        margin: 3px;
+        color: black;
+        background: white;
+        width: 400px;
+    }
+
+   
+
+    #Customform div input[type="text"]:not(table input[type="text"]) {
+        margin: 3px;
+        color: black;
+        background: white;
+        border: none;
+        width: 400px;
+    }
+
+
+
+    .bold-header {
+        font-weight: bold;
+    }
+
+
+    .customer-info-container {
+        display: none;
+    }
+
+    .company-info-container {
+        display: none;
+    }
+ .fa-text-height,.fa-text-width,.fa-image
+    {
+    font-size: large;
+    }
+
+     @* #Customform table {
+     width: 100%;
+    } *@
+
+   .modal-dialog {
+        top: 25% !important;
+        }
+    #Customform p, #Customform div, #Customform input, #Customform label {
+    font-size: medium;
+}
+
+</style>
+
+<div class="content pt-2 ListPage">
+    <div class="form-group" >
+        <label for="tableRows">Form ID</label>
+        <input class="form-control" id="txtformid" placeholder="Form Id" value="@Model.FormId" readonly>
+    </div>
+    <div class="form-group">
+        <label for="tableRows">IncidentNo</label>
+        <input class="form-control" id="txtincidentno" placeholder="Incident No" value="@Model.IncidentNo" readonly>
+    </div>
+
+
+
+
+    <div id="Customform" style="height:80%">
+  
+    </div>
+    <div class="modal fade" id="textInputModal" tabindex="-1" aria-labelledby="textInputModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enter Text</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="modalInputBox" placeholder="Enter text here...">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveTextInput">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="form-group">
+                <br>
+                <button id="btnsaveform" style="width: 100%;" class="btn btn-primary">Save Form</button>
+            </div>
+        </div>
+
+
+  
+     <div class="modal fade" id="LoaderModal" style="top:50% important">
+        @Html.Partial("~/Views/PartialViews/Loader/Loader.cshtml")
+    </div>
+     
+
+<script>
+    $(document).ready(function () {
+
+        //var formIdFromModel = @Model.FormId;
+        //$("#txtformid").val(formIdFromModel);
+        //var formIncidentNoFromModel = @Model.IncidentNo;
+        //$("#txtincidentno").val(formIncidentNoFromModel)
+
+
+        var formData = `@Html.Raw(Model.FormData)`;
+        $("#Customform").append(formData);
+
+
+        $('table').css('top', '0');
+        $('div').css('top', '0');
+        setConvasSettings();
+
+
+
+        $("#Customform input[type='file']").on("change", function (event) {
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                const imagePreview = $(fileInput).siblings('.image-preview')[0];
+                const label = $(fileInput).siblings('label')[0];
+
+                reader.onload = function (e) {
+                    // Update  image  src
+                    imagePreview.src = e.target.result;
+                    // Hide  "Picture " text
+                    label.style.display = "none";
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Attach double-click event listener to image previews to trigger file input click
+        $("#Customform .image-preview").on("dblclick", function () {
+            const fileInput = $(this).siblings('input[type="file"]')[0];
+            if (fileInput) {
+                fileInput.click(); // Trigger a click on the file input
+            }
+        });
+
+        // Attach an input event listener to the Customform
+        document.getElementById('Customform').addEventListener('input', function (event) {
+            const target = event.target;
+
+            if (target.type === 'text') {
+                const currentValue = target.value;
+                target.setAttribute("value", currentValue);
+            } else if (target.type === 'checkbox') {
+                const isChecked = target.checked;
+                target.setAttribute("checked", isChecked ? "true" : "false");
+            } else if (target.type === 'radio') {
+                const isChecked = target.checked;
+                target.setAttribute("checked", isChecked ? "true" : "false");
+            }
+        });
+
+   
+
+
+        document.body.addEventListener("click", function (event) {
+            // For clear-button
+            if (event.target.classList.contains('clear-button')) {
+                const canvasId = event.target.previousElementSibling.id;
+                clearSignature(canvasId);
+                event.target.style.display = "none";
+            }
+
+            // For clear-buttonlabel
+            if (event.target.classList.contains('clear-buttonlabel')) {
+                // Assuming the clearButton is a sibling to the questionLabel, and it's directly after it.
+                const clearBtn = event.target.nextElementSibling.querySelector('.clear-button');
+                if (clearBtn) {
+                    clearBtn.style.display = "inline-block";
+                }
+            }
+        });
+
+
+
+                    $("body").on("click", ".fa-text-height", function () {    
+                            const fafaheight=$(this);
+                            const associatedTextareaField = $(this).siblings('textarea');
+                            const currentText = associatedTextareaField.val();
+                            $("#modalInputBox").val(currentText);
+                            $("#textInputModal").modal("show");
+                            $("#saveTextInput").off("click").on("click", function () {
+                                debugger;
+                                const modalText = $("#modalInputBox").val();
+                                if (modalText!="")
+                                {
+                                    fafaheight.css('color', 'green');
+                                }
+                                associatedTextareaField.val(modalText); 
+                                associatedTextareaField.text(modalText); 
+                                const inputEvent = new Event('input', {
+                                    bubbles: true,
+                                    cancelable: true,
+                                });
+                                associatedTextareaField[0].dispatchEvent(inputEvent); 
+
+                        
+                                $("#textInputModal").modal("hide");
+                            });
+                        });
+
+
+        $("body").on("click", ".fa-text-width", function () {
+            const currentText = $(this).siblings('input[type="text"]').val();
+            $("#modalInputBox").val(currentText);
+            $("#textInputModal").modal("show");
+
+            const associatedInputField = $(this).siblings('input[type="text"]');
+
+            // Event handler for modal save button click
+            $("#saveTextInput").off("click").on("click", function () {
+                const modalText = $("#modalInputBox").val();
+                associatedInputField.val(modalText);
+
+                // Create and dispatch an "input" event for the associated input field
+                const inputEvent = new Event('input', {
+                    bubbles: true,
+                    cancelable: true,
+                });
+                associatedInputField[0].dispatchEvent(inputEvent); // [0] to access the DOM element
+
+                $("#textInputModal").modal("hide");
+            });
+        });
+                   
+
+          $(document).on('click', '.yesfollowup', function(event) {
+                        debugger; 
+                        $("#followupno" + event.target.getAttribute("followupdiv")).css('display', 'none');
+                        $("#followupyes" + event.target.getAttribute("followupdiv")).css('display', 'block');                             
+           });
+
+
+
+          $(document).on('click', '.nofollowup', function(event) {
+                          debugger;
+                    
+              $("#followupyes" + event.target.getAttribute("followupdiv")).css('display', 'none');
+              $("#followupno" + event.target.getAttribute("followupdiv")).css('display', 'block');
+                     
+           });
+
+
+                    $(document).on('click', '.followupdiv', function(event) {
+                        debugger;
+                        var checkbox = $(event.target).is('input[type="checkbox"]') ? $(event.target) : $(event.target).closest('.followupdiv').find('input[type="checkbox"]');
+                        if (checkbox.prop('checked')) {
+                            $("#followupdiv" + checkbox.closest('.followupdiv').attr("followupdiv")).css('display', 'block');
+                        } else {
+                            $("#followupdiv" + checkbox.closest('.followupdiv').attr("followupdiv")).css('display', 'none');
+                        }
+                     });
+
+
+
+
+
+
+
+             $(document).on('change', '.dropdown', function(event) {
+                  debugger;
+
+               // var elements=  document.querySelectorAll( #$(this).id" .followupdivsubdropdown");
+             //   var elements = document.querySelectorAll('#' + $(this).attr('id') + ' .followupdivsubdropdown');
+         
+                        var pid = $(this).parent(); // Get the parent element
+                         var elements = pid.find('.followupdivsubdropdown');
+
+
+                 
+                 // var elements = document.getElementsByClassName("followupdivsubdropdown");
+                        for(var i = 0; i < elements.length; i++) {
+                            var element = elements[i];
+                            element.style.display = 'none'; 
+                        }
+                      var selectedOption = $(this).find('option:selected');
+                      var followupDivValue = selectedOption.attr('followupdiv');
+                   
+                 
+                    $("#followupdiv" + followupDivValue).css('display', 'block');      
+                    var selectedValue = $(this).val();
+                    this.setAttribute('selected-value', selectedValue);
+                    $(this).find("option").removeAttr("selected");
+                    $(this).find("option[value='" + selectedValue + "']").attr("selected", "selected");
+             });
+
+
+ 
+
+
+
+
+
+
+
+       
+
+        $("#btnsaveform").click(async function () {
+            try {
+                await SaveLoader();
+                await Saveajax();
+                await SaveLoaderHide();
+            } catch (err) {
+                console.log(err);
+                return false;
+            }
+        });
+    
+
+
+
+
+    const Saveajax = async () => {
+
+            try {
+
+     
+                var obj = {
+                Formid: $("#txtformid").val(),
+                Incidentno: $("#txtincidentno").val(),
+                FormData: $('#Customform').html()
+            };
+                await $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=UTF-8",
+                    url: "/OwnForm/SaveViewForm/",
+                    data: JSON.stringify(obj),
+                    async: true,
+                    dataType: "json",
+                    success: async function (data) {
+                        if (data == true) {
+                            await SaveLoaderHide();
+                            toastr.success("Saved Successfully", "", {
+                                closeButton: !0,
+                                tapToDismiss: !1,
+                                ltl: o
+                            });
+                            
+                        }
+                        else if (data == false) {
+                            toastr.error("Please Save Again", "", {
+                                closeButton: !0,
+                                tapToDismiss: !1,
+                                ltl: o
+                            });
+                        }
+                        else {
+                            toastr.info(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function (data) {
+                        alert(data)
+                    }
+                });
+
+            } catch (err) {
+                console.log(err);
+                return false;
+            }
+        };
+
+      
+        const SaveLoader = async () => {
+            try {
+                await new Promise((resolve) => {
+                    $('#LoaderModal').modal({
+                        backdrop: 'static',
+                        keyboard: false,
+                        show: false
+                    });
+
+                    $("#LoaderModal").modal('show');
+                    resolve();
+                });
+
+            } catch (err) {
+                console.log(err);
+                return false;
+            }
+        };
+
+
+
+//Hide Loader 
+
+
+    const SaveLoaderHide = async () => {
+        try {
+            await new Promise(resolve => {
+                setTimeout(() => {
+                    $("#LoaderModal").modal('hide');
+                    resolve();
+                }, 1000); // Add a delay of 1000 milliseconds before hiding the modal
+            });
+        } catch (err) {
+            console.log(err);
+            return false;
+        }
+    };
+
+        function setConvasSettings() {
+            const canvasElements = document.querySelectorAll('[id*="signatureCanvas"]');
+            for (let i = 0; i < canvasElements.length; i++) {
+                initializeSignatureCanvas(canvasElements[i].id);
+
+                retrieveSignature(canvasElements[i].id);
+            }
+
+        }
+
+        function initializeSignatureCanvas(signatureCanvas) {
+
+
+            const canvas = document.getElementById(signatureCanvas);
+            const ctx = canvas.getContext('2d');
+            let drawing = false;
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('touchstart', startDrawing);
+
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('touchmove', draw);
+
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('touchend', stopDrawing);
+
+            function startDrawing(e) {
+                e.preventDefault();
+                drawing = true;
+                const x = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+                const y = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
+                ctx.beginPath();
+                ctx.moveTo(x - canvas.getBoundingClientRect().left, y - canvas.getBoundingClientRect().top);
+            }
+
+            function draw(e) {
+                if (!drawing) return;
+                e.preventDefault();
+                const x = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+                const y = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+                ctx.lineTo(x - canvas.getBoundingClientRect().left, y - canvas.getBoundingClientRect().top);
+                ctx.stroke();
+                canvas.setAttribute('data-signature', canvas.toDataURL());
+            }
+
+            function stopDrawing() {
+                drawing = false;
+                ctx.closePath();
+            }
+        }
+        function clearSignature(signatureCanvasId) {
+            const canvas = document.getElementById(signatureCanvasId);
+            const ctx = canvas.getContext('2d');
+
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Set the canvas background color to white (you can also use 'transparent')
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function retrieveSignature(signatureCanvasId) {
+            const canvas = document.getElementById(signatureCanvasId);
+            const ctx = canvas.getContext('2d');
+            const signatureDataURL = canvas.getAttribute('data-signature');
+
+            if (signatureDataURL) {
+                const img = new Image();
+                img.src = signatureDataURL;
+                img.onload = function () {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                };
+            }
+        }
+
+
+
+
+    });
+
+
+</script>

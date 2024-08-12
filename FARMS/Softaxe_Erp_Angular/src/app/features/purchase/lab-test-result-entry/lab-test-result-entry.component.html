@@ -1,0 +1,434 @@
+<section>
+
+  <div class="content ListPage" *ngIf="isShowPage">
+    <div class="page-header">
+      <div class="page-title">
+        <h4 class="newcolor">Final Lab Test  Form</h4>
+        
+      </div>
+      <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf" id="pdfPrint">
+                <img src="/assets/img/icons/pdf.svg" alt="img">
+              </a>
+            </li>
+            <li>
+              <a href="/Home/Index" role="button">
+                <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+
+        <div class="row align-items-center mb-2">
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="search-set">
+              <div class="search-path">
+                <a class="btn btn-filter" id="filter_search">
+                  <img src="/assets/img/icons/filter.svg" alt="img">
+                  <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+                </a>
+              </div>
+              <div class="search-input">
+                <input (input)="searchGrid($event)" type="search" id="txtSearch" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-9 col-md-6 col-sm-12 ">
+
+            <div class="row align-items-center">
+              <div class="col-lg-2 col-md-2 text-end p-0">
+                <span class="fw-bolder">From Date</span>
+              </div>
+              <div class="col-lg-3 col-md-4 ps-1">
+                <div class="form-group mb-0">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepicker" [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                    <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-2 text-end p-0">
+                <span class="fw-bolder">To Date</span>
+              </div>
+              <div class="col-lg-3 col-md-4 ps-1">
+                <div class="form-group mb-0">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                      [matDatepicker]="datepicker2" [(ngModel)]="toDate" (click)="datepicker2.open()">
+                    <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-2">
+                <div class="add-icon" (click)="getLabList()">
+                  <a class="w-50"><img src="/assets/img/icons/search.svg" alt="img" class="searchSvg"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="col-lg-2 col-md-2 ps-0">
+            <div class="wordset ms-4 text-center">
+              <p class="btn-addednew btnAdd" (click)="togglePages()">
+                <img src="/assets/img/icons/plus.svg" alt="img" class="me-1">Add New
+              </p>
+            </div>
+          </div> -->
+
+        </div>
+        <div class="table-responsive mb-1">
+          <table class="table table-hover" id="tbl-print">
+            <thead>
+              <tr>
+                <th class="text-start">Lab #</th>
+                <th class="text-start">Arrival #</th>
+                <th class="text-start">Vehicle #</th>
+                <th class="text-start">Party</th>
+                <th class="text-start">Item</th>
+                <th class="text-start">1st Lab Date</th>
+                <th class="text-center w-10">Action</th>
+              </tr>
+            </thead>
+            <tbody #voucherLists>
+              <tr *ngFor="let data of voucherList">
+                <td class="text-start d-none">{{data.ArrivalNo}}</td>
+                <td class="text-start">{{data.LabTestNo}}</td>
+                <td class="text-start">{{data.ArrivalNo}}</td>
+                <td class="text-start">{{data.VehicleNo}}</td>
+                <td class="text-start">{{data.Party}}</td>
+                <td class="text-start">{{data.Item}}</td>
+                <td class="text-start">{{data.ResultDate}}</td>
+                <td class="text-center">
+                  <span (click)="PrintSlip(data.ResultDate, data.ArrivalNo)" class="btnRowPrint me-3">
+                    <img src="/assets/img/icons/printer.svg" style="cursor: pointer;" alt="img">
+                  </span>
+                  <span (click)="editLab(data.LabTestNo)" class="me-3 btnEditCategory">
+                    <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                  </span>
+                
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content AddPage" *ngIf="!isShowPage">
+
+    <div class="page-header mb-4">
+      <div class="page-title">
+        <h4>Lab Test From</h4>
+      </div>
+      <div class="page-btn" routerLink="/journal-voucher">
+        <a (click)="togglePages()" class="btn btn-added btnList">
+          <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+            aria-label="fa fa-th-list"></i>
+          Home
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row align-items-center mb-2" [formGroup]="LabEntryForm">
+
+          <div class="d-flex justify-content-between">
+              <div class="row" style="width: 72%;">     
+                      <div class="row">
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="position-relative w-100 me-2">
+                                <label class="fw-bold">Lab Type</label>
+                                <ng-select class="bold-placeholder" placeholder="--- Select Voucher Type ---" bindLabel="name" bindValue="id"
+                                  formControlName="vchType" [dropdownPosition]="'bottom'" readonly>
+                                  <ng-option value="LB">LB</ng-option>
+                                </ng-select>
+                              </div>
+                            </div>
+                            
+              
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="position-relative w-100 me-2">
+                                <label class="fw-bold">Lab Test#</label>
+                                <input type="text" formControlName="labNo" readonly class="form-control me-2">
+                                <input type="text" formControlName="UserId" readonly class="form-control me-2 d-none">
+                              </div>
+                            </div>
+                
+                          <div class="col-lg-3 col-md-3 col-sm-12 dsiabled">
+                            <div class="position-relative w-100 me-2 form-group mb-0">
+                              <label class="fw-bold" style="margin-bottom: 0px !important;">Lab Date</label>
+                              <div class="input-groupicon">
+                                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                                  (click)="datepicker.open()" formControlName="Vchdate" />
+                                <mat-datepicker #datepicker></mat-datepicker>
+                                <div class="addonset">
+                                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="position-relative w-100 me-2">
+                              <label class="fw-bold">Bags In</label>
+                              <input type="text" formControlName="BagsIn" readonly class="form-control me-2">
+                            </div>
+                          </div>
+              
+                          
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="position-relative w-100 me-2">
+                                <label class="fw-bold">Vehicle No</label>
+                                <input type="text" formControlName="VehNo" readonly class="form-control me-2">
+                              </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="mb-2">
+                                <div class="row">
+                                  <div class="col-lg-10 col-sm-10 col-10">
+                                      <label class="fw-bold">Arrival No</label>
+                                      <input type="text" formControlName="arrvNo" readonly class="form-control me-2">
+                                  </div>
+                                  <!-- <div class="col-lg-2 col-sm-2 col-2 ps-0 pt-3">
+                                    <div class="add-icon text-end">
+                                      <button data-bs-toggle="modal" data-bs-target="#ArrivalListModal" (click)="getArrivalList();" class="btn btn-primary btn-sm me-1" style="margin-top: 4px;">List</button>
+                                    </div>
+                                  </div> -->
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 pt-4 disabled" style="padding-left: 55px;">
+                              <div class="form-group d-flex align-items-end" style="margin-bottom:0px!important;">
+                                <div class="d-flex align-items-center me-4">
+                                  <input type="radio" id="unapproved" value="unapproved" [checked]="accepted" class="me-1" name="approvalStatus"
+                                         (change)="accepted = true; rejected = false;" readonly>
+                                  <label for="unapproved" class="mb-0 pt-1">Visually Accepted</label>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                  <input type="radio" id="approved" [checked]="rejected" value="approved" class="me-1" name="approvalStatus"
+                                         (change)="rejected = true; accepted = false;" readonly>
+                                  <label for="approved" class="mb-0 pt-1">Visually Rejected</label>
+                                </div>
+                              </div>
+                            </div>
+                            
+              
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                              <label class="fw-bold">Remarks</label>
+                              <textarea type="text" formControlName="remarks" class="form-control me-2"></textarea>
+                            </div>
+                            
+                            
+              
+                
+                      </div>
+              </div>
+                  <div class="row" style="width: 30%;">
+                      <fieldset style="border: 1px solid #cccccc; border-radius: 3px; padding: 5px;">
+                          <legend class="fw-bold" style="font-size: 11px; float:none; margin-bottom:-6px; width: auto; padding:0 2%;">First Samples</legend>
+                
+                          <div class="col-lg-12 col-md-12 col-sm-12">
+                              <div class="position-relative w-100 me-2">
+                                <label class="fw-bold">Sample Test - 1</label>
+                                <input type="text" formControlName="sample1" readonly class="form-control me-2">
+                              </div>
+                            </div>
+  
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                              <div class="position-relative w-100 me-2">
+                                <label class="fw-bold">Sample Test - 2</label>
+                                <input type="text" formControlName="sample2" readonly class="form-control me-2">
+                              </div>
+                            </div>
+  
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                              <div class="position-relative w-100 me-2">
+                                <label class="fw-bold">Sample Test - 3</label>
+                                <input type="text" formControlName="sample3" readonly class="form-control me-2">
+                              </div>
+                            </div>
+                      </fieldset>
+                  </div>
+              </div>
+             
+     
+
+
+          
+
+          <!-- <div class="col-lg-12 col-md-12 col-sm-12 text-end">
+            <button type="submit" (click)="onAdd()" class="btn btn-success btn-sm me-1"
+              style="margin-top: 20px;">{{btnAdd}}</button>
+          </div> -->
+
+        </div>
+
+        <div class="table-responsive" style="height: 200px">
+          <table class="table table-hover" id="tbl-print">
+            <thead>
+              <tr>
+                <th class="d-none">Sno</th>
+                <th class="text-center wd-15">Test Name</th>
+                <th class="text-center wd-5">Bags</th>
+                <th class="text-center wd-5">Result %</th>
+                <th class="text-center wd-10">UOM</th>
+                <th class="text-center wd-5">Deduction %</th>
+                <th class="text-center wd-5 d-none">P. Ded Kgs</th>
+                <th class="text-center wd-5 d-none">Stk Ded</th>
+                <th class="text-center wd-5 d-none">S. Ded Kg</th>
+                <th class="text-center wd-5">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr [ngClass]="{ 'disabled': isFreeze }" *ngFor="let data of LabEntryList">
+                <td class="d-none"><input #sno type="text" class="form-control me-2 ht-25" value="{{data.sno}}"></td>
+                <td class="wd-15">
+                  <select style="font-size: 12px; height: 28px;" #testType class="bold-placeholder form-select" placeholder="--- Select Test Type ---">
+                    <option disabled selected>--- Select Test Type ---</option>
+                    <option *ngFor="let item of TestTypeList" [value]="item.LabTestName">{{ item.LabTestName }}</option>
+                  </select>
+                </td>
+                <td class="wd-5"><input #tanker type="text" (input)="CalculateBags();" (change)="CalculateBags();" class="form-control me-2 ht-25"></td>
+                <td class="wd-5"><input #result type="number" class="form-control me-2 ht-25"></td>
+
+                <td class="wd-10">
+                  <select style="font-size: 12px; height: 28px;" #uom class="bold-placeholder form-select" placeholder="--- Select Uom ---">
+                    <option disabled selected>--- Select Uom ---</option>
+                    <option *ngFor="let item of UomList" [value]="item.name">{{ item.name }}</option>
+                  </select>
+                </td>
+
+               
+                <td class="wd-5"><input #PartyDed type="text" class="form-control me-2 ht-25"></td>
+                <td class="wd-5 d-none"><input #PDedKgs type="text" class="form-control me-2 ht-25"></td>
+                <td class="wd-5 d-none"><input #StkDed type="text" class="form-control me-2 ht-25"></td>
+                <td class="wd-5 d-none"><input #SDedKg type="text" class="form-control me-2 ht-25 "></td>
+                <td class="text-center">
+                  <!-- Delete Button  -->
+                  <span (click)="deleteItem(data)" class="confirm-text btnDelItem" style="cursor: pointer">
+                    <img src="/assets/img/icons/delete.svg" alt="Delete" />
+                  </span>
+                  <span (click)="onAdd()" class="confirm-text btnDelItem" style="cursor: pointer">
+                    <img src="/assets/img/icons/plus-row.svg" alt="Delete" />
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="text-center" colspan="2">Total Bags: {{TotalBags}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+
+            <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">New</button>
+            <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+              (click)="onClickSave()">Save</button>
+            <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Arrival MODAL -->
+<div  class="modal fade" id="ArrivalListModal"> 
+<div class="modal-dialog" style="max-width: 60%">
+  <div class="modal-content">
+    <div class="modal-header p-2 align-items-center">
+      <h5 class="modal-title">Arrival List</h5>
+      <button type="button" class="close fs-30 autoClose" data-bs-dismiss="modal" aria-label="Close">
+        x
+      </button>
+    </div>
+    <div class="modal-body p-2">
+      <div class="card mb-0">
+        <div class="card-body p-2">
+          <div class="row">
+            <div class="form-group col-md-10 col-lg-10 col-sm-12">
+              <input type="text" class="form-control" (input)="searchArrivals($event)"
+                placeholder="Search Arrivals List..." />
+            </div>
+            <div class="form-group col-md-2 col-lg-2 col-sm-12 d-flex align-items-end p-0">
+              <div class="d-flex align-items-center me-2">
+                <input type="radio" class="me-1" name="inv" id="chkAll" checked="checked" />
+                <label for="chkAll" class="form-label fs-13" style="margin: 0!important;">All</label>
+              </div>
+              <div class="d-flex align-items-center">
+                <input type="radio" name="inv" class="me-1" id="chkPendding" />
+                <label for="chkPendding" class="form-label fs-13" style="margin: 0!important;">Pendding</label>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-0 scroll">
+            <div class="table-responsive" style="height: 250px">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-center">Vehicle No#</th>
+                    <th class="text-center">Product Name</th>
+                    <th class="text-center w-5">Quantity</th>
+                    <th class="text-center w-5">Bags</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody #ArrivalList>
+                  <tr *ngFor="let item of ArrvialList" (click)="rowHighLight($event)" (dblclick)="AddArrival(item);">
+                    <td class="text- d-none">{{ item.Dmcode }}</td>
+                    <td class="text-center d-none">{{ item.Code }}</td>
+                    <td class="text-center d-none">{{ item.VchNo }}</td>
+                    <td class="text-center d-none">{{ item.Vchtype }}</td>
+                    <td class="text-center">{{ item.Vehicleno }}</td>
+                    <td class="text-center">{{ item.NAMES }}</td>
+                    <td class="text-center">
+                      {{ item.qty }}
+                    </td>
+                    <td class="text-center">{{ item.Bags }}</td>
+                    <td class="text-center">
+                      <span (click)="AddArrival(item)" class="me-3" style="cursor: pointer">
+                        <i class="fas fa-edit"></i>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,236 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Payment Recipts Status</h4>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Recipts-Payment-Status', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Recipts-Payment-Status', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder">Main Group</label>
+            <ng-select [items]="groupList" [disabled]="true" placeholder="---Select Main Group---" bindLabel="name"
+              bindValue="id" [(ngModel)]="groupId" [dropdownPosition]="'bottom'">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="mb-2 form-group">
+            <label class="fw-bolder" style="margin-bottom:0!important;">From Date:</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                [(ngModel)]="fromDate" (click)="datepicker.open()" (dateChange)="getVoucherList()" />
+              <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="mb-2 form-group">
+            <label class="fw-bolder" style="margin-bottom:0!important;">To Date:</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker2"
+                [(ngModel)]="toDate" (click)="datepicker2.open()" (dateChange)="getVoucherList()" />
+              <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder">Select Party</label>
+            <ng-select placeholder="---Select Party---" [items]="partyList" bindLabel="name" bindValue="code"
+              [dropdownPosition]="'bottom'" (change)="onChangeParty($event)" (clear)="onClearParty()">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder">Select Company</label>
+            <ng-select placeholder="---Select Company---" [items]="companyList" [disabled]="cmpDisable" bindLabel="name"
+              bindValue="id" [(ngModel)]="companyId" [dropdownPosition]="'bottom'" (change)="getVoucherList()" >
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder">Select Bank/Cash</label>
+            <ng-select placeholder="---Select Bank/Cash---" [items]="bankCashList" bindLabel="name" bindValue="code"
+              [dropdownPosition]="'bottom'" (change)="onChangeBankCash($event)" (clear)="onClearBakCash()">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="mb-2">
+            <label class="fw-bolder">Select Type</label>
+            <ng-select placeholder="---Select Type---" [items]="typesList" bindLabel="name" bindValue="value"
+              [dropdownPosition]="'bottom'" (change)="onChangeTypes($event)" (clear)="onClearTypes()">
+            </ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height:320px;">
+        <table class="table productTable fs-13 mb-0" id="export">
+          <thead>
+            <tr rowspan="2">
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th colspan="2" style="width:13%;" class="text-center text-decoration-underline">B A N K</th>
+              <th colspan="2" style="width:13%;" class="text-center text-decoration-underline">C A S H</th>
+              <th colspan="2" style="width:13%;" class="text-center text-decoration-underline">CREDIT CARD</th>
+              <th rowspan="2" class="text-center w-0 noPrint">Print</th>
+              <th rowspan="2" class="text-center w-0 noPrint">Image</th>
+            </tr>
+            <tr>
+              <th class="text-center w-0">Sno</th>
+              <th class="w-0">Type-No</th>
+              <th class="text-center">VchDate</th>
+              <th style="width:25%;">Party</th>
+              <th style="width:10%;">Account</th>
+              <th class="text-end">TAX</th>
+              <th class="text-end">Received</th>
+              <th class="text-end">Payment</th>
+              <th class="text-end">Received</th>
+              <th class="text-end">Payment</th>
+              <th class="text-end">Received</th>
+              <th class="text-end">Payment</th>
+            </tr>
+          </thead>
+          <tbody #PRStatus>
+            <tr *ngFor="let item of voucherList; let i = index">
+              <td class="srno text-center limited-text">{{ i + 1 }}</td>
+              <td class="vchno d-none">{{ item.VCHNO }}</td>
+              <td class="vchType d-none">{{ item.VCHTYPE }}</td>
+              <td class="vchTypeNo">{{ item.VCHTYPENO }}</td>
+              <td class="vchDate text-center">{{ item.VCHDATE }}</td>
+              <td class="partyCode d-none">{{ item.PARTYCODE }}</td>
+              <td class="partyName limited-text" title="{{ item.PARTYNAME }}">{{ item.PARTYNAME }}</td>
+              <td class="bcCode d-none">{{ item.BCCODE }}</td>
+              <td class="bcName limited-text" title="{{ item.BCNAME }}">{{ item.BCNAME }}</td>
+              <td class="tax text-end">{{ item.TAX | number: "1.2-2" }}</td>
+              <td class="text-end BR">
+                {{ ((item.VCHTYPE.slice(0, 2) == "BR" && (item.BCNAME).toLowerCase() != "credit card") ? item.CREDIT : 0 ) | number: "1.2-2" }}
+              </td>
+              <td class="text-end BP">
+                {{ ((item.VCHTYPE.slice(0, 2) == "BP" && (item.BCNAME).toLowerCase() != "credit card") ? item.DEBIT : 0 ) | number: "1.2-2" }}
+              </td>
+              <td class="text-end CR">
+                {{ ((item.VCHTYPE.slice(0, 2) == 'CR') ? item.CREDIT : 0) | number: "1.2-2" }}
+              </td>
+              <td class="text-end CP">
+                {{ ((item.VCHTYPE.slice(0, 2) == 'CP') ? item.DEBIT : 0) | number: "1.2-2" }}
+              </td>
+              <td class="text-end CreditCardR">
+                {{ ((item.VCHTYPE.slice(0, 2) == "BR" && (item.BCNAME).toLowerCase() == "credit card") ? item.CREDIT : 0) | number: "1.2-2" }}
+              </td>
+              <td class="text-end CreditCardP">
+                {{ ((item.VCHTYPE.slice(0, 2) == "BP" && (item.BCNAME).toLowerCase() == "credit card") ? item.DEBIT : 0) | number: "1.2-2" }}
+              </td>
+              <td class="text-center noPrint">
+                <span class="btnPrintInvoice" (click)="openReportModal(item)">
+                  <i class="fas fa-print"></i>
+                </span>
+              </td>
+              <td class="text-center noPrint">
+                <span class="btnImageUpload" data-bs-toggle="modal" data-bs-target="#Modal"
+                  (click)="onClickModel(item)">
+                  <i class="fas fa-images"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot id="grdEnd">
+            <tr>
+              <td class="text-end" colspan="5">Total = </td>
+              <td class="text-end">{{ tax | number : "1.2-2" }}</td>
+              <td class="text-end">{{ bankReceived | number : "1.2-2" }}</td>
+              <td class="text-end">{{ bankPayment | number : "1.2-2" }}</td>
+              <td class="text-end">{{ cashReceived | number : "1.2-2" }}</td>
+              <td class="text-end">{{ cashPayment | number : "1.2-2" }}</td>
+              <td class="text-end">{{ creditReceived | number : "1.2-2" }}</td>
+              <td class="text-end">{{ creditPayment | number : "1.2-2" }}</td>
+              <td colspan="2" class="noPrint"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="Modal">
+  <div class="modal-dialog" style="max-width: 60%;">
+    <div class="modal-content" style="height:353px; font-weight: 600;" aria-hidden="true">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Upload Invoice Receiving</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="row">
+          <div class="col-lg-6 col-sm-12 col-md-6">
+            <div class="card mb-0" style="height:288px;">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Sno</th>
+                      <th class="w-75">File</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of fileList; let i = index">
+                      <td class="text-center">{{ i + 1 }}</td>
+                      <td class="limited-text">{{item.name}}</td>
+                      <td class="text-center">
+                        <span class="me-3"><i class="fas fa-trash" (click)="onRemoveFile(item)"></i></span>
+                        <span><i class="fas fa-eye" (click)="onViewFile(item)"></i></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-12 col-md-6">
+            <div class="imgBox" style="height: 255px;">
+              <iframe *ngIf="isPdf" [src]="srcPdfImg | safeUrl" style="width: 100%;height: 100%;">
+              </iframe>
+              <img *ngIf="!isPdf" [src]="srcPdfImg" style="width: 100%; height: 100%;">
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <input type="file" accept="image/png, image/jpeg, application/pdf, image/jpg"
+                (change)="onFileSelected($event)" [(ngModel)]="file" class="form-control p-1px me-2">
+              <button class="btn btn-sm btn-success" (click)="onClickUpload()">Upload</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

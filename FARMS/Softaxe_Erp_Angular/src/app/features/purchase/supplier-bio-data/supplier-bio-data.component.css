@@ -1,0 +1,10 @@
+.btn-addednew {
+  background: #ff9f43;
+  padding: 7px 12px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  margin: 0px;
+  display: flex;
+  align-items: center;
+}

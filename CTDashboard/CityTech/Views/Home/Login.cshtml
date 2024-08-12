@@ -1,0 +1,164 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer;
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CityTech</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/img/city-tech-icon.png">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"> </script>
+
+</head>
+
+<body>
+    <style>
+        .input-width{
+            width: 40px;
+            height: 40px;
+            background: #575c7c;
+            background-color: #575c7c !important;
+            border: none;
+            color: white !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0)
+        }
+    </style>
+    <div class="col-12 col-md-12 col-sm-12 login-background">
+        <div class="form-background p-3 pt-5 pb-5">
+            <div class="login-logo d-flex justify-content-center align-item-center mb-3">
+                <img class="img-fluid w-75" src="~/assets/img/city-tech-logo.png" alt="Logo">
+            </div>
+            <h2 class="login-logo">@Localizer["DASHBOARD"]</h2>
+            <div style="float:right;margin-right:36px;margin-bottom:20px;">
+                <a href="@Url.Action("SetLanguage", "Language", new { culture = "en-US", returnUrl = Context.Request.Path })"><img src="~/img/eng-flag.png" height="30px" width="30px" /></a>
+                <a href="@Url.Action("SetLanguage", "Language", new { culture = "nl-NL", returnUrl = Context.Request.Path })"><img src="~/img/dutch-flag.png" height="30px" width="30px" /></a>
+                </div>
+            <form asp-controller="Home" asp-action="Login" method="post">
+                <div class="input-details">
+                    <input type="text" class="form-control rounded-pill login-input" name="userName" placeholder="@Localizer["Username"]">
+                    <div class="d-flex justify-content-around mb-5">
+                        @*<input type="password" id="" class="form-control rounded-pill login-input" name="password" placeholder="@Localizer["6DigitPincode"]">*@
+                        <input type="text" id="one" class="form-control rounded-pill text-center input-width" name="one">
+                        <input type="text" id="two" class="form-control rounded-pill text-center input-width" name="two">
+                        <input type="text" id="three" class="form-control rounded-pill text-center input-width" name="three">
+                        <input type="text" id="four" class="form-control rounded-pill text-center input-width" name="four">
+                        <input type="text" id="five" class="form-control rounded-pill text-center input-width" name="five">
+                        <input type="text" id="six" class="form-control rounded-pill text-center input-width" name="six">
+                    </div>
+                    
+                    <input type="hidden" id="dateNow" name="activityLogDateTime">
+                    @if (ViewBag.Error != "")
+                    {
+                        <div class="text-center mb-1">
+                            <span class="text-danger p-pad">@ViewBag.Error</span>
+                        </div>
+                    }
+                </div>
+                <div class="d-flex justify-content-center align-item-center">
+                    <button type="submit" class="login-button rounded-pill">@Localizer["Login"]</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <script src="~/js/script.js"></script>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var dateElement = document.getElementById('dateNow');
+
+            function updateDateTime() {
+                var currentDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                dateElement.value = currentDateTime;
+            }
+
+            updateDateTime();
+            setInterval(updateDateTime, 10);
+        });
+
+        document.addEventListener('input', function (event) {
+            if (
+                event.target.id === 'one' ||
+                event.target.id === 'two' ||
+                event.target.id === 'three' ||
+                event.target.id === 'four' ||
+                event.target.id === 'five'
+            ) {
+                const inputValue = event.target.value;
+                event.target.value = inputValue.replace(/[^0-9]/g, ''); 
+
+                const numericValue = parseInt(event.target.value, 10); 
+
+                if (numericValue < 0) {
+                    event.target.value = ""; // Reset the input value if it's negative
+                }
+
+                if (event.target.value.length !== 0) {
+                    const nextInput = event.target.nextElementSibling;
+
+                    if (nextInput) {
+                        nextInput.focus(); // Focus on the next input element
+                    }
+                }
+            }
+        });
+
+        document.addEventListener('input', function (event) {
+            const element = event.target;
+
+            if (element.id === "six") {
+                const inputValue = element.value;
+                element.value = inputValue.replace(/[^0-9+]/g, '');
+
+                if (parseInt(element.value) < 0) {
+                    element.value = "";
+                }
+
+                if (element.value.length !== 0) {
+                    var v = element.value;
+
+                    if (v.length > 1) {
+                        v = v.substring(0, 1);
+                        element.value = v;
+                    }
+
+                    document.querySelector('button').click();
+                    element.blur();
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (
+                event.target.id === 'one' ||
+                event.target.id === 'two' ||
+                event.target.id === 'three' ||
+                event.target.id === 'four' ||
+                event.target.id === 'five' ||
+                event.target.id === 'six'
+            ) {
+                if (event.which === 8) {
+                    if (event.target.value.length == 0) {
+                        const previousInput = event.target.previousElementSibling;
+                        if (previousInput) {
+                            previousInput.focus();
+                        }
+                    }
+                }
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>

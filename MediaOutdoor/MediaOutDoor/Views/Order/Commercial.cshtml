@@ -1,0 +1,200 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Commercial";
+}
+
+
+<div class="container">
+    <h2 class="text-center my-3">@Localizer["Commercial"]</h2>
+
+    <table class="table rounded table-hover table-dark text-white">
+        <thead>
+            <tr>
+                <th class="pe-3">@Localizer["BudgetFrom"]</th>
+                <th class="pe-3">@Localizer["BudgetTo"]</th>
+                <th class="pe-3">@Localizer["Discount"]</th>
+                <th class="pe-3">@Localizer["CPM"]</th>
+                <th class="pe-3">@Localizer["Reach"]</th>
+            </tr>
+        </thead>
+        <tbody id="cpmList"></tbody>
+    </table>
+
+    <div class="row pb-4">
+        <div class="col-md-4 col-lg-4 form-group d-flex">
+
+            <label class="col-form-label text-white">@Localizer["EnterYourBudget"]</label>
+
+            <div class="col-6 p-0 ml-auto">
+                <input type="number" class="form-control" id="cBudget">
+            </div>
+
+        </div>
+
+        <div class="col-md-8 col-lg-8 form-group d-flex">
+
+            <label class="col-form-label text-white">@Localizer["RateForYou"]</label>
+
+            <div class="col-3 p-0 ml-3">
+                <input disabled="" type="text" class="form-control" id="rateForYou">
+            </div>
+
+            <button class="btn btn-success ml-auto" id="btnNextStep1">@Localizer["NextStep"] →</button>
+        </div>
+
+    </div>
+</div>
+
+<input type="hidden" value="@ViewBag.b2bRate" id="b2bRate" />
+
+@section scripts{
+
+    <script>
+
+        $(function(){
+            GetCpm();
+        });
+
+        //====================== Cpm Get ========================\\
+
+        function GetCpm() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Order/GetCpmEntry/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#cpmList").empty();
+                        $.each(data, function (i, item) {
+
+                            var b2bRate = parseFloat($("#b2bRate").val());
+                            var discount = parseFloat(item.discount);
+
+                            var cpm = (b2bRate * discount);
+
+                            cpm = cpm / 100;
+                            cpm = b2bRate - cpm;
+
+                            var budgetTo = parseFloat(item.budgetTo).toFixed(2);
+                            if (budgetTo == "NaN") {
+
+                                budgetTo = item.budgetTo;
+                            }
+
+                            $("#cpmList").append(`
+                              <tr>
+                                  <td class="budgetFrom ps-2">${parseFloat(item.budgetFrom).toFixed(2)}</td>
+                                  <td class="budgetTo">${budgetTo}</td>
+                                  <td class="discount">${parseFloat(discount).toFixed(2)}</td>
+                                  <td class="cpm">${parseFloat(cpm).toFixed(2)}</td>
+                                  <td class="reach">${item.reach}</td>
+                              </tr>
+                            `)
+                        });
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $('body').on('input', "#cBudget", function () {
+            var budget = parseFloat($(this).val()).toFixed(2);
+
+            var budgetLast = parseFloat($('#cpmList tr:last .budgetTo').text()).toFixed(2);
+
+            if (parseFloat(budget) > parseFloat(budgetLast)) {
+                parseFloat($(this).val(budgetLast)).toFixed(2);
+                budget = budgetLast;
+            }
+
+            var cpm = null;
+            $('#cpmList tr').each(function () {
+                var budgetFrom = parseFloat($(this).find('.budgetFrom').text());
+                var budgetTo = parseFloat($(this).find('.budgetTo').text());
+
+                if (budget >= budgetFrom && budget <= budgetTo) {
+                    cpm = parseFloat($(this).find('.cpm').text());
+                    return false;
+                }
+
+            });
+
+            if (cpm !== null) {
+                $("#rateForYou").val(cpm.toFixed(2));
+            } else {
+                // Handle the case where no matching row is found
+                $("#rateForYou").val('');
+            }
+
+        });
+
+
+        $('body').on('click', "#btnNextStep1", function () {
+            var rate = $("#rateForYou").val();
+            if (rate.length > 0) {
+
+                setCookie("OrderType", "B2B", 1);
+                setCookie("OrderRate", rate, 1);
+     
+            var priceString = $(".price").text(); 
+            var priceWithoutCurrencySign = parseFloat(priceString.substr(1));
+
+            if (priceWithoutCurrencySign > 0) {
+                var userConfirmed = confirm("Do you want to update selected cart with new budget ? (yes/no)");
+
+                if (userConfirmed) {
+                var orderType = getCookie("OrderType");
+                    $.ajax({
+                        asyc:false,
+                        url: '/Order/BudgetRate',
+                        type: 'POST',
+                        data: {
+                                VisitorId: visitorId,
+                                Rate: rate,
+                                OrderType: orderType
+                               
+                        },
+                        success: function (data) {
+                                window.location.href = "/#mapSection";
+                        },
+                        error: function () {
+                            // Handle errors if the request fails
+                        }
+                    });
+
+                }
+
+            }
+            else
+            {
+                //cart should be empty here
+
+                    window.location.href = "/#mapSection";
+            }
+
+
+                 
+
+          }
+            
+
+        });
+
+
+
+     
+
+   
+</script>
+
+}

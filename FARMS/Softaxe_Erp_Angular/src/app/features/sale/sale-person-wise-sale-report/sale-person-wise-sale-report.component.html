@@ -1,0 +1,219 @@
+<div class="content ListPage">
+    <div class="page-header mb-0">
+      <div class="page-title">
+        <h4>Sale Person Wise Report</h4>
+      </div>
+      <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="pdfPrint" data-bs-original-title="pdf">
+                <img src="assets/img/icons/pdf.svg" alt="img" />
+              </a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="convertExel"
+                data-bs-original-title="excel">
+                <img src="assets/img/icons/excel.svg" alt="img" />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-0">
+      <div class="card-body pt-2">
+        <div class="row fw-bolder">
+          <!-- <div class="col-lg-2 col-md-3 col-sm-6 ">
+              <label class="fw-bolder mb-1">Voucher Type</label>
+              <div class="">
+                <ng-select bindLabel="name" bindValue="id" placeholder="---Select Voucher Type---"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+            </div> -->
+          <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="form-group">
+              <label>From Date</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" matInput [matDatepicker]="datepicker" (click)="datepicker.open()"
+                  [(ngModel)]="fromDate" />
+                <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                <div class="addonset">
+                  <img src="assets/img/icons/calendars.svg" alt="img" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-2 col-sm-6 ps-0">
+            <div class="form-group">
+              <label>To Date</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" matInput [matDatepicker]="datepicker2"
+                  (click)="datepicker2.open()" [(ngModel)]="toDate" />
+                <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                <div class="addonset">
+                  <img src="assets/img/icons/calendars.svg" alt="img" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 ps-0">
+            <label class="fw-bolder mb-1">Location</label>
+            <div class="">
+              <ng-select bindLabel="name" bindValue="id" placeholder="---Select Location---"
+                [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 ps-0">
+            <label class="fw-bolder mb-1">Cost Center</label>
+            <div class="">
+              <ng-select bindLabel="name" bindValue="id" placeholder="---Select Cost Center---"
+                [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="row fw-bolder py-0">
+          <div class="col-lg-1 col-md-1 col-sm-2 mt-4">
+            <div class="search-path" data-bs-toggle="modal" data-bs-target="#productModal">
+              <a class="btn btn-filter setclose" id="filter_search">
+                <img src="/assets/img/icons/filter.svg" alt="img">
+                <span><img src="/assets/img/icons/closes.svg" alt="img"></span>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-2 col-sm-6 d-flex">
+            <div class="form-group d-flex align-items-end">
+              <div class="d-flex align-items-center me-3">
+                <input type="radio" id="status" name="GIP" value="status" class="me-1">
+                <label for="status" class="mb-0">With Value</label>
+              </div>
+              <div class="d-flex align-items-center me-3">
+                <input type="radio" id="detail" name="GIP" value="detail" class="me-1">
+                <label for="detail" class="mb-0">Product Wise Sale</label>
+              </div>
+              <div class="d-flex align-items-center me-3">
+                <input type="radio" id="arrival" name="GIP" value="arrival" class="me-1">
+                <label for="arrival" class="mb-0">Party Wise Sale</label>
+              </div>
+              <div class="d-flex align-items-center me-3">
+                <input type="checkbox" id="atGate" name="GIP" value="atGate" class="me-1">
+                <label for="atGate" class="mb-0">With Print Date</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-1 col-sm-3 mt-4">
+            <div class="">
+              <button class="btn btn-primary btn-sm mt-2">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal " id="productModal" >
+    <div class="modal-dialog" style="max-width: 50%;">
+      <div class="modal-content">
+        <div class="modal-header p-2 justify-content-end">
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-1">
+            <div class="card-body activeForm  p-2">
+              <div class="row fw-bolder ">
+                <div class="col-lg-6 col-md-4 col-sm-12">
+                  <div class="">
+                    <label class="form-label mb-1">Vouchers From</label>
+                    <input type="text" class="form-control" id="txtProductSearch" placeholder="Enter Vouchers From" skinid="">
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-12 ps-0">
+                  <div class="">
+                    <label class="form-label mb-1">Vouchers To</label>
+                    <input type="text" class="form-control" id="txtProductSearch" placeholder="Enter Vouchers To" skinid="">
+                  </div>
+                </div>
+              </div>
+              <div class="row fw-bolder py-1">
+                <div class="col-lg-6 col-md-4 col-sm-6">
+                  <label class="form-label mb-1">Item</label>
+                  <div class="position-relative w-100">
+                      <ng-select bindLabel="name" bindValue="id" placeholder="---Select Item---"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-6 ps-0">
+                    <label class="form-label mb-1">Party</label>
+                    <div class="position-relative w-100">
+                      <ng-select bindLabel="name" bindValue="id" placeholder="---Select Party---"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                </div>
+              </div>
+              <div class="row fw-bolder py-1">
+                <div class="col-lg-6 col-md-4 col-sm-6">
+                  <label class="form-label mb-1">Single Item Fiter</label>
+                  <div class="position-relative w-100">
+                      <ng-select bindLabel="name" bindValue="id" placeholder="---Select Single Item---"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-6 ps-0">
+                    <label class="form-label mb-1">National S.M</label>
+                    <div class="position-relative w-100">
+                      <ng-select bindLabel="name" bindValue="id" placeholder="---Select National S.M---"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                </div>
+              </div>
+              <div class="row fw-bolder py-1">
+                <div class="col-lg-6 col-md-4 col-sm-6">
+                  <label class="form-label mb-1">Zonal S.M</label>
+                  <div class="position-relative w-100">
+                      <ng-select bindLabel="name" bindValue="id" placeholder="---Select Zonal S.M---"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-6 ps-0">
+                    <label class="form-label mb-1">Regional S.M</label>
+                    <div class="position-relative w-100">
+                      <ng-select bindLabel="name" bindValue="id" placeholder="---Select Regional S.M---"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                </div>
+              </div>
+              <div class="row fw-bolder py-1">
+                <div class="col-lg-6 col-md-4 col-sm-6">
+                  <label class="form-label mb-1">Area S.M</label>
+                  <div class="position-relative w-100">
+                      <ng-select bindLabel="name" bindValue="id" placeholder="---Select Area S.M---"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-6 ps-0">
+                    <label class="form-label mb-1">Sale Promotion Office</label>
+                    <div class="position-relative w-100">
+                      <ng-select bindLabel="name" bindValue="id" placeholder="---Select Sale Promo---"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

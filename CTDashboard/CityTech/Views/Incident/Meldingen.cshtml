@@ -1,0 +1,319 @@
+﻿@{
+    ViewData["Title"] = "MELDINGEN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>Incident Details Report</h4>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #1265c3; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="PDF" id="pdfPrint">
+                            <i class="far fa-file-pdf" style="color: #ea5455; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" id="convertExcel">
+                            <i class="far fa-file-excel" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="CSV" id="convertCsv">
+                            <i class="fa-solid fa-file-csv" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch" class="rounded-pill">
+                    </div>
+                </div>
+                @*<div class="wordset">
+                <p href="javascript:void(0);" class="btn btn-addednew btnAdd ct-btns">
+                <img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">Add New
+                </p>
+                </div>*@
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="p-0 w-0imp"></th>
+                            <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />IncNo</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />IncDate</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />Object</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />Location</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />IncType</th>
+                        </tr>
+                    </thead>
+                    <tbody id="incDetalList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+
+        $(function () {
+            IncidentDetailsList();
+            UserPageRights();
+        });
+
+        function IncidentDetailsList() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Incident/IncidentDetailsList/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#incDetalList").empty();
+                        $.each(data, function (i, item) {
+
+                            var status = "";
+                            var scheduled = item.ISSCHEDULED;
+                            var workDone = item.WORKDONE;
+                            var accepted = item.ACCEPTED;
+                            var reject = item.REJECTED;
+
+                            if (scheduled == "fasle" && accepted == "fasle" && workDone == "fasle") {
+                                status = "Unscheduled";
+                            }
+                            else if (scheduled == true && accepted == false && workDone == false) {
+                                status = "Scheduled";
+                            }
+
+                            else if (scheduled == true && accepted == true && workDone == false) {
+                                status = "In-Process";
+                            }
+
+                            else if (scheduled == true && accepted == true && workDone == true) {
+                                status = "Fixed";
+                            }
+
+                            //if (!scheduled && !accepted && !workDone && !reject) {
+                            //    status = "Unscheduled";
+                            //}
+                            //else if (scheduled && !accepted && !workDone && !reject) {
+                            //    status = "Scheduled";
+                            //}
+                            //else if (scheduled && !accepted && !workDone && reject) {
+                            //    status = "Rejected";
+                            //}
+                            //else if (scheduled && accepted && !workDone && !reject) {
+                            //    status = "In-Process";
+                            //}
+                            //else if (scheduled && accepted && workDone && !reject) {
+                            //    status = "Fixed";
+                            //}
+
+                            var incDate = item.INCDATE;
+                            const Idate = moment(incDate).toDate();
+                            incDate = moment(Idate).format("DD/MM/YYYY");
+
+                            var sla = "";
+                            var actual = "";
+
+                            var fixDate = item.FIXEDDATE;
+                            var secureDate = item.SECUREDATE;
+                            var doneDate = item.WORKDONEDATE;
+
+                            const fixMoment = moment(fixDate);
+                            const secureMoment = moment(secureDate);
+                            const doneMoment = moment(doneDate);
+
+                            const duration = moment.duration(fixMoment.diff(secureMoment));
+                            const actualDuration = moment.duration(doneMoment.diff(secureMoment));
+
+                            const totalHours = duration.asHours();
+                            const actualTotalHours = actualDuration.asHours();
+
+                            var sla = formatDuration(totalHours);
+                            var actual = formatDuration(actualTotalHours);
+
+                            var SLAStatus = actualTotalHours >= 0 ? "True" : "False";
+
+                            $("#incDetalList").append(`
+                                <tr>
+                                    <td class="ViewIncNo ps-2"><i class="fa fa-eye"></i></td>
+                                    <td class="incNo ps-2">${item.INCNO}</td>
+                                    <td class="incDate">${incDate}</td>
+                                    <td class="incObject">${item.OBJECTNAME}</td>
+                                    <td class="incLocation">${item.LOCATION}</td>
+                                    <td class="incType">${item.INCTYPE}</td>
+                                </tr>
+                              `)
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        function formatDuration(totalHours) {
+            const hours = Math.floor(Math.abs(totalHours));
+            const minutes = Math.floor((Math.abs(totalHours) - hours) * 60);
+            return `${totalHours < 0 ? '-' : ''}${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        }
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#incDetalList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]"+".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+        //================ User Page Rights ==================\\
+
+        function UserPageRights() {
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/UserPageRights/",
+                    data: { url: window.location.pathname },
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.word == false) { $("#convertWord").closest('li').remove(); }
+                        if (data.pdf == false) { $("#pdfPrint").closest('li').remove(); }
+                        if (data.excel == false) { $("#convertExcel").closest('li').remove(); }
+                        if (data.csv == false) { $("#convertCsv").closest('li').remove(); }
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+    </script>
+}

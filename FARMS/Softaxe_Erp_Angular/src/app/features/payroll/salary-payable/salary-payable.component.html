@@ -1,0 +1,250 @@
+<section>
+
+  
+    <div class="content AddPage">
+  
+      <div class="page-header mb-4">
+        <div class="page-title">
+          <h4>Salary Payables</h4>
+        </div>
+       
+      </div>
+  
+      <div class="card" [formGroup]="SalaryPayableForm">
+        <div class="card-body">
+          <div class="row align-items-center mb-1">
+  
+           
+            <div class="col-lg-3 col-md-3 col-sm-12 d-none">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Sr No.</label>
+                <input type="text" formControlName="SrNo" readonly class="form-control me-2">
+              </div>
+            </div>
+
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="mb-2">
+                  <label class="fw-bolder">Employee Name</label>
+                  <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-12">
+                      <ng-select class="bold-placeholder" placeholder="--- Select Employee ---"
+                      [items]="EmployeeList" 
+                      bindLabel="name"
+                      bindValue="empy_id"
+                        formControlName="empName"
+                        [dropdownPosition]="'bottom'">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class=" ">
+
+                        <div class=" ">
+                            <label class="fw-bolder" id="lblSubGroup">Location</label>
+                            <div class="position-relative w-100">
+                                <ng-select
+                                [items]="LocationList"
+                               
+                                bindLabel="LocName"
+                                bindValue="LocId"
+                                formControlName="Location"
+                                placeholder="--- Select Location ---"
+                                [dropdownPosition]="'bottom'"></ng-select> 
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2">
+                          <label class="fw-bold">Month</label>
+                          <ng-select class="bold-placeholder" placeholder="--- Select Month ---" (change)="getSalaryPayables($event)"
+                          formControlName="month" [dropdownPosition]="'bottom'"
+                          bindLabel="name" bindValue="id" [items]="months">
+                        </ng-select>
+                        </div>
+                      </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div class="">
+                                <div class=" ">
+                                    <label class="fw-bolder" id="lblGroup">Department</label>
+                                    <div class="position-relative w-100">
+                                        <ng-select
+                                        class="js-example-basic-single select2" 
+                                        id="drpCompanyGroup"
+                                        [items]="DepartmentList"
+                                        bindLabel="Department"
+                                        bindValue="Id"
+                                        formControlName="Department"
+                                        placeholder="---Select Department---"
+                                        [searchable]="true"
+                                      
+                                        [dropdownPosition]="'bottom'"
+                                        style="font-size: 14px; max-width: auto; justify-content: center;"
+                                    ></ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div class=" " >
+                            <label class="fw-bolder" id="lblGroup">Designation</label>
+                            <div class="position-relative w-100">
+                                <ng-select placeholder="---Select Designation ---" 
+                                [items]="DesignationList"
+                                bindLabel="Designation" 
+                                bindValue="Id"
+                                formControlName="Designation"
+                                [dropdownPosition]="'bottom'" 
+                                >
+                              </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                      <div class=" " >
+                          <label class="fw-bolder" id="lblGroup">Expenses</label>
+                          <div class="position-relative w-100">
+                              <ng-select placeholder="---Select Expenses ---" 
+                              [items]="Level5List"
+                              bindLabel="Names" 
+                              bindValue="code"
+                              formControlName="level5Accounts"
+                              [dropdownPosition]="'bottom'" 
+                              >
+                            </ng-select>
+                          </div>
+                      </div>
+                  </div>
+    
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2 form-group mb-0">
+                          <label class="fw-bold" style="margin-bottom: 0px !important;">Date</label>
+                          <div class="input-groupicon">
+                            <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                              (click)="datepicker.open()" formControlName="Date" />
+                            <mat-datepicker #datepicker></mat-datepicker>
+                            <div class="addonset">
+                              <img src="/assets/img/icons/calendars.svg" alt="img">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="position-relative w-100 me-2 form-group mb-0">
+                          <label class="fw-bold" style="margin-bottom: 0px !important;">Tr. Date</label>
+                          <div class="input-groupicon">
+                            <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker1"
+                              (click)="datepicker1.open()" formControlName="trDate" />
+                            <mat-datepicker #datepicker1></mat-datepicker>
+                            <div class="addonset">
+                              <img src="/assets/img/icons/calendars.svg" alt="img">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3 col-md-3 col-sm-6">
+                        <div class=" " >
+                            <label class="fw-bolder" id="lblGroup">Type</label>
+                            <div class="position-relative w-100">
+                                <ng-select placeholder="---Select Type ---" 
+                                [items]="Level5List"
+                                bindLabel="Names" 
+                                bindValue="code"
+                                formControlName="level5Accounts"
+                                [dropdownPosition]="'bottom'" 
+                                >
+                              </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                      
+            <div class="col-lg-9 col-md-9 col-sm-12 pt-4 text-end">
+              <button type="submit" class="btn btn-success btn-sm me-1"
+                (click)="onClickSave()">Save</button>
+              <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">Refresh</button>
+            </div>
+          </div>
+  
+          <div class="table-responsive" style="height: 250px">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th class="text-start">Emp Id.</th>
+                  <th class="text-start">Employee Name</th>
+                  <th class="text-start">Location</th>
+                  <th class="text-start">Department</th>
+                  <th class="text-start">Designation</th>
+                  <th class="text-end">Net Salary</th>
+                  <th class="text-end">Basic</th>
+                  <th class="text-end">Gross Salary</th>
+                  <th class="text-end">Leave</th>
+                  <th class="text-end">Insurance</th>
+                  <th class="text-end">Provident Loan</th>
+                  <th class="text-end">Advance</th>
+                  <th class="text-end">Bonus</th>
+                  <th class="text-end">Staff Loan</th>
+                  <th class="text-end">Vehicle Loan</th>
+                  <th class="text-end">EOBI</th>
+                  <th class="text-end">Level 2</th>
+                  <th class="text-end">Level 3</th>
+                  <th class="text-end">Level 4</th>
+                  <th class="text-end">Level 5</th>
+                  <th class="text-end">Level 6</th>
+                  <th class="text-end">Level 7</th>
+                  <th class="text-end">Active</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of SalaryPayableList" (click)="rowHighLight($event)">
+  
+                  <td class="text-start">{{ data.empy_id }}</td>
+                  <td class="text-start">{{ data.empName }}</td>
+                  <!-- <td class="">{{ data.Date | date: 'yyyy-dd-MM'}}</td> -->
+                  <td class="text-start">{{ data.LocName }}</td>
+                  <td class="text-start">{{ data.Department }}</td>
+                  <td class="text-start">{{ data.Designation }}</td>
+                  <td class="text-end">{{ data.netsalary }}</td>
+                  <td class="text-end">{{ data.basic }}</td>
+                  <td class="text-end">{{ data.gsalary }}</td>
+                  <td class="text-end">{{ data.Leave }}</td>
+                  <td class="text-end">{{ data.Insurance }}</td>
+                  <td class="text-end">{{ data.ProvidentLoan }}</td>
+                  <td class="text-end">{{ data.Advance }}</td>
+                  <td class="text-end">{{ data.Bonus }}</td>
+                  <td class="text-end">{{ data.StaffLoan }}</td>
+                  <td class="text-end">{{ data.VehicleLoan }}</td>
+                  <td class="text-end">{{ data.EOBI }}</td>
+                  <td class="text-end">{{ data.Level2 }}</td>
+                  <td class="text-end">{{ data.Level3 }}</td>
+                  <td class="text-end">{{ data.Level4 }}</td>
+                  <td class="text-end">{{ data.Level5 }}</td>
+                  <td class="text-end">{{ data.Level6 }}</td>
+                  <td class="text-end">{{ data.Level7 }}</td>
+                  <td class="text-center"><input type="checkbox" [checked]="data.sent"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 pt-2 text-end">
+                <div class="position-relative w-100 me-2">
+                    <input class="form-check-input" formControlName="apprvAll" type="checkbox" (change)="toggleApproveAll()">
+                    <label class="form-check-label pl-10 ">Approve All</label>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

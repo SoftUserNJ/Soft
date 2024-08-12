@@ -1,0 +1,201 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Trial Balance</h4>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Trial-Balance', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Trial-Balance', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card mt-0">
+    <div class="card-body pt-2">
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-6">
+          <div class="form-group">
+            <label>Search</label>
+            <input type="text" class="form-control" placeholder="Search..." (input)="onSearchInput($event)" />
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 ps-0 d-flex">
+          <div class="form-group me-1">
+            <label>From Date:</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" 
+              placeholder="DD/MM/YYYY" 
+              matInput 
+              [matDatepicker]="datepicker"
+              [(ngModel)]="fromDate" 
+              (click)="datepicker.open()" />
+              <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+          <div class="form-group ms-1">
+            <label>To Date:</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" 
+              placeholder="DD/MM/YYYY"
+              matInput 
+              [matDatepicker]="datepicker2"
+              [(ngModel)]="toDate" 
+              (click)="datepicker2.open()" />
+              <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6 ps-0">
+          <div class="mb-2">
+            <label class="fw-bolder mb-1">Location</label>
+            <div class="position-relative w-100">
+              <ng-select 
+                placeholder="---Select Location---" 
+                [dropdownPosition]="'bottom'"
+                [disabled]="isDisableLoc" 
+                [(ngModel)]="locId"
+                (change)="getTrialBalance()" >
+                <ng-option *ngFor="let item of locationList" [value]="item.ID">
+                  {{ item.ID + " - " + item.NAME}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-6 col align-self-center ps-0">
+          <div class="">
+            <button class="btn btn-primary btn-sm mt-3" (click)="getTrialBalance()">
+              Refresh
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 d-flex col align-self-center ps-0 justify-content-between mt-4">
+          <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center me-3">
+              <input type="radio" class="me-1"  id="Consolidated" name="dataGet" value="Consolidated" [checked]="consolidated" (click)="onClickFilter($event)" />
+              <label for="Consolidated" class="mb-0 fw-bolder">Consolidated</label>
+            </div>
+            <div class="d-flex align-items-center me-3">
+              <input type="radio" id="Detailed" class="me-1" name="dataGet" value="Detailed" [checked]="detailed" (click)="onClickFilter($event)" />
+              <label for="Detailed" class="mb-0 fw-bolder">Detailed</label>
+            </div>
+            <div class="d-flex align-items-center">
+              <input type="radio" id="Control" class="me-1" name="dataGet" value="Control" [checked]="control" (click)="onClickFilter($event)" />
+              <label for="Control" class="mb-0 fw-bolder">Control</label>
+            </div>
+          </div>
+          <button class="btn btn-info btn-sm" id="btnPrint"(click)="openReportModal()">Print</button>
+        </div>
+      </div>
+      <div class="table-responsive" style="height: 400px">
+        <table class="table productTable fs-13 mb-0" id="export">
+          <thead>   
+            <tr rowspan="2">
+              <th class="w-0"></th>
+              <th class="text-center"></th>
+              <th class=""></th>
+              <th class=""></th>
+              <th class=""></th>
+              <th style="width: 8.5%" colspan="2" class="text-center text-decoration-underline">
+                Opening Balance
+              </th>
+              <th style="width: 8.5%" colspan="2" class="text-center text-decoration-underline">
+                During the Period
+              </th>
+              <th style="width: 8.5%" colspan="2" class="text-center text-decoration-underline">
+                Closing Balance
+              </th>
+              <th class=""></th>
+              <th class=""></th>
+            </tr>
+            <tr>
+              <th class="w-0"></th>
+              <th class="text-start">Level3</th>
+              <th class="text-start limited-text">Level4</th>
+              <th class="text-start"></th>
+              <th class="text-start  limited-text">Level5</th>
+              <th style="width: 8.5%" class="text-end">Debit</th>
+              <th style="width: 8.5%" class="text-end">Credit</th>
+              <th style="width: 8.5%" class="text-end">Debit</th>
+              <th style="width: 8.5%" class="text-end">Credit</th>
+              <th style="width: 8.5%" class="text-end">Debit</th>
+              <th style="width: 8.5%" class="text-end">Credit</th>
+              <th class="text-start">Level2</th>
+              <th class="text-start">Level1</th>
+            </tr>
+          </thead>
+          <tbody #trialList>
+            <tr *ngFor="let item of trialBalanceList">
+              <td>
+                <span data-bs-toggle="modal" data-bs-target="#LedgerModal" (click)="onClickLedger(item.MAINCODE + item.SUBCODE, item.LEVEL5)">
+                  <i class="fas fa-print"></i>
+                </span>
+              </td>
+              <td class="limited-text limited-text lvl3" title='{{ item.LEVEL3 }}'>{{ item.LEVEL3 }} </td>
+              <td class="limited-texts lvl4" title='{{ item.MAINCODE + "-" + item.LEVEL4 }}'>
+                {{ item.MAINCODE + "-" + item.LEVEL4 }}
+              </td>
+              <td class="limited-text text-end subCode" title='{{ item.SUBCODE }}' >
+                {{ item.SUBCODE }}
+              </td>
+              <td class="limited-text limited-text lvl5" title='{{ item.LEVEL5 }}'>
+                {{ item.LEVEL5 }}
+              </td>
+              <td class="limited-text text-end obDebit">
+                {{ (((item.OPENAMOUNT > 0) ? item.OPENAMOUNT : 0 ) | number : "1.2-2") }}
+              </td>
+              <td class="limited-text text-end obCredit">
+                {{ (((item.OPENAMOUNT < 0 ) ? item.OPENAMOUNT*-1 : 0) | number : "1.2-2") }}
+              </td>
+              <td class="limited-text text-end debit ">
+                {{ (item.CURRDEBIT | number : "1.2-2") }}
+              </td>
+              <td class="limited-text text-end credit">
+                {{ (item.CURRCREDIT | number : "1.2-2") }}
+              </td>
+              <td class="limited-text text-end cbDebit">
+                {{ (((item.OPENAMOUNT + item.CURRDEBIT - item.CURRCREDIT) > 0) ? (item.OPENAMOUNT + item.CURRDEBIT - item.CURRCREDIT) : 0) | number : "1.2-2" }}
+              </td>
+              <td class="limited-text text-end cbCredit">
+                {{  (((item.OPENAMOUNT + item.CURRDEBIT - item.CURRCREDIT) < 0) ? (item.OPENAMOUNT + item.CURRDEBIT - item.CURRCREDIT)*-1 : 0) | number : "1.2-2" }}
+              </td>
+              <td class="limited-text limited-text lvl2" title='{{ item.LEVEL2 }}'>{{ item.LEVEL2 }}</td>
+              <td class="limited-text lvl1" title='{{ item.LEVEL1 }}'>{{ item.LEVEL1 }}</td>
+            </tr>
+            <tr></tr>
+          </tbody>
+           <tfoot id="grdEnd">
+            <tr>
+              <td class="text-end" colspan="5">Total = </td>
+              <td class="text-end">{{ obDebit | number : "1.2-2" }}</td>
+              <td class="text-end">{{ obCredit | number : "1.2-2" }}</td>
+              <td class="text-end">{{ debit | number : "1.2-2" }}</td>
+              <td class="text-end">{{ credit | number : "1.2-2" }}</td>
+              <td class="text-end">{{ cbDebit | number : "1.2-2" }}</td>
+              <td class="text-end">{{ cbCredit | number : "1.2-2" }}</td>
+              <td colspan="2"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-file-attachment [code]="outputCode" [name]="outputName" [fromDate]="fromDate" [toDate]="toDate"></app-file-attachment>

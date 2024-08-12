@@ -1,0 +1,110 @@
+<section>
+
+    <div class="content ListPage" *ngIf="isShowPage">
+      <div class="page-header">
+        <div class="page-title">
+          <h4 class="newcolor">Bank Entry</h4>
+          <h6 class="newcolor">New Bank Entry</h6>
+        </div>
+        <div class="page-btn">
+          <div class="wordset newwordset">
+            <ul>
+              <li>
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf" id="pdfPrint">
+                  <img src="/assets/img/icons/pdf.svg" alt="img">
+                </a>
+              </li>
+              <li>
+                <a href="/Home/Index" role="button">
+                  <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+  
+          <div class="row align-items-center mb-2"  [formGroup]="BankForm">
+            
+  
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Bank Name</label>
+                      <input type="text" formControlName="bankName" class="form-control me-2" [readOnly]="Disabled">
+                      <input type="text" formControlName="bankId" readonly class="form-control me-2 d-none" >
+                  </div>
+
+                  
+  
+              </div>
+
+
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="position-relative w-100 me-2">
+                  <label class="fw-bold">Branch Code</label>
+                  <input type="text" formControlName="branchCode" class="form-control me-2" [readOnly]="Disabled">
+              </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="position-relative w-100 me-2">
+              <label class="fw-bold">Account No#</label>
+              <input type="text" formControlName="accNo" class="form-control me-2" [readOnly]="Disabled">
+          </div>
+      </div>
+
+      <div class="col-lg-10 col-md-10 col-sm-12">
+        <div class="position-relative w-100 me-2">
+          <label class="fw-bold">Address</label>
+          <input type="text" formControlName="address" class="form-control me-2" [readOnly]="Disabled">
+      </div>
+  </div>
+
+
+              <div class="col-lg-2 col-md-2 pt-3 text-end">
+  
+                <button class="btn btn-primary me-1" [hidden]="isShow" (click)="onClickNew()">Add New</button>
+                <button type="submit" class="btn btn-success me-1" [hidden]="!isShow"
+                  (click)="onClickSave()">Save</button>
+    
+              </div>
+          </div>
+          <div class="table-responsive mb-1" style="height: 380px;">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th class="text-start">Id</th>
+                  <th class="text-start">Bank Name</th>
+                  <th class="text-start">Branch Code</th>
+                  <th class="text-start">Account #</th>
+                  <th class="text-start">Address</th>
+                  <th class="text-center w-12">Action</th>
+                </tr>
+              </thead>
+              <tbody #voucherLists>
+                <tr *ngFor="let data of voucherList">
+                    <td class="text-start">{{data.bankId}}</td>
+                  <td class="text-start">{{data.bankName}}</td>
+                  <td class="text-start">{{data.branchCode}}</td>
+                  <td class="text-start">{{data.accNo}}</td>
+                  <td class="text-start">{{data.address}}</td>
+                  <td class="text-center">
+                    <span (click)="editBank(data)" class="me-3 btnEditCategory">
+                      <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                    </span>
+                    <span (click)="deleteBank(data.bankId)" class="confirm-text btnDelCategory">
+                      <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete">
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

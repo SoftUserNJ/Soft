@@ -1,0 +1,83 @@
+<section>
+
+    <div class="content ListPage" *ngIf="isShowPage">
+      <div class="page-header">
+        <div class="page-title">
+          <h4 class="newcolor">Shift Entry</h4>
+          <h6 class="newcolor">New Shift Entry</h6>
+        </div>
+        <div class="page-btn">
+          <div class="wordset newwordset">
+            <ul>
+              <li>
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf" id="pdfPrint">
+                  <img src="/assets/img/icons/pdf.svg" alt="img">
+                </a>
+              </li>
+              <li>
+                <a href="/Home/Index" role="button">
+                  <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+  
+          <div class="row justify-content-between mb-2"  [formGroup]="ShiftForm">
+            
+  
+            <div class="col-lg-6 col-md-8 col-sm-12">
+  
+                <div class="col-lg-12 col-md-4 col-sm-12">
+                    <div class="position-relative w-100 me-2">
+                      <label class="fw-bold">Shift Name</label>
+                      <input type="text" formControlName="shiftName" [readOnly]="Disabled" class="form-control me-2">
+                      <input type="text" formControlName="shiftId" readonly class="form-control me-2 d-none">
+      
+                    </div>
+                  </div>
+  
+              </div>
+              <div class="col-lg-4 col-md-4 pt-3 text-end">
+  
+                <button class="btn btn-primary me-1" [hidden]="isShow" (click)="onClickNew()">Add New</button>
+                <button type="submit" class="btn btn-success me-1" [hidden]="!isShow"
+                  (click)="onClickSave()">Save</button>
+                  <button class="btn btn-secondary me-1" (click)="onClickRefresh()">Refresh</button>
+    
+              </div>
+          </div>
+          <div class="table-responsive mb-1" style="height: 380px;">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th class="text-start">Id</th>
+                  <th class="text-start">Name</th>
+                  <th class="text-center w-12">Action</th>
+                </tr>
+              </thead>
+              <tbody #voucherLists>
+                <tr *ngFor="let data of voucherList">
+                    <td class="text-start">{{data.Id}}</td>
+                  <td class="text-start">{{data.Shift}}</td>
+                  <td class="text-center">
+                    <span (click)="editShift(data)" class="me-3 btnEditCategory">
+                      <img src="/assets/img/icons/edit.svg" style="cursor: pointer;" alt="Edit">
+                    </span>
+                    <span (click)="deleteShift(data.Id)" class="confirm-text btnDelCategory">
+                      <img src="/assets/img/icons/delete.svg" style="cursor: pointer;" alt="Delete">
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

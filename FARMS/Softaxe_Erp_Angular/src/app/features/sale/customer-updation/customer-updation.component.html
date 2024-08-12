@@ -1,0 +1,71 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Customer Updation</h4>
+      <h6>Manage your Customer</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Customer Updation', 'pdf')" title="pdf" data-bs-original-title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Customer Updation', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="form-group">
+            <input type="search" (input)="searchGrid($event)" class="form-control" placeholder="Search....">
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" style="height:330px;">
+        <table class="table" id="export">
+          <thead>
+            <tr>
+              <th>Customer Name</th>
+              <th class="text-center">Sale Tax</th>
+              <th class="text-center">W.H. Tax</th> 
+            </tr>
+          </thead>
+          <tbody #customerLists>
+            <tr *ngFor="let item of customerList">
+              <td title="{{item.name}}">{{item.name}}</td>
+              <td>
+                <select [(ngModel)]="item.saleTax" class="form-select form-select-sm" (change)="onChangeTax(item)">
+                  <option value="nonfiler">Non-Filer</option>
+                  <option value="filer">Filer</option>
+                  <option value="taxfree">Exempted</option>
+                </select>
+              </td>
+              <td>
+                <select [(ngModel)]="item.whTax" class="form-select form-select-sm" (change)="onChangeTax(item)">
+                  <option value="nonfiler">Non-Filer</option>
+                  <option value="filer">Filer</option>
+                  <option value="taxfree">Exempted</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row mt-2">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <button class="btn btn-success btn-sm" (click)="onClickSave()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

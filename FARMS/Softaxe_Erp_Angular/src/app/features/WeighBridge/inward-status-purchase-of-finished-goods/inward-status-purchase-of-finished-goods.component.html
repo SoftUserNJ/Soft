@@ -1,0 +1,373 @@
+<div class="content ListPage pt-1">
+  <div class="page-header mb-0">
+    <div class="page-title">
+      <h4>Finished Goods Status</h4>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="pdfPrint" data-bs-original-title="pdf">
+              <img src="assets/img/icons/pdf.svg" alt="img" />
+            </a>
+          </li>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="" id="convertExel"
+              data-bs-original-title="excel">
+              <img src="assets/img/icons/excel.svg" alt="img" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card mt-0">
+  <!-- <div class="card mt-0" [formGroup]="SaleStatus"> -->
+    <div class="card-body pt-2">
+      <!-- <div class="row align-items-center">
+
+        
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="mb-2">
+            <label class="fw-bold">Voucher Type</label>
+            <ng-select class="bold-placeholder" placeholder="--- Select Voucher Type ---" formControlName="vchType"
+              [dropdownPosition]="'bottom'" readonly>
+              <ng-option value="SP">SP</ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12 pl-0 pr-2rem">
+          <div class="mb-2">
+            <label class="fw-bold">Inward Type</label>
+            <ng-select class="bold-placeholder" placeholder="--- Inward Type ---" formControlName="inwardType"
+              [dropdownPosition]="'bottom'" readonly>
+              <ng-option value="ALL">ALL</ng-option>
+              <ng-option value="Purchase">Purchase</ng-option>
+              <ng-option value="Loan">Loan</ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="position-relative w-100 me-2 form-group mb-0">
+            <label class="fw-bold" style="margin-bottom: 0px !important;">Date From</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" formControlName="fromDate" placeholder="DD/MM/YYYY" matInput
+                [matDatepicker]="datepicker" (click)="datepicker.open()" />
+              <mat-datepicker #datepicker></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="position-relative w-100 me-2 form-group mb-0">
+            <label class="fw-bold" style="margin-bottom: 0px !important;">Date To</label>
+            <div class="input-groupicon">
+              <input type="text" class="form-control" formControlName="toDate" matInput placeholder="DD/MM/YYYY"
+                [matDatepicker]="datepicker2" (click)="datepicker2.open()">
+              <mat-datepicker #datepicker2></mat-datepicker>
+              <div class="addonset">
+                <img src="/assets/img/icons/calendars.svg" alt="img">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="position-relative w-100 me-2">
+            <label class="fw-bold">GRN/Arr No#</label>
+            <input type="number" formControlName="arrivalNo" [readonly]="Disabled" class="form-control me-2">
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="position-relative w-100 me-2">
+            <label class="fw-bold">TO</label>
+            <input type="number" formControlName="arrivalNoTO" class="form-control me-2">
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-2">
+            <label class="fw-bolder">Cost Center</label>
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-12">
+                <ng-select class="bold-placeholder" placeholder="--- Select Cost Center ---" [items]="costCenterList"
+                  bindLabel="CostcentreName" bindValue="CostcentreId" formControlName="costcenter"
+                  [dropdownPosition]="'bottom'" [readonly]="Disabled">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-2">
+            <label class="fw-bolder">Party</label>
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-12">
+                <ng-select class="bold-placeholder" placeholder="--- Select Party ---" [items]="partyList"
+                  bindLabel="L5NAMES" bindValue="L5CODE" formControlName="partyList" [dropdownPosition]="'bottom'"
+                  [readonly]="Disabled">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-2">
+            <label class="fw-bolder">Item</label>
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-12">
+                <ng-select class="bold-placeholder" placeholder="--- Select Item ---" [items]="itemList"
+                  bindLabel="L5NAMES" bindValue="L5CODE" formControlName="itemList" [dropdownPosition]="'bottom'"
+                  [readonly]="Disabled">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="position-relative w-100 me-2">
+            <label class="fw-bold">Vehicle No</label>
+            <input type="number" formControlName="VehNo" [readonly]="Disabled" class="form-control me-2"
+              (input)="searchVehicleNo($event)">
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="position-relative w-100 me-2">
+            <label class="fw-bold">L/C No</label>
+            <input type="number" formControlName="LCNO" [readonly]="Disabled" class="form-control me-2"
+              (input)="searchVehicleNo($event)">
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="mb-2">
+            <label class="fw-bolder">Godowns</label>
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-12">
+                <ng-select class="bold-placeholder" placeholder="--- Select Godown ---" [items]="GoDownList"
+                  bindLabel="GODOWNNAME" bindValue="GODOWNID" formControlName="godown" [dropdownPosition]="'bottom'"
+                  [readonly]="Disabled">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="position-relative w-100 me-2">
+            <label class="fw-bold">Remarks</label>
+            <input type="number" formControlName="remarks" [readonly]="Disabled" class="form-control me-2"
+              (input)="searchVehicleNo($event)">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row fw-bolder py-1">
+        <div class="col-lg-9 col-md-9 col-sm-6 d-flex">
+          <div class="d-flex">
+            <div class="d-flex align-items-center me-4">
+              <input class="form-check-input" formControlName="outAfterLoading" type="checkbox">
+              <label class="form-check-label ps-1 pt-1">GRN</label>
+            </div>
+
+            <div class="d-flex align-items-center me-4">
+              <input class="form-check-input" formControlName="outAfterLoading" type="checkbox">
+              <label class="form-check-label ps-1 pt-1">OIL SLIP</label>
+            </div>
+
+            <div class="d-flex align-items-center me-4">
+              <input class="form-check-input" formControlName="waitToEnter" type="checkbox">
+              <label class="form-check-label ps-1 pt-1">Arrival</label>
+            </div>
+
+            <div class="d-flex align-items-center me-4">
+              <input class="form-check-input" formControlName="inForloading" type="checkbox">
+              <label class="form-check-label ps-1 pt-1">Pending at Gate</label>
+            </div>
+
+            <div class="d-flex align-items-center me-4">
+              <input class="form-check-input" formControlName="outAfterLoading" type="checkbox">
+              <label class="form-check-label ps-1 pt-1">Unloading</label>
+            </div>
+
+            <div class="d-flex align-items-center me-4">
+              <input class="form-check-input" formControlName="outAfterLoading" type="checkbox">
+              <label class="form-check-label ps-1 pt-1">Unloaded</label>
+            </div>
+
+            <div class="d-flex align-items-center me-4">
+              <input class="form-check-input" formControlName="outAfterLoading" type="checkbox">
+              <label class="form-check-label ps-1 pt-1">Rejected Vehicles</label>
+            </div>
+          </div>
+
+          <div class="add-icon ms-auto">
+            <a class="w-100" style="height: 24px;"><img src="/assets/img/icons/search.svg" alt="img" (click)="filter();"
+                class="searchSvg"></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-success btn-sm w-50">Update Rejected</button>
+          </div>
+        </div>
+      </div> -->
+
+
+      <div class="row align-items-center mb-2">
+
+        <div class="col-lg-5 col-md-5 col-sm-12">
+          <div class="d-flex align-items-center">
+            <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+            <input type="search" class="form-control" placeholder="Search" (input)="searchGrid($event)" />
+          </div>
+        </div>
+
+        <div class="col-lg-7 col-md-7 col-sm-12">
+          <div class="row align-items-center">
+            <div class="col-lg-2 col-md-2 text-end p-0">
+              <span class="fw-bolder">From Date</span>
+            </div>
+            <div class="col-lg-3 col-md-4 ps-1">
+              <div class="form-group mb-0">
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                    [matDatepicker]="datepicker" [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                  <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 text-end p-0">
+              <span class="fw-bolder">To Date</span>
+            </div>
+            <div class="col-lg-3 col-md-4 ps-1">
+              <div class="form-group mb-0">
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                    [matDatepicker]="datepicker2" [(ngModel)]="toDate" (click)="datepicker2.open()">
+                  <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+              <div class="ms-auto" (click)="getSaleSatusList();">
+                <img src="/assets/img/icons/search.svg" alt="img" class="filter-img">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-sm-12 col-12">
+          <div class="card flex-fill p-2" style="margin-bottom: 0px;">
+            <div class="table-responsive" style="height: 350px">
+              <table class="table tableSticky productTable fs-13 mb-0 StatusList">
+                <thead>
+                  <tr>
+                    <th class="text-start">Sno</th>
+                    <th class="text-start">Date</th>
+                    <th class="text-start">Ar#</th>
+                    <th class="text-start">GPNo</th>
+                    <th class="text-start">Party</th>
+                    <th class="text-start">VehicleNo</th>
+                    <th class="text-end">Qty</th>
+                    <th class="text-end">RejBags</th>
+                    <th class="text-end">TBags</th>
+                    <th class="text-end">PGross</th>
+                    <th class="text-end">OGross</th>
+                    <th class="text-end">GDiff</th>
+                    <th class="text-end">OTare</th>
+                    <th class="text-end">PTare</th>
+                    <th class="text-end">TDiff</th>
+                    <th class="text-end">ONet</th>
+                    <th class="text-end">LcNo</th>
+                  </tr>
+                </thead>
+                <tbody #voucherLists>
+                  <tr *ngFor="let data of SaleStatusList" [hidden]="data.hideRow" (click)="rowHighLight($event)">
+                    <td class="text-start">{{ data.Sno }}</td>
+                    <td class="text-start">{{ data.VchDate }}</td>
+                    <td class="text-start">{{ data.Vchno }}</td>
+                    <td class="text-start">{{ data.Gpno }}</td>
+                    <td class="text-start">{{ data.SPARTY }}</td>
+                    <td class="text-start">{{ data.VehicleNo }}</td>
+                    <td class="text-end">{{ data.Qty }}</td>
+                    <td class="text-end">{{ data.RegBags }}</td>
+                    <td class="text-end">{{ data.Bags }}</td>
+                    <td class="text-end">{{ data.Gross }}</td>
+                    <td class="text-end">{{ data.firstweight }}</td>
+                    <td class="text-end">{{ data.Gross ??0 - data.firstweight ?? 0 }}</td>
+                    <td class="text-end">{{ data.secweight }}</td>
+                    <td class="text-end">{{ data.Tare }}</td>
+                    <td class="text-end">{{ data.Tare ??0 - data.secweight ?? 0 }}</td>
+                    <td class="text-end">{{ data.Tare }}</td>
+                    <td class="text-end">{{ data.firstweight ??0 -  data.secweight ?? 0}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="row justify-content-between">
+
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="position-relative w-100 me-2">
+            <label class="fw-bold">Sum Bags</label>
+            <input type="number" formControlName="VehNo" [readonly]="Disabled" class="form-control me-2">
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="position-relative w-100 me-2">
+            <label class="fw-bold">Sum Qty</label>
+            <input type="number" formControlName="sumQty" readonly class="form-control me-2">
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="position-relative w-100 me-2">
+            <label class="fw-bold">TONS</label>
+            <input type="number" formControlName="VehNo" [readonly]="Disabled" class="form-control me-2">
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div class="position-relative w-100 me-2">
+            <label class="fw-bold">Sum Freight</label>
+            <input type="number" formControlName="VehNo" [readonly]="Disabled" class="form-control me-2">
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12 pt-3">
+          <div class="position-relative w-100 me-2">
+            <button class="btn btn-success btn-sm w-100">Print</button>
+          </div>
+        </div>
+
+      </div> -->
+
+    </div>
+  </div>
+</div>

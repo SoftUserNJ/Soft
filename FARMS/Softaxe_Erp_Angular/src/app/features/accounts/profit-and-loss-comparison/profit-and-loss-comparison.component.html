@@ -1,0 +1,90 @@
+<div class="content ListPage">
+    <div class="page-header mb-1">
+        <div class="page-title">
+            <h4>Profit and Loss Comparison</h4>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-sm-12">
+                    <div class="mb-2">
+                        <label class="fw-bolder mb-1">Location</label>
+                        <div class="position-relative w-100">
+                          <ng-select 
+                            placeholder="---Select Location---" 
+                            [dropdownPosition]="'bottom'"
+                            [disabled]="isDisableLoc" 
+                            [(ngModel)]="locId" 
+                            (change)="onChangeLoc()" >
+                            <ng-option *ngFor="let item of locationList" [value]="item.ID">
+                              {{ item.ID + " - " + item.NAME}}
+                            </ng-option>
+                          </ng-select>
+                        </div>
+                      </div>
+                      <div class="mb-2" *ngIf="costCenter == 'true'">
+                        <label class="fw-bolder mb-1">Job No</label>
+                        <ng-select placeholder="---Select Job No---" 
+                          [items]="filterList" 
+                          bindLabel="NAME" 
+                          bindValue="ID"
+                          [(ngModel)]="jobNo"
+                          [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label>From Date</label>
+                                <div class="input-groupicon">
+                                    <input type="text" class="form-control" 
+                                      placeholder="DD/MM/YYYY" 
+                                      matInput 
+                                      [matDatepicker]="datepicker"
+                                      [(ngModel)]="fromDate" 
+                                      (click)="datepicker.open()" />
+                                    <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                                    <div class="addonset">
+                                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label>To Date</label>
+                                <div class="input-groupicon">
+                                    <input type="text" class="form-control" 
+                                      placeholder="DD/MM/YYYY" 
+                                      matInput 
+                                      [matDatepicker]="datepicker1"
+                                      [(ngModel)]="toDate" 
+                                      (click)="datepicker1.open()" />
+                                    <mat-datepicker #datepicker1 [startAt]="toDate"></mat-datepicker>
+                                    <div class="addonset">
+                                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row content-justify-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                            <button class="btn btn-primary btn-sm" id="btnView" (click)= "openReportModal() ">View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

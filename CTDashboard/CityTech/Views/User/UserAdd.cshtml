@@ -1,0 +1,1463 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer;
+
+
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content ListPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>@Localizer["UserManagement"]</h4>
+            <h6>@Localizer["AddUpdateUser"]</h6>
+        </div>
+        <div class="page-btn">
+            <div class="wordset newwordset">
+                <ul>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Word" id="convertWord">
+                            <i class="far fa-file-word" style="color: #1265c3; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="PDF" id="pdfPrint">
+                            <i class="far fa-file-pdf" style="color: #ea5455; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" id="convertExcel">
+                            <i class="far fa-file-excel" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-bs-toggle="tooltip" data-bs-placement="top" title="CSV" id="convertCsv">
+                            <i class="fa-solid fa-file-csv" style="color: #28c76f; font-size:21px;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="Dashboard" role="button">
+                            <i class="fas fa-times-circle fs-22" style="color: #ff0000;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top table-topm">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter" id="filter_search_rm">
+                            <img src="~/assets/img/icons/filter.svg" alt="img">
+                            <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <input type="search" id="txtSearch" class="rounded-pill">
+                    </div>
+                </div>
+                <div class="wordset">
+                    <p href="javascript:void(0);" class="btn btn-addednew btnAdd ct-btns">
+                        <img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">@Localizer["AddNew"]
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-responsive" style="height:395px;">
+                <table class="table text-white table-hover" id="tbl-print">
+                    <thead>
+                        <tr>
+                            <th class="ps-2"><input type="checkbox" checked class="printCheckBox notPrintCol" />Id</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["UserName"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["FirstName"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["SecondName"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["UserType"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Phone"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Gender"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["EmContact"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Address"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["DashboardAccess"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["AppAccess"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["AlertReceived"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Allow-Call"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Allow-SMS"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Allow-Whatsapp"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["Allow-Email"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["InTime"]</th>
+                            <th class="pe-3"><input type="checkbox" checked class="printCheckBox notPrintCol" />@Localizer["OutTime"]</th>
+                            <th class="text-center pe-3 last-th-sticky"><input type="checkbox" class="printCheckBox notPrintCol" hidden>@Localizer["Action"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allUsersList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content AddPage pt-1">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>User Add</h4>
+        </div>
+        <div class="page-btn">
+            <a href="javascript:void(0);" class="btn btn-added btnList ct-btns">
+                <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="" aria-label="fa fa-th-list"></i> @Localizer["Users"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="row activeForm disabled">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["FirstName"]</label>
+                                <input type="text" class="rounded-pill" id="txtFirstName" skinid="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["SecondName"]</label>
+                                <input type="text" class="rounded-pill" id="txtSecondName" skinid="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Phone"]</label>
+                                <input type="text" class="rounded-pill" id="txtUserPhone" skinid="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Email"]</label>
+                                <input type="email" class="rounded-pill" id="txtUserEmail" skinid="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Address"]</label>
+                                <input type="text" class="rounded-pill" id="txtUserAddress" skinid="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["UserName"]</label>
+                                <input type="text" class="rounded-pill" id="txtUserName" skinid="Enter User Name....!">
+                                <input type="hidden" id="txtUserId">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Password"]</label>
+                                <div class="pass-group">
+                                    <input type="password" class="pass-input rounded-pill" id="userPassword" skinid="Enter Password....!">
+                                    <span class="fas toggle-password fa-eye-slash"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["ConfirmPassword"]</label>
+                                <div class="pass-group">
+                                    <input type="password" class="pass-inputs rounded-pill" id="userConfirmPassword" skinid="Enter Confirm Password....!">
+                                    <span class="fas toggle-passworda fa-eye-slash"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["InTime"]</label>
+                                <input type="datetime-local" class="rounded-pill date-input" id="txtInTime" skinid="Select InTime" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["OutTime"]</label>
+                                <input type="datetime-local" class="rounded-pill date-input" id="txtOutTime" skinid="Select OutTime" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Gender"]</label>
+                                <select class="js-example-basic-single select2" id="drpUserGender" skinid="">
+                                    <option value="0">--- Select Gender ---</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>Type</label>
+                                <div class="row">
+                                    <div class="col-lg-10 col-sm-10 col-10">
+                                        <select class="js-example-basic-single select2" id="drpUserType" skinid="Select User Type....!"></select>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                        <div @*class="add-icon text-end"*@>
+                                            <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="User Types" data-bs-toggle="modal" data-bs-target="#UserTypesModal"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Skills"]</label>
+                                <div class="row">
+                                    <div class="col-lg-10 col-sm-10 col-10">
+                                        <select class="form-select disabled" id="drpUserSkill"></select>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-2 ps-0 pe-0">
+                                        <div @*class="add-icon text-end"*@>
+                                            <i class="fa fa-plus custom-plus-icon text-center" aria-label="fa fa-plus" title="User Skills" data-bs-toggle="modal" data-bs-target="#UserSkillModal"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12" id="hideEmContact">
+                            <div class="form-group">
+                                <label>@Localizer["EmergencyContact"]</label>
+                                <select class="js-example-basic-single select2" id="drpEmContact" skinid=""></select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Allow-Call"]</label>
+                                <input type="checkbox" id="allowCall" style="margin-top:14px; height:19px; width:19px;" skinid="" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Allow-SMS"]</label>
+                                <input type="checkbox" id="allowSms" style="margin-top:14px; height:19px; width:19px;" skinid="" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Allow-Whatsapp"]</label>
+                                <input type="checkbox" id="allowWhatsapp" style="margin-top:14px; height:19px; width:19px;" skinid="" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Allow-Email"]</label>
+                                <input type="checkbox" id="allowEmail" style="margin-top:14px; height:19px; width:19px;" skinid="" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["DashboardAccess"]</label>
+                                <input type="checkbox" id="dashboardAccess" style="margin-top:14px; height:19px; width:19px;" skinid="" />
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Mobile-App-Access"]</label>
+                                <input type="checkbox" id="appAccess" style="margin-top:14px; height:19px; width:19px;" skinid="" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["Incident-Alert-Received"]</label>
+                                <input type="checkbox" id="incidentAlertReceived" style="margin-top:14px; height:19px; width:19px;" skinid="" />
+                            </div>
+                        </div>
+
+                              <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["User Active"]</label>
+                                <input type="checkbox" id="isactive" style="margin-top:14px; height:19px; width:19px;" skinid="" />
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </div>
+             <div class="col-lg-4 col-md-4 col-sm-12 activeForm disabled">
+                 <div class="commom-img mb-2 mt-1">
+                        <img src="" id="ImageUser" />
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control text-white" type="file" id="userImg" accept="image/jpg, image/jpeg, image/png" />
+                    </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="mb-2">
+                    <button class="btn btn-primary btn-sm ct-btns" id="btnNewUser">New</button>
+                    <button class="btn btn-success btn-sm ct-btns" id="btnSaveUser">Save</button>
+                    <button class="btn btn-secondary btn-sm ct-btns" id="btnRefreshUser">Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade AddTypePage" id="UserTypesModal">
+    @Html.Partial("~/Views/PartialViews/User/UserTypes.cshtml")
+</div>
+
+<div class="modal fade AddSkillPage" id="UserSkillModal">
+    @Html.Partial("~/Views/PartialViews/User/UserSkill.cshtml")
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(function(){
+            $(".AddPage").hide();
+            GetUserData();
+            GetUsersList();
+            $("#btnRefreshUser").click();
+            $("#btnRefreshUserType").click();
+            $("#btnRefreshUserSkill").click();
+            
+            UserPageRights();
+        })
+
+        $(".btnAdd").click(function () {
+            $(".ListPage").hide();
+            $(".AddPage").show();
+            $("#txtUserId").val('');
+            $("#btnRefreshUser").click();
+        });
+
+        $(".btnList").click(function () {
+            $(".ListPage").show();
+            $(".AddPage").hide();
+        });
+
+        
+        //====================== Get Data ========================\\
+
+        function CountUsers(emContact){
+            var emContactEdit = emContact;
+
+            var emergencyContact = [];
+            
+            $("#allUsersList tr").each(function () {
+                var emContact = $(this).find('.userEmContact').text();
+                if(emContact.length != ""){
+                    emergencyContact.push({
+                        emContact: emContact,
+                    });
+                }
+            });
+
+
+            var obj = { assignedValues: emergencyContact, emContactEdit: emContactEdit };
+
+            try {
+                $.ajax({
+                    type: "Post",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/GetUserData/",
+                    data:obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpEmContact").empty();
+                        $("#drpEmContact").append(`<option value="0">--- Select Emergency Contact ---</option>`)
+
+                        $.each(data.countRoles, function (i, item) {
+                            $("#drpEmContact").append(`<option value="${item}" >${item}</option>`);
+                        })
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        function GetUserData(){
+
+            try {
+                $.ajax({
+                    type: "Post",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/GetUserData/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#drpUserType").empty();
+                        $("#userTypesDetail").empty();
+
+                        $("#drpUserSkill").empty();
+                        $("#userSkillsDetail").empty();
+
+                        $("#drpUserType").append(`<option value="0">--- Select User Type ---</option>`)
+                        $("#drpUserSkill").append(`<option>Select User Skills</option>`)
+
+                        $.each(data.userTypes, function (i, item) {
+                            $("#drpUserType").append(`<option value="${item.userTypeId}" >${item.userType}</option>`);
+                            $("#userTypesDetail").append(`
+                             <tr>
+                                 <td class="userTypeId ps-2">${item.userTypeId}</td>
+                                 <td class="userTypenames">${item.userType}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditUserType cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelUserType cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                             </tr>
+                            `)
+                        })
+
+                        $.each(data.skills, function (i, item) {
+                            //$("#drpUserSkill").append(`<option value="${item.skillId}" >${item.skillName}</option>`);
+                            $("#userSkillsDetail").append(`
+                             <tr>
+                                 <td class="userSkillId ps-2">${item.skillId}</td>
+                                 <td class="userSkillnames"> <input type="checkbox" class="userSkillActive me-2" />${item.skillName}</td>
+                                 <td class="userSkillActiveId d-none"></td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditUserSkill cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelUserSkill cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                             </tr>
+                            `)
+                        })
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        //====================== Users ========================\\
+
+        function GetUsersList(){
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/GetUsersList/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#allUsersList").empty();
+                        $.each(data, function (i, item) {
+
+                            var userDashboardAccess = "";
+                            var userAppAccess = "";
+                            var incidentAlertReceived = "";
+                             var isactive = "";
+                          
+
+                            if(item.dashboardaccess == true){userDashboardAccess = "Yes"}else {userDashboardAccess = "No"}
+                            if(item.appaccess == true){userAppAccess = "Yes"}else {userAppAccess = "No"}
+                            if(item.alert == true){incidentAlertReceived = "Yes"}else {incidentAlertReceived = "No"}
+                            if(item.isactive == true){isactive = "Yes"}else {isactive = "No"}
+                            
+
+                            var call = "";
+                            var sms = "";
+                            var whatsapp = "";
+                            var email = "";
+
+                            if(item.allowCall == true){call = "Yes"}else {call = "No"}
+                            if(item.allowSms == true){sms = "Yes"}else {sms = "No"}
+                            if(item.allowWhatsapp == true){whatsapp = "Yes"}else {whatsapp = "No"}
+                            if(item.allowEmail == true){email = "Yes"}else {email = "No"}
+
+                            var inTime = moment(item.inTime).format('DD-MMM-YYYY HH:mm');
+                            if(inTime == "Invalid date"){ inTime = ""; }
+
+                            var outTime = moment(item.outTime).format('DD-MMM-YYYY HH:mm');
+                            if(outTime == "Invalid date"){ outTime = ""; }
+
+                            $("#allUsersList").append(`
+                             <tr>
+                                 <td class="userId ps-2">${item.id}</td>
+                                 <td class="userName">${item.name}</td>
+                                 <td class="userFirstName">${item.firstName}</td>
+                                 <td class="userSecondName">${item.secondName}</td>
+                                 <td class="userType">${item.type}</td>
+                                 <td class="userPhone">${item.phone}</td>
+                                 <td class="userGender">${item.gender}</td>
+                                 <td class="userEmContact">${item.emContact}</td>
+                                 <td class="userAddress">${item.address}</td>
+                                 <td class="userDashboardAccess">${userDashboardAccess}</td>
+                                 <td class="userAppAccess">${userAppAccess}</td>
+                                 <td class="incAlertReceived">${incidentAlertReceived}</td>
+                                 <td class="isactive">${isactive}</td>
+                                 <td class="allowCall">${call}</td>
+                                 <td class="allowSms">${sms}</td>
+                                 <td class="allowWhatsapp">${whatsapp}</td>
+                                 <td class="allowEmail">${email}</td>
+                                 <td class="inTime">${inTime}</td>
+                                 <td class="outTime">${outTime}</td>
+                                 <td class="text-center last-td-sticky">
+                                     <span class="me-3 btnEditUser cursor-pointer" >
+                                         <img src="/assets/img/icons/edit.svg" alt="img">
+                                     </span>
+                                     <span class="confirm-text btnDelUser cursor-pointer" >
+                                         <img src="/assets/img/icons/delete.svg" alt="img">
+                                     </span>
+                                 </td>
+                                 
+                                 <td class="userSkill d-none">${item.skill}</td>
+                                 <td class="userPassId d-none">${item.password}</td>
+                                 <td class="userEmail d-none">${item.email}</td>
+                                 <td class="userTypesId d-none">${item.typeId}</td>
+                                 <td class="userSkillsId d-none">${item.skillId}</td>
+                                 <td class="userImg d-none">${item.imgPath}</td>
+                             </tr>
+                            `)
+                        });
+
+                        CountUsers();
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+        $("#drpUserType").change(function () {
+            if ($("#drpUserType option:selected").text().toLowerCase() === "mechanic") {
+
+                $("#hideEmContact").attr("hidden", true);
+                $("#drpEmContact").val("0");
+                $("#drpEmContact").next('span').find('.select2-selection__rendered').html($("#drpEmContact option:selected").text());
+
+                $("#dashboardAccess").prop("checked", false);
+                $("#dashboardAccess").prop("disabled", true);
+
+            } else {
+                $("#hideEmContact").attr("hidden", false);
+                $("#drpEmContact").val("0");
+                $("#drpEmContact").next('span').find('.select2-selection__rendered').html($("#drpEmContact option:selected").text());
+
+                $("#dashboardAccess").prop("disabled", false);
+
+            }
+        });
+
+        $("#btnSaveUser").click(function () {
+
+            // Email Validation
+            var txtUserEmail = $('#txtUserEmail').val();
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (txtUserEmail.length > 0) {
+                if (!emailRegex.test(txtUserEmail)) {
+                    toastr.warning("Invalid Email Address", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    $('#txtUserEmail').focus();
+                    return false;
+                }
+            }
+
+            // Password Confirm
+            var userPassword = $("#userPassword").val();
+            var userConfirmPassword = $("#userConfirmPassword").val();
+
+            if(userPassword.length < 6){
+                toastr.warning("Please enter a 6-digit PIN code", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+            }
+
+            if (userPassword != userConfirmPassword){
+                toastr.warning("Confirm Password Not Mach", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                    return false;
+            }
+
+            // Dashboard Mobile Access
+
+            var dashboardAccess = false;
+            var appAccess = false;
+            var incidentAlertReceived = false;
+
+            if($("#dashboardAccess").is(":checked")){ dashboardAccess = true; }
+            if($("#appAccess").is(":checked")){ appAccess = true; }
+            if($("#incidentAlertReceived").is(":checked")){ incidentAlertReceived = true; }
+
+            var allowCall = false;
+            var allowSms = false;
+            var allowWhatsapp = false;
+            var allowEmail = false;
+            var isactive=false;
+
+            if($("#allowCall").is(":checked")){ allowCall = true; }
+            if($("#allowSms").is(":checked")){ allowSms = true; }
+            if($("#allowWhatsapp").is(":checked")){ allowWhatsapp = true; }
+            if($("#allowEmail").is(":checked")){ allowEmail = true; }
+            if ($("#isactive").is(":checked")) { isactive = true; }
+            // Skills Loop Form Multiple Skills
+
+            var Skills = [];
+            $("#userSkillsDetail tr").each(function () {
+                var SkillId = $(this).find('.userSkillId').text();
+                var Active = Boolean($(this).find('.userSkillActiveId').text());
+                
+                Skills.push({
+                    SkillId: SkillId,
+                    Active: Active
+                });
+            });
+
+            if (CheckValidation("AddPage") == false) {
+
+                    return false;
+            }
+
+            var userId = $("#txtUserId").val();
+            var emContact = $("#drpEmContact option:selected").val();
+            if(emContact == "0"){
+                emContact = "";
+            }
+
+            var formData = new FormData();
+
+            var totalFiles = document.getElementById("userImg").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("userImg").files[i];
+                formData.append("Image", file);
+            }
+
+            formData.append("id", userId);
+            formData.append("firstName", $("#txtFirstName").val());
+            formData.append("secondName", $("#txtSecondName").val());
+            formData.append("email", $("#txtUserEmail").val());
+            formData.append("phone", $("#txtUserPhone").val());
+            formData.append("address", $("#txtUserAddress").val());
+            formData.append("name", $("#txtUserName").val().trim());
+            formData.append("password", userConfirmPassword);
+            formData.append("inTime", $("#txtInTime").val());
+            formData.append("outTime", $("#txtOutTime").val());
+            formData.append("gender", $("#drpUserGender option:selected").val());
+            formData.append("userTypeId", $("#drpUserType option:selected").val());
+            formData.append("dashboardAccess", dashboardAccess);
+            formData.append("appAccess", appAccess);
+            formData.append("incidentAlertReceived", incidentAlertReceived);
+            formData.append("skillId", "0");
+            formData.append("emContact", emContact);
+            formData.append("allowCall", allowCall);
+            formData.append("allowSms", allowSms);
+            formData.append("allowWhatsapp", allowWhatsapp);
+            formData.append("allowEmail", allowEmail);
+             formData.append("isactive", isactive);
+
+            
+
+            formData.append("Skills", JSON.stringify(Skills));
+            formData.append("activityLogDateTime", moment().format('YYYY-MM-DD HH:mm:ss'));
+
+            //CheckDuplicateEntry(NameMatch, LoopTableBodyId, TableDataNameMatchByClass, IgnoreValueId, IngoreValClassInTable)
+            if (CheckDuplicateEntry($("#txtUserName").val().trim(), "#allUsersList", ".userName", $("#txtUserId").val(), ".userId") == false) {
+                toastr.info("User Name Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                $("#txtUserName").focus();
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/SaveUser/",
+                    data: formData,
+                    async: false,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetUsersList();
+                            $("#txtUserId").val("");
+                            $("#btnRefreshUser").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelUser", function(){
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".userId").text();
+            obj.imgName = $(this).closest('tr').find(".userImg").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/DelUser/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+
+                        
+                        if (data=="Already In Use")
+                        {
+                           toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                      else if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetUsersList();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEditUser', function () {
+
+            $(".activeForm").removeClass('disabled');
+
+            var id = $(this).closest('tr').find('.userId').text();
+
+            var userFirstName = $(this).closest('tr').find('.userFirstName').text();
+            var userSecondName = $(this).closest('tr').find('.userSecondName').text();
+            var userEmail = $(this).closest('tr').find('.userEmail').text();
+            var userPhone = $(this).closest('tr').find('.userPhone').text();
+            var userAddress = $(this).closest('tr').find('.userAddress').text();
+            var userGender = $(this).closest('tr').find('.userGender').text();
+
+            var inTime = $(this).closest('tr').find('.inTime').text();
+            $("#txtInTime").val(moment(inTime).format("YYYY-MM-DDTHH:mm"));
+
+            var outTime = $(this).closest('tr').find('.outTime').text();
+            $("#txtOutTime").val(moment(outTime).format("YYYY-MM-DDTHH:mm"));
+
+            var emContact = $(this).closest('tr').find('.userEmContact').text();
+            CountUsers(emContact);
+
+            var userImg = $(this).closest('tr').find('.userImg').text();
+
+            var dashboardAccess = $(this).closest('tr').find('.userDashboardAccess').text();
+            var appAccess = $(this).closest('tr').find('.userAppAccess').text();
+            var incidentAlertReceived = $(this).closest('tr').find('.incAlertReceived').text();
+            var isactive = $(this).closest('tr').find('.isactive').text();
+            var allowCall = $(this).closest('tr').find('.allowCall').text();
+            var allowSms = $(this).closest('tr').find('.allowSms').text();
+            var allowWhatsapp = $(this).closest('tr').find('.allowWhatsapp').text();
+            var allowEmail = $(this).closest('tr').find('.allowEmail').text();
+
+            var name = $(this).closest('tr').find('.userName').text();
+            var userTypeId = $(this).closest('tr').find('.userTypesId').text();
+            var userType = $(this).closest('tr').find('.userType').text();
+        
+            var userPassId = $(this).closest('tr').find('.userPassId').text();
+
+            $("#txtUserId").val(id);
+
+            $("#txtFirstName").val(userFirstName);
+            $("#txtSecondName").val(userSecondName);
+            $("#txtUserEmail").val(userEmail);
+            $("#txtUserPhone").val(userPhone);
+            $("#txtUserAddress").val(userAddress);
+            $("#drpUserGender").val(userGender);
+            $("#drpUserGender").next('span').find('.select2-selection__rendered').html($("#drpUserGender option:selected").text());
+
+
+            $("#drpEmContact").val(emContact);
+            $("#drpEmContact").next('span').find('.select2-selection__rendered').html($("#drpEmContact option:selected").text());
+
+            var path = window.location.origin; debugger
+            $("#ImageUser").attr('src', path + "/" + userImg);
+
+            if(dashboardAccess == "Yes"){
+                $("#dashboardAccess").prop('checked', true);
+            } else {
+                $("#dashboardAccess").prop('checked', false);
+            }
+
+            if(appAccess == "Yes"){
+                $("#appAccess").prop('checked', true);
+            } else {
+                $("#appAccess").prop('checked', false);
+            }
+            
+            if(incidentAlertReceived == "Yes"){
+                $("#incidentAlertReceived").prop('checked', true);
+            } else {
+                $("#incidentAlertReceived").prop('checked', false);
+            }
+
+            if(allowCall == "Yes"){
+                $("#allowCall").prop('checked', true);
+            } else {
+                $("#allowCall").prop('checked', false);
+            }
+
+            if(allowSms == "Yes"){
+                $("#allowSms").prop('checked', true);
+            } else {
+                $("#allowSms").prop('checked', false);
+            }
+
+            if(allowWhatsapp == "Yes"){
+                $("#allowWhatsapp").prop('checked', true);
+            } else {
+                $("#allowWhatsapp").prop('checked', false);
+            }
+
+            if(allowEmail == "Yes"){
+                $("#allowEmail").prop('checked', true);
+            } else {
+                $("#allowEmail").prop('checked', false);
+            }
+
+            if(isactive == "Yes"){
+                $("#isactive").prop('checked', true);
+            } else {
+                $("#isactive").prop('checked', false);
+            }
+            
+
+          
+            
+            $("#txtUserName").val(name);
+            $("#userPassword").val(userPassId);
+            $("#userConfirmPassword").val(userPassId);
+            $("#drpUserType").val(userTypeId);
+            $("#drpUserType").next('span').find('.select2-selection__rendered').html($("#drpUserType option:selected").text());
+
+            if ($("#drpUserType option:selected").text().toLowerCase() === "mechanic") {
+
+                $("#hideEmContact").attr("hidden", true);
+                $("#drpEmContact").val("0");
+                $("#drpEmContact").next('span').find('.select2-selection__rendered').html($("#drpEmContact option:selected").text());
+            } 
+            else {
+                $("#hideEmContact").attr("hidden", false);
+
+                if(emContact == ""){
+                    $("#drpEmContact").val("0");
+                    $("#drpEmContact").next('span').find('.select2-selection__rendered').html($("#drpEmContact option:selected").text());
+                }
+            }
+
+            $("#btnSaveUser").show();
+            $("#btnNewUser").hide();
+            $("#btnSaveUser").text('Update');
+
+            $(".ListPage").hide();
+            $(".AddPage").show();
+
+            var obj = {};
+            obj.userId = $("#txtUserId").val();
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/EditUserSkills/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.length == 0) {
+                            $(".userSkillActive").prop('checked', false);
+                            $(".userSkillActiveId").text('');
+                        }
+                        else {
+                            data.forEach(item => {
+                                const { skillId, active } = item;
+                                const checkbox = $(`#userSkillsDetail tr:eq(${skillId - 1}) .userSkillActive`);
+                                const userSkillActiveId = $(`#userSkillsDetail tr:eq(${skillId - 1}) .userSkillActiveId`);
+
+                                if (checkbox.length) {
+                                    checkbox.prop("checked", active);
+                                    userSkillActiveId.text(active ? "1" : "");
+                                }
+                            });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+
+            $(".userSkillActive").trigger('change');
+        });
+
+
+        //====================== User Types ========================\\
+
+        $("#btnSaveUserType").click(function () {
+
+            if (CheckValidation("AddTypePage") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtUserTypeId").val();
+            obj.name = $("#txtUserType").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            if (CheckDuplicateEntry($("#txtUserType").val(), "#userTypesDetail", ".userTypenames") == false) {
+                toastr.info("User Type Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/SaveTypes/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetUserData();
+                            $("#btnRefreshUserType").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelUserType", function(){
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".userTypeId").text();
+            obj.name = $(this).closest('tr').find(".userTypenames").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/DelTypes/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "Already In Use") { 
+                            toastr.error(data, "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        } else  
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetUserData();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        $("body").on('click', '.btnEditUserType', function () {
+
+            var id = $(this).closest('tr').find('.userTypeId').text();
+            var name = $(this).closest('tr').find('.userTypenames').text();
+
+            $("#txtUserTypeId").val(id);
+            $("#txtUserType").val(name);
+            $("#txtUserType").removeClass('disabled');
+            $("#btnSaveUserType").show();
+            $("#btnNewUserType").hide();
+            $("#btnSaveUserType").text('Update');
+        });
+
+
+        //====================== User Skills ========================\\
+
+        $("#btnSaveUserSkill").click(function () {
+
+            if (CheckValidation("AddSkillPage") == false) {
+
+                return false;
+            }
+
+            var obj = {};
+            obj.id = $("#txtUserSkillId").val();
+            obj.name = $("#txtUserSkill").val();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            if (CheckDuplicateEntry($("#txtUserSkill").val(), "#userSkillsDetail", ".userSkillnames") == false) {
+                toastr.info("Skill Already Added.", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                return false;
+            }
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/SaveSkill/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Save Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetUserData();
+                            $("#btnRefreshUserSkill").click();
+                        }
+                        else {
+                            toastr.error("Please Save Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $('body').on('click', ".btnDelUserSkill", function(){
+
+            var x = confirm("Are you sure you want to delete?");
+            if (x == false) { return false; }
+
+            var obj = {};
+            obj.id = $(this).closest('tr').find(".userSkillId").text();
+            obj.activityLogDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+
+            try {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/DelSkill/",
+                    data: obj,
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != false) {
+                            toastr.success("Deleted Successfully", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                            GetUserData();
+                        }
+                        else {
+                            toastr.error("Please Delete Again", "", { closeButton: !0, tapToDismiss: !1, ltl: o });
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+        $("body").on('click', '.btnEditUserSkill', function () {
+
+            var id = $(this).closest('tr').find('.userSkillId').text();
+            var name = $(this).closest('tr').find('.userSkillnames').text();
+
+            $("#txtUserSkillId").val(id);
+            $("#txtUserSkill").val(name);
+            $("#txtUserSkill").removeClass('disabled');
+            $("#btnSaveUserSkill").show();
+            $("#btnNewUserSkill").hide();
+            $("#btnSaveUserSkill").text('Update');
+
+            $("#drpUserType").trigger('change');
+
+        });
+
+        $("#userSkillsDetail").on('click', '.userSkillActive', function () {
+
+            if ($(this).is(":checked")) {
+                $(this).closest('tr').find('.userSkillActiveId').text('1');
+            } else{
+                $(this).closest('tr').find('.userSkillActiveId').text('');
+            }
+        })
+
+        $('body').on('change',".userSkillActive", function(){
+            var checkboxes = document.querySelectorAll('.userSkillActive');
+
+            // Initialize a counter for checked checkboxes
+            var checkedCount = 0;
+
+            // Iterate through the checkboxes and count the checked ones
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    checkedCount++;
+                }
+            });
+
+            $("#drpUserSkill").empty();
+
+            if(checkedCount > 1){
+                $("#drpUserSkill").append(`<option>${checkedCount} Skills Selected</option>`)
+            }
+            else if(checkedCount == 1){
+                $("#drpUserSkill").append(`<option>${checkedCount} Skill Selected</option>`)
+            }
+            else{
+                $("#drpUserSkill").append(`<option>Select User Skills</option>`)
+            }
+        });
+
+        //====================== Buttons ========================\\
+
+        $("#btnNewUser").click(function () {
+            $(".activeForm").removeClass('disabled');
+            
+            $(this).hide();
+            $("#btnSaveUser").text('Save');
+            $("#btnSaveUser").show();
+            $("#txtFirstName").focus();
+        });
+
+        $("#btnRefreshUser").click(function () {
+
+            var uId = $("#txtUserId").val();
+
+            if (uId != 0) {
+                $(".userId").each(function () {
+                    const userIdValue = $(this).text().trim();
+                    if (userIdValue === uId) {
+                        $(this).closest('tr').find('.btnEditUser').click();
+                        return false;
+                    }
+                });
+            }
+            else {
+                CountUsers();
+
+                $(".activeForm").addClass('disabled');
+
+                $("#btnSaveUser").hide();
+                $("#btnNewUser").show();
+
+                $("#txtUserId").val('');
+                $("#txtFirstName").val('');
+                $("#txtSecondName").val('');
+                $("#txtUserEmail").val('');
+                $("#txtUserPhone").val('');
+                $("#txtUserAddress").val('');
+                $("#drpUserGender").val('0');
+                $("#drpUserGender").next('span').find('.select2-selection__rendered').html($("#drpUserGender option:selected").text());
+                $("#dashboardAccess").prop('checked', false);
+                $("#incidentAlertReceived").prop('checked', false);
+                $("#isactive").prop('checked', false);
+                $("#appAccess").prop('checked', false);
+                $("#allowCall").prop('checked', false);
+                $("#allowSms").prop('checked', false);
+                $("#allowWhatsapp").prop('checked', false);
+                $("#allowEmail").prop('checked', false);
+                 $("#isactive").prop('checked', false);
+                $("#drpEmContact").val('0');
+                $("#drpEmContact").next('span').find('.select2-selection__rendered').html($("#drpEmContact option:selected").text());
+
+
+                $("#txtUserName").val('');
+                $("#txtUserName").removeClass('disabled');
+                $("#userPassword").val('');
+                $("#userConfirmPassword").val('');
+                $("#drpUserType").val('0');
+                $("#drpUserType").next('span').find('.select2-selection__rendered').html($("#drpUserType option:selected").text());
+
+
+                $(".userSkillActive").prop('checked', false);
+                $(".userSkillActiveId").text('');
+                $("#btnRefreshUserSkill").click();
+
+                $("#ImageUser").attr('src', '');
+                $("#userImg").val('');
+                $("#drpUserType").trigger('change');
+            }
+        });
+
+        $("#btnNewUserType").click(function () {
+            $(this).hide();
+            $("#txtUserType").removeClass('disabled');
+            $("#btnSaveUserType").text('Save');
+            $("#btnSaveUserType").show();
+            $("#txtUserType").focus();
+        });
+
+        $("#btnRefreshUserType").click(function () {
+            $("#btnSaveUserType").hide();
+            $("#btnNewUserType").show();
+
+            $("#txtUserType").addClass('disabled');
+
+            $("#txtUserTypeId").val('');
+            $("#txtUserType").val('');
+        });
+
+        $("#btnNewUserSkill").click(function () {
+            $(this).hide();
+            $("#txtUserSkill").removeClass('disabled');
+
+            $("#btnSaveUserSkill").text('Save');
+            $("#btnSaveUserSkill").show();
+            $("#txtUserSkill").focus();
+        });
+
+        $("#btnRefreshUserSkill").click(function () {
+            $("#btnSaveUserSkill").hide();
+            $("#btnNewUserSkill").show();
+
+            $("#txtUserSkill").addClass('disabled');
+
+            $("#txtUserSkillId").val('');
+            $("#txtUserSkill").val('');
+        });
+
+        //====================== Search ========================\\
+
+        $(document).on('input', '#txtSearch', function () {
+            var value = $(this).val().toLowerCase();
+            $("#allUsersList tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $(document).on('input', '#txtSearchSkills', function () {
+            var value = $(this).val().toLowerCase();
+            $("#userSkillsDetail tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $(document).on('input', '#txtSearchUserType', function () {
+            var value = $(this).val().toLowerCase();
+            $("#userTypesDetail tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        document.getElementById('txtUserPhone').addEventListener('input', function (event) {
+            const inputValue = event.target.value;
+            event.target.value = inputValue.replace(/[^0-9+]/g, '');
+        });
+
+        //====================== 6 Digit Password ========================\\
+
+
+        $('body').on('input', "#userPassword, #userConfirmPassword", function () {
+
+            const inputValue = $(this).val();
+            $(this).val(inputValue.replace(/[^0-9+]/g, ''));
+                var v = $(this).val();
+
+                if (v.length > 6) {
+                    v = v.substring(0, 6);
+                    $(this).val(v);
+                }
+        });
+
+
+
+
+        //====================== User Image ========================\\
+        $("body #userImg").change(function (event) {
+            $("#ImageUser").attr('src', URL.createObjectURL(event.target.files[0]));
+        });
+
+        //$("#ImageUser").click(function(){
+        //    $("#userImg").click();
+        //});
+
+        //====================== Word Convert ========================\\
+
+        $('#convertWord').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            HTMLtoWORD("tbl-print", "@ViewData["Title"]")
+        });
+
+        //====================== Grid Print Start ========================\\
+
+        $('#pdfPrint').click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+            $(cloneTable).printThis();
+        });
+
+        //====================== Excel Convert ========================\\
+
+        $("#convertExcel").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            TableToExcel.convert($(cloneTable)[0], {
+                name: "@ViewData["Title"]" + ".xlsx",
+                sheet: {
+                    name: "@ViewData["Title"]"
+                },
+
+            });
+        });
+
+        //====================== Csv Convert ========================\\
+
+        $("#convertCsv").click(function () {
+            $(".printCheckBox").trigger('change');
+
+            var cloneTable = $("#tbl-print").clone();
+            cloneTable.find('.d-none, .notPrintCol').remove();
+
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            var headers = [];
+            cloneTable.find("thead th").each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            csvContent += headers.join(",") + "\r\n";
+
+            var tbody = cloneTable.find("tbody");
+
+            tbody.find("tr").each(function () {
+                var row = [];
+
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            var encodedUri = encodeURI(csvContent);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "@ViewData["Title"]"+".csv");
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+        });
+
+        //================ Select Column By CheckBox ==================\\
+        $(".printCheckBox").change(function () {
+            const columnIndex = $(this).closest("th").index();
+            const isChecked = $(this).is(":checked");
+            const colClassToAdd = isChecked ? "PrintCol" : "notPrintCol";
+            const colClassToRemove = isChecked ? "notPrintCol" : "PrintCol";
+
+            $("#tbl-print tr").each(function () {
+                const $cells = $(this).find(`th:eq(${columnIndex}), td:not(.d-none):eq(${columnIndex})`);
+                $cells.removeClass(colClassToRemove).addClass(colClassToAdd);
+            });
+        });
+
+        //================ User Page Rights ==================\\
+
+        function UserPageRights(){
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/User/UserPageRights/",
+                    data: { url: window.location.pathname },
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.word == false) { $("#convertWord").closest('li').remove(); }
+                        if(data.pdf == false){ $("#pdfPrint").closest('li').remove(); }
+                        if (data.excel == false) { $("#convertExcel").closest('li').remove(); }
+                        if (data.csv == false) { $("#convertCsv").closest('li').remove(); }
+                        if(data.delete == false){ $(".btnDelUser").remove(); }
+                        if(data.edit == false){ $(".btnEditUser").remove(); }
+
+                        if(data.save == false){
+                            $(".btnAdd").closest('div').remove();
+                            $("#btnRefreshUser, #btnRefreshUserSkill, #btnSaveUserSkill, #btnNewUserSkill, .btnEditUserSkill, .btnDelUserSkill, #btnNewUserType, #btnSaveUserType, #btnRefreshUserType, .btnEditUserType, .btnDelUserType ").remove();
+                            $("#drpUserType").closest('.row').find('.custom-plus-icon').addClass('disabled');
+                        }
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+    </script>
+}

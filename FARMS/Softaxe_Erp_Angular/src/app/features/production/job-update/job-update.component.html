@@ -1,0 +1,133 @@
+<section>
+  <div class="content AddPage">
+    <div class="page-header mb-1">
+      <div class="page-title">
+        <h4>Job Update</h4>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row mb-2">
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="position-relative w-100 form-group mb-0">
+              <label class="fw-bold" style="margin-bottom: 0px !important;">
+                Date</label>
+              <div class="input-groupicon">
+                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                  (click)="datepicker.open()" [(ngModel)]="vchDate" />
+                <mat-datepicker #datepicker></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="position-relative w-100">
+              <label class="fw-bold">Job#</label>
+              <ng-select placeholder="---Select Job No---" 
+                [items]="JobList" 
+                bindLabel="NAME" 
+                bindValue="ID"
+                [(ngModel)]="jobNo"
+                [dropdownPosition]="'bottom'" 
+                (change)="onChangeJobNo()">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="position-relative w-100">
+              <label class="fw-bold">Week#</label>
+              <ng-select placeholder="--- Select Week ---" (change)="weekFilter($event)" [dropdownPosition]="'bottom'">
+                <ng-option value="1">1</ng-option>
+                <ng-option value="2">2</ng-option>
+                <ng-option value="3">3</ng-option>
+                <ng-option value="4">4</ng-option>
+                <ng-option value="5">5</ng-option>
+                <ng-option value="6">6</ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive" style="height: 390px">
+          <table class="table table-hover mb-1" id="tbl-print">
+            <thead>
+              <tr>
+                <th class="wd-24">Date</th>
+                <th class="text-center wd-24">Week#</th>
+                <th class="text-center wd-15">Weight</th>
+                <th class="text-center wd-15">Feed</th>
+                <th class="text-center wd-15">Motality</th>
+                <th class="text-center wd-15">Diesel</th>
+                <th class="text-center wd-15">Remarks</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody #detailsGrid>
+              <ng-container *ngFor="let data of detailsList; let i = index">
+                <tr *ngIf="data.filter "  [ngClass]="userType == 'SV' && detailsList.length-1 !=  i ? 'disabled' : ''" >
+                  <td class="wd-24">
+                    <div class="position-relative w-100 form-group mb-0">
+                      <div class="input-groupicon">
+                        <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput
+                          [matDatepicker]="datepickerT" (click)="datepickerT.open()" [(ngModel)]="data.transDate"
+                          [readonly]="isDisabled" />
+                        <mat-datepicker #datepickerT></mat-datepicker>
+                        <div class="addonset">
+                          <img src="/assets/img/icons/calendars.svg" alt="img">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="wd-24">
+                    <ng-select placeholder="select" [(ngModel)]="data.week" >
+                      <ng-option value="1">1</ng-option>
+                      <ng-option value="2">2</ng-option>
+                      <ng-option value="3">3</ng-option>
+                      <ng-option value="4">4</ng-option>
+                      <ng-option value="5">5</ng-option>
+                      <ng-option value="6">6</ng-option>
+                    </ng-select>
+                  </td>
+                  <td class="wd-15"><input (input)="calculation()" [(ngModel)]="data.avgWeight" type="number"
+                      class="form-control text-end avgWeight me-2 ht-25"></td>
+                  <td class="wd-15"><input (input)="calculation()" [(ngModel)]="data.feedCons" type="number"
+                      class="form-control text-end feedCons me-2 ht-25"></td>
+                  <td class="wd-15"><input (input)="calculation()" [(ngModel)]="data.motality" type="number"
+                      class="form-control text-end motality me-2 ht-25"></td>
+                  <td class="wd-15"><input (input)="calculation()" [(ngModel)]="data.diesel" type="number"
+                      class="form-control text-end diesel me-2 ht-25"></td>
+                  <td class="wd-15"><input [(ngModel)]="data.remarks" type="text"
+                      class="form-control me-2 ht-25"></td>
+                  <td class="text-center">
+                    <span *ngIf="userType != 'SV'" (click)="deleteItem(i)" class="confirm-text btnDelItem me-2" style="cursor: pointer">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                    <span (click)="onAdd()" class="confirm-text btnDelItem" style="cursor: pointer">
+                      <i class="fa-solid fa-circle-plus" style="color: #07b807; font-size: 18px;"></i>
+                    </span>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3"></td>
+                <td class="text-end">{{feedConsSum}}</td>
+                <td class="text-end">{{motalitySum}}</td>
+                <td class="text-end">{{dieselSum}}</td>
+                <td colspan="2"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="row mt-1">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <button type="submit" class="btn btn-success btn-sm me-1" (click)="onClickSave()">Save</button>
+            <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

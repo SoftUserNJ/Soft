@@ -1,0 +1,242 @@
+﻿@{
+
+    ViewData["Title"] = "My Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<style>
+    table:hover{
+        color:#fff !important;
+    }
+</style>
+
+<div class="container">
+    <h2 class="text-center my-3">@Localizer["MyOrders"]</h2>
+
+    <table class="table rounded table-hover table-dark text-white">
+        <thead>
+            <tr>
+                <th class="pe-3">@Localizer["OrderDate"]</th>
+                <th class="pe-3">@Localizer["PlayDate"]</th>
+                <th class="pe-3">@Localizer["Slot"]</th>
+                <th class="pe-3">@Localizer["Status"]</th>
+                <th class="text-center pe-2">@Localizer["View"]</th>
+            </tr>
+        </thead>
+        <tbody id="ordersList">
+        </tbody>
+    </table>
+</div>
+
+<div id="OrderModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="max-width:900px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close text-white mr-2" data-dismiss="modal" aria-hidden="true" id="btnDismissModal">×</button>
+                <div class="row mt-3">
+                    <div class="col-md-4 col-lg-3">
+                        <label class="text-white">@Localizer["OrderNo"]</label>
+                        <input type="text" disabled id="orderNoC" />
+                    </div>
+
+                    <div class="col-md-4 col-lg-3">
+                        <label class="text-white">@Localizer["OrderDate"]</label>
+                        <input type="text" disabled id="orderDateC" />
+                    </div>
+
+                    <div class="col-md-4 col-lg-3">
+                        <label class="text-white">@Localizer["OrderStatus"]</label>
+                        <input type="text" disabled id="orderStatusC" />
+                    </div>
+
+                    <div id="editSection" class="col-md-4 col-lg-3" style=" padding: 20px; ">
+                        <button onclick="navigateToEditOrder();" type="button" class="btn btn-info btn-lg" style=" font-size: 15px; ">
+                            <i class="far fa-edit" style="color: #ffffff;"></i> Edit Your Order </button> 
+                            </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-md-8 col-lg-8">
+                        <div class="table-responsive" style="max-height:350px;">
+                            <table class="table rounded table-hover table-dark text-white">
+                                <thead>
+                                    <tr>
+                                        <th class="ps-2">@Localizer["Station"]</th>
+                                        <th class="ps-2">@Localizer["Screen"]</th>
+                                        <th class="ps-2">@Localizer["Size"]</th>
+                                        <th class="pe-2 text-end">@Localizer["Rate"]</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="viewOrdersList">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="table-responsive" style="max-height:350px;">
+                            <table class="table rounded table-hover table-dark text-white">
+                                <thead>
+                                    <tr>
+                                        <th class="ps-2">@Localizer["PlayDate"]</th>
+                                        <th class="ps-2">@Localizer["Slot"]</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="viewOrdersSlotList">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            GetOrdersList();
+        });
+
+        //====================== Get Orders List ========================\\
+
+        function GetOrdersList() {
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Order/GetOrdersCompleted/",
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#ordersList").empty();
+                        $.each(data, function (i, item) {
+
+                            var date = moment(item.date).format("DD-MM-YYYY");
+                            var slotFrom = moment(item.slotFrom, "HH:mm:ss").format("HH:mm");
+                            var slotTo = moment(item.slotTo, "HH:mm:ss").format("HH:mm");
+                            var playDate = moment(item.playDate).format("DD-MM-YYYY");
+                            var slot = slotFrom + " - " + slotTo;
+
+                            $("#ordersList").append(`
+                                        <tr>
+                                            <td class="d-none orderNo">${item.orderNo}</td>
+                                            <td class="date">${date}</td>
+                                            <td class="playDate">${playDate}</td>
+                                            <td class="slot">${slot}</td>
+                                            <td class="status">${item.status}</td>
+                                            <td class="text-center last-td-sticky">
+                                                <span class="me-2 btnView cursor-pointer">
+                                                  <i class="fas fa-eye fs-22" data-target="#OrderModal" data-toggle="modal"></i>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    `)
+
+
+                                    if (item.status === "Approved") {
+                        $("#editSection").hide();
+                    }
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        }
+
+
+        $("body").on('click', '.btnView', function () {
+
+            var orderNo = $(this).closest('tr').find('.orderNo').text();
+
+            try {
+                $.ajax({
+                    type: "Get",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    url: "/Order/ViewOrdersCompleted/",
+                    data: { id: orderNo },
+                    async: false,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#viewOrdersList").empty();
+                        $("#viewOrdersSlotList").empty();
+
+                        $.each(data.slots, function (i, item) {
+
+                            var playDate = moment(item.playDate).format("DD-MM-YYYY");
+
+                            var slotFrom = moment(item.slotFrom, "HH:mm:ss").format("HH:mm");
+                            var slotTo = moment(item.slotTo, "HH:mm:ss").format("HH:mm");
+                            var slot = slotFrom + " - " + slotTo;
+
+                            $("#viewOrdersSlotList").append(`
+                                        <tr>
+                                            <td class="playDate ps-2">${playDate}</td>
+                                            <td class="playSlot ps-2">${slot}</td>
+                                        </tr>
+                                    `);
+                        });
+
+                        $.each(data.detail, function (i, item) {
+
+                            var date = moment(item.date).format("DD-MM-YYYY");
+                            var playDate = moment(item.playDate).format("DD-MM-YYYY");
+
+                            var slotFrom = moment(item.slotFrom, "HH:mm:ss").format("HH:mm");
+                            var slotTo = moment(item.slotTo, "HH:mm:ss").format("HH:mm");
+                            var slot = slotFrom + " - " + slotTo;
+
+                            $("#orderNoC").val(item.orderNo);
+                            $("#orderDateC").val(date);
+                            $("#orderStatusC").val(item.status);
+
+                            $("#viewOrdersList").append(`
+                                        <tr>
+                                            <td class="station ps-2">${item.stationName}</td>
+                                            <td class="screen ps-2">${item.screenName}</td>
+                                            <td class="size ps-2">${item.size}</td>
+                                            <td class="rate pe-2 text-end">${parseFloat(item.rate).toFixed(2)}&nbsp;<span>€</span></td>
+                                            <td class="orderImage d-none ps-2">${item.image}</td>
+                                        </tr>
+                                    `);
+                        });
+
+                        var totalSum = 0;
+                        $("#viewOrdersList .rate").each(function () {
+                            totalSum += parseFloat($(this).text());
+                        });
+
+                        $("#viewOrdersList").append(`
+                                   <tr>
+                                       <td colspan="3">Total</td>
+                                       <td class="rateSum pe-2 text-end">${parseFloat(totalSum).toFixed(2)}&nbsp;<span>€</span></td>
+                                   </tr>
+                                `);
+
+                        //$("#viewOrdersList tr:first-child").click();
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+            catch (err) {
+                alert(err)
+            }
+        });
+
+
+        function navigateToEditOrder() {
+            var orderNo = document.getElementById("orderNoC").value;
+            window.location.href = '/Order/EditYourOrder?orderNo=' + orderNo;
+           
+        }
+    </script>
+
+}

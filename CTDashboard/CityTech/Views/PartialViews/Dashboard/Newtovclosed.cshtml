@@ -1,0 +1,135 @@
+﻿@{
+    Layout = null;
+}
+<div style="float: left; width: 100%;">
+    <h5 style="float: left;">New tov Closed</h5>
+</div>
+<p style="clear: both;"></p>
+<div style="width: 100%; height:90%;">
+    <canvas id="Chartnewtovclosed"></canvas>
+</div>
+
+<script>
+
+    var Chartnewtovclosed;
+    function NewtovclosedWidgetFunPartial(fromDate, toDate) {
+        try {
+            $.ajax({
+                type: "Get",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                url: "/Home/Assets/",
+                dataType: "json",
+                async: false,
+                success: function (data1) {
+                    var labelArray = [];
+                    var DataArray = [];
+
+                    $.each(data1, function (i, item) {
+                        var labelvalue = item.Xasix.replace(/'/g, '');
+                        labelArray.push(labelvalue);
+                        DataArray.push(item.Datavalue);
+                    });
+
+                    var dataset1 = {
+                        label: 'New',
+                        data: DataArray,
+                        borderColor: 'Maroon',
+                        barPercentage: 0.3,
+                        backgroundColor: 'blue', // Change this to set the color of the bars
+                    };
+                    var dataset2 = {
+                        label: 'Closed',
+                        data: DataArray,
+                        borderColor: 'Maroon',
+                        barPercentage: 0.3,
+                        backgroundColor: 'Green', // Change this to set the color of the bars
+                    };
+
+                    var mdata = {
+                        labels: labelArray,
+                        datasets: [dataset1, dataset2]
+                    };
+
+
+                @*    var mdata = {
+                        labels: labelArray,
+                        datasets: [{
+                            label: 'Dataset 1',
+                            data: DataArray,
+                            borderColor: 'Maroon',
+                            barPercentage: 0.2,
+                            backgroundColor: 'blue', // Change this to set the color of the bars
+                        }]
+                    };*@
+
+                    var options = {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        title: {
+                            display: false,
+                            text: 'Horizontal Bar Chart Example'
+                        },
+                        legend: {
+                            display: true
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: false,
+                                    labelString: 'Value'
+                                },
+                                gridLines: {
+                                    color: '#85888c'
+                                },
+                                     ticks: {
+                                    fontSize: 9
+
+                                },
+                            }],
+                            yAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: false,
+                                    labelString: 'Day'
+                                },
+                                gridLines: {
+                                    display: false,
+                                    color: 'white'
+                                }
+                                ,
+                                ticks: {
+                                    fontSize: 9
+
+                                },
+                            }]
+                        }
+                    };
+
+                    var ctx = document.getElementById('Chartnewtovclosed').getContext('2d');
+
+
+                    if (Chartnewtovclosed) {
+                        Chartnewtovclosed.destroy();
+                    }
+
+
+                    Chartnewtovclosed = new Chart(ctx, {
+                        type: 'horizontalBar', // Change the chart type to 'horizontalBar'
+                        data: mdata,
+                        options: options
+                    });
+                },
+                error: function (data1) {
+                }
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+  
+
+    
+    NewtovclosedWidgetFunPartial('@ViewBag.FromDate', '@ViewBag.ToDate');
+
+</script>

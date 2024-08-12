@@ -1,0 +1,552 @@
+<section>
+  <div class="content ListPage" *ngIf="isShowPage">
+    <div class="page-header">
+      <div class="page-title">
+        <h4 class="newcolor">Gate Pass Inward (Purchase)</h4>
+      </div>
+      <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="pdf" id="pdfPrint">
+                <img src="/assets/img/icons/pdf.svg" alt="img">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row mb-1">
+          <div class="col-lg-2 col-md-6 col-sm-12 pe-0">
+            <label class="fw-bold">Inward Type</label>
+            <ng-select placeholder="--- Select ---" [(ngModel)]="vchType">
+              <ng-option value="RP-RAW">RP-RAW</ng-option>
+            </ng-select>
+          </div>
+          <div class="col-lg-1 col-md-6 col-sm-12">
+            <label class="fw-bold">GRN #</label>
+            <input class="form-control" type="text" [(ngModel)]="grnNo">
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-12 ps-0">
+            <label class="fw-bold">From Date</label>
+            <div class="form-group mb-0">
+              <div class="input-groupicon">
+                <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                  [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-12 ps-0">
+            <label class="fw-bold">To Date</label>
+            <div class="form-group mb-0">
+              <div class="input-groupicon">
+                <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY" [matDatepicker]="datepicker2"
+                  [(ngModel)]="toDate" (click)="datepicker2.open()">
+                <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                <div class="addonset">
+                  <img src="/assets/img/icons/calendars.svg" alt="img">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-1 col-md-1">
+            <img src="/assets/img/icons/search.svg" alt="img" class="filter-img mt-20" (click)="getVouchersList()">
+          </div>
+          <div class="col-lg-2 col-md-2 ps-0"></div>
+          <div class="col-lg-2 col-md-2 ps-0">
+            <div class="d-flex align-items-center justify-content-end mt-20">
+              <p (click)="togglePages(); onClickRefresh()" class="add-new w-100">
+                <img src="/assets/img/icons/plus.svg" alt="img" class="filter-img">Add New
+              </p>
+            </div>
+          </div>
+          <div class="col-12 mt-2">
+            <input class="form-control w-100" placeholder="Search..." (input)="searchGrid($event)" type="search"
+              id="txtSearch" />
+          </div>
+        </div>
+        <div class="table-responsive mb-1">
+          <table class="table table-hover" id="tbl-print">
+            <thead>
+              <tr>
+                <th class="text-start wd-5">Vch No</th>
+                <th class="text-start w-25">Party</th>
+                <th class="text-center">Vehicle No</th>
+                <th class="text-start">Bilty No</th>
+                <th class="text-center">Vch Date</th>
+                <th class="text-center w-12">Action</th>
+              </tr>
+            </thead>
+            <tbody #voucherLists>
+              <tr *ngFor="let data of voucherList">
+                <td class="text-start">{{data.VCHNO}}</td>
+                <td class="text-start">{{data.PARTY}}</td>
+                <td class="text-center">{{data.VEHICLENO}}</td>
+                <td class="text-start">{{data.BILTYNO}}</td>
+                <td class="text-center">{{data.VCHDATE}}</td>
+                <td class="text-center">
+                  <span class="me-3" style="cursor: pointer;">
+                    <i class="fas fa-print"></i>
+                  </span>
+                  <span class="me-3" style="cursor: pointer;" (click)="editVouchers(data.VCHNO, data.VCHTYPE)">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                  <span class="confirm-text" style="cursor: pointer;" (click)="deleteVouchers(data.VCHNO, data.VCHTYPE)">
+                    <i class="fas fa-trash"></i>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content AddPage pt-1" *ngIf="!isShowPage">
+    <div class="page-header mb-1">
+      <div class="page-title">
+        <h4>Gate Pass Inward Entry (Purchase)</h4>
+      </div>
+      <div class="page-title ms-auto me-2">
+        <h5 class="text-danger mt-1 fw-bold">{{editDisabled == true ? 'Approved' : ''}}</h5>
+      </div>
+      <div class="page-btn" routerLink="/journal-voucher">
+        <a (click)="togglePages()" class="btn btn-added btnList">
+          <i class="fa me-2 fa-th-list" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-th-list"
+            aria-label="fa fa-th-list"></i>
+          Home
+        </a>
+      </div>
+    </div>
+    <div class="card" [ngClass]="{ disabled: editDisabled }">
+      <div class="card-body pt-1">
+        <div class="row mb-2" [formGroup]="InwardEntryForm">
+          <div class="col-8 col-lg-8 col-md-8 col-sm-12">
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Voucher Type</label>
+                  <ng-select class="bold-placeholder" [clearable]="none" placeholder="--- Select ---" [clearable]="none"
+                    [searchable]="none" bindLabel="NAME" bindValue="CODE" formControlName="vchType"
+                    [dropdownPosition]="'bottom'">
+                    <ng-option value="RP-RAW">RP-RAW</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Location</label>
+                  <ng-select class="bold-placeholder" [items]="locationList" placeholder="--- Select ---"
+                    [readonly]="readonly" [clearable]="none" [searchable]="none" bindLabel="LocID" bindValue="LocID"
+                    formControlName="location" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">GpiNo</label>
+                  <input type="text" readonly formControlName="vchNo" class="form-control">
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <label class="fw-bold">GRN Date</label>
+                <div class="form-group mb-0">
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" placeholder="DD/MM/YYYY" formControlName="grnDate"
+                      [readonly]="readonly" matInput [matDatepicker]="datepicker5" (click)="datepicker5.open()" />
+                    <mat-datepicker #datepicker5 [startAt]="fromDate"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="/assets/img/icons/calendars.svg" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Vehicle No</label>
+                  <input type="text" formControlName="vehicleNo" #vehicles [readonly]="readonly" class="form-control">
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Bilty No</label>
+                  <input type="text" formControlName="biltyNo" [readonly]="readonly" class="form-control">
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Freight</label>
+                  <div class="row">
+                    <div class="col-6 pe-0">
+                      <input type="number" formControlName="freight" [readonly]="readonly" class="form-control">
+                    </div>
+                    <div class="col-6">
+                      <ng-select class="bold-placeholder" placeholder="" [searchable]="none" formControlName="freightDD"
+                        [readonly]="readonly" [dropdownPosition]="'bottom'">
+                        <ng-option value="S">S</ng-option>
+                        <ng-option value="O">O</ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="position-relative w-100">
+                  <div class="d-flex">
+                    <div>
+                      <label class="fw-bold">Minimum-Weight</label>
+                    </div>
+                    <div class="ms-auto d-flex">
+                      <input type="checkbox"  formControlName="chkMinWeight" [readonly]="readonly">
+                    </div>
+                  </div>
+                  <ng-select class="bold-placeholder" placeholder="--- Select ---" [searchable]="none"
+                    formControlName="minWeight" [readonly]="readonly" [dropdownPosition]="'bottom'">
+                    <ng-option value="S">S</ng-option>
+                    <ng-option value="O">O</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Party Main</label>
+                  <ng-select class="bold-placeholder" [items]="partyMainList" placeholder="--- Select ---"
+                    [readonly]="readonly" bindLabel="NAME" bindValue="CODE" formControlName="partyMain"
+                    (change)="getPartySub();" (clear)="onPartyClear();" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <label class="fw-bold">Remarks</label>
+                <input type="text" formControlName="remarks" [readonly]="readonly" class="form-control">
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Party Sub</label>
+                  <ng-select class="bold-placeholder" [items]="partySubList" placeholder="--- Select ---"
+                    [readonly]="readonly" (change)="getTblSubParty($event)" bindLabel="NAME" bindValue="CODE"
+                    formControlName="partySub" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Sub Party</label>
+                  <ng-select class="bold-placeholder" [items]="supPartyList" placeholder="--- Select ---"
+                    [readonly]="true" bindLabel="SubParty" bindValue="SubPartyCode" formControlName="subParty"
+                    [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Item Main</label>
+                  <ng-select class="bold-placeholder" [items]="itemMainList" placeholder="--- Select ---"
+                    [readonly]="readonly" bindLabel="NAME" bindValue="CODE" formControlName="itemMain"
+                    (change)="getItemSub();" (clear)="onItemClear();" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Godown</label>
+                  <ng-select class="bold-placeholder" [items]="godownList" placeholder="--- Select ---"
+                    [readonly]="readonly" bindLabel="GODOWNNAME" bindValue="GODOWNID" formControlName="godown"
+                    [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-4 col-lg-4 col-md-4 col-sm-12 ps-0">
+            <div class="card mb-0 border-top-0 border-bottom-0">
+              <div class="card-body px-1 py-0">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">GPNO</label>
+                      <input type="text" formControlName="manualGpiNo" [readonly]="readonly" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">Driver Name</label>
+                      <input type="text" formControlName="driverName" [readonly]="readonly" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">Contact</label>
+                      <input type="text" formControlName="contact" [readonly]="readonly" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">T.CNIC</label>
+                      <input type="text" formControlName="tCNIC" [readonly]="readonly" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">Transit Permit</label>
+                      <input type="text" formControlName="transitPermit" [readonly]="readonly" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">Sludge</label>
+                      <input type="text" formControlName="sludge" [readonly]="readonly" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">Color</label>
+                      <input type="text" formControlName="color" [readonly]="readonly" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12" hidden>
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">WB Charges</label>
+                      <input type="text" formControlName="wbCharge" [readonly]="readonly" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12" hidden>
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">Area Main</label>
+                      <input type="text" formControlName="areaMain" [readonly]="readonly" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12" hidden>
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">Area Sub</label>
+                      <input type="text" formControlName="areaSub" [readonly]="readonly" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">Ret-Stat</label>
+                      <ng-select class="bold-placeholder" placeholder="Select" [readonly]="readonly"
+                        formControlName="retStat" [searchable]="none" [dropdownPosition]="'bottom'">
+                        <ng-option value="Re-Process">Re-Process</ng-option>
+                        <ng-option value="In-Stock">In-Stock</ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12" hidden>
+                    <div class="position-relative w-100">
+                      <label class="fw-bold">Rate</label>
+                      <input type="text" formControlName="rate" [readonly]="readonly" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">PoNo#</label>
+                  <input type="number" formControlName="poNo" [readOnly]="true" class="form-control">
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="position-relative w-100">
+                  <label class="fw-bold">Po-Bal Qty</label>
+                  <input type="text" formControlName="poBal" [readOnly]="true" class="form-control">
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-2 col-sm-12 d-flex p-0">
+                <button type="submit" (click)="getPoDetails()" class="btn btn-secondary btn-sm mt-3">Po#</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-2" [formGroup]="InwardEntryForm">
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="position-relative w-100">
+              <label class="fw-bold">Item Sub</label>
+              <ng-select class="bold-placeholder" [items]="itemSubList" placeholder="--- Select ---"
+                [readonly]="readonly" (change)="onItemSubChange($event)" bindLabel="NAME" bindValue="CODE"
+                formControlName="itemSub" [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-12 ps-0">
+            <label class="fw-bold">Fix Wt</label>
+            <input type="text" formControlName="standardWt" [readonly]="true" class="form-control">
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-12 pe-1">
+            <div class="position-relative w-100">
+              <label class="fw-bold">UOM</label>
+              <ng-select class="bold-placeholder" [items]="uomList" placeholder=" UOM " [readonly]="readonly"
+                [clearable]="none" [searchable]="none" bindLabel="name" bindValue="id" formControlName="uom"
+                [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12 px-1">
+            <div class="position-relative w-100">
+              <label class="fw-bold">Tanker/Bags/Qty</label>
+              <div class="row">
+                <div class="col-6 pe-0">
+                  <input type="number" formControlName="bags" (input)="netCalculation()" [readonly]="readonly"
+                    class="form-control">
+                </div>
+                <div class="col-6">
+                  <ng-select class="bold-placeholder" placeholder="" [readonly]="readonly" formControlName="bagsType"
+                    [searchable]="none" [dropdownPosition]="'bottom'">
+                    <ng-option value="W">W</ng-option>
+                    <ng-option value="O">O</ng-option>
+                    <ng-option value="S">S</ng-option>
+                    <ng-option value="P">P</ng-option>
+                    <ng-option value="R">R</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-12 px-1">
+            <label class="fw-bold d-none">Bags Wt</label>
+            <input type="text" formControlName="bagsWt" [readonly]="readonly" class="form-control d-none">
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-12 px-1" hidden>
+            <label class="fw-bold">Exp Wt</label>
+            <input type="number" formControlName="expWt" [readonly]="readonly" class="form-control">
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-12" hidden>
+            <label class="fw-bold">S.Tax</label>
+            <input type="text" formControlName="sTax" [readonly]="readonly" class="form-control">
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-12" hidden>
+            <label class="fw-bold">I.Tax</label>
+            <input type="text" formControlName="iTax" [readonly]="readonly" class="form-control">
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-12 px-1">
+            <label class="fw-bold">Gross</label>
+            <input type="number" formControlName="gross" (input)="netCalculation()" [readonly]="readonly"
+              class="form-control">
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-12 px-1">
+            <label class="fw-bold">Tare</label>
+            <input type="number" formControlName="tare" (input)="netCalculation()" [readonly]="readonly"
+              class="form-control">
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-12 px-1">
+            <label class="fw-bold">Net</label>
+            <input type="text" formControlName="net" readonly class="form-control">
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-12 d-flex">
+            <button type="submit" (click)="onAdd()" class="btn btn-success btn-sm ms-auto"
+              style="margin-top: 20px;">{{btnAdd}}</button>
+          </div>
+        </div>
+        <div class="table-responsive" style="height: 200px">
+          <table class="table table-hover" id="tbl-print">
+            <thead>
+              <tr>
+                <th class="">Item Code</th>
+                <th class="">Item</th>
+                <th class="">Bags</th>
+                <th class="d-none">BagsType</th> 
+                <th class="text-center">Rate</th>
+                <th class="text-center">St Wt</th>
+                <th class="">Gross</th>
+                <th class="">Tare</th>
+                <th class="text-center">Net</th>
+                <th class="d-none">UOM</th>
+                <th class="text-center">Godown</th>
+                <th class="text-center">PoNo</th>
+                <th class="text-center wd-12">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of detailsList; let i = index" (click)="rowHighLight($event)">
+                <td class="">{{ data.code }}{{ data.sub }}</td>
+                <td class="">{{ data.itemName }}</td>
+                <td class="">{{ data.bags }} {{ data.bagsType }}</td>
+                <!-- <td class=""></td> -->
+                <td class="text-center">{{ data.rate }}</td>
+                <td class="text-center">{{ data.standardWt }}</td>
+                <td class="">{{ data.gross }}</td>
+                <td class="">{{ data.tare }}</td>
+                <td class="text-center">{{ data.net }}</td>
+                <td class="d-none">{{ data.uom }}</td>
+                <td class="text-center">{{ data.godown }}</td>
+                <td class="text-center">{{ data.poNo }}</td>
+                <td class="text-center">
+                  <!-- Edit Button -->
+                  <span (click)="editItem(data)" class="me-3" style="cursor: pointer">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                  <!-- Delete Button  -->
+                  <span (click)="deleteItem(i)" class="confirm-text" style="cursor: pointer">
+                    <i class="fas fa-trash"></i>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">New</button>
+            <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+              (click)="onClickSave()">Save</button>
+            <button class="btn btn-secondary btn-sm" (click)="onClickRefresh()">Refresh</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="modal fade" id="poDetailsModal">
+  <div class="modal-dialog" style="max-width: 60%; margin: 50px auto">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">PO Details</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="table-responsive" style="height: 200px">
+              <table class="table table-hover" id="tbl-print">
+                <thead>
+                  <tr>
+                    <th class="wd-7">Po#</th>
+                    <th class="wd-15">Date</th>
+                    <th class="w-25">Party</th>
+                    <th class="wd-25">Items</th>
+                    <th class="wd-15 text-end">Qty</th>
+                    <th class="text-end">Balance</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of poDetailsList" (click)="rowHighLight($event)" (dblclick)="selectPo(data)">
+                    <td class="">{{data.PoNo}}</td>
+                    <td class="">{{data.PODATE}}</td>
+                    <td class="">{{data.Party}}</td>
+                    <td class="">{{data.Product}}</td>
+                    <td class="text-end">{{data.PoQty}}</td>
+                    <td class="text-end">{{data.BalQty}}</td>
+                    <td class="text-end pe-1">
+                      <span (click)="selectPo(data)" class="me-3" style="cursor: pointer">
+                        <img src="/assets/img/icons/arrow.png" alt="GO" />
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

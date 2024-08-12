@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AnExceptionallyGood" xml:space="preserve">
+    <value>An exceptionally good price-quality guarantee &lt;br /&gt;&lt;br /&gt; &lt;span&gt;
+                            Competitive prices for
+                            (long-running) campaigns
+                        &lt;/span&gt; &lt;br /&gt;&lt;br /&gt; Extremely suitable for the business market</value>
+  </data>
+  <data name="AtTheMostVisitedPlaces" xml:space="preserve">
+    <value>At the most visited places in Amsterdam, the metro stations, our screen advertisements are
+                        visible 100 times per hour for 6 seconds. That's purposeful screen communication. Choose the
+                        station (or several stations) where you expect your target group and where your message comes
+                        across crystal clear</value>
+  </data>
+  <data name="BookNow" xml:space="preserve">
+    <value>Book Now</value>
+  </data>
+  <data name="DoubleScreen" xml:space="preserve">
+    <value>Double Screen</value>
+  </data>
+  <data name="DynamicMediaCompany" xml:space="preserve">
+    <value>Dynamic Media Company</value>
+  </data>
+  <data name="ForAnyoneWhoWants" xml:space="preserve">
+    <value>“For anyone who wants to convey a message, display on our digital screens is an effective
+                        approach. Both for the business and private markets. Choose the right location. Go for one or
+                        multiple stations. Because we have screens at all metro stations in Amsterdam.”</value>
+  </data>
+  <data name="GROWYOURBUSINESS" xml:space="preserve">
+    <value>GROW YOUR BUSINESS FOR JUST €50 PER HOUR</value>
+  </data>
+  <data name="HappyCustomer" xml:space="preserve">
+    <value>Happy Customer</value>
+  </data>
+  <data name="OurClients" xml:space="preserve">
+    <value>Our Clients</value>
+  </data>
+  <data name="SaleOf" xml:space="preserve">
+    <value>Sale Of</value>
+  </data>
+  <data name="ScreenSizeSpecifications" xml:space="preserve">
+    <value>Screen Size Specifications</value>
+  </data>
+  <data name="SearchStations" xml:space="preserve">
+    <value>Search Stations</value>
+  </data>
+  <data name="SELECTYOURSTATION" xml:space="preserve">
+    <value>SELECT YOUR STATION</value>
+  </data>
+  <data name="ShowMore" xml:space="preserve">
+    <value>Show More</value>
+  </data>
+  <data name="SingleScreen" xml:space="preserve">
+    <value>Single Screen</value>
+  </data>
+  <data name="ThisIsTheOpportunity" xml:space="preserve">
+    <value>This is the opportunity to promote your company in Amsterdam and the surrounding area. With
+                        screen advertisements that draw very targeted attention to your company, your store or whatever
+                        service you provide. Also suitable for events, sports competitions, festivals. For less than €50
+                        per hour you are visible 100 times per hour for 6 seconds. You determine the time and number of
+                        hours that your campaign is visible.</value>
+  </data>
+  <data name="TotalLocations" xml:space="preserve">
+    <value>Total Locations</value>
+  </data>
+  <data name="TotalStations" xml:space="preserve">
+    <value>Total Stations</value>
+  </data>
+  <data name="TripleScreen" xml:space="preserve">
+    <value>Triple Screen</value>
+  </data>
+  <data name="WhatWeDo" xml:space="preserve">
+    <value>What We Do?</value>
+  </data>
+  <data name="WhatWeDoContent" xml:space="preserve">
+    <value>The head office is located in Amsterdam. They advise and support in the field of screen advertising in all Amsterdam metro stations.</value>
+  </data>
+  <data name="WhoWeAre" xml:space="preserve">
+    <value>Who We Are?</value>
+  </data>
+  <data name="WhoWeAreContent" xml:space="preserve">
+    <value>Media Outdoor is a media company with experienced professionals in marketing, outdoor media and communication.</value>
+  </data>
+  <data name="WhyChooseUs" xml:space="preserve">
+    <value>Why Choose Us?</value>
+  </data>
+  <data name="WhyChooseUsContent" xml:space="preserve">
+    <value>Choose one close by or go for more stations if you want to reach a larger part of Amsterdam. Need help? We are happy to assist you with advice.</value>
+  </data>
+</root>

@@ -1,0 +1,95 @@
+<div class="content ListPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4>Voucher Type Setting</h4>
+      <h6>Manage your Voucher Type Setting</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body"> 
+      <div class="row" [formGroup]="voucherTypeForm">
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="">
+            <label class="fw-bolder mb-1">VchType</label>
+            <div class="position-relative w-100">
+              <ng-select 
+                placeholder="---Select Vch Type---"
+                [items]="vchList" 
+                formControlName="id"
+                bindLabel="vchtype" 
+                bindValue="id"
+                (change)="onChangeVch($event)" 
+                (clear)="onClearVch()" 
+                [dropdownPosition]="'bottom'">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" formControlName="description" class="form-control">
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="form-group">
+            <label>Verify</label>
+            <div class="row">
+              <div class="col-lg-9 col-sm-9 col-9">
+                <input type="text" formControlName="verifyName" class="form-control">
+              </div>
+              <div class="col-lg-3 col-sm-3 col-3">
+                <div class="d-flex align-items-center mt-1">
+                  <input type="checkbox" id="vchVerifyRequired" formControlName="verifyRequired" class="me-1">
+                  <label for="vchVerifyRequired" class="mb-0" style="padding-top: 3px;">Required</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="form-group">
+            <label>Approve</label>
+            <div class="row">
+              <div class="col-lg-9 col-sm-9 col-9">
+                <input type="text" formControlName="approvalName" class="form-control">
+              </div>
+              <div class="col-lg-3 col-sm-3 col-3">
+                <div class="d-flex align-items-center mt-1">
+                  <input type="checkbox" id="vchApproveRequired" formControlName="approvalRequired" class="me-1">
+                  <label for="vchApproveRequired" class="mb-0" style="padding-top: 3px;">Required</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="form-group">
+            <label>Audit</label>
+            <input type="text" formControlName="auditName" class="form-control">
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+          <div class="form-group">
+            <label>Last</label>
+            <input type="text" formControlName="lastText" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-sm-12">
+          <div class="me-3">
+            <button class="btn btn-success btn-sm" (click)="onClickSave()">Update</button>
+            <button class="btn btn-secondary btn-sm ms-1" (click)="onClearVch()">Refresh</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

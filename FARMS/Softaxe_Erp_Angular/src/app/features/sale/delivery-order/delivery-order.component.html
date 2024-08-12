@@ -1,0 +1,798 @@
+<div class="content ListPage" *ngIf="isShowPage">
+  <div class="page-header mb-1">
+    <div class="page-title">
+      <h4 class="listHead">Delivery Order</h4>
+      <h6 class="listSubHead">Manage your Delivery Order</h6>
+    </div>
+    <div class="page-btn">
+      <div class="wordset newwordset">
+        <ul>
+          <li>
+            <a (click)="export('Delivery-Order-List', 'pdf')" title="pdf">
+              <img src="/assets/img/icons/pdf.svg" alt="img">
+            </a>
+          </li>
+          <li>
+            <a (click)="export('Delivery-Order-List', 'xlxs')" title="excel">
+              <img src="/assets/img/icons/excel.svg" alt="img">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row align-items-center mb-2">
+        <div class="col-lg-2 col-md-6  col-sm-12">
+          <div class="d-flex align-items-center">
+            <img src="/assets/img/icons/filter.svg" class="filter-img me-1" alt="img">
+            <input type="search" class="form-control" placeholder="Search" (input)="onSearchInput($event)" />
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="row align-items-center">
+            <div class="col-lg-2 col-md-2 text-end p-0">
+              <span class="fw-bolder">From Date</span>
+            </div>
+            <div class="col-lg-3 col-md-4 ps-1">
+              <div class="form-group mb-0">
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                    [(ngModel)]="fromDate" (click)="datepicker.open()" />
+                  <mat-datepicker #datepicker [startAt]="fromDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 text-end p-0">
+              <span class="fw-bolder">To Date</span>
+            </div>
+            <div class="col-lg-3 col-md-4 ps-1">
+              <div class="form-group mb-0">
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" matInput placeholder="DD/MM/YYYY"
+                    [matDatepicker]="datepicker2" [(ngModel)]="toDate" (click)="datepicker2.open()">
+                  <mat-datepicker #datepicker2 [startAt]="toDate"></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+              <img src="/assets/img/icons/search.svg" alt="img" class="filter-img" (click)="getInvoices()">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-12 pt-2 d-flex">
+          <div class="form-group d-flex align-items-end" style="margin-bottom:0px!important;">
+            <div class="d-flex align-items-center me-4">
+              <input type="radio" id="unsent" value="unsent" [checked]="selectedStatus === 'unsent'" (change)="onStatusChange($event)" class="me-1" name="sentStatus">
+              <label for="unsent" class="mb-0 mt-1">Unsent</label>
+            </div>
+            <div class="d-flex align-items-center">
+              <input type="radio" id="sent" value="sent" [checked]="selectedStatus === 'sent'" (change)="onStatusChange($event)" class="me-1" name="sentStatus">
+              <label for="sent" class="mb-0 mt-1">Sent</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-2">
+          <div class="d-flex align-items-center justify-content-end">
+            <p class="add-new" (click)="togglePages()">
+              <img src="/assets/img/icons/plus.svg" alt="img" class="filter-img">Add New
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive mb-1" style="height:370px;">
+        <table class="table mb-0" id="export">
+          <thead>
+            <tr>
+              <th class="text-center">Do No</th>
+              <th class="text-center">Do Date</th>
+              <th>Party</th>
+              <th class="text-end">Qty</th>
+              <th class="text-end">Amount</th>
+              <th class="text-center w-12 noPrint">Sent</th>
+              <th class="text-center w-12 noPrint">Action</th>
+            </tr>
+          </thead>
+          <tbody #InvoiceList>
+            <tr *ngFor="let item of invoiceList">
+              <td class="text-center">{{ item.INVOIVENO }}</td>
+              <td class="text-center">{{ item.INVDATE }}</td>
+              <td class="text-start limited-text" title="{{ item.CUSTOMER }}">{{ item.CUSTOMER }}</td>
+              <td class="text-end">
+                {{ isRound(item.QTY.toFixed(2)) }}
+              </td>
+              <td class="text-end">
+                {{ isRound(item.AMOUNT.toFixed(2)) }}
+              </td>
+              <td class="text-center">
+                <span>
+                  <input type="checkbox" [disabled]="item.Approve && item.Sent" [checked]="item.Sent" (change)="SentVoucher($event, item.INVOIVENO, item.Approve)">
+                 </span>
+              </td>
+              <td class="text-center">
+                <span class="me-2" (click)="onClickRowReport(item.INVOIVENO, item.INVDATE, 'invoice')" style="cursor: pointer"  >
+                  <i class="fas fa-print"></i>
+                </span>
+                <span  class="me-2" (click)="onClickRowReport(item.INVOIVENO, item.INVDATE, 'loading')" style="cursor: pointer">
+                  <i class="fas fa-print"></i>
+                </span>
+               
+                <span (click)="editInvoice(item.INVOIVENO, item.INVDATE, item.Approve)" class="me-2" style="cursor: pointer">
+                  <i class="fas fa-edit"></i>
+                </span >
+                <span (click)="deleteInvoice(item.INVOIVENO, item.Approve)" class="confirm-text" style="cursor: pointer">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </td>
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row p-2 bg-white" *ngIf="!isShowPage">
+  <div class="col-lg-9 col-sm-12" [ngClass]="{ disabled: isDisabled }">
+    <div class="row mb-1">
+      <div class="col-lg-4 col-md-6 col-sm-12 pe-1">
+        <ng-select [items]="categoryList" bindLabel="name" bindValue="id" [(ngModel)]="category"
+          placeholder="---Select Category---" (change)="onChangeCategory($event)" [readonly]="!isPartySelected" [dropdownPosition]="'bottom'">
+        </ng-select>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-12 px-1">
+        <input type="search" class="form-control" [(ngModel)]="productName" (input)="onInputSearchProduct($event)"
+          placeholder="Search Product..." />
+      </div>
+      <div class="col-lg-4 col-md-3 col-sm-12 px-1">
+        <!-- <input type="search" class="form-control" [(ngModel)]="barCode" placeholder="Search Bar/QR Code..."
+              (click)="onInputSearchBarcode($event)"> -->
+        <div class="" *ngIf="costCenter == 'true'">
+          <ng-select placeholder="---Select Job No---" [items]="JobList" bindLabel="NAME" bindValue="ID"
+            [dropdownPosition]="'bottom'" [(ngModel)]="jobNo" (change)="onChangeJobNo()">
+          </ng-select>
+        </div>
+      </div>
+      <div class="col-lg-1 col-md-2 col-sm-12 text-end">
+        <span class="text-danger fw-bolder">{{formStatus}}</span>
+      </div>
+    </div>
+    <div class="table-responsive border mb-1" style="height: 150px">
+      <table class="table mb-0 table-product">
+        <thead>
+          <tr>
+            <th class="text-start limited-text">Product</th>
+            <th class="text-start limited-text">Category</th>
+            <th class="text-start">Brand</th>
+            <th class="text-start">Made In</th>
+            <th class="text-start" *ngIf="!SR">Stock</th>
+            <th class="text-center" *ngIf="!SR">Location</th>
+            <th class="text-center w-10">UOM</th>
+            <th class="text-end">Rate</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="product-list">
+          <tr *ngFor="let item of productList">
+            <td class="productimgname">
+              <span class="product-img">
+                <img src="{{basePath + item.IMAGE}}" alt="">
+              </span>
+              <span class="product limited-text">{{ item.PRODUCT }}</span>
+            </td>
+            <td class="text-start">{{ item.CATEGORY }}</td>
+            <td class="text-start">{{ item.BRAND }}</td>
+            <td class="text-start">{{ item.MADEIN }}</td>
+            <td class="text-start" *ngIf="!SR">{{ item.STOCK }}</td>
+            <td class="text-center" *ngIf="!SR">{{ item.LOCATION }}</td>
+            <td class="text-center">{{ item.UOM }}</td>
+            <td class="text-end">{{ item.MAXRATE | number : "1.2-2" }}</td>
+            <td class="text-center">
+              <span class="confirm-text btnAddProduct me-2">
+                <button (click)="onClickPlusQty(item)" class="btn btn-sm">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </span>
+              <span class="confirm-text btnRemoveQty">
+                <button (click)="onClickMinusQty(item)" class="btn btn-sm">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-responsive border" style="height: 388px">
+      <table class="table my-table mb-0">
+        <thead>
+          <tr rowspan="2">
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th class="text-center">TAX</th>
+            <th class="text-center">TAX</th>
+            <th class="text-center">NET</th>
+            <th></th>
+          </tr>
+          <tr>
+            <th class="text-start limited-text">PRODUCT NAME</th>
+            <th class="text-center">Qty</th>
+            <th class="text-center">Rate</th>
+            <th class="text-center">Diff</th>
+            <th class="text-center">Net Rate</th>
+            <th class="text-center">Value</th>
+            <th class="text-center">%</th>
+            <th class="text-center">Amount</th>
+            <th class="text-center">Value</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="productDetail">
+          <tr *ngFor="let item of appendedData; let i = index">
+            <td class="limited-text text-start" title="{{ item.PRODUCT }}">
+              {{ item.PRODUCT }}
+            </td>
+            <td>
+              <div class="d-flex justify-content-center">
+                <input type="number" class="txtTbl text-center" [(ngModel)]="item.QTY"
+                  (input)="onInputQty($event, item, i)" />
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center">
+                <input type="number" class="txtTbl text-center" [(ngModel)]="item.RATE"
+                  (input)="calculation(); onZero($event)" />
+              </div>
+            </td>
+            <td class="">
+              <div class="d-flex justify-content-center">
+                <input type="number" class="txtTbl text-center" readonly [(ngModel)]="item.DIFF"
+                  (input)="calculation(); onZero($event);" />
+              </div>
+            </td>
+            <td class="text-center">{{item.NETRATE}}</td>
+            <td class="text-center">{{item.VALUE}}</td>
+            <td class="">
+              <div class="d-flex justify-content-center">
+                <input type="number" class="txtTbl text-center" [(ngModel)]="item.SALETAX"
+                  (input)="calculation(item); onZero($event); onLength($event, 100)" [disabled]="isTaxDisable" />
+              </div>
+            </td>
+            <td class="text-center">{{item.SALETAXAMT}}</td>
+            <td class="text-center totalNetBill">
+              {{ item.NETVALUE }}
+            </td>
+            <td class="text-center">
+              <a class="confirm-text me-2" href="javascript:void(0);" (click)="onClickPlus(item, i)">
+                <i class="fas fa-plus"></i>
+              </a>
+              <a class="confirm-text" href="javascript:void(0);" (click)="onClickRemove(item, i)">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fw-bold d-flex align-items-center" style="border: 1px solid #dee2e6; padding: 2px;">
+      <label class="w-10">Total Qty</label>
+      <input type="number" class="form-control" style="width: 100px;" [(ngModel)]="totalQty" [disabled]="true" />
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-sm-12" [formGroup]="saleInvoiceForm">
+    <div class="row align-items-center mb-1">
+      <div class="col-lg-3 col-md-2 col-sm-12 px-0">
+        <div class="form-group  mb-0">
+          <input type="text" class="form-control text-center px-1" formControlName="invNo" placeholder="0"
+            [disabled]="true">
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 px-1">
+        <div class="form-group  mb-0">
+          <div class="input-groupicon">
+            <input type="text" class="form-control" matInput [matDatepicker]="datepicker" formControlName="vchDate"
+              (click)="datepicker.open()" />
+            <mat-datepicker #datepicker></mat-datepicker>
+            <div class="addonset">
+              <img src="assets/img/icons/calendars.svg" alt="img" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-3 col-3 ps-0">
+        <button class="btn btn-sm btn-secondary w-100" (click)="togglePages()">Home</button>
+      </div>
+ 
+    </div>
+    <div class="row align-items-center mb-1">
+      <div class="col-lg-9 col-sm-9 col-9 pe-1 ps-0" [ngClass]="{ disabled: isDisabled }">
+        <ng-select bindLabel="name" bindValue="code" formControlName="party" placeholder="---Select Customer---"
+          [items]="customerList" [dropdownPosition]="'bottom'" (change)="getSubParty(); onChangeParty();">
+        </ng-select>
+      </div>
+      
+    </div>
+    <div class="card card-order border" style="margin-left: -12px">
+      <table class="table productTable fs-13 mb-0" [ngClass]="{ disabled: isDisabled }">
+        <thead>
+          <tr>
+            <th class="text-center" style="font-size: 18px;">Bill</th>
+          </tr>
+        </thead>
+      </table>
+      <div class="card-body p-1" [ngClass]="{ disabled: isDisabled }" [formGroup]="saleInvoiceForm">
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">Gross Amount </span>
+          </div>
+          <div class="col-sm-4 px-1">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="grossAmount">
+            <p class="currency">$</p>
+          </div>
+        </div>
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">{{ Dis1 }}</span>
+          </div>
+          <div class="col-sm-4 px-1 text-end">
+            <input type="number" class="txtDis" formControlName="discount1" (input)="onInputDis()">
+            <input type="number" class="d-none" formControlName="Formula1">
+            <input type="number" class="d-none" formControlName="Formula2">
+            <input type="number" class="d-none" formControlName="Formula3">
+            <input type="number" class="d-none" formControlName="Formula4">
+            <input type="number" class="d-none" formControlName="Formula5">
+            <input type="number" class="d-none" formControlName="Formula6">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="discountAmt1" (input)="onInputDisAmt()">
+            <p class="currency">$</p>
+          </div>
+        </div>
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">{{ Dis2 }}</span>
+          </div>
+          <div class="col-sm-4 px-1 text-end">
+            <input type="number" class="txtDis" formControlName="discount2" (input)="onInputDis()">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="discountAmt2" (input)="onInputDisAmt()">
+            <p class="currency">$</p>
+          </div>
+        </div>
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">{{ Dis4}}</span>
+          </div>
+          <div class="col-sm-4 px-1 text-end">
+            <input type="number" class="txtDis" formControlName="discount4" (input)="onInputDis()">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="discountAmt4" (input)="onInputDisAmt()">
+            <p class="currency">$</p>
+          </div>
+        </div>
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">{{ Dis5}}</span>
+          </div>
+          <div class="col-sm-4 px-1 text-end">
+            <input type="number" class="txtDis" formControlName="discount5" (input)="onInputDis()">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="discountAmt5" (input)="onInputDisAmt()">
+            <p class="currency">$</p>
+          </div>
+        </div>
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">{{ Dis6}}</span>
+          </div>
+          <div class="col-sm-4 px-1 text-end">
+            <input type="number" class="txtDis" formControlName="discount6" (input)="onInputDis()">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="discountAmt6" (input)="onInputDisAmt()">
+            <p class="currency">$</p>
+          </div>
+        </div>
+        <!-- <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">Other Credit</span>
+          </div>
+          <div class="col-sm-4 px-1">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="otherCredit" (input)="calculation(); onZero($event)">
+            <p class="currency">$</p>
+          </div>
+        </div> -->
+        <!-- <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-12 px-1 d-flex">
+            <input type="text" placeholder="Remarks" class="txtBills" formControlName="remarks">
+            <p class="currency" style="color:transparent; user-select:none">$</p>
+          </div>
+        </div> -->
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">{{ Dis3}}</span>
+          </div>
+          <div class="col-sm-4 px-1 text-end">
+            <input type="number" class="txtDis" formControlName="discount3" (input)="onInputDis()">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="discountAmt3" (input)="onInputDisAmt()">
+            <p class="currency">$</p>
+          </div>
+        </div>
+
+        <div class="mb-1 d-flex align-items-center totalDis">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">Total Disc</span>
+          </div>
+          <div class="col-sm-4 px-1">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="totalDiscount">
+            <p class="currency">$</p>
+          </div>
+        </div>
+        
+
+
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">F.Tax</span>
+          </div>
+          <div class="col-sm-4 px-1 text-end">
+            <input type="number" class="txtDis" formControlName="fTax"
+              (input)="calculation(); onZero($event); onLength($event, 100);">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="fTaxAmt">
+            <p class="currency">$</p>
+          </div>
+        </div>
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">W.H.T</span>
+          </div>
+          <div class="col-sm-4 px-1 text-end">
+            <input type="number" class="txtDis" formControlName="whTax"
+              (input)="calculation(); onZero($event); onLength($event, 100);">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="whTaxAmt">
+            <p class="currency">$</p>
+          </div>
+        </div>
+        
+        <!-- <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-5 px-1">
+            <span class="fs-13">Amount Recieved</span>
+          </div>
+          <div class="col-sm-3 px-1">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="recAmount" (input)="calculation(); onZero($event)">
+            <p class="currency">$</p>
+          </div>
+        </div>
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-12 px-1 d-flex">
+            <input type="text" placeholder="Remarks Amount Recieved" class="txtBills"
+              formControlName="remarksAmountPaid">
+            <p class="currency" style="color:transparent; user-select:none">$</p>
+          </div>
+        </div>
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-4 px-1">
+            <span class="fs-13">Return Amount</span>
+          </div>
+          <div class="col-sm-4 px-1">
+          </div>
+          <div class="col-sm-4 px-1 d-flex align-items-center">
+            <input type="number" class="txtBills" formControlName="retAmount">
+            <p class="currency">$</p>
+          </div>
+        </div> -->
+        <div class="mb-1 d-flex mt-2">
+          <div class="col-sm-10 px-1 d-flex">
+            <select class="txtTerms" formControlName="termsDay">
+              <option value="0">Same Day</option>
+              <option *ngFor="let item of termsList" [value]="item.name">
+                {{ item.name }} Days
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-2 px-1 d-flex">
+            <div class="terms-add-icon">
+              <a href="javascript:void(0);" class="w-100" data-bs-toggle="modal" data-bs-target="#TermsModal">
+                <img src="/assets/img/icons/plus1.svg" alt="img">
+              </a>
+            </div>
+            <p class="currency" style="color:transparent; user-select:none">$</p>
+          </div>
+        </div>
+        <div class="mb-1 d-flex align-items-center">
+          <div class="col-sm-12 px-1 d-flex">
+            <input type="text" placeholder="Enter Sale Remarks" class="txtBills" formControlName="saleRemarks">
+            <p class="currency" style="color:transparent; user-select:none">$</p>
+          </div>
+        </div>
+        <!-- <div class="setvaluecash mt-2">
+          <ul class="p-0">
+            <li>
+              <a href="javascript:void(0);" class="paymentmethod cash activePaymnet"
+                (click)="onClickPayment($event, 'Cash')">
+                <img src="/assets/img/icons/cash.svg" alt="img" class="me-2">
+                Cash
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="paymentmethod debit" (click)="onClickPayment($event, 'Debit')">
+                <img src="/assets/img/icons/debitcard.svg" alt="img" class="me-2">
+                Debit
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" class="paymentmethod scan" (click)="onClickPayment($event, 'Scan')">
+                <img src="/assets/img/icons/scan.svg" alt="img" class="me-2">
+                Scan
+              </a>
+            </li>
+          </ul>
+        </div> -->
+        <div class="btn-totallabel">
+          <h5>Net Due</h5>
+          <h6 id="txtNetDue">{{netDue}}</h6>
+        </div>
+      </div>
+      <div class="card-body py-0 px-2 mb-2">
+        <div class="row text-end">
+          <div class="col-lg-12 px-1">
+            <button class="btn btn-success btn-sm me-1" *ngIf="!isDisabled" (click)="onClickSave()">
+              Save
+            </button>
+            <button class="btn btn-primary btn-sm me-1" *ngIf="isDisabled" (click)="onClickNew()">
+              New
+            </button>
+            <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">
+              Refresh
+            </button>
+            <button class="btn btn-info btn-sm me-1" *ngIf="isPrint" (click)="onClickPrint('invoice')">
+              Bill
+            </button>
+            <button class="btn btn-info btn-sm me-1" *ngIf="isPrint" (click)="onClickPrint('loading')">
+              D.O
+            </button>
+            <button class="btn btn-info btn-sm me-1" *ngIf="isPrint" (click)="onClickPrint('vch')">
+              VCH
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+
+<!-- QTY MODAL -->
+<div class="modal fade" id="QtyModal">
+  <div class="modal-dialog" style="max-width: 30%; margin: 180px auto">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Current Stock {{balance}}</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-md-6 text-center">
+                <div class="form-group">
+                  <label class="form-label" style="font-size: 24px">Quantity</label>
+                  <input type="number" class="text-center fw-bolder onQty" [(ngModel)]="onQty"
+                    (input)="onInputModalCla($event)" (keyup.enter)="appendData()" />
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-12 col-md-6">
+                <div class="">
+                  <label class="mb-1 fw-bolder">Select Location</label>
+                  <ng-select placeholder="--- Select Location ---" [disabled]="!SR" [items]="locationList"
+                    bindValue="id" bindLabel="name" [(ngModel)]="location" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">Vehicle No</label>
+                  <input type="text" class="form-control" [(ngModel)]="batchNo" (keyup.enter)="appendData()" />
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">Expiry Date</label>
+                  <div class="input-groupicon">
+                    <input type="text" class="form-control" [disabled]="!SR" placeholder="DD/MM/YYYY" matInput
+                      [matDatepicker]="datepicker3" [(ngModel)]="expiryDate" (click)="datepicker3.open()" />
+                    <mat-datepicker #datepicker3 [startAt]="expiryDate"></mat-datepicker>
+                    <div class="addonset">
+                      <img src="assets/img/icons/calendars.svg" alt="img" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label class="form-label">Sale Rate</label>
+                  <input type="number" class="form-control" [(ngModel)]="saleRate"
+                   (keyup.enter)="appendData()" />
+                </div>
+              </div>
+              <div class="col-lg-11 col-sm-11 col-md-11">
+                <div class="">
+                  <label class="mb-1 fw-bolder">Sub Party</label>
+                  <ng-select placeholder="--- Select Sub Party ---" [items]="subPartyList" bindValue="ID"
+                    bindLabel="SubParty" [(ngModel)]="sParty" [dropdownPosition]="'bottom'">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-lg-1 col-sm-1 col-md-1 text-end ps-0">
+                <button class="btn btn-sm btn-primary mt-4" (click)="onClickPlusSubParty()">
+                  <i class="fas fa-plus text-white"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUB PARTY MODAL -->
+
+<div class="modal fade" id="SubPartyModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Sub Party</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">
+          x
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Name</label>
+              <input type="text" class="form-control" [(ngModel)]="subParty" [disabled]="isDisabledSubParty" />
+            </div>
+            <div class="py-2">
+              <button class="btn btn-primary btn-sm me-1" (click)="newSubParty()" [hidden]="isShowSubParty">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateSubParty()"
+                [hidden]="!isShowSubParty">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshSubParty()">
+                Refresh
+              </button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 205px">
+                <table class="table mb-0">
+                  <thead class="limited-text">
+                    <tr>
+                      <th class="text-center">Id</th>
+                      <th class="text-start w-75">Sub Party</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of subPartyList">
+                      <td class="text-center id">{{item.ID}}</td>
+                      <td class="text-start names">{{item.SubParty}}</td>
+                      <td class="text-center">
+                        <span (click)="editSubParty(item.ID, item.SubParty)" class="me-3">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span (click)="deleteSubParty(item.ID)" class="confirm-text">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- TERMS MODAL -->
+<div class="modal fade" id="TermsModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2 align-items-center">
+        <h5 class="modal-title">Terms</h5>
+        <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">
+          x
+        </button>
+      </div>
+      <div class="modal-body p-2">
+        <div class="card mb-0">
+          <div class="card-body p-2">
+            <div class="form-group mb-1">
+              <label class="form-label mb-1">Terms Days</label>
+              <input type="number" class="form-control" [(ngModel)]="termsDays" [disabled]="isDisabledTerms" />
+            </div>
+            <div class="py-2">
+              <button class="btn btn-primary btn-sm me-1" (click)="newTerms()" [hidden]="isShowTerms">
+                New
+              </button>
+              <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateTerms()"
+                [hidden]="!isShowTerms">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="refreshTerms()">
+                Refresh
+              </button>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height: 205px">
+                <table class="table mb-0">
+                  <thead class="limited-text">
+                    <tr>
+                      <th class="text-center">Id</th>
+                      <th class="text-start w-75">Days</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of termsList">
+                      <td class="text-center id">{{ item.id }}</td>
+                      <td class="text-start names">{{ item.name }} Days</td>
+                      <td class="text-center">
+                        <span (click)="editTerms(item.id, item.name)" class="me-3">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span (click)="deleteTerms(item.id)" class="confirm-text">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

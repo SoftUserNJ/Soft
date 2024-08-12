@@ -1,0 +1,621 @@
+<div class="content ListPage" *ngIf="isShowPage">
+    <div class="page-header mb-1">
+      <div class="page-title">
+        <h4 class="newcolor mb-0">Chart of Account List</h4>
+        <h6 class="newcolor">Manage your Chart of Account</h6>
+      </div>
+      <div class="page-btn">
+        <div class="wordset newwordset">
+          <ul>
+            <li>
+              <a (click)="export('Chart of Account', 'pdf')" title="pdf">
+                <img src="/assets/img/icons/pdf.svg" alt="img">
+              </a>
+            </li>
+            <li>
+              <a (click)="export('Chart of Account', 'xlxs')" title="excel">
+                <img src="/assets/img/icons/excel.svg" alt="img">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-0">
+      <div class="card-body">
+        <div class="row mb-2">
+          <div class="col-lg-10">
+            <div class="row">
+              <div class="col-lg-3 col-md-4 col-sm-6 pe-1">
+                <ng-select id="drpL1Search" placeholder="---Select Level 1---" [items]="coaLvl1" bindValue="code"
+                bindLabel="name" [(ngModel)]="search1" (change)="onL1Change($event)" [dropdownPosition]="'bottom'">
+              </ng-select>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6 px-1">
+                <ng-select id="drpL2Search" placeholder="---Select Level 2---" [items]="searchLvl2" bindLabel="name"
+                  bindValue="code" [(ngModel)]="search2" (change)="onL2Change($event)" [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-6 px-1">
+                <ng-select id="drpL3Search" placeholder="---Select Level 3---" [items]="searchLvl3" bindLabel="name"
+                  bindValue="code" [(ngModel)]="search3" (change)="onL3Change($event)" (clear)="onL3Change($event)"
+                  [dropdownPosition]="'bottom'">
+                </ng-select>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-6 px-1">
+                <input type="search" class="form-control" placeholder="Search Level 4" [(ngModel)]="l4Search"
+                  (input)="onInput()" />
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-6 px-1">
+                <input type="search" class="form-control" placeholder="Search Level 5" [(ngModel)]="l5Search"
+                (input)="onInput()" />
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-6 ps-1">
+            <div class="add-icon d-flex justify-content-end">
+              <button class="btn btn-secondary btn-sm me-1" (click)="refresh()">
+                <i class="fa fa-refresh text-white"></i>
+              </button>
+              <button class="btn btn-info btn-sm me-1" (click)="onClickPrint()">Print</button>
+              <button class="btn btn-primary btn-sm text-white" (click)="togglePages()"><i class="fa fa-plus text-white"></i> Add New</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive" style="height:400px;">
+          <table class="table mb-0" id="export">
+            <thead class="limited-text">
+              <tr>
+                <th colspan="2" class="tablepd">Level1</th>
+                <th colspan="2" class="tablepd">Level2</th>
+                <th colspan="2" class="tablepd">Level3</th>
+                <th colspan="2" class="tablepd">Level4</th>
+                <th colspan="2" class="tablepd">Level5</th>
+                <th class="text-center noPrint">Action</th>
+              </tr>
+            </thead>
+            <tbody #coaList>
+              <tr *ngFor="let item of chartOfAccount">
+                <td class="limited-text l1Code" title="{{item.L1CODE}}">{{item.L1CODE}}</td>
+                <td class="limited-text l1Name" title="{{item.L1NAMES}}">{{item.L1NAMES}}</td>
+                <td class="limited-text l2Code" title="{{item.L2CODE}}">{{item.L2CODE}}</td>
+                <td class="limited-text l2Name" title="{{item.L2NAMES}}">{{item.L2NAMES}}</td>
+                <td class="limited-text l3Code" title="{{item.L3CODE}}">{{item.L3CODE}}</td>
+                <td class="limited-text l3Name" title="{{item.L3NAMES}}">{{item.L3NAMES}}</td>
+                <td class="limited-text l4Code" title="{{item.L4CODE}}">{{item.L4CODE}}</td>
+                <td class="limited-text l4Name" title="{{item.L4NAMES}}">{{item.L4NAMES}}</td>
+                <td class="limited-text l5Code" title="{{item.L5CODE}}">{{item.L5CODE}}</td>
+                <td class="limited-text l5Name" title="{{item.L5NAMES}}">{{item.L5NAMES}}</td>
+                <td class="limited-text d-none l5NotChange">{{item.NOTCHANGE}}</td>
+                <td class="text-center noPrint">
+                  <!-- Edit Button -->
+                  <span *ngIf="item.L5CODE != ''"
+                    (click)="editCoaList(item.L1CODE, item.L2CODE, item.L3CODE, item.L4CODE, item.L5CODE, item.L5NAMES, item.NOTCHANGE)"
+                    class="me-3" style="cursor: pointer;">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                  <!-- Delete Button -->
+                  <span *ngIf="item.L5CODE != ''"
+                    (click)="deleteLevel5(item.L1CODE + item.L2CODE + item.L3CODE + item.L4CODE + item.L5CODE, item.NOTCHANGE)"
+                    class="confirm-text" style="cursor: pointer;">
+                    <i class="fas fa-trash"></i>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="content AddPage" *ngIf="!isShowPage">
+    <div class="page-header mb-1">
+      <div class="page-title">
+        <h4>Chart Of Account Details</h4>
+      </div>
+      <div class="page-header mb-0 d-block text-end">
+        <button class="btn btn-primary btn-sm text-white" (click)="togglePages()"><i class="fa fa-list text-white"></i> Home</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="productdetails">
+              <ul class="product-bar p-0 mb-0">
+                <li>
+                  <h4>Level1</h4>
+                  <h6>
+                    <div class="row">
+                      <div class="col-lg-11 col-md-10 col-10">
+                        <ng-select placeholder="--Select Level 1--" [items]="coaLvl1" [(ngModel)]="selectedLevel1"
+                          bindLabel="name" bindValue="code" (change)="onLevel1Change($event)"
+                          [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                      <div class="col-lg-1 col-sm-2 col-2 ps-0">
+                        <div class="text-end">
+                          <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#level1Modal"
+                            (click)="refreshLevel1()"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </h6>
+                </li>
+                <li>
+                  <h4>Level2</h4>
+                  <h6>
+                    <div class="row">
+                      <div class="col-lg-11 col-sm-10 col-10">
+                        <ng-select placeholder="--Select Level 2--" [items]="coaLvl2" [(ngModel)]="selectedLevel2"
+                          bindLabel="name" bindValue="code" (change)="onLevel2Change($event)"
+                          [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                      <div class="col-lg-1 col-sm-2 col-2 ps-0">
+                        <div class="text-end">
+                          <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#level2Modal"
+                            (click)="refreshLevel2()"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </h6>
+                </li>
+                <li>
+                  <h4>Level3</h4>
+                  <h6>
+                    <div class="row">
+                      <div class="col-lg-11 col-sm-10 col-10">
+                        <ng-select placeholder="--Select Level 3--" [items]="coaLvl3" [(ngModel)]="selectedLevel3"
+                          bindLabel="name" bindValue="code" (change)="onLevel3Change($event)"
+                          [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                      <div class="col-lg-1 col-sm-2 col-2 ps-0">
+                        <div class="text-end">
+                          <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#level3Modal"
+                            (click)="refreshLevel3()"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </h6>
+                </li>
+                <li>
+                  <h4>Level4</h4>
+                  <h6>
+                    <div class="row">
+                      <div class="col-lg-11 col-sm-10 col-10">
+                        <ng-select placeholder="--Select Level 4--" [items]="coaLvl4" bindLabel="name" bindValue="code"
+                          [(ngModel)]="selectedLevel4" (change)="onLevel4Change($event)" [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                      <div class="col-lg-1 col-sm-2 col-2 ps-0">
+                        <div class="text-end">
+                          <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#level4Modal"
+                            (click)="refreshLevel4()"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </h6>
+                </li>
+                <li class="activeForm">
+                  <h4>Level5</h4>
+                  <h6>
+                    <div class="row">
+                      <div class="col-lg-11 col-sm-10 col-10">
+                        <ng-select placeholder="--Select Level 5--" [items]="coaLvl5" bindLabel="name" bindValue="code"
+                          [(ngModel)]="selectedLevel5" (change)="onLevel5Change($event)" [dropdownPosition]="'bottom'">
+                        </ng-select>
+                      </div>
+                      <div class="col-lg-1 col-sm-2 col-2 ps-0">
+                        <div class="text-end">
+                          <i class="fas fa-plus-square" data-bs-toggle="modal" data-bs-target="#level5Modal"
+                            (click)="refreshLevel5()"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </h6>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!--Modal Level 1 -->
+  
+  <div class="modal fade" id="level1Modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center">
+          <h5 class="modal-title ">Level 1
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2 ">
+              <div class="form-group mb-1">
+                <label class="form-label mb-1">Name</label>
+                <input type="text" class="form-control" [autofocus]="isFocusLevel1" [(ngModel)]="level1Name"
+                  [disabled]="isDisabledLevel1">
+                <input type="hidden" [(ngModel)]="level1Code">
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newLevel1()" [hidden]="isShowLevel1">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateLevel1()"
+                  [hidden]="!isShowLevel1">Save</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshLevel1()">Refresh</button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead class="limited-text">
+                      <tr>
+                        <th class="text-center w-0">Code</th>
+                        <th class="w-75">Name</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of coaLvl1">
+                        <td class="code text-center">{{item.code}}</td>
+                        <td class="names">{{ item.name }}</td>
+                        <td class="notChange d-none">{{item.notChange}}</td>
+                        <td class="text-center">
+                          <!-- Edit Button -->
+                          <span (click)=" editLevel1(item.code, item.name, item.notChange)" class="me-3"
+                            style="cursor: pointer;">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                          <!-- Delete Button -->
+                          <span (click)="deleteLevel1(item.code, item.notChange)" class="confirm-text"
+                            style="cursor: pointer;">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                        </td>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!--Modal Level 2-->
+  
+  <div class="modal fade" id="level2Modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center text-center">
+          <h5 class="modal-title">Level 2
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group mb-1">
+                <label class="form-label mb-1">Name</label>
+                <input type="text" class="form-control" [(ngModel)]="level2Name" [disabled]="isDisabledLevel2">
+                <input type="hidden" [(ngModel)]="level2Code">
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newLevel2()" [hidden]="isShowLevel2">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateLevel2()"
+                  [hidden]="!isShowLevel2">Save</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshLevel2()">Refresh</button>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center w-0">Code</th>
+                        <th class="w-75">Name</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of coaLvl2">
+                        <td class="code text-center">{{item.code}}</td>
+                        <td class="names">{{ item.name }}</td>
+                        <td class="notChange d-none">{{item.notChange}}</td>
+                        <td class="text-center">
+                          <!-- Edit Button -->
+                          <span (click)=" editLevel2(item.code, item.name, item.notChange)" class="me-3"
+                            style="cursor: pointer;">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                          <!-- Delete Button -->
+                          <span (click)="deleteLevel2(item.code, item.notChange)" class="confirm-text"
+                            style="cursor: pointer;">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                        </td>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal Level 3-->
+  
+  <div class="modal fade" id="level3Modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center text-center">
+          <h5 class="modal-title">Level 3</h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="form-group mb-1">
+                <label class="form-label mb-1">Name</label>
+                <input type="text" class="form-control" [(ngModel)]="level3Name" [disabled]="isDisabledLevel3">
+                <input type="hidden" [(ngModel)]="level3Code">
+              </div>
+              <div class="mb-1">
+                <button class="btn btn-primary btn-sm me-1" (click)="newLevel3()" [hidden]="isShowLevel3">New</button>
+                <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateLevel3()"
+                  [hidden]="!isShowLevel3">Save</button>
+                <button class="btn btn-secondary btn-sm" (click)="refreshLevel3()">Refresh</button>
+              </div>
+            </div>
+            <div class="card mb-0 scroll">
+              <div class="table-responsive" style="height:205px;">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-center w-0">Code</th>
+                      <th class="w-75">Name</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of coaLvl3">
+                      <td class="notChange d-none">true</td>
+                      <td class="code text-center">{{item.code}}</td>
+                      <td class="names">{{ item.name }}</td>
+                      <td class="notChange d-none">{{item.notChange}}</td>
+                      <td class="text-center">
+                        <span (click)=" editLevel3(item.code, item.name, item.notChange)" class="me-3"
+                          style="cursor: pointer;">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span (click)="deleteLevel3(item.code, item.notChange)" class="confirm-text"
+                          style="cursor: pointer;">
+                          <i class="fas fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal Level 4 -->
+  
+  <div class="modal fade" id="level4Modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center text-center">
+          <h5 class="modal-title">Level 4
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2 ">
+          <div class="card mb-0">
+            <div class="card-body p-2 ">
+              <div class="row">
+                <div class="col-lg-{{locWise == 'Location Wise' ? '8' : '12'}}">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-1">
+                        <label class="form-label mb-0">Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="level4Name" [disabled]="isDisabledLevel4">
+                        <input type="hidden" [(ngModel)]="level4Code">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group mb-1">
+                        <label class="form-label mb-0">Tag</label>
+                        <input type="text" (input)="getSaleCode()" class="form-control" [(ngModel)]="level4Tag" [disabled]="isDisabledLevel4">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group mb-1">
+                        <label class="form-label mb-0">Tag 1</label>
+                        <input type="text" class="form-control" [(ngModel)]="level4Tag1" [disabled]="isDisabledLevel4">
+                      </div>
+                    </div>
+                    <div class="col-md-12" [hidden]="saleCodeHide">
+                      <div class="mb-1">
+                        <label class="fw-bolder mb-0">Sale Code</label>
+                        <ng-select 
+                          placeholder="--Select--" 
+                          [items]="saleCodeList" 
+                          bindLabel="NAME" 
+                          bindValue="CODE"
+                          [(ngModel)]="saleCodeDD" 
+                          [dropdownPosition]="'bottom'" 
+                          [disabled]="isDisabledLevel4">
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-1">
+                    <button class="btn btn-primary btn-sm me-1" (click)="newLevel4()" [hidden]="isShowLevel4">New</button>
+                    <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateLevel4()"
+                      [hidden]="!isShowLevel4">Save</button>
+                    <button class="btn btn-secondary btn-sm" (click)="refreshLevel4()">Refresh</button>
+                  </div>
+                </div>
+                <div class="col-lg-4 ps-0" *ngIf="locWise == 'Location Wise'">
+                  <div class="table-responsive table-border mb-1" style="height:160px;">
+                    <table class="table mb-0">
+                      <thead>
+                        <tr>
+                          <th class="pys-1">Location</th>
+                          <th class="text-end pr-3">
+                            <input type="checkbox" class="headCheckBox" name="L4" (change)="columChecked($event, 'l4')">
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of locationList4">
+                          <td class="limited-loc-text" title="{{item.NAME}}">{{item.NAME}}</td>
+                          <td class="text-end">
+                            <input type="checkbox" [(ngModel)]="item.CHECKEDL4">
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center w-0">Code</th>
+                        <th class="w-75">Name</th>
+                        <th class="w-75">Tag</th>
+                        <th class="w-75">Tag 1</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of coaLvl4">
+                        <td class="notChange d-none">true</td>
+                        <td class="code text-center">{{item.code}}</td>
+                        <td class="names">{{ item.name }}</td>
+                        <td>{{item.tag}}</td>
+                        <td>{{item.tag1}}</td>
+                        <td class="notChange d-none">{{item.notChange}}</td>
+                        <td class="text-center">
+                          <span (click)=" editLevel4(item)" class="me-3" style="cursor: pointer;">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                          <span (click)="deleteLevel4(item.code, item.notChange)" class="confirm-text"
+                            style="cursor: pointer;">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal Level 5-->
+  
+  <div class="modal fade" id="level5Modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2  align-items-center text-center">
+          <h5 class="modal-title ">Level 5
+          </h5>
+          <button type="button" class="close fs-30" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body p-2">
+          <div class="card mb-0">
+            <div class="card-body p-2">
+              <div class="row">
+                <div class="col-lg-{{locWise == 'Location Wise' ? '8' : '12'}}">
+                  <div class="form-group mb-1">
+                    <label class="form-label mb-0">Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="level5Name" [disabled]="isDisabledLevel5">
+                    <input type="hidden" [(ngModel)]="level5Code">
+                  </div>
+                  <div class="mb-1">
+                    <button class="btn btn-primary btn-sm me-1" (click)="newLevel5()" [hidden]="isShowLevel5">New</button>
+                    <button type="submit" class="btn btn-success btn-sm me-1" (click)="createUpdateLevel5()"
+                      [hidden]="!isShowLevel5">Save</button>
+                    <button class="btn btn-secondary btn-sm" (click)="refreshLevel5()">Refresh</button>
+                  </div>
+                </div>
+                <div class="col-lg-4 ps-0" *ngIf="locWise == 'Location Wise'">
+                  <div class="table-responsive table-border mb-1" style="height:160px;">
+                    <table class="table mb-0">
+                      <thead>
+                        <tr>
+                          <th class="pys-1">Location</th>
+                          <th class="text-end pr-3">
+                            <input type="checkbox" class="headCheckBox" name="L5" (change)="columChecked($event, 'l5')">
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of locationList5">
+                          <td class="limited-loc-text" title="{{item.NAME}}">{{item.NAME}}</td>
+                          <td class="text-end">
+                            <input type="checkbox" [(ngModel)]="item.CHECKEDL5">
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="card mb-0 scroll">
+                <div class="table-responsive" style="height:205px;">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-center w-0">Code</th>
+                        <th class="w-75">Name</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of coaLvl5">
+                        <td class="limited-text code text-center">{{item.code}}</td>
+                        <td class="limited-text names">{{ item.name }}</td>
+                        <td class="notChange d-none">{{item.notChange}}</td>
+                        <td class="text-center">
+                          <span (click)="editLevel5(item.code, item.name, item.notChange)" class="me-3"
+                            style="cursor: pointer;">
+                            <i class="fas fa-edit"></i>
+                          </span>
+                          <span (click)="deleteLevel5(item.code, item.notChange)" class="confirm-text"
+                            style="cursor: pointer;">
+                            <i class="fas fa-trash"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

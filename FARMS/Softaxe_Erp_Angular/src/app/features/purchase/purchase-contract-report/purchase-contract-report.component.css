@@ -1,0 +1,17 @@
+.mb-4 {
+    margin-bottom: 1.5rem!important;
+}
+
+.align-items-end {
+    align-items: flex-end!important;
+}
+.d-flex {
+    display: flex!important;
+}
+.form-group {
+    margin-bottom: 10px;
+}
+
+label{
+    font-size: 11px !important;
+}

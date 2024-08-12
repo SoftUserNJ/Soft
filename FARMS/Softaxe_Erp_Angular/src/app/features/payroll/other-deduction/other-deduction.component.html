@@ -1,0 +1,148 @@
+
+<section>
+
+
+  
+    <div class="content AddPage">
+  
+      <div class="page-header mb-4">
+        <div class="page-title">
+          <h4>Other Deduction Form</h4>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <div class="row align-items-center mb-2" [formGroup]="EOBIForm">
+  
+           
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Sr No.</label>
+                <input type="text" formControlName="SrNo" readonly class="form-control me-2">
+              </div>
+            </div>
+
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="mb-2">
+                  <label class="fw-bolder">Employee Name</label>
+                  <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-12">
+                      <ng-select class="bold-placeholder" placeholder="--- Select Employee ---" (change)="editDeduction($event)"
+                      [items]="EmployeeList" 
+                      bindLabel="name"
+                      bindValue="empy_id"
+                        formControlName="empName"
+                        [dropdownPosition]="'bottom'" [readonly]="Disabled">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="position-relative w-100 me-2 form-group mb-0">
+                <label class="fw-bold" style="margin-bottom: 0px !important;">Date</label>
+                <div class="input-groupicon">
+                  <input type="text" class="form-control" placeholder="DD/MM/YYYY" matInput [matDatepicker]="datepicker"
+                    (click)="datepicker.open()" formControlName="Date" />
+                  <mat-datepicker #datepicker></mat-datepicker>
+                  <div class="addonset">
+                    <img src="/assets/img/icons/calendars.svg" alt="img">
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-md-3 col-sm-12"> 
+              <div class="position-relative w-100 me-2">
+                <label class="fw-bold">Reference</label>
+                <input type="text" formControlName="reference" [readonly]="Disabled" class="form-control me-2">
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-12"> 
+                <div class="position-relative w-100 me-2">
+                  <label class="fw-bold">Other Deduction</label>
+                  <input type="number" formControlName="amount" [readonly]="Disabled" class="form-control me-2">
+                </div>
+              </div>
+    
+              <div class="col-lg-8 col-md-8 col-sm-12"> 
+                <div class="position-relative w-100 me-2">
+                  <label class="fw-bold">Remarks</label>
+                  <input type="text" formControlName="remarks" [readonly]="Disabled" class="form-control me-2">
+                </div>
+              </div>
+    
+              <!-- <div class="col-lg-2 col-sm-2 col-12 pt-4">
+                <input class="form-check-input" formControlName="isAllow" type="checkbox" checked>
+                <label class="form-check-label pl-10 ">Allow</label>
+              </div> -->
+
+            <div class="col-lg-1 col-md-1 col-sm-12">
+              <button type="submit" (click)="onAdd()" class="btn btn-success btn-sm me-1"
+                style="margin-top: 20px;">{{btnAdd}}</button>
+            </div>
+          </div>
+  
+          <div class="table-responsive" style="height: 200px">
+            <table class="table table-hover" id="tbl-print">
+              <thead>
+                <tr>
+                  <th>Sr No.</th>
+                  <th>Employee Name</th>
+                  <th>Date</th>
+                  <th>Reference</th>
+                  <th>Other Deduction</th>
+                  <th>Remarks</th>
+                  <!-- <th>Active</th> -->
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of EOBIList" (click)="rowHighLight($event)">
+  
+                  <td class="">{{ data.sno }}</td>
+                  <td class="">{{ data.empName }}</td>
+                  <td class="d-none">{{ data.EmpyId }}</td>
+                  <td class="">{{ data.Date | date: 'yyyy-dd-MM'}}</td>
+                  <td class="">{{ data.reference }}</td>
+                  <td class="">{{ data.amount }}</td>
+                  <td class="">{{ data.remarks }}</td>
+                  <!-- <td class="">{{ data.isAllow ? data.isAllow : 'false' }}</td> -->
+                  <td>
+                    <ng-container {{data.sent}}>
+                      <!-- Edit Button -->
+                      <span (click)="editItem(data)" class="me-3 btnEditItem" style="cursor: pointer">
+                        <i class="fas fa-edit"></i>
+                      </span>
+                      <!-- Delete Button  -->
+                      <span (click)="deleteItem(data)" class="confirm-text btnDelItem" style="cursor: pointer">
+                        <i class="fas fa-trash"></i>
+                      </span>
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+  
+              <button class="btn btn-primary btn-sm me-1" [hidden]="isShow" (click)="onClickNew()">New</button>
+              <button type="submit" class="btn btn-success btn-sm me-1" [hidden]="!isShow"
+                (click)="onClickSave()">Save</button>
+              <button class="btn btn-secondary btn-sm me-1" (click)="onClickRefresh()">Refresh</button>
+              <button type="submit" class="btn btn-danger btn-sm me-1" [hidden]="!isShow"
+                (click)="deleteDeduction()">Delete</button>
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>

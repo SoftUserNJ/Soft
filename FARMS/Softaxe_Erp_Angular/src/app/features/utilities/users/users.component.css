@@ -1,0 +1,20 @@
+label {
+    margin-bottom: 3px !important;
+    font-weight: 900 !important;
+}
+
+.commom-img {
+    border: 1px solid #e9e4e4;
+    height: 345px;
+    width: 100%;
+}
+
+.commom-img img {
+    height: 100%;
+    width: 100%;
+}
+
+.imgBox img {
+    height: 290px;
+    width: 100%;
+}

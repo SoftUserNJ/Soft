@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Modal PopUp</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./popup.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600;700&family=Roboto:wght@700;200;300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="./script.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Modal Pop-Up</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Click Here</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+            <div class="container1">
+                <div><h1 class="main-head1">PRIO 1</h1></div>
+            <div><p class="main-head2">NEW INCIDENT<br>ACTION REQUIRED</p></div>
+            <div><i class="fa-solid fa-triangle-exclamation main-head3" style="color: #f53d6a;"></i></div>
+            </div>
+            <div class="container2">
+                <div class="box-1"><p>Incident:  Broken glass</p>
+                    <p>Location: Weesperplein</p>
+                    <p>Object:   WSP-001</p>
+                </div>
+                <div class="box-2"><h3>SLA</h3>
+                    <p>Response: before 14:10 6-7-2023</p>
+                    <p>Secure: before 16:00 6-7-2023</p>
+                    <p>Fixed: before 14:00 7-7-2023</p>
+                </div>
+            </div>
+
+            <div class="container3">
+                <div class="SchBox1">
+                    <p class="sch-head">Schedule now</p>
+                    <div>
+                        <label>Name mechanic:</label>
+                        <select class="form-control rounded-pill login-input" name="" id="" placeholder="Select Option">
+                            <option value="0">Select Option</option>
+                        </select>
+                        </div>
+                        <h3>Preparations:</h3>
+                        <p>Get safety materials at <br>storage</p>
+                        <h3>Requirements:</h3>
+                        <p>Peugeot Expert</p>
+                </div>
+                <div class="SchBox2">
+                    <h3>Secure date:</h3>
+                    <input type="text" class="form-control rounded-pill login-input datepicker" name="" id="" placeholder="Select Date">
+                    <h3>Fixed date:</h3>
+                    <input type="text" class="form-control rounded-pill login-input datepicker" name="" id="" placeholder="Select Date">
+
+                    <button class="form-control rounded-pill schedule-btn" >Schedule</button>
+                </div>
+            </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+</body>
+</html>

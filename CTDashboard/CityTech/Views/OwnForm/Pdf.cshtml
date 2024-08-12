@@ -1,0 +1,947 @@
+﻿@model CityTech.Models.ViewModel.ViewForm;
+
+@{
+
+
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+<style>
+    /* Custom styles for the elements */
+    .draggable {
+        width: 200px;
+        height: 100px;
+        background-color: #007BFF;
+        color: white;
+        padding: 15px;
+        border: 1px solid #ccc;
+    }
+
+    .resizable {
+        width: 200px;
+        height: 100px;
+        background-color: #ff5722;
+        color: white;
+        padding: 15px;
+        border: 1px solid #ccc;
+        resize: both;
+        overflow: auto;
+    }
+
+    /* Style for the textbox and its wrapper */
+    .textbox-wrapper {
+        width: 200px;
+        padding: 5px;
+        margin: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .textbox-wrapper1 {
+        width: 200px;
+ page-break-inside: avoid;
+        /* padding: 15px;
+                                    margin: 10px; */
+        /* border: 1px solid #ccc; */
+    }
+
+    .textbox-wrapper2 {
+        margin-left: 5px;
+    }
+
+    #printButton {
+        padding: 5px 10px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+
+    .editable-heading {
+        cursor: pointer;
+        user-select: text;
+    }
+
+    /* Style for resizable and draggable table */
+    .resizable-table {
+        border: 1px solid #ccc;
+    }
+
+        .resizable-table th, .resizable-table td {
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+    /* Style for image preview */
+    .image-preview {
+        max-width: 50px;
+        max-height: 50px;
+    }
+
+    .empty-highlight {
+        border: 1px solid red !important; /* Add a red border to highlight the element */
+    }
+
+    #Customform div p {
+        margin: 3px;
+        color: black;
+        background: white;
+        width: 400px;
+    }
+
+
+    #Customform div input[type="text"]:not(table input[type="text"]) {
+        margin: 3px;
+        color: black;
+        background: white;
+        border: none;
+        width: 400px;
+    }
+
+    table th, table td {
+        border: 1px solid white;
+    }
+
+    .bold-header {
+        font-weight: bold;
+    }
+
+
+
+     .lblfollowup {
+            color: Red; /* Set the text color to red */
+            font-weight: bold; /* Make the text bold */
+            /* Add any other styles or effects you want */
+        }
+
+        .followupyesno{
+           padding-left:10px; 
+        }
+ .followupdivsub{
+           padding-left:10px; 
+        }
+
+ #Customform tr {
+    page-break-inside: avoid;
+}
+  .fa-text-height,.fa-text-width,.fa-image
+    {
+    font-size: large;
+    }
+
+#Customform p, #Customform div, #Customform input, #Customform label {
+    font-size: small;
+}
+  
+
+
+
+</style>
+@*</head>*@
+@*<body>*@
+<div class="content pt-2 ListPage">
+    <div class="row" style="display: none;">
+        <div class="col-md-6">
+            <!-- Draggable Element -->
+            <div id="draggableElement" class="draggable">
+                <h2></h2>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Resizable Element -->
+            <div id="resizableElement" class="resizable">
+                <h2></h2>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="CreationForm" class="mt-3">
+
+
+
+        <div class="form-group" style="display:none">
+            <label for="tableRows">Form ID</label>
+            <input class="form-control" id="txtformid" value="@Model.FormId" placeholder="Form Id" readonly>
+        </div>
+        <div class="form-group" style="display:none">
+            <label for="tableRows">Form ID</label>
+            <input class="form-control" id="txtlocation" value="@Model.Location" placeholder="Location" readonly>
+        </div>
+
+     
+
+        <div class="form-group">
+            <label for="tableRows">Form Name</label>
+            <input class="form-control" id="txtformname" value="@Model.FormName" style="    background: #11153a; color: white;" placeholder="Enter Form Name">
+        </div>
+    
+
+
+
+        <div class="form-group">
+            
+           <button id="generatePdfBtn" class="btn btn-primary btn-sm ct-btns">Generate PDF</button>
+
+        </div>
+        <div id="Customform" style="width: 71%; border: 1px dotted;">
+        </div>
+    </div>
+
+    </div>
+    
+    
+
+
+
+    <script>
+
+    var followup=false;
+    var followupdiv="";
+        $(document).ready(function () {
+
+               var formData = `@Html.Raw(Model.FormData)`;
+                 $("#Customform").append(formData);
+
+                    debugger;
+                    const answerWrapper = document.createElement("div");
+                    answerWrapper.classList.add("textbox-wrapper1");
+
+                    const WorkorderNolabel = document.createElement("p");
+                    const boldText = document.createElement("strong");
+                    boldText.innerHTML = "JHA nummer:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                    WorkorderNolabel.appendChild(boldText);
+                    const formValue = document.createTextNode($("#txtformid").val());
+                    WorkorderNolabel.appendChild(formValue);
+                    answerWrapper.appendChild(WorkorderNolabel);
+                    
+ 
+                    const Workorderlocationlabel = document.createElement("p");
+                    const boldLocationText = document.createElement("strong");
+                    boldLocationText.innerHTML = "Werkzaamheden:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                    Workorderlocationlabel.appendChild(boldLocationText);
+                    const locationValue = document.createTextNode($("#txtlocation").val());
+                    Workorderlocationlabel.appendChild(locationValue);
+                    answerWrapper.appendChild(Workorderlocationlabel);
+
+                    var existingDiv = document.querySelector('.company-info-container');
+                    existingDiv.parentNode.insertBefore(answerWrapper, existingDiv.nextSibling);
+                    
+
+
+                       
+
+
+
+            setConvasSettings();
+            $(".resizable-table").each(function () {
+                $(this).resizable({
+                    containment: "#Customform"
+                }).draggable({
+                    containment: "#Customform"
+                });
+            });
+
+
+
+
+
+            function setConvasSettings() {
+                const canvasElements = document.querySelectorAll('[id*="signatureCanvas"]');
+                for (let i = 0; i < canvasElements.length; i++) {
+                    initializeSignatureCanvas(canvasElements[i].id);
+
+                    retrieveSignature(canvasElements[i].id);
+                }
+
+            }
+
+            function initializeSignatureCanvas(signatureCanvas) {
+
+
+                const canvas = document.getElementById(signatureCanvas);
+                const ctx = canvas.getContext('2d');
+                let drawing = false;
+
+                canvas.addEventListener('mousedown', startDrawing);
+                canvas.addEventListener('touchstart', startDrawing);
+
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('touchmove', draw);
+
+                canvas.addEventListener('mouseup', stopDrawing);
+                canvas.addEventListener('touchend', stopDrawing);
+
+                function startDrawing(e) {
+                    e.preventDefault();
+                    drawing = true;
+                    const x = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+                    const y = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
+                    ctx.beginPath();
+                    ctx.moveTo(x - canvas.getBoundingClientRect().left, y - canvas.getBoundingClientRect().top);
+                }
+
+                function draw(e) {
+                    if (!drawing) return;
+                    e.preventDefault();
+                    const x = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+                    const y = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+                    ctx.lineTo(x - canvas.getBoundingClientRect().left, y - canvas.getBoundingClientRect().top);
+                    ctx.stroke();
+                    canvas.setAttribute('data-signature', canvas.toDataURL());
+                }
+
+                function stopDrawing() {
+                    drawing = false;
+                    ctx.closePath();
+                }
+            }
+            function clearSignature(signatureCanvasId) {
+                const canvas = document.getElementById(signatureCanvasId);
+                const ctx = canvas.getContext('2d');
+
+                // Clear the canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Set the canvas background color to white (you can also use 'transparent')
+                ctx.fillStyle = "white";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            function retrieveSignature(signatureCanvasId) {
+                const canvas = document.getElementById(signatureCanvasId);
+                const ctx = canvas.getContext('2d');
+                const signatureDataURL = canvas.getAttribute('data-signature');
+
+                if (signatureDataURL) {
+                    const img = new Image();
+                    img.src = signatureDataURL;
+                    img.onload = function () {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    };
+                }
+            }
+
+
+
+
+           
+
+
+
+
+
+
+
+
+
+
+
+           
+
+         
+
+
+    
+
+
+       
+
+           
+
+            //trigger events
+            $("#Customform input[type='file']").on("change", function (event) {
+                const fileInput = event.target;
+                const file = fileInput.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+                    const imagePreview = $(fileInput).siblings('.image-preview')[0];
+                    const label = $(fileInput).siblings('label')[0];
+
+                    reader.onload = function (e) {
+                        // Update the image preview src
+                        imagePreview.src = e.target.result;
+                        // Hide the "Picture Upload" text
+                        label.style.display = "none";
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Attach double-click event listener to image previews to trigger file input click
+            $("#Customform .image-preview").on("dblclick", function () {
+                const fileInput = $(this).siblings('input[type="file"]')[0];
+                if (fileInput) {
+                    fileInput.click(); // Trigger a click on the file input
+                }
+            });
+
+            // Attach an input event listener to the Customform
+            document.getElementById('Customform').addEventListener('input', function (event) {
+                const target = event.target;
+
+                if (target.type === 'text') {
+                    const currentValue = target.value;
+                    target.setAttribute("value", currentValue);
+                } else if (target.type === 'checkbox') {
+                    const isChecked = target.checked;
+                    target.setAttribute("checked", isChecked ? "true" : "false");
+                } else if (target.type === 'radio') {
+                    const isChecked = target.checked;
+                    target.setAttribute("checked", isChecked ? "true" : "false");
+                }
+            });
+
+          
+
+
+            document.body.addEventListener("click", function (event) {
+                // For clear-button
+
+                
+                if (event.target.classList.contains('clear-button')) {
+                    const canvasId = event.target.previousElementSibling.id;
+                    clearSignature(canvasId);
+                    event.target.style.display = "none";
+                }
+
+                // For clear-buttonlabel
+                if (event.target.classList.contains('clear-buttonlabel')) {
+                    // Assuming the clearButton is a sibling to the questionLabel, and it's directly after it.
+                    const clearBtn = event.target.nextElementSibling.querySelector('.clear-button');
+                    if (clearBtn) {
+                        clearBtn.style.display = "inline-block";
+                    }
+                }
+
+                    
+            });
+
+                 $(document).on('click', '.yesfollowup', function(event) {
+                        debugger;
+                
+                        const userResponse = confirm('Do you want to add a follow-up question for yes?');  
+                        if (userResponse) {
+                            event.preventDefault();
+                           
+
+                             followupstatus(true,"followupyes"+this.getAttribute("followupdiv"));
+
+
+                         $("#followupno" + this.getAttribute("followupdiv")).css('display', 'none');
+                           $("#followupyes" + this.getAttribute("followupdiv")).css('display', 'none');
+                        } else {
+                           followupstatus(false,"followupyes"+this.getAttribute("followupdiv"))
+                             $("#followupno" + event.target.getAttribute("followupdiv")).css('display', 'none');
+                        $("#followupyes" + event.target.getAttribute("followupdiv")).css('display', 'block');                 
+                        }
+                       
+                    });
+
+
+
+
+
+
+
+
+
+                    $(document).on('click', '.nofollowup', function(event) {
+                          debugger;
+                        const userResponse = confirm('Do you want to add a follow-up question for no?');
+                        if (userResponse) {
+                            event.preventDefault();
+
+                        followupstatus(true,"followupno"+this.getAttribute("followupdiv"))
+           
+                        $("#followupyes" + event.target.getAttribute("followupdiv")).css('display', 'none');
+                        $("#followupno" + event.target.getAttribute("followupdiv")).css('display', 'none');
+                        } else {
+                            followupstatus(false,"followupno"+this.getAttribute("followupdiv"))
+                            $("#followupyes" + event.target.getAttribute("followupdiv")).css('display', 'none');
+                        $("#followupno" + event.target.getAttribute("followupdiv")).css('display', 'block');
+                        }
+
+                        
+                    });
+
+
+
+
+                
+                    $(document).on('click', '.followupdiv', function(event) {
+                          debugger;
+                        const userResponse = confirm('Do you want to add a follow-up question ?');
+                        if (userResponse) {
+                            event.preventDefault();
+
+                        followupstatus(true,"followupdiv"+this.getAttribute("followupdiv"))
+           
+                        $("#followupdiv" + event.target.getAttribute("followupdiv")).css('display', 'none');
+           
+                        } else {
+                            followupstatus(false,"followupdiv"+this.getAttribute("followupdiv"))
+                            $("#followupdiv" + event.target.getAttribute("followupdiv")).css('display', 'block');
+                        }
+
+                        
+                    });
+
+
+
+
+                            $(".textbox-wrapper1").draggable({
+                                containment: "#Customform"
+                            })
+
+
+                    $("body").on("click", ".fa-text-height", function () {    
+                            const fafaheight=$(this);
+                            const associatedTextareaField = $(this).siblings('textarea');
+                            const currentText = associatedTextareaField.val();
+                            $("#modalInputBox").val(currentText);
+                            $("#textInputModal").modal("show");
+                            $("#saveTextInput").off("click").on("click", function () {
+                                debugger;
+                                const modalText = $("#modalInputBox").val();
+                                if (modalText!="")
+                                {
+                                     fafaheight.css('color', 'green');
+                                }
+                                associatedTextareaField.val(modalText); 
+                                associatedTextareaField.text(modalText); 
+                                const inputEvent = new Event('input', {
+                                    bubbles: true,
+                                    cancelable: true,
+                                });
+                                associatedTextareaField[0].dispatchEvent(inputEvent); 
+
+                        
+                                $("#textInputModal").modal("hide");
+                            });
+                        });
+
+            $("body").on("click", ".fa-text-width", function () {
+                const currentText = $(this).siblings('input[type="text"]').val();
+                $("#modalInputBox").val(currentText);
+                $("#textInputModal").modal("show");
+
+                const associatedInputField = $(this).siblings('input[type="text"]');
+
+                // Event handler for modal save button click
+                $("#saveTextInput").off("click").on("click", function () {
+                    const modalText = $("#modalInputBox").val();
+                    associatedInputField.val(modalText);
+
+                    // Create and dispatch an "input" event for the associated input field
+                    const inputEvent = new Event('input', {
+                        bubbles: true,
+                        cancelable: true,
+                    });
+                    associatedInputField[0].dispatchEvent(inputEvent); // [0] to access the DOM element
+
+                    $("#textInputModal").modal("hide");
+                });
+            });
+
+                 $(document).on('change', '.dropdown', function(event) {
+                       debugger;
+                     var pid = $(this).parent(); // Get the parent element
+                         var elements = pid.find('.followupdivsubdropdown');
+
+                        for(var i = 0; i < elements.length; i++) {
+                            var element = elements[i];
+                            element.style.display = 'none'; 
+                        }
+
+                      var selectedOption = $(this).find('option:selected');
+                      var followupDivValue = selectedOption.attr('followupdiv');
+                      const userResponse = confirm('Do you want to add a follow-up question for yes?');  
+                        
+
+                       if (userResponse) {
+                         event.preventDefault();
+                        followupstatus(true,"followupdiv"+followupDivValue)
+ 
+                        $("#followupdiv" + followupDivValue).css('display', 'none');
+                          }
+                                    
+                     else {
+                            followupstatus(false,"followupdiv"+followupDivValue)
+                            $("#followupdiv" + followupDivValue).css('display', 'block');
+                        }
+
+                                // Update the 'selected-value' attribute of the select element
+                        var selectedValue = $(this).val();
+                        $(this).attr('selected-value', selectedValue);
+                        $(this).find("option").removeAttr("selected");
+                       selectedOption.attr("selected", "selected");
+                });
+
+
+
+
+
+
+                       function generatePDF() {
+                        let images = document.querySelectorAll('.image-preview');
+                        images.forEach(image => {
+                            image.style.maxWidth = "150px";
+                image.style.maxHeight = "150px";
+                        });
+
+                        const tablesInCustomForm = document.querySelectorAll("#Customform table");
+
+               
+                        tablesInCustomForm.forEach(table => {
+                            const tableDataCells = table.querySelectorAll("td, th, tr");
+                            tableDataCells.forEach(cell => {
+                            cell.style.borderColor = "black";
+                            cell.style.color = "black";
+                            });
+                        });
+
+
+                      const textareasToReplace = document.querySelectorAll('#Customform textarea');
+
+                        textareasToReplace.forEach(textareaToReplace => {
+                            if (textareaToReplace) {
+                                const textarea1 = document.createElement('textarea1');
+                                const attributes = textareaToReplace.attributes;
+
+                                for (let i = 0; i < attributes.length; i++) {
+                                    const attr = attributes[i];
+                                    textarea1.setAttribute(attr.name, attr.value);
+                                }
+
+                                textarea1.innerHTML = textareaToReplace.innerHTML;
+                                textarea1.style.display = 'block'; // Add this line to set the display property to 'block'
+                                textareaToReplace.parentNode.replaceChild(textarea1, textareaToReplace);
+                            }
+                        });
+
+                        const fatextheight = document.querySelectorAll("#Customform .fa-text-height");
+                        fatextheight.forEach(icon => {
+                            icon.style.display="none";
+                        });
+
+
+                        const spans = document.querySelectorAll("#Customform span");
+
+                        spans.forEach(span => {
+                            span.style.color = "black";
+                        });
+                      
+
+                       const yesnofollowuplables = document.querySelectorAll("#Customform .yesfollowup, #Customform .nofollowup");
+
+
+                        yesnofollowuplables.forEach(yesnofollowuplable => {
+                            yesnofollowuplable.style.color = "black";
+                        });
+
+                      
+
+
+                        
+
+
+
+                        // Generate the PDF with the updated styles
+            var pdfOptions = {
+                margin: [15, 15],
+                filename: 'pdfFileName.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 3, letterRendering: true, dpi: 300, useCORS: true }, // Adjusted the scale and added DPI
+                jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+                        var element = document.getElementById('Customform');
+                        html2pdf().from(element).set(pdfOptions).toPdf().get('pdf').then(function (pdf) {
+                            // This callback is run after the PDF is generated
+                            // You can now perform actions with the 'pdf' object, like sending it to a server or saving it
+                        }).save().then(() => {
+                      
+                            images.forEach(image => {
+                            image.style.maxWidth = "50px";
+                            image.style.maxHeight = "50px";
+                            });
+
+                            tablesInCustomForm.forEach(table => {
+                            const tableDataCells = table.querySelectorAll("td, th, tr");
+                            tableDataCells.forEach(cell => {
+                                cell.style.borderColor = "white";
+                                cell.style.color = "white";
+                            });
+                            });
+
+
+
+
+                         const textarea1ToReplace = document.querySelectorAll('#Customform textarea1');
+
+                        textarea1ToReplace.forEach(textarea1ToReplace => {
+                            if (textarea1ToReplace) {
+                                const textarea = document.createElement('textarea');
+                                const attributes = textarea1ToReplace.attributes;
+
+                                for (let i = 0; i < attributes.length; i++) {
+                                    const attr = attributes[i];
+                                    textarea.setAttribute(attr.name, attr.value);
+                                }
+
+                                textarea.innerHTML = textarea1ToReplace.innerHTML;
+                                textarea.style.display = 'none'; // Add this line to set the display property to 'none'
+                                textarea1ToReplace.parentNode.replaceChild(textarea, textarea1ToReplace);
+                            }
+                        });
+
+
+
+                          fatextheight.forEach(icon => {
+                            icon.style.display="block";
+                        });
+                       
+                         spans.forEach(span => {
+                            span.style.color = "white";
+                        });
+
+                        yesnofollowuplables.forEach(yesnofollowuplable => {
+                            yesnofollowuplable.style.color = "white";
+                        });
+                        followupstatuscolor();
+                        });
+                        }
+
+
+           
+            document.getElementById('generatePdfBtn').addEventListener('click', function () {
+                generatePDF();
+              
+            });
+
+
+
+
+            // Make the draggable element
+            $("#draggableElement").draggable();
+
+            // Make the resizable element
+            $("#resizableElement").resizable();
+
+            // Function to add a new textbox with Bootstrap styling
+
+
+
+
+
+
+
+
+            // Add event listener to deselect picture boxes when clicking outside of them
+            $(document).on("click", function (e) {
+                if (!$(e.target).closest(".textbox-wrapper").length) {
+                    $(".textbox-wrapper").css("border-color", "black");
+                }
+
+                if (!$(e.target).closest(".textbox-wrapper1").length) {
+                    $(".textbox-wrapper1").css("border-color", "white");
+                }
+
+
+            });
+
+
+
+
+            // Function to add a new textbox with an editable heading
+
+
+
+
+
+
+
+            $("#answerType").change(function () {
+                var selectedType = $(this).val();
+                $("#checkboxLabelInputDiv").toggle(selectedType === "checkbox");
+               $("#dropdownfromdiv").toggle(selectedType === "dropdown");
+                $("#dropdowntodiv").toggle(selectedType === "dropdown");
+               $("#multiselectOptionsDiv").toggle(selectedType === "multiselect");
+
+            });
+
+      
+
+            let isEditMode = false; // Initialize edit mode as false
+            let editingElement = null; // Initialize the editing element as null
+             let isEditModeradio = false; // Initialize edit mode as false
+            let editingElementradio = null; // Initialize the editing element as null
+            // Function to open the modal in add mode
+            function openAddMode() {
+                isEditMode = false; // Set edit mode to false
+                // Reset the editing modal fields
+                $("#question").val("");
+                $("#answerType").val("textbox");
+                $("#checkboxLabelInput").val("");
+                $("#boldCheckbox").prop("checked", false);
+                $("#mandatoryCheckbox").prop("checked", false);
+                $("#checkboxLabelInputDiv").hide();
+                $("#dropdownfromdiv").hide();
+                $("#dropdowntodiv").hide();
+                 $("#dropdownfromdiv").val("");
+                $("#dropdowntodiv").val("");
+                // Show the editing modal
+                $('#questionPopupModal').modal('show');
+            }
+
+            // Function to open the modal in edit mode
+            // Function to open the modal in edit mode
+            function openEditMode(element) {
+                isEditMode = true; // Set edit mode to true
+                editingElement = element; // Store the element being edited
+
+                // Capture the properties of the selected element
+                const questionLabel = element.find("p");
+                const questionValue = questionLabel.text().replace(" *", ""); // Remove asterisk if present
+                const isBold = questionLabel.css("font-weight") === "700"; // Check if the label is bold
+                const isMandatory = questionValue.endsWith(" *"); // Check if the label ends with an asterisk
+
+                // Identify the type of answer element (textbox, checkbox, or sketchbox)
+                let answerType = "textbox";
+                if (element.find("input[type='checkbox']").length > 0) {
+                    answerType = "checkbox";
+                } else if (element.find("select").length > 0) {
+                    answerType = "dropdown";
+                    // For dropdown, capture additional properties like range if needed
+                    // You might want to store and retrieve the range values as attributes or data properties of the dropdown                
+                const dropdown = element.find("select");
+               const fromRange = dropdown.attr("data-from-range");
+                 const toRange = dropdown.attr("data-to-range");
+
+                // Set the modal inputs with these values
+
+                $("#rangeFrom").val(fromRange);
+                $("#rangeTo").val(toRange);
+                 $("#dropdownfromdiv").show();
+                 $("#dropdowntodiv").show();
+
+                }else if (element.find(".sketch-canvas").length > 0) {
+                    answerType = "sketchbox";
+                }
+                
+
+                const checkboxLabel = element.find("span").text().trim();
+
+                // Populate the editing modal with the captured properties
+                $("#question").val(questionValue);
+                $("#answerType").val(answerType);
+                $("#boldCheckbox").prop("checked", isBold);
+                $("#mandatoryCheckbox").prop("checked", isMandatory);
+
+                if (answerType === "checkbox") {
+                    $("#checkboxLabelInput").val(checkboxLabel);
+                    $("#checkboxLabelInputDiv").show();
+                } else {
+                    $("#checkboxLabelInputDiv").hide();
+                }
+
+                // If more properties need to be edited when sketchbox is detected, add them here.
+
+                // Show the editing modal
+                $('#questionPopupModal').modal('show');
+            }
+
+
+
+            // Add an event listener to open the modal in add mode when clicking the "Add New Textbox" button
+            $("#addButton").click(function () {
+                openAddMode();
+            });
+
+                        // Add an event listener to capture double-click events on textbox and checkbox elements
+                    $("#Customform").on("dblclick", ".textbox-wrapper1", function () {
+                    
+                            if (!$(this).hasClass("radio-wrapper1")) {
+                                openEditMode($(this)); // Open the modal in edit mode
+                            }
+                   });
+
+
+
+
+                  $("#Customform").on("dblclick", ".radio-wrapper1", function () {
+                     
+
+                       isEditModeradio = true; 
+                       editingElementradio = $(this);
+
+                        // Get the question header and other data from the clicked element
+                        const questionHeader = $(this).find("p").text();
+                        const yesText = $(this).find("label[for^='yesRadio']").text();
+                        const noText = $(this).find("label[for^='noRadio']").text();
+
+                        // Populate the modal fields with the data from the clicked element
+                        $("#questionHeader").val(questionHeader);
+                        $("#yesText").val(yesText);
+                        $("#noText").val(noText);
+
+                        // Show the modal for editing
+                        $("#addQuestionModal").modal("show");
+                    });
+            
+
+            // Add a handler for applying the changes
+
+            // Add an event listener to the delete button
+            $("#deleteQuestion").click(function () {
+                if (isEditMode) {
+                    // Ask for confirmation before deleting
+                    if (confirm("Are you sure you want to delete this question?")) {
+                        // Handle editing mode: Remove the editingElement
+                        editingElement.remove();
+                        // Close the modal
+                        $('#questionPopupModal').modal('hide');
+                    }
+                }
+            });
+          
+
+           $("#deleteRadioQuestion").click(function () {
+                if (isEditModeradio) {
+                    // Ask for confirmation before deleting
+                    if (confirm("Are you sure you want to delete this question?")) {
+                        // Handle editing mode: Remove the editingElement
+                        editingElementradio.remove();
+                        // Close the modal
+                        $('#addQuestionModal').modal('hide');
+                    }
+                }
+            });
+
+
+
+
+
+
+           
+
+
+
+
+
+
+
+
+        });
+    </script>
+    @*</body>
+    </html>*@

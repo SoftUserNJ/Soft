@@ -1,0 +1,217 @@
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <section class="bg-white container">
+      <div class="img-sec">
+        <img src="{{cmpLogo}}">
+      </div>
+      <div>
+        <span class="cmp-name">{{row.CMPNAME}}</span>
+      </div>
+      <div>
+        <span class="cmp-number">{{row.CONTACT}}</span>
+      </div>
+      <div>
+        <span class="cmp-email">{{row.EMAIL}}</span>
+      </div>
+      <div class="text-center mt-2">
+        <span class="farm-name">{{row.COSTCENTRENAME}}</span>
+      </div>
+      <div class="text-center mt-2">
+        <span class="farm-title">Flock Wise Detail</span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-bordered my-tbl">
+          <thead>
+            <tr>
+              <th class="text-center" colspan="3">SHARE HOLDERS</th>
+              <th class="text-center" colspan="2">BIRDS</th>
+              <th class="text-center" colspan="2">WEIGHT</th>
+              <th class="text-center" colspan="2">ANAYSIS</th>
+              <th class="text-center" colspan="2">FLOCK START & END DATE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Number Of Birds Placed</td>
+              <td class="text-end">{{row.TOTALCHICKS | number : "1.0-0"}}</td>
+              <td>Avg. Wt/Bird Grm</td>
+              <td class="text-end">{{row.AVGWEIGHT | number : "1.2-2"}}</td>
+              <td>FCR</td>
+              <td class="text-end">{{fcr | number : "1.2-2"}}</td>
+              <td class="text-center">Flock No:</td>
+              <td class="text-center">{{row.JOBNO}}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Mortality (Bird)</td>
+              <td class="text-end">{{row.MORTALITY | number : "1.0-0"}}</td>
+              <td>Total Weight In Kg</td>
+              <td class="text-end">{{ totalWtKg | number : "1.2-2"}}</td>
+              <td>EBI</td>
+              <td class="text-end">{{ ebi | number : "1.2-2"}}</td>
+              <td class="text-center">Start Date:</td>
+              <td class="text-center">{{row.STARTDATE | date: "dd/MM/yyyy"}}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Live Birds</td>
+              <td class="text-end">{{row.TOTALCHICKS - row.MORTALITY | number : "1.0-0"}}</td>
+              <td></td>
+              <td></td>
+              <td>Cost/ Kg</td>
+              <td class="text-end">{{totalExp / totalWtKg | number : "1.2-2"}}</td>
+              <td class="text-center">End Date:</td>
+              <td class="text-center">{{row.ENDDATE | date: "dd/MM/yyyy"}}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Liveability</td>
+              <td class="text-end">{{liveability | number : "1.2-2"}}%
+              </td>
+              <td></td>
+              <td></td>
+              <td>Cost/ Bird</td>
+              <td class="text-end">{{totalExp / row.TOTALCHICKS | number : "1.2-2"}}</td>
+              <td class="text-center">No. of Days:</td>
+              <td class="text-center">{{row.DAYS}}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Mortality %</td>
+              <td class="text-end">{{((row.MORTALITY / row.TOTALCHICKS) * 100) | number : "1.2-2"}}%</td>
+              <td></td>
+              <td></td>
+              <td>P/L / Kg</td>
+              <td class="text-end">{{totalProfitLoss / totalWtKg | number : "1.2-2"}}</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>P/L/ Bird</td>
+              <td class="text-end">{{totalProfitLoss / row.TOTALCHICKS | number : "1.2-2"}}</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>EXPENSE</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered my-tbl">
+          <thead>
+            <tr>
+              <th class="w-0"></th>
+              <th class="w-50">PARTICULARS</th>
+              <th class="text-center w-8">QTY</th>
+              <th class="text-center w-8">AVG. RATE</th>
+              <th class="text-center w-12">TOTAL COST</th>
+              <th class="text-center w-8">COST/BIRD</th>
+              <th class="text-center w-8">COST/KG</th>
+              <th class="text-center w-6">%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of expList; let i = index">
+              <td class="text-center">
+                <span data-bs-toggle="modal" data-bs-target="#LedgerModal" (click)="onClickLedger(item.CODE, item.NAMES)">
+                  <i class="fas fa-print"></i>
+                </span>
+              </td>
+              <td class="limited-text" title="{{item.NAMES}}">{{item.NAMES}}</td>
+              <td class="text-end">{{item.QTY == 0 ? '' : item.QTY | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.AVGRATE | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.AMOUNT | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.AMOUNT / row.TOTALCHICKS | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.AMOUNT / totalWtKg | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.AMOUNT / totalExp * 100 | number : "1.1-1"}}%</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">TOTAL EXPENSE:</td>
+              <td class="text-end">{{totalExp | number : "1.2-2"}}</td>
+              <td class="text-end">{{totalExpCostBird | number : "1.2-2"}}</td>
+              <td class="text-end">{{totalExpCostKg | number : "1.2-2"}}</td>
+              <td class="text-end">{{totalExpPercent | number : "1.1-1"}}%</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <h4>SALE</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered my-tbl">
+          <thead>
+            <tr>
+              <th class="w-0"></th>
+              <th class="w-50">PARTICULARS</th>
+              <th class="text-center w-8">QTY</th>
+              <th class="text-center w-8">AVG. RATE</th>
+              <th class="text-center w-12">TOTAL COST</th>
+              <th class="text-center w-8">COST/BIRD</th>
+              <th class="text-center w-8">COST/KG</th>
+              <th class="text-center w-6">%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of saleList; let i = index">
+              <td class="text-center">
+                <span data-bs-toggle="modal" data-bs-target="#LedgerModal" (click)="onClickLedger(item.CODE, item.NAMES)">
+                  <i class="fas fa-print"></i>
+                </span>
+              </td>
+              <td class="limited-text" title="{{item.NAMES}}">{{item.NAMES}}</td>
+              <td class="text-end">{{item.QTY == 0 ? '' : item.QTY | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.AVGRATE | number : "1.2-2"}}</td>
+              <td class="text-end">{{item.AMOUNT | number : "1.2-2"}}</td>
+              <td class="text-end"></td>
+              <td class="text-end"></td>
+              <td class="text-end">{{item.AMOUNT / totalSale * 100 | number : "1.1-1"}}%</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">TOTAL REVENUE:</td>
+              <td class="text-end">{{totalSale | number : "1.2-2"}}</td>
+              <td colspan="2"></td>
+              <td class="text-end">{{totalSalePercent | number : "1.1-1"}}%</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered my-tbl">
+          <tfoot>
+            <tr>
+              <td colspan="4" class="w-66">PROFIT/LOSS:</td>
+              <td class="text-end w-12">{{totalProfitLoss | number : "1.2-2"}}</td>
+              <td colspan="3"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+<app-file-attachment [code]="outputCode" [name]="outputName" [fromDate]="fromDate" [toDate]="toDate" [jobNo]="jobNo" ></app-file-attachment>
